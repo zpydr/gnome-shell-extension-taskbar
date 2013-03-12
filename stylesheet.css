@@ -1,0 +1,50 @@
+.tkb-desktop-box
+{
+    padding-right: 4px;
+}
+
+.tkb-task-button
+{
+    padding-left: 2px;
+    padding-right: 2px;
+
+    border: 1px;
+}
+
+.tkb-task-button:frame
+{
+    border: 1px solid gray;
+    border-radius: 5px;
+
+    background-image: url("images/tkb-button-highlight-wide.svg");
+}
+
+.tkb-task-button:bgcolor
+{	
+	border-radius: 5px;
+    background-color: rgba(0,55,255,255);
+}
+
+.tkb-preview
+{
+    background-color: rgba(10,10,10,0.7);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.tkb-preview-name
+{
+    padding : 0 5px 0 5px;
+
+    color: white;
+    text-shadow: black 0px 2px 2px;
+    font-weight: bold;
+}
+
+.tkb-preview-title
+{
+    padding : 0 5px 5px 5px;
+
+    color: white;
+    font-size: 10px;
+}

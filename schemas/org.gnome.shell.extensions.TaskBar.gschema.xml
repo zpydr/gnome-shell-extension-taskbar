@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gnome-shell-extensions-TaskBar">
+   	<enum id="org.gnome.shell.extensions.TaskBar.display-desktop-button-enum">
+		<value value="0" nick="none"/>
+		<value value="1" nick="default"/>
+		<value value="2" nick="gnome"/>
+		<value value="3" nick="dark"/>
+	</enum>
+	<enum id="org.gnome.shell.extensions.TaskBar.remove-activities-enum">
+		<value value="0" nick="none"/>
+		<value value="1" nick="hotcorner"/>
+		<value value="2" nick="activities"/>
+	</enum>
+	<enum id="org.gnome.shell.extensions.TaskBar.close-button-enum">
+		<value value="0" nick="none"/>
+		<value value="1" nick="middle-click"/>
+		<value value="2" nick="right-click"/>
+	</enum>
+	<enum id="org.gnome.shell.extensions.TaskBar.active-task-style-enum">
+		<value value="0" nick="none"/>
+		<value value="1" nick="frame"/>
+		<value value="2" nick="shade"/>
+		<value value="3" nick="bgcolor"/>
+	</enum>
+    <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
+		<key name="display-all-workspaces" type="b">
+		    <default>true</default>
+		    <summary>Display All Workspaces</summary>
+			<description/>
+		</key>
+    	<key name="display-desktop-button" enum="org.gnome.shell.extensions.TaskBar.display-desktop-button-enum">
+      		<default>'default'</default>
+      		<summary>Display Desktop Button</summary>
+      		<description/>
+    	</key>
+		<key name="display-showapps-button" type="b">
+		    <default>false</default>
+		    <summary>Display Show Applications Button</summary>
+			<description/>
+		</key>
+		<key name="display-overview-button" type="b">
+		    <default>false</default>
+		    <summary>Display Overview Button</summary>
+			<description/>
+		</key>
+    	<key name="remove-activities" enum="org.gnome.shell.extensions.TaskBar.remove-activities-enum">
+      		<default>'none'</default>
+      		<summary>Remove Activities</summary>
+      		<description/>
+    	</key>
+		<key name="remove-default-application-menu" type="b">
+		    <default>true</default>
+		    <summary>Remove Default Application Menu</summary>
+			<description/>
+		</key>	
+    	<key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-enum">
+      		<default>'middle-click'</default>
+      		<summary>Middle/Right Click to Close Task</summary>
+      		<description/>
+    	</key>
+    	<key name="active-task-style" enum="org.gnome.shell.extensions.TaskBar.active-task-style-enum">
+      		<default>'frame'</default>
+      		<summary>Active Task Style</summary>
+      		<description/>
+    	</key>
+    	<key name="icon-size" type="i">
+      		<range min="1" max="96"/>
+      		<default>22</default>
+      		<summary>Icon Size</summary>
+      		<description/>
+    	</key>
+    	<key name="panel-position" type="i">
+      		<default>1</default>
+      		<summary>Panel Position</summary>
+	        <description/>
+ 	    </key>
+ 	    <key name="panel-box" type="i">
+      		<default>1</default>
+      		<summary>Panel Box Left=1 Middle=2 Right=3</summary>
+	        <description/>
+ 	    </key>
+ 	    <key name="position-max-right" type="i">
+      		<default>9</default>
+      		<summary>Max Right Position</summary>
+	        <description/>
+ 	    </key>
+    	<key name="display-label" type="b">
+      		<default>true</default>
+      		<summary>Display Label</summary>
+      		<description/>
+    	</key>
+    	<key name="display-thumbnail" type="b">
+      		<default>true</default>
+      		<summary>Display Thumbnail</summary>
+      		<description/>
+    	</key>
+    	<key name="preview-delay" type="i">
+      		<range min="0" max="3000"/>
+      		<default>500</default>
+      		<summary>Delay before Preview</summary>
+      		<description/>
+    	</key>
+    	<key name="preview-size" type="i">
+      		<range min="100" max="1000"/>
+      		<default>350</default>
+      		<summary>Preview Size</summary>
+      		<description/>
+    	</key>
+    </schema>
+</schemalist>
