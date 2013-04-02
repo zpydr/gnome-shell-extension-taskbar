@@ -449,10 +449,9 @@ TaskBar.prototype =
 		let app = Shell.WindowTracker.get_default().get_window_app(window);
 		if (app != null)
 		{
-			let iconTask = new AppDisplay.AppIcon(app, { setSizeManually: true, showLabel: false });
-			iconTask.setIconSize(this.iconSize);
+			let iconTask = app.create_icon_texture(this.iconSize);
 			let buttonTask = new St.Button({ style_class: "tkb-task-button" });
-			buttonTask.set_child(iconTask.actor);
+			buttonTask.set_child(iconTask);
 			let signalsTask = [
 				buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
 				buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
