@@ -8,11 +8,30 @@ const Lang = imports.lang;
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
 
+const Gettext = imports.gettext.domain('TaskBar');
+const _ = Gettext.gettext;
+
 const schema = "org.gnome.shell.extensions.TaskBar";
 
 function init()
 {
+    initTranslations("TaskBar");
+}
 
+function initTranslations(domain) {
+    let extension = imports.misc.extensionUtils.getCurrentExtension();
+
+    domain = domain || extension.metadata['gettext-domain'];
+
+    // check if this extension was built with "make zip-file", and thus
+    // has the locale files in a subfolder
+    // otherwise assume that extension has been installed in the
+    // same prefix as gnome-shell
+    let localeDir = extension.dir.get_child('locale');
+    if (localeDir.query_exists(null))
+        imports.gettext.bindtextdomain(domain, localeDir.get_path());
+    else
+        imports.gettext.bindtextdomain(domain, Config.LOCALEDIR);
 }
 
 function buildPrefsWidget()
@@ -143,13 +162,13 @@ Prefs.prototype =
     {
 	let frame = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, border_width: 10});
 
-	let label = new Gtk.Label({ label: "<b>Global</b>", use_markup: true, xalign: 0});
+	let label = new Gtk.Label({ label: _("<b>Global</b>"), use_markup: true, xalign: 0});
 	let vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20});
 
 	
 	
 	let hboxDisplayAllWorkspaces = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelDisplayAllWorkspaces = new Gtk.Label({label: "Display All Workspaces", xalign: 0});
+	let labelDisplayAllWorkspaces = new Gtk.Label({label: _("Display All Workspaces"), xalign: 0});
 	let valueDisplayAllWorkspaces = new Gtk.Switch({active: this.settings.get_boolean("display-all-workspaces")});
 	valueDisplayAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeDisplayAllWorkspaces));
 
@@ -160,12 +179,12 @@ Prefs.prototype =
 
 
 	let hboxDisplayDesktopButton = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelDisplayDesktopButton = new Gtk.Label({label: "Display Desktop Button", xalign: 0});
+	let labelDisplayDesktopButton = new Gtk.Label({label: _("Display Desktop Button"), xalign: 0});
 	let valueDisplayDesktopButton = new Gtk.ComboBoxText();
-	valueDisplayDesktopButton.append_text("None");
-    valueDisplayDesktopButton.append_text("Default");
-    valueDisplayDesktopButton.append_text("GNOME");
-    valueDisplayDesktopButton.append_text("Dark");
+	valueDisplayDesktopButton.append_text(_("None"));
+    valueDisplayDesktopButton.append_text(_("Default"));
+    valueDisplayDesktopButton.append_text(_("GNOME"));
+    valueDisplayDesktopButton.append_text(_("Dark"));
     valueDisplayDesktopButton.set_active(this.settings.get_enum("display-desktop-button"));
 	valueDisplayDesktopButton.connect('changed', Lang.bind(this, this.changeDisplayDesktopButton, valueDisplayDesktopButton));
 
@@ -176,7 +195,7 @@ Prefs.prototype =
 
 
 	let hboxDisplayShowAppsButton = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelDisplayShowAppsButton = new Gtk.Label({label: "Display Show Applications Button", xalign: 0});
+	let labelDisplayShowAppsButton = new Gtk.Label({label: _("Display Show Applications Button"), xalign: 0});
 	let valueDisplayShowAppsButton = new Gtk.Switch({active: this.settings.get_boolean("display-showapps-button")});
 	valueDisplayShowAppsButton.connect('notify::active', Lang.bind(this, this.changeDisplayShowAppsButton));
 
@@ -187,7 +206,7 @@ Prefs.prototype =
 
 
 	let hboxDisplayOverviewButton = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL});
-	let labelDisplayOverviewButton = new Gtk.Label({label: "Display Activities Icon Button", xalign: 0});
+	let labelDisplayOverviewButton = new Gtk.Label({label: _("Display Activities Icon Button"), xalign: 0});
 	let valueDisplayOverviewButton = new Gtk.Switch({active: this.settings.get_boolean("display-overview-button")});
 	valueDisplayOverviewButton.connect('notify::active', Lang.bind(this, this.changeDisplayOverviewButton));
 
@@ -198,11 +217,11 @@ Prefs.prototype =
 
 
 	let hboxRemoveActivities = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelRemoveActivities = new Gtk.Label({label: "Remove HotCorner/Activities", xalign: 0});
+	let labelRemoveActivities = new Gtk.Label({label: _("Remove HotCorner/Activities"), xalign: 0});
 	let valueRemoveActivities = new Gtk.ComboBoxText();
-	valueRemoveActivities.append_text("None");
-    valueRemoveActivities.append_text("HotCorner");
-    valueRemoveActivities.append_text("Activities");
+	valueRemoveActivities.append_text(_("None"));
+    valueRemoveActivities.append_text(_("HotCorner"));
+    valueRemoveActivities.append_text(_("Activities"));
     valueRemoveActivities.set_active(this.settings.get_enum("remove-activities"));
 	valueRemoveActivities.connect('changed', Lang.bind(this, this.changeRemoveActivities, valueRemoveActivities));
 
@@ -213,7 +232,7 @@ Prefs.prototype =
 
 
 	let hboxRemoveDefaultApplicationMenu = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelRemoveDefaultApplicationMenu = new Gtk.Label({label: "Remove Default Application Menu", xalign: 0});
+	let labelRemoveDefaultApplicationMenu = new Gtk.Label({label: _("Remove Default Application Menu"), xalign: 0});
 	let valueRemoveDefaultApplicationMenu = new Gtk.Switch({active: this.settings.get_boolean("remove-default-application-menu")});
 	valueRemoveDefaultApplicationMenu.connect('notify::active', Lang.bind(this, this.changeRemoveDefaultApplicationMenu));
 
@@ -224,11 +243,11 @@ Prefs.prototype =
 
 
 	let hboxCloseButton = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelCloseButton = new Gtk.Label({label: "Close Task with Middle/Right Click", xalign: 0});
+	let labelCloseButton = new Gtk.Label({label: _("Close Task with Middle/Right Click"), xalign: 0});
 	let valueCloseButton = new Gtk.ComboBoxText();
-	valueCloseButton.append_text("None");
-    valueCloseButton.append_text("Middle Click");
-    valueCloseButton.append_text("Right Click");
+	valueCloseButton.append_text(_("None"));
+    valueCloseButton.append_text(_("Middle Click"));
+    valueCloseButton.append_text(_("Right Click"));
 	valueCloseButton.set_active(this.settings.get_enum("close-button"));
 	valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton, valueCloseButton));
 
@@ -239,12 +258,12 @@ Prefs.prototype =
 
 
 	let hboxActiveTaskStyle = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelActiveTaskStyle = new Gtk.Label({label: "Active Task Style", xalign: 0});
+	let labelActiveTaskStyle = new Gtk.Label({label: _("Active Task Style"), xalign: 0});
 	let valueActiveTaskStyle = new Gtk.ComboBoxText();
-	valueActiveTaskStyle.append_text("None");
-    valueActiveTaskStyle.append_text("Frame");
-    valueActiveTaskStyle.append_text("Opacity");
-    valueActiveTaskStyle.append_text("BG Color");
+	valueActiveTaskStyle.append_text(_("None"));
+    valueActiveTaskStyle.append_text(_("Frame"));
+    valueActiveTaskStyle.append_text(_("Opacity"));
+    valueActiveTaskStyle.append_text(_("BG Color"));
     valueActiveTaskStyle.set_active(this.settings.get_enum("active-task-style"));
 	valueActiveTaskStyle.connect('changed', Lang.bind(this, this.changeActiveTaskStyle, valueActiveTaskStyle));
 
@@ -255,7 +274,7 @@ Prefs.prototype =
 
 	
 	let hboxIconSize = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelIconSize = new Gtk.Label({label: "Icon Size ", xalign: 0});
+	let labelIconSize = new Gtk.Label({label: _("Icon Size "), xalign: 0});
 	let valueIconSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
 	let value2IconSize = new Gtk.SpinButton({adjustment: valueIconSize, snap_to_ticks: true});
 	value2IconSize.set_value(this.settings.get_int("icon-size"));
@@ -268,7 +287,7 @@ Prefs.prototype =
 
 
  	let hboxPanelPosition = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
- 	let labelPanelPosition = new Gtk.Label({label: "Position on Panel", xalign: 0});
+ 	let labelPanelPosition = new Gtk.Label({label: _("Position on Panel"), xalign: 0});
 	let valuePanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'back'})});
 	let value2PanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'forward'})});
 	valuePanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionLeft));
@@ -284,13 +303,13 @@ Prefs.prototype =
 	frame.add(label);
 	frame.add(vbox);
 
-	label = new Gtk.Label({ label: "\n<b>Preview</b>", use_markup: true, xalign: 0 });
+	label = new Gtk.Label({ label: _("\n<b>Preview</b>"), use_markup: true, xalign: 0 });
 	vbox = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, margin_left: 20 });
 
 
 
 	let hboxDisplayLabel = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelDisplayLabel = new Gtk.Label({label: "Display Label", xalign: 0});
+	let labelDisplayLabel = new Gtk.Label({label: _("Display Label"), xalign: 0});
 	let valueDisplayLabel = new Gtk.Switch({active: this.settings.get_boolean("display-label")});
 	valueDisplayLabel.connect('notify::active', Lang.bind(this, this.changeDisplayLabel));
 
@@ -301,7 +320,7 @@ Prefs.prototype =
 
 
 	let hboxDisplayThumbnail = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL});
-	let labelDisplayThumbnail = new Gtk.Label({label: "Display Thumbnail", xalign: 0});
+	let labelDisplayThumbnail = new Gtk.Label({label: _("Display Thumbnail"), xalign: 0});
 	let valueDisplayThumbnail = new Gtk.Switch({active: this.settings.get_boolean("display-thumbnail")});
 	valueDisplayThumbnail.connect('notify::active', Lang.bind(this, this.changeDisplayThumbnail));
 
@@ -312,7 +331,7 @@ Prefs.prototype =
 
 	
 	let hboxPreviewSize = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelPreviewSize = new Gtk.Label({label: "Preview Size ", xalign: 0});
+	let labelPreviewSize = new Gtk.Label({label: _("Preview Size "), xalign: 0});
 	let valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 50});
 	let value2PreviewSize = new Gtk.SpinButton({adjustment: valuePreviewSize, snap_to_ticks: true});
 	value2PreviewSize.set_value(this.settings.get_int("preview-size"));
@@ -326,7 +345,7 @@ Prefs.prototype =
 
 
 	let hboxPreviewDelay = new Gtk.Box({orientation: Gtk.Orientation.HORIZONTAL, margin_top: 5});
-	let labelPreviewDelay = new Gtk.Label({label: "Delay before Preview (milliseconds)", xalign: 0});
+	let labelPreviewDelay = new Gtk.Label({label: _("Delay before Preview (milliseconds)"), xalign: 0});
 	let valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 3000, step_increment: 250});
 	let value2PreviewDelay = new Gtk.SpinButton({adjustment: valuePreviewDelay, snap_to_ticks: true});
 	value2PreviewDelay.set_value(this.settings.get_int("preview-delay"));
