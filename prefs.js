@@ -78,14 +78,14 @@ Prefs.prototype =
         let labelAdjustments = new Gtk.Label({ label: "\n<b>Adjustments</b>", use_markup: true, xalign: 0});
         this.grid.attach(labelAdjustments, 1, 6, 1, 1);
 
-        let labelpanelPosition = new Gtk.Label({label: "Align Position", xalign: 0});
-        this.grid.attach(labelpanelPosition, 1, 7, 1, 1);
-        let valuepanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'back'})});
-        let value2panelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'forward'})});
-        valuepanelPosition.connect('clicked', Lang.bind(this, this.changepanelPositionLeft));
-        value2panelPosition.connect('clicked', Lang.bind(this, this.changepanelPositionRight));
-        this.grid.attach(valuepanelPosition, 4, 7, 1, 1);
-        this.grid.attach(value2panelPosition, 5, 7, 1, 1);
+        let labelPanelPosition = new Gtk.Label({label: "Align Position", xalign: 0});
+        this.grid.attach(labelPanelPosition, 1, 7, 1, 1);
+        let valuePanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'back'})});
+        let value2PanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'forward'})});
+        valuePanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionLeft));
+        value2PanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionRight));
+        this.grid.attach(valuePanelPosition, 4, 7, 1, 1);
+        this.grid.attach(value2PanelPosition, 5, 7, 1, 1);
 
         let labelIconSize = new Gtk.Label({label: "Icon Size [22]", xalign: 0});
         this.grid.attach(labelIconSize, 1, 8, 1, 1);
@@ -298,7 +298,7 @@ Prefs.prototype =
         this.settings.set_boolean("display-favorites", object.active);
     },
 
-    changepanelPositionLeft: function()
+    changePanelPositionLeft: function()
     {
         this.panelPosition = this.settings.get_int("panel-position");
         this.panelBox = this.settings.get_int("panel-box");
@@ -320,7 +320,7 @@ Prefs.prototype =
             this.settings.set_int("panel-position", this.panelPosition - 1);
     },
 
-    changepanelPositionRight: function()
+    changePanelPositionRight: function()
     {
         this.panelPosition = this.settings.get_int("panel-position");
         this.panelBox = this.settings.get_int("panel-box");
