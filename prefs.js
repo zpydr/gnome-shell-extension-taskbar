@@ -37,7 +37,7 @@ Prefs.prototype =
     {
         this.grid = new Gtk.Grid();
         this.grid.margin = this.grid.row_spacing = 10;
-        this.grid.column_spacing = 5;
+        this.grid.column_spacing = 2;
         
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
@@ -253,11 +253,17 @@ Prefs.prototype =
         this.valueAppearanceFive.connect('changed', Lang.bind(this, this.changeAppearanceFive));
         this.grid.attach(this.valueAppearanceFive, 1, 30, 1, 1);
 
-        let labelVersion = new Gtk.Label({label: "Version 21", xalign: 0});
-        this.grid.attach(labelVersion, 1, 32, 1, 1);
-        let resetButton = new Gtk.Button({ label: "RESET ALL", xalign: 0 });
+        let labelLink1 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "extensions.gnome.org",
+            uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
+        let resetButton = new Gtk.Button({label: "RESET ALL"});
         resetButton.connect('clicked', Lang.bind(this, this.reset));
         this.grid.attach(resetButton, 4, 32, 2, 1);
+        this.grid.attach(labelLink1, 1, 32, 1, 1);
+        let labelLink2 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "github.com",
+            uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
+        this.grid.attach(labelLink2, 1, 33, 1, 1);
+        let labelVersion = new Gtk.Label({label: "Version 21"});
+        this.grid.attach(labelVersion, 4, 33, 2, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
         this.grid.attach(labelSpace1, 0, 1, 1, 1);
@@ -270,7 +276,7 @@ Prefs.prototype =
         let labelSpace5 = new Gtk.Label({label: "\t", xalign: 0});
         this.grid.attach(labelSpace5, 0, 31, 1, 1);
         let labelSpace6 = new Gtk.Label({label: "\t", xalign: 0});
-        this.grid.attach(labelSpace6, 0, 33, 1, 1);
+        this.grid.attach(labelSpace6, 0, 34, 1, 1);
     },
 
     changeDisplayTasks: function(object, pspec)
