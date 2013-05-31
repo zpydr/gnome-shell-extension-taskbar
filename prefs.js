@@ -253,7 +253,7 @@ Prefs.prototype =
         this.valueAppearanceFive.connect('changed', Lang.bind(this, this.changeAppearanceFive));
         this.grid.attach(this.valueAppearanceFive, 1, 30, 1, 1);
 
-        let labelVersion = new Gtk.Label({label: "Version 20", xalign: 0});
+        let labelVersion = new Gtk.Label({label: "Version 21", xalign: 0});
         this.grid.attach(labelVersion, 1, 32, 1, 1);
         let resetButton = new Gtk.Button({ label: "RESET ALL", xalign: 0 });
         resetButton.connect('clicked', Lang.bind(this, this.reset));
