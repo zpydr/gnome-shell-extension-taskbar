@@ -1,7 +1,7 @@
 gnome-shell-extension-taskbar
 =============================
 
-GNOME Shell Extension TaskBar Version 21
+GNOME Shell Extension TaskBar Version 21 for GNOME 3.4 / 3.6 / 3.8
 
 Displays icons of running applications on the top panel.        
 Activate, minimize or close tasks with a simple click.          
