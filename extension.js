@@ -785,6 +785,8 @@ TaskBar.prototype =
             let labelNamePreview = new St.Label({ text: app.get_name(), style_class: "tkb-preview-name" });
             this.preview.add_actor(labelNamePreview);
             let title = window.get_title();
+            if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
+	            title = title.substr(0, 47) + "...";
             let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
             this.preview.add_actor(labelTitlePreview);
         }
