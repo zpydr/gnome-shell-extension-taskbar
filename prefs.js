@@ -286,13 +286,13 @@ Prefs.prototype =
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         let resetButton = new Gtk.Button({label: _("RESET ALL")});
         resetButton.connect('clicked', Lang.bind(this, this.reset));
-        this.grid.attach(resetButton, 4, 32, 2, 1);
+        this.grid.attach(resetButton, 3, 32, 3, 1);
         this.grid.attach(labelLink1, 1, 32, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
         this.grid.attach(labelLink2, 1, 33, 1, 1);
         let labelVersion = new Gtk.Label({label: _("Version")+" 21"});
-        this.grid.attach(labelVersion, 4, 33, 2, 1);
+        this.grid.attach(labelVersion, 3, 33, 3, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
         this.grid.attach(labelSpace1, 0, 1, 1, 1);
