@@ -210,14 +210,17 @@ TaskBar.prototype =
         }
 
         //Disconnect Setting Signals
-        this.settingSignals.forEach(
-            function(signal)
-            {
-                this.settings.disconnect(signal);
-            },
-            this
-        );
-        this.settingSignals = null;
+        if (this.settingSignals != null) 
+        {
+            this.settingSignals.forEach(
+                function(signal)
+                {
+                    this.settings.disconnect(signal);
+                },
+                this
+            );
+            this.settingSignals = null;
+        }
         
         //Hide current preview if necessary
         this.hidePreview();
@@ -455,17 +458,20 @@ TaskBar.prototype =
     {
         if (ShellVersion[1] === 4)
         {
-            this.appMenuActor = Main.panel._appMenu.actor;
-            if (this.settings.get_boolean("hide-default-application-menu"))
+            if (Main.panel._appMenu != null)
             {
-                let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
-                let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
-                xsettings.set_value('overrides', variant);
-                this.appMenuActor.hide();
-                this.hidingId = Main.overview.connect('hiding', function ()
+                this.appMenuActor = Main.panel._appMenu.actor;
+                if (this.settings.get_boolean("hide-default-application-menu"))
                 {
-                    Main.panel._appMenu.actor.hide();
-                });
+                    let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
+                    let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
+                    xsettings.set_value('overrides', variant);
+                    this.appMenuActor.hide();
+                    this.hidingId = Main.overview.connect('hiding', function ()
+                    {
+                        Main.panel._appMenu.actor.hide();
+                    });
+                }
             }
         }
         else
