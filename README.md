@@ -19,6 +19,6 @@ Thumbnail/label-preview
 Hide activities                 
 Disable hot corner              
 Hide default application menu - simultaneously integrates the menu into                         
-applications like empathy, nautilus, etc.
-German language support by jonnius
-Credit: Xes, flubshi, rogst
+applications like empathy, nautilus, etc.   
+German language support by jonnius    
+Credit: Xes, flubshi, rogst   
