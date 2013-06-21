@@ -23,3 +23,6 @@ applications like empathy, nautilus, etc.
 
 German language support by jonnius    
 Credit: Xes, flubshi, rogst   
+    
+    
+![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_12.png)
