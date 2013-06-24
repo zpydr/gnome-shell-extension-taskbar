@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-15 14:20+0200\n"
-"PO-Revision-Date: 2013-06-15 14:47+0100\n"
+"PO-Revision-Date: 2013-06-24 02:24+0100\n"
 "Last-Translator: Jonatan Zeidler <jonatan_zeidler@hotmail.de>\n"
 "Language-Team: German <jonatan_zeidler@gmx.de>\n"
 "Language: de\n"
@@ -24,27 +24,27 @@ msgstr "Komponenten"
 
 #: prefs.js:77
 msgid "Show Tasks"
-msgstr "Aktive Anwendungen anzeigen"
+msgstr "Aktive Anwendungen"
 
 #: prefs.js:83
 msgid "Show Desktop Button"
-msgstr "Schreibtisch-Knopf anzeigen"
+msgstr "Schreibtisch-Knopf"
 
 #: prefs.js:89
 msgid "Show Workspace Button"
-msgstr "Arbeitsflächen-Umschalter anzeigen"
+msgstr "Arbeitsflächen-Umschalter"
 
 #: prefs.js:95
 msgid "Show Apps/Overview Button"
-msgstr "Anwendungen/Übersicht-Schaltfläche anzeigen"
+msgstr "Schaltfläche für Anwendungen/Übersicht"
 
 #: prefs.js:101
 msgid "Show Favorites"
-msgstr "Favoriten anzeigen"
+msgstr "Favoriten"
 
 #: prefs.js:107
 msgid "Adjustments"
-msgstr "Anordnung"
+msgstr "Anpassung"
 
 #: prefs.js:110
 msgid "Align Position"
@@ -96,7 +96,7 @@ msgstr ""
 
 #: prefs.js:153
 msgid "Workspace Button Index"
-msgstr "Arbeitsflächen-Umschalter-Index"
+msgstr "Arbeitsflächen-Umschalter zeigt"
 
 #: prefs.js:156
 msgid "Index"
@@ -160,7 +160,7 @@ msgstr "Programmname anzeigen"
 
 #: prefs.js:201
 msgid "Show Tasks Thumbnail"
-msgstr "Vorschau anzeigen"
+msgstr "Vorschaubild anzeigen"
 
 #: prefs.js:207
 msgid "Show Favorites Label"
@@ -168,7 +168,7 @@ msgstr "Bei Favoriten Name anzeigen"
 
 #: prefs.js:213
 msgid "Thumbnail Size"
-msgstr "Vorschaugröße"
+msgstr "Vorschaubildgröße"
 
 #: prefs.js:221
 msgid "Preview Delay"
