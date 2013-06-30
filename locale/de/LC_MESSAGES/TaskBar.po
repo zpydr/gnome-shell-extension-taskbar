@@ -36,23 +36,23 @@ msgid "Components"
 msgstr "Komponenten"
 
 #: prefs.js:77
-msgid "Show Tasks"
+msgid "Tasks"
 msgstr "Aktive Anwendungen"
 
 #: prefs.js:83
-msgid "Show Desktop Button"
+msgid "Desktop Button"
 msgstr "Schreibtisch-Knopf"
 
 #: prefs.js:89
-msgid "Show Workspace Button"
+msgid "Workspace Button"
 msgstr "Arbeitsflächen-Umschalter"
 
 #: prefs.js:95
-msgid "Show Apps/Overview Button"
+msgid "Appview Button"
 msgstr "Schaltfläche für Anwendungen/Übersicht"
 
 #: prefs.js:101
-msgid "Show Favorites"
+msgid "Favorites"
 msgstr "Favoriten"
 
 #: prefs.js:107
@@ -121,8 +121,8 @@ msgstr "Index/Gesamt"
 
 #: prefs.js:162
 msgid ""
-"Show Apps/Overview\n"
-"Button L/R Click Toggle"
+"Appview Button\n"
+"L/R Click Toggle"
 msgstr ""
 "Anwendungen/Übersicht anzeigen\n"
 "Links-/Rechtsklick-Zuordnung"
@@ -168,15 +168,15 @@ msgid "Preview"
 msgstr "Vorschau"
 
 #: prefs.js:195
-msgid "Show Tasks Label"
+msgid "Tasks Label"
 msgstr "Programmname anzeigen"
 
 #: prefs.js:201
-msgid "Show Tasks Thumbnail"
+msgid "Tasks Thumbnail"
 msgstr "Vorschaubild anzeigen"
 
 #: prefs.js:207
-msgid "Show Favorites Label"
+msgid "Favorites Label"
 msgstr "Bei Favoriten Name anzeigen"
 
 #: prefs.js:213
@@ -212,7 +212,7 @@ msgid "Workspace Button"
 msgstr "Arbeitsflächen-Umschalter"
 
 #: prefs.js:239 prefs.js:249 prefs.js:259 prefs.js:269 prefs.js:279
-msgid "Show Apps Button"
+msgid "Appview Button"
 msgstr "Anwendungen-Schaltfläche"
 
 #: prefs.js:240 prefs.js:250 prefs.js:260 prefs.js:270 prefs.js:280
