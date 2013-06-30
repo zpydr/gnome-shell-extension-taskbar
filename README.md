@@ -1,10 +1,10 @@
 GNOME Shell Extension TaskBar Version 23 for GNOME 3.4 / 3.6 / 3.8  
 https://extensions.gnome.org/extension/584/taskbar/
         
-GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)
+GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/
 
-Displays icons of running applications on the top panel.        
+TaskBar displays icons of running applications on the top panel.        
 Activate, minimize or close tasks with a simple click.          
 TaskBar is a dock-like windows list on the top bar.
 
