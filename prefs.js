@@ -1,3 +1,21 @@
+//  GNOME Shell Extension TaskBar
+//  Copyright (C) 2013 by zpydr
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+//  zpydr@linuxwaves.com
+
 const Gtk = imports.gi.Gtk;
 const Lang = imports.lang;
 
@@ -291,7 +309,7 @@ Prefs.prototype =
         let labelLink2 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
         this.grid.attach(labelLink2, 1, 33, 1, 1);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 21"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 23"});
         this.grid.attach(labelVersion, 3, 33, 3, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
