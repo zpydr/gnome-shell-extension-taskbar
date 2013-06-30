@@ -35,11 +35,16 @@
     border: 1px;
 }
 
-.tkb-task-button:active-task
+.tkb-task-button:active-task-frame
 {
     border: 1px solid gray;
     border-radius: 5px;
-    background-image: url("images/tkb-button-highlight-wide.svg");
+    background-image: url("images/active-task-background.svg");
+}
+
+.tkb-task-button:active-task-no-frame
+{
+
 }
 
 .tkb-preview
