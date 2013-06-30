@@ -96,6 +96,11 @@
             <summary>Middle/Right Click to Close Task</summary>
             <description/>
         </key>
+        <key name="active-task-frame" type="b">
+            <default>true</default>
+            <summary>Active Task Frame</summary>
+            <description/>
+        </key>
         <key name="desktop-button-icon" enum="org.gnome.shell.extensions.TaskBar.desktop-button-icon-style">
             <default>'default'</default>
             <summary>Desktop Button Icon</summary>
