@@ -92,31 +92,31 @@ Prefs.prototype =
         let labelComponents = new Gtk.Label({ label: "\n<b>"+_("Components")+"</b>", use_markup: true, xalign: 0});
         this.grid.attach(labelComponents, 1, 0, 1, 1);
 
-        let labelDisplayTasks = new Gtk.Label({label: _("Show Tasks"), xalign: 0});
+        let labelDisplayTasks = new Gtk.Label({label: _("Tasks"), xalign: 0});
         this.grid.attach(labelDisplayTasks, 1, 1, 1, 1);
         this.valueDisplayTasks = new Gtk.Switch({active: this.settings.get_boolean("display-tasks")});
         this.valueDisplayTasks.connect('notify::active', Lang.bind(this, this.changeDisplayTasks));
         this.grid.attach(this.valueDisplayTasks, 4, 1, 2, 1);
 
-        let labelDisplayDesktopButton = new Gtk.Label({label: _("Show Desktop Button"), xalign: 0});
+        let labelDisplayDesktopButton = new Gtk.Label({label: _("Desktop Button"), xalign: 0});
         this.grid.attach(labelDisplayDesktopButton, 1, 2, 1, 1);
         this.valueDisplayDesktopButton = new Gtk.Switch({active: this.settings.get_boolean("display-desktop-button")});
         this.valueDisplayDesktopButton.connect('notify::active', Lang.bind(this, this.changeDisplayDesktopButton));
         this.grid.attach(this.valueDisplayDesktopButton, 4, 2, 2, 1);
 
-        let labelDisplayWorkspaceButton = new Gtk.Label({label: _("Show Workspace Button"), xalign: 0});
+        let labelDisplayWorkspaceButton = new Gtk.Label({label: _("Workspace Button"), xalign: 0});
         this.grid.attach(labelDisplayWorkspaceButton, 1, 3, 1, 1);
         this.valueDisplayWorkspaceButton = new Gtk.Switch({active: this.settings.get_boolean("display-workspace-button")});
         this.valueDisplayWorkspaceButton.connect('notify::active', Lang.bind(this, this.changeDisplayWorkspaceButton));
         this.grid.attach(this.valueDisplayWorkspaceButton, 4, 3, 2, 1);
 
-        let labelDisplayShowAppsButton = new Gtk.Label({label: _("Show Apps/Overview Button"), xalign: 0});
+        let labelDisplayShowAppsButton = new Gtk.Label({label: _("Appview Button"), xalign: 0});
         this.grid.attach(labelDisplayShowAppsButton, 1, 4, 1, 1);
         this.valueDisplayShowAppsButton = new Gtk.Switch({active: this.settings.get_boolean("display-showapps-button")});
         this.valueDisplayShowAppsButton.connect('notify::active', Lang.bind(this, this.changeDisplayShowAppsButton));
         this.grid.attach(this.valueDisplayShowAppsButton, 4, 4, 2, 1);
 
-        let labelDisplayFavorites = new Gtk.Label({label: _("Show Favorites"), xalign: 0});
+        let labelDisplayFavorites = new Gtk.Label({label: _("Favorites"), xalign: 0});
         this.grid.attach(labelDisplayFavorites, 1, 5, 1, 1);
         this.valueDisplayFavorites = new Gtk.Switch({active: this.settings.get_boolean("display-favorites")});
         this.valueDisplayFavorites.connect('notify::active', Lang.bind(this, this.changeDisplayFavorites));
@@ -177,7 +177,7 @@ Prefs.prototype =
         this.valueWorkspaceButtonIndex.connect('changed', Lang.bind(this, this.changeWorkspaceButtonIndex));
         this.grid.attach(this.valueWorkspaceButtonIndex, 3, 12, 3, 1);
 
-        let labelShowAppsButtonToggle = new Gtk.Label({label: _("Show Apps/Overview\nButton L/R Click Toggle"), xalign: 0});
+        let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nL/R Click Toggle"), xalign: 0});
         this.grid.attach(labelShowAppsButtonToggle, 1, 13, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
@@ -210,19 +210,19 @@ Prefs.prototype =
         let labelPreview = new Gtk.Label({ label: "\n<b>"+_("Preview")+"</b>", use_markup: true, xalign: 0 });
         this.grid.attach(labelPreview, 1, 18, 1, 1);
 
-        let labelDisplayLabel = new Gtk.Label({label: _("Show Tasks Label"), xalign: 0});
+        let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
         this.grid.attach(labelDisplayLabel, 1, 19, 1, 1);
         this.valueDisplayLabel = new Gtk.Switch({active: this.settings.get_boolean("display-label")});
         this.valueDisplayLabel.connect('notify::active', Lang.bind(this, this.changeDisplayLabel));
         this.grid.attach(this.valueDisplayLabel, 4, 19, 2, 1);
 
-        let labelDisplayThumbnail = new Gtk.Label({label: _("Show Tasks Thumbnail"), xalign: 0});
+        let labelDisplayThumbnail = new Gtk.Label({label: _("Tasks Thumbnail"), xalign: 0});
         this.grid.attach(labelDisplayThumbnail, 1, 20, 1, 1);
         this.valueDisplayThumbnail = new Gtk.Switch({active: this.settings.get_boolean("display-thumbnail")});
         this.valueDisplayThumbnail.connect('notify::active', Lang.bind(this, this.changeDisplayThumbnail));
         this.grid.attach(this.valueDisplayThumbnail, 4, 20, 2, 1);
 
-        let labelDisplayFavoritesLabel = new Gtk.Label({label: _("Show Favorites Label"), xalign: 0});
+        let labelDisplayFavoritesLabel = new Gtk.Label({label: _("Favorites Label"), xalign: 0});
         this.grid.attach(labelDisplayFavoritesLabel, 1, 21, 1, 1);
         this.valueDisplayFavoritesLabel = new Gtk.Switch({active: this.settings.get_boolean("display-favorites-label")});
         this.valueDisplayFavoritesLabel.connect('notify::active', Lang.bind(this, this.changeDisplayFavoritesLabel));
@@ -254,7 +254,7 @@ Prefs.prototype =
         this.valueAppearanceOne.append_text(_("Tasks"));
         this.valueAppearanceOne.append_text(_("Desktop Button"));
         this.valueAppearanceOne.append_text(_("Workspace Button"));
-        this.valueAppearanceOne.append_text(_("Show Apps Button"));
+        this.valueAppearanceOne.append_text(_("Appview Button"));
         this.valueAppearanceOne.append_text(_("Favorites"));
         this.valueAppearanceOne.set_active(this.settings.get_enum("appearance-one"));
         this.valueAppearanceOne.connect('changed', Lang.bind(this, this.changeAppearanceOne));
@@ -264,7 +264,7 @@ Prefs.prototype =
         this.valueAppearanceTwo.append_text(_("Tasks"));
         this.valueAppearanceTwo.append_text(_("Desktop Button"));
         this.valueAppearanceTwo.append_text(_("Workspace Button"));
-        this.valueAppearanceTwo.append_text(_("Show Apps Button"));
+        this.valueAppearanceTwo.append_text(_("Appview Button"));
         this.valueAppearanceTwo.append_text(_("Favorites"));
         this.valueAppearanceTwo.set_active(this.settings.get_enum("appearance-two"));
         this.valueAppearanceTwo.connect('changed', Lang.bind(this, this.changeAppearanceTwo));
@@ -274,7 +274,7 @@ Prefs.prototype =
         this.valueAppearanceThree.append_text(_("Tasks"));
         this.valueAppearanceThree.append_text(_("Desktop Button"));
         this.valueAppearanceThree.append_text(_("Workspace Button"));
-        this.valueAppearanceThree.append_text(_("Show Apps Button"));
+        this.valueAppearanceThree.append_text(_("Appview Button"));
         this.valueAppearanceThree.append_text(_("Favorites"));
         this.valueAppearanceThree.set_active(this.settings.get_enum("appearance-three"));
         this.valueAppearanceThree.connect('changed', Lang.bind(this, this.changeAppearanceThree));
@@ -284,7 +284,7 @@ Prefs.prototype =
         this.valueAppearanceFour.append_text(_("Tasks"));
         this.valueAppearanceFour.append_text(_("Desktop Button"));
         this.valueAppearanceFour.append_text(_("Workspace Button"));
-        this.valueAppearanceFour.append_text(_("Show Apps Button"));
+        this.valueAppearanceFour.append_text(_("Appview Button"));
         this.valueAppearanceFour.append_text(_("Favorites"));
         this.valueAppearanceFour.set_active(this.settings.get_enum("appearance-four"));
         this.valueAppearanceFour.connect('changed', Lang.bind(this, this.changeAppearanceFour));
@@ -294,7 +294,7 @@ Prefs.prototype =
         this.valueAppearanceFive.append_text(_("Tasks"));
         this.valueAppearanceFive.append_text(_("Desktop Button"));
         this.valueAppearanceFive.append_text(_("Workspace Button"));
-        this.valueAppearanceFive.append_text(_("Show Apps Button"));
+        this.valueAppearanceFive.append_text(_("Appview Button"));
         this.valueAppearanceFive.append_text(_("Favorites"));
         this.valueAppearanceFive.set_active(this.settings.get_enum("appearance-five"));
         this.valueAppearanceFive.connect('changed', Lang.bind(this, this.changeAppearanceFive));
