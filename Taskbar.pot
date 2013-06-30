@@ -35,23 +35,23 @@ msgid "Components"
 msgstr ""
 
 #: prefs.js:77
-msgid "Show Tasks"
+msgid "Tasks"
 msgstr ""
 
 #: prefs.js:83
-msgid "Show Desktop Button"
+msgid "Desktop Button"
 msgstr ""
 
 #: prefs.js:89
-msgid "Show Workspace Button"
+msgid "Workspace Button"
 msgstr ""
 
 #: prefs.js:95
-msgid "Show Apps/Overview Button"
+msgid "Appview Button"
 msgstr ""
 
 #: prefs.js:101
-msgid "Show Favorites"
+msgid "Favorites"
 msgstr ""
 
 #: prefs.js:107
@@ -118,8 +118,8 @@ msgstr ""
 
 #: prefs.js:162
 msgid ""
-"Show Apps/Overview\n"
-"Button L/R Click Toggle"
+"Appview Button\n"
+"L/R Click Toggle"
 msgstr ""
 
 #: prefs.js:165
@@ -157,15 +157,15 @@ msgid "Preview"
 msgstr ""
 
 #: prefs.js:195
-msgid "Show Tasks Label"
+msgid "Tasks Label"
 msgstr ""
 
 #: prefs.js:201
-msgid "Show Tasks Thumbnail"
+msgid "Tasks Thumbnail"
 msgstr ""
 
 #: prefs.js:207
-msgid "Show Favorites Label"
+msgid "Favorites Label"
 msgstr ""
 
 #: prefs.js:213
@@ -201,7 +201,7 @@ msgid "Workspace Button"
 msgstr ""
 
 #: prefs.js:239 prefs.js:249 prefs.js:259 prefs.js:269 prefs.js:279
-msgid "Show Apps Button"
+msgid "Appview Button"
 msgstr ""
 
 #: prefs.js:240 prefs.js:250 prefs.js:260 prefs.js:270 prefs.js:280
