@@ -121,6 +121,9 @@ TaskBar.prototype =
         //Hide Default Application Menu
         this.initHideDefaultAppMenu();
 
+        //Active Task Frame
+        this.activeTaskFrame();
+
         //Init Windows Manage Callbacks
         this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
 
@@ -162,6 +165,7 @@ TaskBar.prototype =
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-tasks", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
             this.settings.connect("changed::disable-hotcorner", Lang.bind(this, this.disableHotCorner)),
@@ -509,6 +513,15 @@ TaskBar.prototype =
         }
     },
 
+    //Active Task Frame
+    activeTaskFrame: function()
+    {
+        if (this.settings.get_boolean("active-task-frame"))
+            this.activeTask = "active-task-frame"
+        else
+            this.activeTask = "active-task-no-frame"
+    },
+
     //Click Events
     onClickShowAppsButton: function(button, pspec)
     {
@@ -597,7 +610,7 @@ TaskBar.prototype =
                     else
                     {
                         windowTask.minimize(global.get_current_time());
-                        buttonTask.remove_style_pseudo_class('active-task');
+                        buttonTask.remove_style_pseudo_class(this.activeTask);
                     }
                 },
                 this
@@ -624,16 +637,16 @@ TaskBar.prototype =
                         if (! windowTask.has_focus())
                         {
                             windowTask.activate(global.get_current_time());
-                            buttonTask.add_style_pseudo_class('active-task');
+                            buttonTask.add_style_pseudo_class(this.activeTask);
                         }
                         else if (! Main.overview.visible)
                         {
                             windowTask.minimize(global.get_current_time());
-                            buttonTask.remove_style_pseudo_class('active-task');
+                            buttonTask.remove_style_pseudo_class(this.activeTask);
                         }
                     }
                     else
-                        buttonTask.remove_style_pseudo_class('active-task');
+                        buttonTask.remove_style_pseudo_class(this.activeTask);
                 },
                 this
             );
@@ -686,9 +699,9 @@ TaskBar.prototype =
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
                     if (windowTask == window)
-                        buttonTask.add_style_pseudo_class('active-task');
+                        buttonTask.add_style_pseudo_class(this.activeTask);
                     else
-                        buttonTask.remove_style_pseudo_class('active-task');
+                        buttonTask.remove_style_pseudo_class(this.activeTask);
                 },
                 this
             );
@@ -723,7 +736,7 @@ TaskBar.prototype =
             buttonTask.connect("leave-event", Lang.bind(this, this.hidePreview))
         ];
         if (window.has_focus())
-            buttonTask.add_style_pseudo_class('active-task');
+            buttonTask.add_style_pseudo_class(this.activeTask);
         if (this.settings.get_boolean("display-tasks"))
             this.boxMainTasks.add_actor(buttonTask);
         this.tasksList.push([ window, buttonTask, signalsTask ]);
