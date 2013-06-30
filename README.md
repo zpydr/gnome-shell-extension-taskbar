@@ -12,7 +12,7 @@ TaskBar is a dock-like windows list on the top bar.
 Options:                        
 Desktop button - toggle desktop view                            
 Workspace button - switch workspaces Left/Right-click: cycle forward/backward                   
-Show Apps button - Leftclick: toggle appview / Rightclick: toggle overview                      
+Appview button - Leftclick: toggle appview / Rightclick: toggle overview                      
 Favorites - add from dash       
 Align position on the top panel                                 
 Icon size                       
