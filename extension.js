@@ -660,6 +660,26 @@ TaskBar.prototype =
             window.delete(global.get_current_time());
     },
 
+    //Switch Task on Hover
+    onHoverSwitchTask: function(button, window)
+    {
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                if ((windowTask == window) && (! windowTask.has_focus()))
+                {
+                    windowTask.activate(global.get_current_time());
+                    buttonTask.add_style_pseudo_class(this.activeTask);
+                }
+            },
+            this
+        );
+        this.desktopView = false;
+        if (Main.overview.visible)
+            Main.overview.hide();
+    },
+
     //Taskslist
     onWindowsListChanged: function(windowsList, type, window)
     {
@@ -799,6 +819,9 @@ TaskBar.prototype =
 
     showPreview: function(button, pspec, window)
     {
+        //Switch Task on Hover
+        if (this.settings.get_boolean("hover-switch-task"))
+            this.onHoverSwitchTask(button, window);
         //Hide current preview if necessary
         this.hidePreview();
         if ((this.settings.get_boolean("display-label")) | (this.settings.get_boolean("display-thumbnail")))
