@@ -15,7 +15,8 @@ Workspace button - switch workspaces Left/Right-click: cycle forward/backward
 Appview button - Leftclick: toggle appview / Rightclick: toggle overview                      
 Favorites - add from dash       
 Align position on the top panel                                 
-Icon size                       
+Icon size               
+**NEW** Switch tasks on hover              
 Thumbnail/label-preview         
 Hide activities                 
 Disable hot corner              
