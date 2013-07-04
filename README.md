@@ -23,7 +23,7 @@ Disable hot corner
 Hide default application menu - simultaneously integrates the menu into                         
 applications like empathy, nautilus, etc.   
         
-German language support by jonnius    
+**NEW** German language support by jonnius    
 Credit to Xes, flubshi, rogst   
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_12.png)
