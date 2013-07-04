@@ -101,6 +101,11 @@
             <summary>Active Task Frame</summary>
             <description/>
         </key>
+        <key name="hover-switch-task" type="b">
+            <default>false</default>
+            <summary>Switch Task on Hover</summary>
+            <description/>
+        </key>
         <key name="desktop-button-icon" enum="org.gnome.shell.extensions.TaskBar.desktop-button-icon-style">
             <default>'default'</default>
             <summary>Desktop Button Icon</summary>
