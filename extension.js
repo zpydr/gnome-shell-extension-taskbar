@@ -517,9 +517,9 @@ TaskBar.prototype =
     activeTaskFrame: function()
     {
         if (this.settings.get_boolean("active-task-frame"))
-            this.activeTask = "active-task-frame"
+            this.activeTask = "active-task-frame";
         else
-            this.activeTask = "active-task-no-frame"
+            this.activeTask = "active-task-no-frame";
     },
 
     //Click Events
