@@ -12,12 +12,12 @@ TaskBar is a dock-like windows list on the top bar.
 
 Options:                        
 Desktop button - toggle desktop view                            
-Workspace button - switch workspaces Left/Right-click: cycle forward/backward                   
+Workspace button - switch workspaces Left/Right-click: cycle forward/backwards                   
 Appview button - Leftclick: toggle appview / Rightclick: toggle overview                      
 Favorites - add from dash       
 Align position on the top panel                                 
 Icon size               
-**NEW** Switch tasks on hover              
+**NEW** Activate tasks on hover              
 Thumbnail/label-preview         
 Hide activities                 
 Disable hot corner              
