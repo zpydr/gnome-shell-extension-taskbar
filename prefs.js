@@ -158,7 +158,7 @@ Prefs.prototype =
         this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
         this.grid.attach(this.valueActiveTaskFrame, 4, 10, 2, 1);
 
-        let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Task on Hover"), xalign: 0});
+        let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
         this.grid.attach(labelHoverSwitchTask, 1, 11, 1, 1);
         this.valueHoverSwitchTask = new Gtk.Switch({active: this.settings.get_boolean("hover-switch-task")});
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
