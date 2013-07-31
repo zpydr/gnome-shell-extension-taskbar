@@ -28,7 +28,7 @@ applications like empathy, nautilus, etc.
 **NEW** German language support by jonnius    
 Credit to Xes, flubshi, rogst   
         
-![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_12.png)
+![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_14.png)
         
 GNOME Shell Extension TaskBar           
 Copyright (C) 2013 zpydr             
