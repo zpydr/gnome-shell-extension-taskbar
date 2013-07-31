@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  GNOME Shell Extension TaskBar
+  Copyright (C) 2013 zpydr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+  zpydr@linuxwaves.com
+-->
+<schemalist gettext-domain="gnome-shell-extensions-TaskBar">
+    <enum id="org.gnome.shell.extensions.TaskBar.close-button-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="middle"/>
+        <value value="2" nick="right"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.desktop-button-icon-style">
+        <value value="0" nick="default"/>
+        <value value="1" nick="gnome"/>
+        <value value="2" nick="dark"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
+        <value value="0" nick="index"/>
+        <value value="1" nick="total"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">
+        <value value="0" nick="leftclickappview"/>
+        <value value="1" nick="leftclickoverview"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.appearance-style">
+        <value value="0" nick="tasks"/>
+        <value value="1" nick="desktopbutton"/>
+        <value value="2" nick="workspacebutton"/>
+        <value value="3" nick="showappsbutton"/>
+        <value value="4" nick="favorites"/>
+    </enum>
+    <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
+        <key name="display-tasks" type="b">
+            <default>true</default>
+            <summary>Display Tasks</summary>
+            <description/>
+        </key>
+        <key name="display-desktop-button" type="b">
+            <default>true</default>
+            <summary>Display Desktop Button</summary>
+            <description/>
+        </key>
+        <key name="display-workspace-button" type="b">
+            <default>true</default>
+            <summary>Display Workspace Button</summary>
+            <description/>
+        </key>
+        <key name="display-showapps-button" type="b">
+            <default>true</default>
+            <summary>Display Show Applications Button</summary>
+            <description/>
+        </key>
+        <key name="display-favorites" type="b">
+            <default>false</default>
+            <summary>Display Favorites</summary>
+            <description/>
+        </key>
+        <key name="panel-position" type="i">
+            <default>1</default>
+            <summary>Panel Position</summary>
+            <description/>
+        </key>
+        <key name="panel-box" type="i">
+            <default>1</default>
+            <summary>Panel Box Left=1 Middle=2 Right=3</summary>
+            <description/>
+        </key>
+        <key name="position-max-right" type="i">
+            <default>9</default>
+            <summary>Max Right Position</summary>
+            <description/>
+        </key>
+        <key name="bottom-panel" type="b">
+            <default>false</default>
+            <summary>Bottom Panel</summary>
+            <description/>
+        </key>
+        <key name="icon-size" type="i">
+            <range min="1" max="96"/>
+            <default>22</default>
+            <summary>Icon Size</summary>
+            <description/>
+        </key>
+        <key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-style">
+            <default>'off'</default>
+            <summary>Middle/Right Click to Close Task</summary>
+            <description/>
+        </key>
+        <key name="active-task-frame" type="b">
+            <default>true</default>
+            <summary>Active Task Frame</summary>
+            <description/>
+        </key>
+        <key name="hover-switch-task" type="b">
+            <default>false</default>
+            <summary>Switch Task on Hover</summary>
+            <description/>
+        </key>
+        <key name="desktop-button-icon" enum="org.gnome.shell.extensions.TaskBar.desktop-button-icon-style">
+            <default>'default'</default>
+            <summary>Desktop Button Icon</summary>
+            <description/>
+        </key>
+        <key name="desktop-button-right-click" type="b">
+            <default>true</default>
+            <summary>Desktop Button Right Click</summary>
+            <description/>
+        </key>
+        <key name="workspace-button-index" enum="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
+            <default>'index'</default>
+            <summary>Workspace Button Index</summary>
+            <description/>
+        </key>
+        <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">
+            <default>'leftclickappview'</default>
+            <summary>ShowApps Button Toggle</summary>
+            <description/>
+        </key>
+        <key name="hide-activities" type="b">
+            <default>false</default>
+            <summary>Hide Activities</summary>
+            <description/>
+        </key>
+        <key name="disable-hotcorner" type="b">
+            <default>false</default>
+            <summary>Disable Hot Corner</summary>
+            <description/>
+        </key>
+        <key name="hide-default-application-menu" type="b">
+            <default>false</default>
+            <summary>Hide Default Application Menu</summary>
+            <description/>
+        </key>
+        <key name="display-label" type="b">
+            <default>true</default>
+            <summary>Display Label</summary>
+            <description/>
+        </key>
+        <key name="display-thumbnail" type="b">
+            <default>true</default>
+            <summary>Display Thumbnail</summary>
+            <description/>
+        </key>
+        <key name="display-favorites-label" type="b">
+            <default>true</default>
+            <summary>Display Favorites Label</summary>
+            <description/>
+        </key>
+        <key name="preview-size" type="i">
+            <range min="100" max="1000"/>
+            <default>350</default>
+            <summary>Preview Size</summary>
+            <description/>
+        </key>
+        <key name="preview-delay" type="i">
+            <range min="0" max="3000"/>
+            <default>500</default>
+            <summary>Delay before Preview</summary>
+            <description/>
+        </key>
+        <key name="appearance-one" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
+            <default>'favorites'</default>
+            <summary>Appearance One</summary>
+            <description/>
+        </key>
+        <key name="appearance-two" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
+            <default>'showappsbutton'</default>
+            <summary>Appearance Two</summary>
+            <description/>
+        </key>
+        <key name="appearance-three" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
+            <default>'workspacebutton'</default>
+            <summary>Appearance Three</summary>
+            <description/>
+        </key>
+        <key name="appearance-four" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
+            <default>'desktopbutton'</default>
+            <summary>Appearance Four</summary>
+            <description/>
+        </key>
+        <key name="appearance-five" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
+            <default>'tasks'</default>
+            <summary>Appearance Five</summary>
+            <description/>
+        </key>
+    </schema>
+</schemalist>
