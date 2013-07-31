@@ -371,43 +371,49 @@ Prefs.prototype =
 
     changePanelPositionLeft: function()
     {
-        this.panelPosition = this.settings.get_int("panel-position");
-        this.panelBox = this.settings.get_int("panel-box");
-        this.positionMaxRight = this.settings.get_int("position-max-right");
-        if (this.panelPosition == 0)
+        if (! this.settings.get_boolean("bottom-panel"))
         {
-            if (this.panelBox > 1)
+            this.panelPosition = this.settings.get_int("panel-position");
+            this.panelBox = this.settings.get_int("panel-box");
+            this.positionMaxRight = this.settings.get_int("position-max-right");
+            if (this.panelPosition == 0)
             {
-                this.signalMax = this.settings.connect("changed::position-max-right", Lang.bind(this, function()
+                if (this.panelBox > 1)
                 {
-                    this.settings.disconnect(this.signalMax);
-                    this.panelPosition = this.settings.get_int("position-max-right");
-                    this.settings.set_int("panel-position", this.panelPosition);
-                })),
-                this.settings.set_int("panel-box", this.panelBox - 1);
+                    this.signalMax = this.settings.connect("changed::position-max-right", Lang.bind(this, function()
+                    {
+                        this.settings.disconnect(this.signalMax);
+                        this.panelPosition = this.settings.get_int("position-max-right");
+                        this.settings.set_int("panel-position", this.panelPosition);
+                    })),
+                    this.settings.set_int("panel-box", this.panelBox - 1);
+                }
             }
+            else
+                this.settings.set_int("panel-position", this.panelPosition - 1);
         }
-        else
-            this.settings.set_int("panel-position", this.panelPosition - 1);
     },
 
     changePanelPositionRight: function()
     {
-        this.panelPosition = this.settings.get_int("panel-position");
-        this.panelBox = this.settings.get_int("panel-box");
-        this.positionMaxRight = this.settings.get_int("position-max-right");
-        if (this.panelPosition >= this.positionMaxRight)
+        if (! this.settings.get_boolean("bottom-panel"))
         {
-            if (this.panelBox < 3)
+            this.panelPosition = this.settings.get_int("panel-position");
+            this.panelBox = this.settings.get_int("panel-box");
+            this.positionMaxRight = this.settings.get_int("position-max-right");
+            if (this.panelPosition >= this.positionMaxRight)
             {
-                this.settings.set_int("panel-box", this.panelBox + 1);
-                this.settings.set_int("panel-position", 0);
+                if (this.panelBox < 3)
+                {
+                    this.settings.set_int("panel-box", this.panelBox + 1);
+                    this.settings.set_int("panel-position", 0);
+                }
+                else
+                    this.settings.set_int("panel-position", this.positionMaxRight);
             }
             else
-                this.settings.set_int("panel-position", this.positionMaxRight);
+                this.settings.set_int("panel-position", this.panelPosition + 1);
         }
-        else
-            this.settings.set_int("panel-position", this.panelPosition + 1);
     },
 
     changeBottomPanel: function(object, pspec)
