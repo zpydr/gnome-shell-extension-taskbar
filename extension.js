@@ -533,13 +533,17 @@ TaskBar.prototype =
             this.activeTask = "active-task-no-frame";
     },
 
+    //Bottom Panel
     bottomPanel: function()
     {
         this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
                                         name: 'bottomPanel',
                                         reactive: true });
         this.bottomPanelActor.add_actor(this.boxMain);
-        Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
+        if (ShellVersion[1] === 4)
+            Main.layoutManager.addChrome(this.bottomPanelActor);
+        else
+            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
         let primary = Main.layoutManager.primaryMonitor;
         let h = null;
         if (this.iconSize < 19)
