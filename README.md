@@ -6,9 +6,9 @@ https://github.com/zpydr/gnome-shell-extension-taskbar/
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/
 
-TaskBar displays icons of running applications on the top panel.        
+TaskBar displays icons of running applications on the top panel or alternatively on a new bottom panel.        
 Activate, minimize or close tasks with a simple click.          
-TaskBar is a dock-like windows list on the top bar.
+TaskBar is a dock-like windows list on the top/bottom bar.
 
 Options:                        
 Desktop button - toggle desktop view                            
@@ -16,7 +16,7 @@ Workspace button - switch workspaces Left/Right-click: cycle forward/backwards
 Appview button - Leftclick: toggle appview / Rightclick: toggle overview                      
 Favorites - add from dash       
 Align position on the top panel                                 
-**NEW** Bottom Panel            
+**NEW** Bottom panel            
 Icon size               
 **NEW** Activate tasks on hover              
 Thumbnail/label-preview         
