@@ -327,7 +327,7 @@ Prefs.prototype =
         let labelLink2 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
         this.grid.attach(labelLink2, 1, 36, 1, 1);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 25"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 26"});
         this.grid.attach(labelVersion, 3, 36, 3, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
