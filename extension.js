@@ -541,7 +541,7 @@ TaskBar.prototype =
                                         reactive: true });
         this.bottomPanelActor.add_actor(this.boxMain);
         if (ShellVersion[1] === 4)
-            Main.layoutManager.addChrome(this.bottomPanelActor);
+            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         else
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
         let primary = Main.layoutManager.primaryMonitor;
