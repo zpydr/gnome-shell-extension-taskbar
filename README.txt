@@ -1,6 +1,9 @@
-GNOME Shell Extension TaskBar Version 25 for GNOME 3.4 / 3.6 / 3.8
+GNOME Shell Extension TaskBar Version 26 for GNOME 3.4 / 3.6 / 3.8
 https://extensions.gnome.org/extension/584/taskbar/
 https://github.com/zpydr/gnome-shell-extension-taskbar/
+https://launchpad.net/gnome-shell-extension-taskbar/
+Ubuntu PPA Repository
+https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/
 
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)
 https://www.gnu.org/licenses/
