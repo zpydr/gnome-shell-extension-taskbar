@@ -9,7 +9,7 @@ https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/
                 
-**![Please Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X5X6MLVCWL3MY)**                
+**![Please Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S)**                
                 
 TaskBar displays icons of running applications on the top panel or alternatively on a new bottom panel.        
 Activate, minimize or close tasks with a simple click.          
@@ -53,6 +53,6 @@ along with this program. If not, see https://www.gnu.org/licenses/.
                 
 zpydr@linuxwaves.com            
                 
-![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)
-
-**![Please Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X5X6MLVCWL3MY)**
+![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
+                
+**![Please Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S)**
