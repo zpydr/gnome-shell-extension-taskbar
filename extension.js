@@ -108,7 +108,7 @@ TaskBar.prototype =
         this.initHideActivities();
 
         //Disable Hot Corner
-        if (ShellVersion[1] === 8)
+        if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
         {
             //Extended Barriers Support
             this.barriers = global.display.supports_extended_barriers();
@@ -192,7 +192,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.show();
             else if (ShellVersion[1] === 6)
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if (ShellVersion[1] === 8)
+            else if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -205,6 +205,8 @@ TaskBar.prototype =
         if (this.settings.get_boolean("hide-default-application-menu"))
         {
             this.appMenuActor.show();
+            if (ShellVersion[1] === 10)
+                Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
 
@@ -445,7 +447,7 @@ TaskBar.prototype =
                     Main.panel._activitiesButton._hotCorner._corner.show();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if (ShellVersion[1] === 8)
+            else if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -463,7 +465,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.hide();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.hide();
-            else if (ShellVersion[1] === 8)
+            else if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = NOHOTCORNER;
@@ -483,6 +485,8 @@ TaskBar.prototype =
             let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
             xsettings.set_value('overrides', variant);
             this.appMenuActor.show();
+            if (ShellVersion[1] === 10)
+                Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
     },
@@ -520,6 +524,13 @@ TaskBar.prototype =
                 {
                     Main.panel.statusArea.appMenu.actor.hide();
                 });
+                if (ShellVersion[1] === 10)
+                {
+	            this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
+                    {
+                        Main.panel.statusArea.appMenu.actor.hide();
+                    });
+                }
             }
         }
     },
@@ -583,6 +594,27 @@ TaskBar.prototype =
                     Main.overview.show();
                 else if (Main.overview._viewSelector._activeTab.id == 'applications')
                     Main.overview._viewSelector.switchTab('windows');
+                else
+                    Main.overview.hide();
+            }
+        }
+        else if (ShellVersion[1] === 10)
+        {
+            if (numButton == this.leftbutton) //Left Button
+            {
+                if (! Main.overview.visible)
+                    Main.overview.show();
+                if (! Main.overview.viewSelector._showAppsButton.checked)
+                    Main.overview.viewSelector._showAppsButton.checked = true;
+                else
+                    Main.overview.hide();
+            }
+            else if (numButton == this.rightbutton) //Right Button
+            {
+                if (! Main.overview.visible)
+                    Main.overview.show();
+                else if (Main.overview.viewSelector._showAppsButton.checked)
+                    Main.overview.viewSelector._showAppsButton.checked = false;
                 else
                     Main.overview.hide();
             }
