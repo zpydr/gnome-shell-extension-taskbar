@@ -1,9 +1,9 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 26 for GNOME 3.4 / 3.6 / 3.8**  
+**GNOME Shell Extension TaskBar Version 27 for GNOME 3.4 / 3.6 / 3.8 / 3.10**  
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
 https://launchpad.net/gnome-shell-extension-taskbar/            
-**NEW** Ubuntu PPA Repository                   
+Ubuntu PPA Repository                   
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                        
         
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
@@ -21,16 +21,16 @@ Workspace button - switch workspaces Left/Right-click: cycle forward/backwards
 Appview button - Leftclick: toggle appview / Rightclick: toggle overview                      
 Favorites - add from dash       
 Align position on the top panel                                 
-**NEW** Bottom panel            
+Bottom panel            
 Icon size               
-**NEW** Activate tasks on hover              
+Activate tasks on hover              
 Thumbnail/label-preview         
 Hide activities                 
 Disable hot corner              
 Hide default application menu - simultaneously integrates the menu into                         
 applications like empathy, nautilus, etc.   
         
-**NEW** German language support by jonnius    
+German language support by jonnius    
 Credit to Xes, flubshi, rogst   
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_14.png)
