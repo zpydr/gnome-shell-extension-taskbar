@@ -1,4 +1,4 @@
-GNOME Shell Extension TaskBar Version 27 for GNOME 3.4 / 3.6 / 3.8 / 3.10
+GNOME Shell Extension TaskBar Version 28 for GNOME 3.4 / 3.6 / 3.8 / 3.10
 https://extensions.gnome.org/extension/584/taskbar/
 https://github.com/zpydr/gnome-shell-extension-taskbar/
 https://launchpad.net/gnome-shell-extension-taskbar/
@@ -28,7 +28,7 @@ Hide default application menu - simultaneously integrates the menu into
 applications like empathy, nautilus, etc.
 
 German language support by jonnius
-Credit to Xes, flubshi, rogst
+Credit to Xes, flubshi, rogst, Baltix
 
 GNOME Shell Extension TaskBar
 Copyright (C) 2013 zpydr
