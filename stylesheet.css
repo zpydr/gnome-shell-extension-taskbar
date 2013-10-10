@@ -23,18 +23,6 @@
     background-color: black;
 }
 
-.message-button {
-    min-width: 2.5em;
-    font-weight: bold;
-    color: #ccc;
-    transition-duration: 100;
-}
-
-.message-button:hover {
-    color: white;
-    text-shadow: black 0px 2px 2px;
-}
-
 .tkb-box
 {
 
