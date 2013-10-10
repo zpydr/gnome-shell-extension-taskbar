@@ -560,9 +560,18 @@ TaskBar.prototype =
     bottomPanel: function(h)
     {
         this.fullscreenChangedId = null;
-        this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
-                                        name: 'bottomPanel',
-                                        reactive: false });
+        if ( ShellVersion[1] === 4)
+        {
+            this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
+                                                       name: 'bottomPanel',
+                                                       reactive: false });
+        }
+        else
+        {
+            this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
+                                                       name: 'bottomPanel',
+                                                       reactive: true });
+        }
         this.bottomPanelActor.add_actor(this.boxMain);
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
