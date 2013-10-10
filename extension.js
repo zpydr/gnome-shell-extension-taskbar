@@ -15,6 +15,10 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 //  zpydr@linuxwaves.com
+//
+// Message button feature added by Jurgis Pralgauskis <jurgis.pralgauskis@gmail.com>
+// MessageButton function copied from Bottom_Panel extension: 
+// http://intgat.tigress.co.uk/rmy/extensions/index.html
 
 const Clutter = imports.gi.Clutter;
 const Gio = imports.gi.Gio;
@@ -27,6 +31,7 @@ const St = imports.gi.St;
 const AppFavorites = imports.ui.appFavorites;
 const Layout = imports.ui.layout;
 const Main = imports.ui.main;
+const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
@@ -46,6 +51,39 @@ function init(extensionMeta)
 {
     return new TaskBar(extensionMeta, schema);
 }
+
+function MessageButton() {
+    this._init();
+}
+
+MessageButton.prototype = {
+    _init: function() {
+        this.actor = new St.Button({ name: 'messageButton',
+                                     style_class: 'message-button',
+                                     reactive: true });
+        let text = ' [!] ';
+        if ( Main.messageTray._summary.get_children().length == 0 ) {
+            text = ' ';
+        }
+        this.messageLabel = new St.Label({ text: text });
+        this.actor.set_child(this.messageLabel);
+        this.actor.connect('clicked', Lang.bind(this, function() {
+            Main.messageTray.toggleState();
+        }));
+
+        this.actorAddedId = Main.messageTray._summary.connect('actor-added',
+            Lang.bind(this, function() {
+                this.messageLabel.set_text(' [!] ');
+        }));
+
+        this.actorRemovedId = Main.messageTray._summary.connect('actor-removed',
+            Lang.bind(this, function() {
+                if ( Main.messageTray._summary.get_children().length == 0 ) {
+                    this.messageLabel.set_text(' ');
+                }
+        }));
+    }
+};
 
 function TaskBar(extensionMeta, schema)
 {
@@ -69,6 +107,17 @@ TaskBar.prototype =
     {
         this.extensionMeta = extensionMeta;
         this.schema = schema;
+
+    MessageTray.MessageTray.prototype.toggleState = function() {
+        if (this._summaryState == MessageTray.State.SHOWN) {
+            this._pointerInSummary = false;
+        }
+        else {
+            this._pointerInSummary = true;
+        }
+        this._updateState();
+    };
+
     },
 
     onParamChanged: function()
@@ -246,7 +295,7 @@ TaskBar.prototype =
             );
             this.settingSignals = null;
         }
-        
+
         //Hide current preview if necessary
         this.hidePreview();
 
@@ -551,6 +600,13 @@ TaskBar.prototype =
                                         name: 'bottomPanel',
                                         reactive: true });
         this.bottomPanelActor.add_actor(this.boxMain);
+
+    //Added empty_space cause I don't know how to put MessageButton on the right
+        this.empty_space = new St.BoxLayout({ name: 'emptySpace',  style_class: 'tkb-box' })
+        this.bottomPanelActor.add(this.empty_space, { expand: true });
+        this.messageButton = new MessageButton();
+        this.bottomPanelActor.add(this.messageButton.actor);
+
         if (ShellVersion[1] === 4)
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         else
