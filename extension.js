@@ -267,7 +267,7 @@ TaskBar.prototype =
             this.bottomPanelActor.destroy();
         this.bottomPanelActor = null;
         Main.messageTray.actor.set_anchor_point(0, 0);
-        if (! ShellVersion[1] === 4)
+        if (ShellVersion[1] !== 4)
             Main.messageTray._notificationWidget.set_anchor_point(0, 0);
         if (this.newBox != null)
             this.newBox.remove_child(this.boxMain);
@@ -560,7 +560,7 @@ TaskBar.prototype =
     bottomPanel: function(h)
     {
         this.fullscreenChangedId = null;
-        if ( ShellVersion[1] === 4)
+        if (ShellVersion[1] === 4)
         {
             this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
                                                        name: 'bottomPanel',
@@ -583,7 +583,7 @@ TaskBar.prototype =
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-h);
         this.bottomPanelActor.set_size(primary.width, -1);
         Main.messageTray.actor.set_anchor_point(0, h);
-        if (! ShellVersion[1] === 4)
+        if (ShellVersion[1] !== 4)
             Main.messageTray._notificationWidget.set_anchor_point(0, h);
         if (ShellVersion[1] === 10)
         {
@@ -607,14 +607,14 @@ TaskBar.prototype =
         {
             this.bottomPanelActor.hide();
             Main.messageTray.actor.set_anchor_point(0, 0);
-            if (! ShellVersion[1] === 4)            
+            if (ShellVersion[1] !== 4)            
                 Main.messageTray._notificationWidget.set_anchor_point(0, 0);
         }
         else
         {
             this.bottomPanelActor.show();
             Main.messageTray.actor.set_anchor_point(0, h);
-            if (! ShellVersion[1] === 4)
+            if (ShellVersion[1] !== 4)
                 Main.messageTray._notificationWidget.set_anchor_point(0, h);
             this.onParamChanged();
         }
