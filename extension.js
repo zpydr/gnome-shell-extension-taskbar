@@ -397,8 +397,7 @@ TaskBar.prototype =
             this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
             let signalWorkspace = this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
             this.buttonWorkspace.set_child(this.labelWorkspace);
-            let kjjj = 33;
-            let boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box", style: 'font-size: kjjj' });
+            let boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             boxWorkspace.add_actor(this.buttonWorkspace);
             this.boxMainWorkspaceButton.add_actor(boxWorkspace);
         }
