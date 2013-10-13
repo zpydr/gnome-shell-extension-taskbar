@@ -175,7 +175,8 @@ TaskBar.prototype =
             this.settings.connect("changed::appearance-three", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::appearance-four", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::appearance-five", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged))
+            this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged))
         ];
     },
 
@@ -396,7 +397,8 @@ TaskBar.prototype =
             this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
             let signalWorkspace = this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
             this.buttonWorkspace.set_child(this.labelWorkspace);
-            let boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            let kjjj = 33;
+            let boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box", style: 'font-size: kjjj' });
             boxWorkspace.add_actor(this.buttonWorkspace);
             this.boxMainWorkspaceButton.add_actor(boxWorkspace);
         }
@@ -559,6 +561,7 @@ TaskBar.prototype =
     //Bottom Panel
     bottomPanel: function(h)
     {
+        this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.fullscreenChangedId = null;
         if (ShellVersion[1] === 4)
         {
@@ -576,10 +579,7 @@ TaskBar.prototype =
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
         let h = null;
-        if (this.iconSize < 16)
-            h = 20;
-        else
-            h = (this.iconSize + 4);
+        h = (this.iconSize + this.bottomPanelVertical + 4);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-h);
         this.bottomPanelActor.set_size(primary.width, -1);
         Main.messageTray.actor.set_anchor_point(0, h);
