@@ -602,7 +602,7 @@ Prefs.prototype =
         this.settings.set_int("panel-box", 1);
         this.settings.set_int("position-max-right", 9);
         this.valueBottomPanel.set_active(false);
-        this.settings.set_int("bottom-panel-vertical", 0);
+        this.valueBottomPanelVertical.set_value(0);        
         this.valueIconSize.set_value(22);
         this.valueCloseButton.set_active(0);
         this.valueActiveTaskFrame.set_active(true);
