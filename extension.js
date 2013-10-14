@@ -82,6 +82,9 @@ TaskBar.prototype =
         let settings = new Lib.Settings(this.schema);
         this.settings = settings.getSettings();
 
+        //First Start
+        this.firstStart();
+
         //Add TaskBar
         this.iconSize = this.settings.get_int('icon-size');
         this.boxMain = new St.BoxLayout({ style_class: "tkb-box" });
@@ -275,6 +278,16 @@ TaskBar.prototype =
         this.boxMain = null;
         this.newBox = null;
         this.cleanTasksList();
+    },
+
+    //First Start
+    firstStart: function()
+    {
+        if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode == 'user'))
+        {
+            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+            this.settings.set_boolean("first-start", false);
+        }
     },
 
     //Align Position

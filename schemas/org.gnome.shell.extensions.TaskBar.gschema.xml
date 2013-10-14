@@ -45,6 +45,11 @@
         <value value="4" nick="favorites"/>
     </enum>
     <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
+        <key name="first-start" type="b">
+            <default>true</default>
+            <summary>Display Preferences on the first start of TaskBar</summary>
+            <description/>
+        </key>
         <key name="display-tasks" type="b">
             <default>true</default>
             <summary>Display Tasks</summary>
