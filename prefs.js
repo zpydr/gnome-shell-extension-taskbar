@@ -725,12 +725,10 @@ Prefs.prototype =
         this.valueCloseButton.set_active(0);
         this.valueActiveTaskFrame.set_active(true);
         this.valueHoverSwitchTask.set_active(false);
-        this.settings.set_string("desktop-button-icon", DESKTOPICONPATH);
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueFontSize.set_value(16);
         this.valueShowAppsButtonToggle.set_active(0);
-        this.settings.set_string("appview-button-icon", APPVIEWICONPATH);
         this.valueHideActivities.set_active(false);
         this.valueDisableHotCorner.set_active(false);
         this.valueHideDefaultApplicationMenu.set_active(false);
