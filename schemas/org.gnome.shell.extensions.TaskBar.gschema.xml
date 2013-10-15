@@ -24,11 +24,6 @@
         <value value="1" nick="middle"/>
         <value value="2" nick="right"/>
     </enum>
-    <enum id="org.gnome.shell.extensions.TaskBar.desktop-button-icon-style">
-        <value value="0" nick="default"/>
-        <value value="1" nick="gnome"/>
-        <value value="2" nick="dark"/>
-    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
         <value value="0" nick="index"/>
         <value value="1" nick="total"/>
@@ -122,8 +117,8 @@
             <summary>Switch Task on Hover</summary>
             <description/>
         </key>
-        <key name="desktop-button-icon" enum="org.gnome.shell.extensions.TaskBar.desktop-button-icon-style">
-            <default>'default'</default>
+        <key name="desktop-button-icon" type="s">
+            <default>'/images/desktop-default.png'</default>
             <summary>Desktop Button Icon</summary>
             <description/>
         </key>
@@ -137,9 +132,20 @@
             <summary>Workspace Button Index</summary>
             <description/>
         </key>
+        <key name="font-size" type="i">
+            <range min="1" max="96"/>
+            <default>16</default>
+            <summary>Icon Size</summary>
+            <description/>
+        </key>
         <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">
             <default>'leftclickappview'</default>
             <summary>ShowApps Button Toggle</summary>
+            <description/>
+        </key>
+        <key name="appview-button-icon" type="s">
+            <default>'/images/view-grid-symbolic.svg'</default>
+            <summary>Desktop Button Icon</summary>
             <description/>
         </key>
         <key name="hide-activities" type="b">

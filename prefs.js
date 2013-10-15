@@ -16,6 +16,11 @@
 //
 //  zpydr@linuxwaves.com
 
+const Gio = imports.gi.Gio;
+const GLib = imports.gi.GLib;
+const Gdk = imports.gi.Gdk;
+const GdkPixbuf = imports.gi.GdkPixbuf;
+const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 const Lang = imports.lang;
 
@@ -29,6 +34,9 @@ const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
+
+const DESKTOPICONPATH = Extension.path + '/images/desktop-default.png';
+const APPVIEWICONPATH = Extension.path + '/images/view-grid-symbolic.svg';
 
 function init()
 {
@@ -85,7 +93,7 @@ Prefs.prototype =
         this.grid = new Gtk.Grid();
         this.grid.margin = this.grid.row_spacing = 10;
         this.grid.column_spacing = 2;
-        
+
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
 
@@ -140,7 +148,7 @@ Prefs.prototype =
         this.valueBottomPanel.connect('notify::active', Lang.bind(this, this.changeBottomPanel));
         this.grid.attach(this.valueBottomPanel, 4, 8, 2, 1);
 
-        let labelBottomPanelVertical = new Gtk.Label({label: _("Vertical Position\nof Bottom Panel")+" [0]", xalign: 0});
+        let labelBottomPanelVertical = new Gtk.Label({label: _("Vertical Adjustment\nBottom Panel")+" [0]", xalign: 0});
         this.grid.attach(labelBottomPanelVertical, 1, 9, 1, 1);
         this.valueBottomPanelVertical = new Gtk.Adjustment({lower: -20, upper: 20, step_increment: 1});
         this.value2BottomPanelVertical = new Gtk.SpinButton({adjustment: this.valueBottomPanelVertical, snap_to_ticks: true});
@@ -178,103 +186,125 @@ Prefs.prototype =
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
         this.grid.attach(this.valueHoverSwitchTask, 4, 13, 2, 1);
 
+        let labelButtons = new Gtk.Label({ label: "\n<b>"+_("Buttons")+"</b>", use_markup: true, xalign: 0});
+        this.grid.attach(labelButtons, 1, 14, 1, 1);
+
         let labelDesktopButtonIcon = new Gtk.Label({label: _("Desktop Button Icon"), xalign: 0});
-        this.grid.attach(labelDesktopButtonIcon, 1, 14, 1, 1);
-        this.valueDesktopButtonIcon = new Gtk.ComboBoxText();
-        this.valueDesktopButtonIcon.append_text(_("Default"));
-        this.valueDesktopButtonIcon.append_text(_("GNOME"));
-        this.valueDesktopButtonIcon.append_text(_("Dark"));
-        this.valueDesktopButtonIcon.set_active(this.settings.get_enum("desktop-button-icon"));
-        this.valueDesktopButtonIcon.connect('changed', Lang.bind(this, this.changeDesktopButtonIcon));
-        this.grid.attach(this.valueDesktopButtonIcon, 3, 14, 3, 1);
+        this.grid.attach(labelDesktopButtonIcon, 1, 15, 1, 1);
+        this.valueDesktopButtonIcon = new Gtk.Image();
+        this.desktopIconFilename = this.settings.get_string("desktop-button-icon");
+        this.loadDesktopIcon();
+        this.valueDesktopButtonIcon2 = new Gtk.Button({image: this.valueDesktopButtonIcon});
+        this.valueDesktopButtonIcon2.connect('clicked', Lang.bind(this, this.changeDesktopButtonIcon));
+        this.grid.attach(this.valueDesktopButtonIcon2, 4, 15, 2, 1);
 
         let labelDesktopButtonRightClick = new Gtk.Label({label: _("Desktop Button Right Click\nopens Preferences (this)"), xalign: 0});
-        this.grid.attach(labelDesktopButtonRightClick, 1, 15, 1, 1);
+        this.grid.attach(labelDesktopButtonRightClick, 1, 16, 1, 1);
         this.valueDesktopButtonRightClick = new Gtk.Switch({active: this.settings.get_boolean("desktop-button-right-click")});
         this.valueDesktopButtonRightClick.connect('notify::active', Lang.bind(this, this.changeDesktopButtonRightClick));
-        this.grid.attach(this.valueDesktopButtonRightClick, 4, 15, 2, 1);
+        this.grid.attach(this.valueDesktopButtonRightClick, 4, 16, 2, 1);
 
         let labelWorkspaceButtonIndex = new Gtk.Label({label: _("Workspace Button Index"), xalign: 0});
-        this.grid.attach(labelWorkspaceButtonIndex, 1, 16, 1, 1);
+        this.grid.attach(labelWorkspaceButtonIndex, 1, 17, 1, 1);
         this.valueWorkspaceButtonIndex = new Gtk.ComboBoxText();
         this.valueWorkspaceButtonIndex.append_text(_("Index"));
         this.valueWorkspaceButtonIndex.append_text(_("Index/Total"));
         this.valueWorkspaceButtonIndex.set_active(this.settings.get_enum("workspace-button-index"));
         this.valueWorkspaceButtonIndex.connect('changed', Lang.bind(this, this.changeWorkspaceButtonIndex));
-        this.grid.attach(this.valueWorkspaceButtonIndex, 3, 16, 3, 1);
+        this.grid.attach(this.valueWorkspaceButtonIndex, 3, 17, 3, 1);
+
+        let labelFontSize = new Gtk.Label({label: _("Workspace Button\nFont Size")+" [16]", xalign: 0});
+        this.grid.attach(labelFontSize, 1, 18, 1, 1);
+        this.valueFontSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
+        let value2FontSize = new Gtk.SpinButton({adjustment: this.valueFontSize, snap_to_ticks: true});
+        value2FontSize.set_value(this.settings.get_int("font-size"));
+        value2FontSize.connect("value-changed", Lang.bind(this, this.changeFontSize));
+        this.grid.attach(value2FontSize, 3, 18, 3, 1);
 
         let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nL/R Click Toggle"), xalign: 0});
-        this.grid.attach(labelShowAppsButtonToggle, 1, 17, 1, 1);
+        this.grid.attach(labelShowAppsButtonToggle, 1, 19, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
         this.valueShowAppsButtonToggle.append_text(_("L Overview\nR Appview"));
         this.valueShowAppsButtonToggle.set_active(this.settings.get_enum("showapps-button-toggle"));
         this.valueShowAppsButtonToggle.connect('changed', Lang.bind(this, this.changeShowAppsButtonToggle));
-        this.grid.attach(this.valueShowAppsButtonToggle, 3, 17, 3, 1);
+        this.grid.attach(this.valueShowAppsButtonToggle, 3, 19, 3, 1);
+
+        let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
+        this.grid.attach(labelAppviewButtonIcon, 1, 20, 1, 1);
+        this.valueAppviewButtonIcon = new Gtk.Image();
+        this.appviewIconFilename = this.settings.get_string("appview-button-icon");
+        this.loadAppviewIcon();
+        this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
+        this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
+        this.grid.attach(this.valueAppviewButtonIcon2, 4, 20, 2, 1);
+
+        let labelMisc = new Gtk.Label({ label: "\n<b>"+_("Misc")+"</b>", use_markup: true, xalign: 0});
+        this.grid.attach(labelMisc, 1, 21, 1, 1);
 
         let labelHideActivities = new Gtk.Label({label: _("Hide Activities")+" *", xalign: 0});
-        this.grid.attach(labelHideActivities, 1, 18, 1, 1);
+        this.grid.attach(labelHideActivities, 1, 22, 1, 1);
         this.valueHideActivities = new Gtk.Switch({active: this.settings.get_boolean("hide-activities")});
         this.valueHideActivities.connect('notify::active', Lang.bind(this, this.changeHideActivities));
-        this.grid.attach(this.valueHideActivities, 4, 18, 2, 1);
+        this.grid.attach(this.valueHideActivities, 4, 22, 2, 1);
 
         let labelDisableHotCorner = new Gtk.Label({label: _("Disable Hot Corner")+" *", xalign: 0});
-        this.grid.attach(labelDisableHotCorner, 1, 19, 1, 1);
+        this.grid.attach(labelDisableHotCorner, 1, 23, 1, 1);
         this.valueDisableHotCorner = new Gtk.Switch({active: this.settings.get_boolean("disable-hotcorner")});
         this.valueDisableHotCorner.connect('notify::active', Lang.bind(this, this.changeDisableHotCorner));
-        this.grid.attach(this.valueDisableHotCorner, 4, 19, 2, 1);
+        this.grid.attach(this.valueDisableHotCorner, 4, 23, 2, 1);
 
         let labelHideDefaultApplicationMenu = new Gtk.Label({label: _("Hide Default App Menu")+" *", xalign: 0});
-        this.grid.attach(labelHideDefaultApplicationMenu, 1, 20, 1, 1);
+        this.grid.attach(labelHideDefaultApplicationMenu, 1, 24, 1, 1);
         this.valueHideDefaultApplicationMenu = new Gtk.Switch({active: this.settings.get_boolean("hide-default-application-menu")});
         this.valueHideDefaultApplicationMenu.connect('notify::active', Lang.bind(this, this.changeHideDefaultApplicationMenu));
-        this.grid.attach(this.valueHideDefaultApplicationMenu, 4, 20, 2, 1);
+        this.grid.attach(this.valueHideDefaultApplicationMenu, 4, 24, 2, 1);
 
         let labelWarning = new Gtk.Label({ label: "* "+_("Possible conflict\nwith other extensions"), use_markup: true, xalign: 0 });
-        this.grid.attach(labelWarning, 1, 21, 1, 1);
+        this.grid.attach(labelWarning, 1, 25, 1, 1);
 
         let labelPreview = new Gtk.Label({ label: "\n<b>"+_("Preview")+"</b>", use_markup: true, xalign: 0 });
-        this.grid.attach(labelPreview, 1, 22, 1, 1);
+        this.grid.attach(labelPreview, 1, 26, 1, 1);
 
         let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
-        this.grid.attach(labelDisplayLabel, 1, 23, 1, 1);
+        this.grid.attach(labelDisplayLabel, 1, 27, 1, 1);
         this.valueDisplayLabel = new Gtk.Switch({active: this.settings.get_boolean("display-label")});
         this.valueDisplayLabel.connect('notify::active', Lang.bind(this, this.changeDisplayLabel));
-        this.grid.attach(this.valueDisplayLabel, 4, 23, 2, 1);
+        this.grid.attach(this.valueDisplayLabel, 4, 27, 2, 1);
 
         let labelDisplayThumbnail = new Gtk.Label({label: _("Tasks Thumbnail"), xalign: 0});
-        this.grid.attach(labelDisplayThumbnail, 1, 24, 1, 1);
+        this.grid.attach(labelDisplayThumbnail, 1, 28, 1, 1);
         this.valueDisplayThumbnail = new Gtk.Switch({active: this.settings.get_boolean("display-thumbnail")});
         this.valueDisplayThumbnail.connect('notify::active', Lang.bind(this, this.changeDisplayThumbnail));
-        this.grid.attach(this.valueDisplayThumbnail, 4, 24, 2, 1);
+        this.grid.attach(this.valueDisplayThumbnail, 4, 28, 2, 1);
 
         let labelDisplayFavoritesLabel = new Gtk.Label({label: _("Favorites Label"), xalign: 0});
-        this.grid.attach(labelDisplayFavoritesLabel, 1, 25, 1, 1);
+        this.grid.attach(labelDisplayFavoritesLabel, 1, 29, 1, 1);
         this.valueDisplayFavoritesLabel = new Gtk.Switch({active: this.settings.get_boolean("display-favorites-label")});
         this.valueDisplayFavoritesLabel.connect('notify::active', Lang.bind(this, this.changeDisplayFavoritesLabel));
-        this.grid.attach(this.valueDisplayFavoritesLabel, 4, 25, 2, 1);
+        this.grid.attach(this.valueDisplayFavoritesLabel, 4, 29, 2, 1);
 
         let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" [350]", xalign: 0});
-        this.grid.attach(labelPreviewSize, 1, 26, 1, 1);
+        this.grid.attach(labelPreviewSize, 1, 30, 1, 1);
         this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 50});
         let value2PreviewSize = new Gtk.SpinButton({adjustment: this.valuePreviewSize, snap_to_ticks: true});
         value2PreviewSize.set_value(this.settings.get_int("preview-size"));
         value2PreviewSize.connect("value-changed", Lang.bind(this, this.changePreviewSize));
-        this.grid.attach(value2PreviewSize, 3, 26, 3, 1);
+        this.grid.attach(value2PreviewSize, 3, 30, 3, 1);
 
         let labelPreviewDelay = new Gtk.Label({label: _("Preview Delay")+" [500] "+_("(ms)"), xalign: 0});
-        this.grid.attach(labelPreviewDelay, 1, 27, 2, 1);
+        this.grid.attach(labelPreviewDelay, 1, 31, 2, 1);
         this.valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 3000, step_increment: 250});
         let value2PreviewDelay = new Gtk.SpinButton({adjustment: this.valuePreviewDelay, snap_to_ticks: true});
         value2PreviewDelay.set_value(this.settings.get_int("preview-delay"));
         value2PreviewDelay.connect("value-changed", Lang.bind(this, this.changePreviewDelay));
-        this.grid.attach(value2PreviewDelay, 3, 27, 3, 1);
+        this.grid.attach(value2PreviewDelay, 3, 31, 3, 1);
 
         let labelAppearance = new Gtk.Label({ label: "\n<b>"+_("Appearance")+"</b>", use_markup: true, xalign: 0 });
-        this.grid.attach(labelAppearance, 1, 28, 1, 1);
+        this.grid.attach(labelAppearance, 1, 32, 1, 1);
 
         let labelLeftToRight = new Gtk.Label({ label: _("From Left to Right"), use_markup: true, xalign: 0 });
-        this.grid.attach(labelLeftToRight, 1, 29, 1, 1);
+        this.grid.attach(labelLeftToRight, 1, 33, 1, 1);
 
         this.valueAppearanceOne = new Gtk.ComboBoxText();
         this.valueAppearanceOne.append_text(_("Tasks"));
@@ -284,7 +314,7 @@ Prefs.prototype =
         this.valueAppearanceOne.append_text(_("Favorites"));
         this.valueAppearanceOne.set_active(this.settings.get_enum("appearance-one"));
         this.valueAppearanceOne.connect('changed', Lang.bind(this, this.changeAppearanceOne));
-        this.grid.attach(this.valueAppearanceOne, 1, 30, 1, 1);
+        this.grid.attach(this.valueAppearanceOne, 1, 34, 1, 1);
 
         this.valueAppearanceTwo = new Gtk.ComboBoxText();
         this.valueAppearanceTwo.append_text(_("Tasks"));
@@ -294,7 +324,7 @@ Prefs.prototype =
         this.valueAppearanceTwo.append_text(_("Favorites"));
         this.valueAppearanceTwo.set_active(this.settings.get_enum("appearance-two"));
         this.valueAppearanceTwo.connect('changed', Lang.bind(this, this.changeAppearanceTwo));
-        this.grid.attach(this.valueAppearanceTwo, 1, 31, 1, 1);
+        this.grid.attach(this.valueAppearanceTwo, 1, 35, 1, 1);
 
         this.valueAppearanceThree = new Gtk.ComboBoxText();
         this.valueAppearanceThree.append_text(_("Tasks"));
@@ -304,7 +334,7 @@ Prefs.prototype =
         this.valueAppearanceThree.append_text(_("Favorites"));
         this.valueAppearanceThree.set_active(this.settings.get_enum("appearance-three"));
         this.valueAppearanceThree.connect('changed', Lang.bind(this, this.changeAppearanceThree));
-        this.grid.attach(this.valueAppearanceThree, 1, 32, 1, 1);
+        this.grid.attach(this.valueAppearanceThree, 1, 36, 1, 1);
 
         this.valueAppearanceFour = new Gtk.ComboBoxText();
         this.valueAppearanceFour.append_text(_("Tasks"));
@@ -314,7 +344,7 @@ Prefs.prototype =
         this.valueAppearanceFour.append_text(_("Favorites"));
         this.valueAppearanceFour.set_active(this.settings.get_enum("appearance-four"));
         this.valueAppearanceFour.connect('changed', Lang.bind(this, this.changeAppearanceFour));
-        this.grid.attach(this.valueAppearanceFour, 1, 33, 1, 1);
+        this.grid.attach(this.valueAppearanceFour, 1, 37, 1, 1);
 
         this.valueAppearanceFive = new Gtk.ComboBoxText();
         this.valueAppearanceFive.append_text(_("Tasks"));
@@ -324,19 +354,19 @@ Prefs.prototype =
         this.valueAppearanceFive.append_text(_("Favorites"));
         this.valueAppearanceFive.set_active(this.settings.get_enum("appearance-five"));
         this.valueAppearanceFive.connect('changed', Lang.bind(this, this.changeAppearanceFive));
-        this.grid.attach(this.valueAppearanceFive, 1, 34, 1, 1);
+        this.grid.attach(this.valueAppearanceFive, 1, 38, 1, 1);
 
         let labelLink1 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         let resetButton = new Gtk.Button({label: _("RESET ALL")});
         resetButton.connect('clicked', Lang.bind(this, this.reset));
-        this.grid.attach(resetButton, 3, 36, 3, 1);
-        this.grid.attach(labelLink1, 1, 36, 1, 1);
+        this.grid.attach(resetButton, 3, 40, 3, 1);
+        this.grid.attach(labelLink1, 1, 40, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
-        this.grid.attach(labelLink2, 1, 37, 1, 1);
+        this.grid.attach(labelLink2, 1, 41, 1, 1);
         let labelVersion = new Gtk.Label({label: _("Version")+" 29"});
-        this.grid.attach(labelVersion, 3, 37, 3, 1);
+        this.grid.attach(labelVersion, 3, 41, 3, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
         this.grid.attach(labelSpace1, 0, 1, 1, 1);
@@ -347,9 +377,9 @@ Prefs.prototype =
         let labelSpace4 = new Gtk.Label({label: "\t", xalign: 0});
         this.grid.attach(labelSpace4, 6, 1, 1, 1);
         let labelSpace5 = new Gtk.Label({label: "\t", xalign: 0});
-        this.grid.attach(labelSpace5, 0, 35, 1, 1);
+        this.grid.attach(labelSpace5, 0, 39, 1, 1);
         let labelSpace6 = new Gtk.Label({label: "\t", xalign: 0});
-        this.grid.attach(labelSpace6, 0, 38, 1, 1);
+        this.grid.attach(labelSpace6, 0, 42, 1, 1);
     },
 
     changeDisplayTasks: function(object, pspec)
@@ -457,9 +487,48 @@ Prefs.prototype =
         this.settings.set_boolean("hover-switch-task", object.active);
     },
 
-    changeDesktopButtonIcon: function(object)
+    changeDesktopButtonIcon: function()
     {
-        this.settings.set_enum("desktop-button-icon", this.valueDesktopButtonIcon.get_active());
+        let iconPath = this.settings.get_string("desktop-button-icon");
+        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences Choose Icon"), action: Gtk.FileChooserAction.OPEN });
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        dialog.set_filename(iconPath);
+        let filter = new Gtk.FileFilter();
+        filter.set_name(_("Images"));
+        filter.add_pattern("*.png");
+        filter.add_pattern("*.jpg");
+        filter.add_pattern("*.gif");
+        filter.add_pattern("*.svg");
+        filter.add_pattern("*.ico");
+        dialog.add_filter(filter);
+        let response = dialog.run();
+        if(response == -3)
+        {
+            this.desktopIconFilename = dialog.get_filename();
+            if (this.desktopIconFilename != iconPath)
+            {
+                iconPath = this.desktopIconFilename;
+                this.loadDesktopIcon();
+            }
+        }
+        dialog.destroy();
+    },
+
+    loadDesktopIcon: function()
+    {
+        let pixbuf;
+        try
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.desktopIconFilename, 24, 24, null);
+            this.settings.set_string("desktop-button-icon", this.desktopIconFilename);
+        }
+        catch (e)
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(DESKTOPICONPATH, 24, 24, null);
+            this.settings.set_string("desktop-button-icon", DESKTOPICONPATH);
+        }
+        this.valueDesktopButtonIcon.set_from_pixbuf(pixbuf);
     },
 
     changeDesktopButtonRightClick: function(object, pspec)
@@ -472,9 +541,58 @@ Prefs.prototype =
         this.settings.set_enum("workspace-button-index", this.valueWorkspaceButtonIndex.get_active());
     },
 
+    changeFontSize: function(object)
+    {
+        this.settings.set_int("font-size", this.valueFontSize.get_value());
+    },
+
     changeShowAppsButtonToggle: function(object)
     {
         this.settings.set_enum("showapps-button-toggle", this.valueShowAppsButtonToggle.get_active());
+    },
+
+    changeAppviewButtonIcon: function()
+    {
+        let iconPath = this.settings.get_string("appview-button-icon");
+        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences Choose Icon"), action: Gtk.FileChooserAction.OPEN });
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        dialog.set_filename(iconPath);
+        let filter = new Gtk.FileFilter();
+        filter.set_name(_("Images"));
+        filter.add_pattern("*.png");
+        filter.add_pattern("*.jpg");
+        filter.add_pattern("*.gif");
+        filter.add_pattern("*.svg");
+        filter.add_pattern("*.ico");
+        dialog.add_filter(filter);
+        let response = dialog.run();
+        if(response == -3)
+        {
+            this.appviewIconFilename = dialog.get_filename();
+            if (this.appviewIconFilename != iconPath)
+            {
+                iconPath = this.appviewIconFilename;
+                this.loadAppviewIcon();
+            }
+        }
+        dialog.destroy();
+    },
+
+    loadAppviewIcon: function()
+    {
+        let pixbuf;
+        try
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.appviewIconFilename, 24, 24, null);
+            this.settings.set_string("appview-button-icon", this.appviewIconFilename);
+        }
+        catch (e)
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(APPVIEWICONPATH, 24, 24, null);
+            this.settings.set_string("appview-button-icon", APPVIEWICONPATH);
+        }
+        this.valueAppviewButtonIcon.set_from_pixbuf(pixbuf);
     },
 
     changeHideActivities: function(object, pspec)
@@ -607,10 +725,12 @@ Prefs.prototype =
         this.valueCloseButton.set_active(0);
         this.valueActiveTaskFrame.set_active(true);
         this.valueHoverSwitchTask.set_active(false);
-        this.valueDesktopButtonIcon.set_active(0);
+        this.settings.set_string("desktop-button-icon", DESKTOPICONPATH);
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
+        this.valueFontSize.set_value(16);
         this.valueShowAppsButtonToggle.set_active(0);
+        this.settings.set_string("appview-button-icon", APPVIEWICONPATH);
         this.valueHideActivities.set_active(false);
         this.valueDisableHotCorner.set_active(false);
         this.valueHideDefaultApplicationMenu.set_active(false);
@@ -625,6 +745,18 @@ Prefs.prototype =
         this.settings.set_enum("appearance-four", "1");
         this.settings.set_enum("appearance-five", "0");
         this.setActive();
+    },
+
+    loadIcon: function(path) {
+        let pixbuf;
+        try {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, 24, 24, null);
+        } catch (e) {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(DEFAULTDESKTOPICONPATH, 24, 24, null);
+            this.settings.set_string("desktop-button-icon", DEFAULTDESKTOPICONPATH);
+            this.iconPath = DEFAULTDESKTOPICONPATH;
+        }
+        this.valueDesktopButtonIcon.set_from_pixbuf(pixbuf);
     },
 
     scrollWindowPrefs: function()

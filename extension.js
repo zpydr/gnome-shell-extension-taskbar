@@ -160,6 +160,7 @@ TaskBar.prototype =
         this.settingSignals =
         [
             this.settings.connect("changed::icon-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::font-size", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::panel-box", Lang.bind(this, this.onBoxChanged)),
             this.settings.connect("changed::panel-position", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-favorites", Lang.bind(this, this.onParamChanged)),
@@ -168,6 +169,7 @@ TaskBar.prototype =
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-tasks", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
@@ -367,12 +369,13 @@ TaskBar.prototype =
         }
     },
 
-    //Add Show Applications Button
+    //Add Appview Button
     addShowAppsButton: function()
     {
         if (this.settings.get_boolean("display-showapps-button"))
         {
-            this.showAppsIcon = Gio.icon_new_for_string(this.extensionMeta.path + '/images/view-grid-symbolic.svg');
+            let iconPath = this.settings.get_string("appview-button-icon");
+            this.showAppsIcon = Gio.icon_new_for_string(iconPath);
             this.iconShowApps = new St.Icon(
             {
                 gicon: this.showAppsIcon,
@@ -407,6 +410,8 @@ TaskBar.prototype =
                 this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
             else if (this.settings.get_enum("workspace-button-index") == 0)
                 this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
+            this.fontSize = this.settings.get_int('font-size');
+            this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
             this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
             let signalWorkspace = this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
             this.buttonWorkspace.set_child(this.labelWorkspace);
@@ -419,15 +424,10 @@ TaskBar.prototype =
     //Add Desktop Button
     addDesktopButton: function()
     {
-        if (this.settings.get_enum("desktop-button-icon") == 0)
-            this.iconpath = '/images/desktop-default.png';
-        else if (this.settings.get_enum("desktop-button-icon") == 1)
-            this.iconpath = '/images/desktop-gnome.png';
-        else if (this.settings.get_enum("desktop-button-icon") == 2)
-            this.iconpath = '/images/desktop-dark.png';
         if (this.settings.get_boolean("display-desktop-button"))
         {
-            this.desktopButtonIcon = Gio.icon_new_for_string(this.extensionMeta.path + this.iconpath);
+            let iconPath = this.settings.get_string("desktop-button-icon");
+            this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
             let iconDesktop = new St.Icon(
             {
                 gicon: this.desktopButtonIcon,
