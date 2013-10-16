@@ -239,28 +239,28 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.grid.attach(this.valueAppviewButtonIcon2, 4, 20, 2, 1);
 
-        let labelMisc = new Gtk.Label({ label: "\n<b>"+_("Misc")+"</b>", use_markup: true, xalign: 0});
+        let labelMisc = new Gtk.Label({ label: "\n<b>"+_("Misc *")+"</b>", use_markup: true, xalign: 0});
         this.grid.attach(labelMisc, 1, 21, 1, 1);
 
-        let labelHideActivities = new Gtk.Label({label: _("Hide Activities")+" *", xalign: 0});
+        let labelHideActivities = new Gtk.Label({label: _("Hide Activities"), xalign: 0});
         this.grid.attach(labelHideActivities, 1, 22, 1, 1);
         this.valueHideActivities = new Gtk.Switch({active: this.settings.get_boolean("hide-activities")});
         this.valueHideActivities.connect('notify::active', Lang.bind(this, this.changeHideActivities));
         this.grid.attach(this.valueHideActivities, 4, 22, 2, 1);
 
-        let labelDisableHotCorner = new Gtk.Label({label: _("Disable Hot Corner")+" *", xalign: 0});
+        let labelDisableHotCorner = new Gtk.Label({label: _("Disable Hot Corner"), xalign: 0});
         this.grid.attach(labelDisableHotCorner, 1, 23, 1, 1);
         this.valueDisableHotCorner = new Gtk.Switch({active: this.settings.get_boolean("disable-hotcorner")});
         this.valueDisableHotCorner.connect('notify::active', Lang.bind(this, this.changeDisableHotCorner));
         this.grid.attach(this.valueDisableHotCorner, 4, 23, 2, 1);
 
-        let labelHideDefaultApplicationMenu = new Gtk.Label({label: _("Hide Default App Menu")+" *", xalign: 0});
+        let labelHideDefaultApplicationMenu = new Gtk.Label({label: _("Hide Default App Menu"), xalign: 0});
         this.grid.attach(labelHideDefaultApplicationMenu, 1, 24, 1, 1);
         this.valueHideDefaultApplicationMenu = new Gtk.Switch({active: this.settings.get_boolean("hide-default-application-menu")});
         this.valueHideDefaultApplicationMenu.connect('notify::active', Lang.bind(this, this.changeHideDefaultApplicationMenu));
         this.grid.attach(this.valueHideDefaultApplicationMenu, 4, 24, 2, 1);
 
-        let labelWarning = new Gtk.Label({ label: "* "+_("Possible conflict\nwith other extensions"), use_markup: true, xalign: 0 });
+        let labelWarning = new Gtk.Label({ label: "<b>* </b>"+_("Possible conflict\nwith other extensions"), use_markup: true, xalign: 0 });
         this.grid.attach(labelWarning, 1, 25, 1, 1);
 
         let labelPreview = new Gtk.Label({ label: "\n<b>"+_("Preview")+"</b>", use_markup: true, xalign: 0 });
@@ -490,9 +490,10 @@ Prefs.prototype =
     changeDesktopButtonIcon: function()
     {
         let iconPath = this.settings.get_string("desktop-button-icon");
-        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences Choose Icon"), action: Gtk.FileChooserAction.OPEN });
+        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Desktop Button Icon"), action: Gtk.FileChooserAction.OPEN });
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
         dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        dialog.add_button("RESET", Gtk.ResponseType.OK);
         dialog.set_filename(iconPath);
         let filter = new Gtk.FileFilter();
         filter.set_name(_("Images"));
@@ -511,6 +512,11 @@ Prefs.prototype =
                 iconPath = this.desktopIconFilename;
                 this.loadDesktopIcon();
             }
+        }
+        if(response == -5)
+        {
+            this.desktopIconFilename = DESKTOPICONPATH;
+            this.loadDesktopIcon();
         }
         dialog.destroy();
     },
@@ -554,9 +560,10 @@ Prefs.prototype =
     changeAppviewButtonIcon: function()
     {
         let iconPath = this.settings.get_string("appview-button-icon");
-        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences Choose Icon"), action: Gtk.FileChooserAction.OPEN });
+        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Appview Button Icon"), action: Gtk.FileChooserAction.OPEN });
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
         dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        dialog.add_button("RESET", Gtk.ResponseType.OK);
         dialog.set_filename(iconPath);
         let filter = new Gtk.FileFilter();
         filter.set_name(_("Images"));
@@ -575,6 +582,11 @@ Prefs.prototype =
                 iconPath = this.appviewIconFilename;
                 this.loadAppviewIcon();
             }
+        }
+        if(response == -5)
+        {
+            this.appviewIconFilename = APPVIEWICONPATH;
+            this.loadAppviewIcon();
         }
         dialog.destroy();
     },

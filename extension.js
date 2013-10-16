@@ -285,21 +285,10 @@ TaskBar.prototype =
     //First Start
     firstStart: function()
     {
-    	if (ShellVersion[1] === 4)
+        if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode == 'user'))
         {
-            if (this.settings.get_boolean("first-start"))
-            {
-                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-                this.settings.set_boolean("first-start", false);
-            }
-        }
-        else
-        {
-            if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode == 'user'))
-            {
-                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-                this.settings.set_boolean("first-start", false);
-            }
+            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+            this.settings.set_boolean("first-start", false);
         }
     },
 
