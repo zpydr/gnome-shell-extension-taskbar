@@ -113,7 +113,7 @@
             <description/>
         </key>
         <key name="active-task-background-color" type="s">
-            <default>'#00000000'</default>
+            <default>'#000'</default>
             <summary>Active Task Background Color</summary>
             <description/>
         </key>
