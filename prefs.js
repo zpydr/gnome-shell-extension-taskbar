@@ -662,7 +662,7 @@ Prefs.prototype =
         }
         catch (e)
         {
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(APPVIEWICON, 48, 48, null);
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(APPVIEWICON, 24, 24, null);
             this.settings.set_string("appview-button-icon", APPVIEWICON);
         }
         this.valueAppviewButtonIcon.set_from_pixbuf(pixbuf);
@@ -677,7 +677,7 @@ Prefs.prototype =
             this.previewFilename = this.dialogAppviewIcon.get_preview_filename();
         try
         {
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.previewFilename, 24, 24, null);
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.previewFilename, 48, 48, null);
             this.preview.set_from_pixbuf(pixbuf);
             have_preview = true;
         }
