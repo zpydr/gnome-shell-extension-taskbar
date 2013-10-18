@@ -35,8 +35,11 @@ const ExtensionUtils = imports.misc.extensionUtils;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
-const DESKTOPICONPATH = Extension.path + '/images/desktop-default.png';
-const APPVIEWICONPATH = Extension.path + '/images/view-grid-symbolic.svg';
+const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
+const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
+const HOMEICON = Extension.path + '/images/settings-home.png';
+const NEXTICON = Extension.path + '/images/settings-next.png';
+const PREVIOUSICON = Extension.path + '/images/settings-previous.png';
 
 function init()
 {
@@ -135,8 +138,8 @@ Prefs.prototype =
 
         let labelPanelPosition = new Gtk.Label({label: _("Align Position\non Top Panel"), xalign: 0});
         this.grid.attach(labelPanelPosition, 1, 7, 1, 1);
-        let valuePanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'back'})});
-        let value2PanelPosition = new Gtk.Button({image: new Gtk.Image({icon_name: 'forward'})});
+        let valuePanelPosition = new Gtk.Button({image: new Gtk.Image({file: PREVIOUSICON})});
+        let value2PanelPosition = new Gtk.Button({image: new Gtk.Image({file: NEXTICON})});
         valuePanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionLeft));
         value2PanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionRight));
         this.grid.attach(valuePanelPosition, 4, 7, 1, 1);
@@ -150,7 +153,7 @@ Prefs.prototype =
 
         let labelBottomPanelVertical = new Gtk.Label({label: _("Vertical Adjustment\nBottom Panel")+" [0]", xalign: 0});
         this.grid.attach(labelBottomPanelVertical, 1, 9, 1, 1);
-        this.valueBottomPanelVertical = new Gtk.Adjustment({lower: -20, upper: 20, step_increment: 1});
+        this.valueBottomPanelVertical = new Gtk.Adjustment({lower: -100, upper: 100, step_increment: 1});
         this.value2BottomPanelVertical = new Gtk.SpinButton({adjustment: this.valueBottomPanelVertical, snap_to_ticks: true});
         this.value2BottomPanelVertical.set_value(this.settings.get_int("bottom-panel-vertical"));
         this.value2BottomPanelVertical.connect("value-changed", Lang.bind(this, this.changeBottomPanelVertical));
@@ -182,13 +185,13 @@ Prefs.prototype =
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task\nBackground Color"), xalign: 0});
         this.grid.attach(labelActiveTaskBackgroundColor, 1, 13, 1, 1);
-        let valueActiveTaskBackgroundColor2 = this.settings.get_string("active-task-background-color");
+        let color = this.settings.get_string("active-task-background-color");
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
         this.valueActiveTaskBackgroundColor = new Gtk.ColorButton();
-        this.valueActiveTaskBackgroundColor.set_title("TaskBar Preferences - Active Task Background Color");
-        this.color = new Gdk.RGBA();
-        this.color.parse(valueActiveTaskBackgroundColor2);
-        this.valueActiveTaskBackgroundColor.set_rgba(this.color);
-        this.valueActiveTaskBackgroundColor.connect('clicked', Lang.bind(this, this.changeActiveTaskBackgroundColor));
+        this.valueActiveTaskBackgroundColor.set_use_alpha(true);
+        this.valueActiveTaskBackgroundColor.set_rgba(rgba);
+        this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
         this.grid.attach(this.valueActiveTaskBackgroundColor, 4, 13, 2, 1);
 
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
@@ -367,14 +370,18 @@ Prefs.prototype =
         this.valueAppearanceFive.connect('changed', Lang.bind(this, this.changeAppearanceFive));
         this.grid.attach(this.valueAppearanceFive, 1, 39, 1, 1);
 
-        let labelLink1 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "extensions.gnome.org",
+        let linkImage1 = new Gtk.Image({file: HOMEICON});
+        let linkImage2 = new Gtk.Image({file: HOMEICON});
+        let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
+        labelLink1.set_always_show_image(true);
         let resetButton = new Gtk.Button({label: _("RESET ALL")});
         resetButton.connect('clicked', Lang.bind(this, this.reset));
         this.grid.attach(resetButton, 3, 41, 3, 1);
         this.grid.attach(labelLink1, 1, 41, 1, 1);
-        let labelLink2 = new Gtk.LinkButton ({image: new Gtk.Image({icon_name: 'go-home'}), label: "github.com",
+        let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
+        labelLink2.set_always_show_image(true);
         this.grid.attach(labelLink2, 1, 42, 1, 1);
         let labelVersion = new Gtk.Label({label: _("Version")+" 29"});
         this.grid.attach(labelVersion, 3, 42, 3, 1);
@@ -495,19 +502,9 @@ Prefs.prototype =
 
     changeActiveTaskBackgroundColor: function()
     {
-/*        let color = this.settings.get_string("active-task-background-color");
-        let dialog = new Gtk.ColorChooserDialog({ title: _("TaskBar Preferences - Active Task Background Color") });
-        dialog.add_button("RESET", Gtk.ResponseType.OK);
-   //     dialog.set_rgba(color);
-        let response = dialog.run();
-        if(response == -3)
-        {
-        }
-        if(response == -5)
-        {
-        }
-        dialog.destroy();
-*/    },
+        this.backgroundColor = this.valueActiveTaskBackgroundColor.get_rgba().to_string();
+        this.settings.set_string("active-task-background-color", this.backgroundColor);
+    },
 
     changeHoverSwitchTask: function(object)
     {
@@ -517,11 +514,18 @@ Prefs.prototype =
     changeDesktopButtonIcon: function()
     {
         let iconPath = this.settings.get_string("desktop-button-icon");
-        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Desktop Button Icon"), action: Gtk.FileChooserAction.OPEN });
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
-        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
-        dialog.add_button("RESET", Gtk.ResponseType.OK);
-        dialog.set_filename(iconPath);
+        this.dialogDesktopIcon = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Desktop Button Icon"), action: Gtk.FileChooserAction.OPEN });
+        this.dialogDesktopIcon.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+        this.dialogDesktopIcon.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        this.dialogDesktopIcon.add_button("RESET", Gtk.ResponseType.NONE);
+        this.dialogDesktopIcon.set_filename(iconPath);
+        this.preview = new Gtk.Image();
+        this.dialogDesktopIcon.set_preview_widget(this.preview);
+        this.dialogDesktopIcon.set_use_preview_label(false);
+        this.initDesktopIconPath = iconPath;
+        this.loadDesktopIconPreview();
+        this.initDesktopIconPath = null;
+        this.updatePreview = this.dialogDesktopIcon.connect("update-preview", Lang.bind(this, this.loadDesktopIconPreview));
         let filter = new Gtk.FileFilter();
         filter.set_name(_("Images"));
         filter.add_pattern("*.png");
@@ -529,23 +533,24 @@ Prefs.prototype =
         filter.add_pattern("*.gif");
         filter.add_pattern("*.svg");
         filter.add_pattern("*.ico");
-        dialog.add_filter(filter);
-        let response = dialog.run();
+        this.dialogDesktopIcon.add_filter(filter);
+        let response = this.dialogDesktopIcon.run();
         if(response == -3)
         {
-            this.desktopIconFilename = dialog.get_filename();
+            this.desktopIconFilename = this.dialogDesktopIcon.get_filename();
             if (this.desktopIconFilename != iconPath)
             {
                 iconPath = this.desktopIconFilename;
                 this.loadDesktopIcon();
             }
         }
-        if(response == -5)
+        if(response == -1)
         {
-            this.desktopIconFilename = DESKTOPICONPATH;
+            this.desktopIconFilename = DESKTOPICON;
             this.loadDesktopIcon();
         }
-        dialog.destroy();
+        this.dialogDesktopIcon.disconnect(this.updatePreview);
+        this.dialogDesktopIcon.destroy();
     },
 
     loadDesktopIcon: function()
@@ -558,11 +563,32 @@ Prefs.prototype =
         }
         catch (e)
         {
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(DESKTOPICONPATH, 24, 24, null);
-            this.settings.set_string("desktop-button-icon", DESKTOPICONPATH);
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(DESKTOPICON, 24, 24, null);
+            this.settings.set_string("desktop-button-icon", DESKTOPICON);
         }
         this.valueDesktopButtonIcon.set_from_pixbuf(pixbuf);
     },
+
+    loadDesktopIconPreview: function()
+    {
+        let pixbuf;
+        if (this.initDesktopIconPath != null)
+            this.previewFilename = this.initDesktopIconPath;
+        else
+            this.previewFilename = this.dialogDesktopIcon.get_preview_filename();
+        try
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.previewFilename, 24, 24, null);
+            this.preview.set_from_pixbuf(pixbuf);
+            have_preview = true;
+        }
+        catch (e)
+        {
+            have_preview = false;
+        }
+        this.dialogDesktopIcon.set_preview_widget_active(have_preview);
+    },
+
 
     changeDesktopButtonRightClick: function(object, pspec)
     {
@@ -587,11 +613,18 @@ Prefs.prototype =
     changeAppviewButtonIcon: function()
     {
         let iconPath = this.settings.get_string("appview-button-icon");
-        let dialog = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Appview Button Icon"), action: Gtk.FileChooserAction.OPEN });
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
-        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
-        dialog.add_button("RESET", Gtk.ResponseType.OK);
-        dialog.set_filename(iconPath);
+        this.dialogAppviewIcon = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Appview Button Icon"), action: Gtk.FileChooserAction.OPEN });
+        this.dialogAppviewIcon.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+        this.dialogAppviewIcon.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        this.dialogAppviewIcon.add_button("RESET", Gtk.ResponseType.NONE);
+        this.dialogAppviewIcon.set_filename(iconPath);
+        this.preview = new Gtk.Image();
+        this.dialogAppviewIcon.set_preview_widget(this.preview);
+        this.dialogAppviewIcon.set_use_preview_label(false);
+        this.initAppviewIconPath = iconPath;
+        this.loadAppviewIconPreview();
+        this.initAppviewIconPath = null;
+        this.updatePreview = this.dialogAppviewIcon.connect("update-preview", Lang.bind(this, this.loadAppviewIconPreview));
         let filter = new Gtk.FileFilter();
         filter.set_name(_("Images"));
         filter.add_pattern("*.png");
@@ -599,23 +632,24 @@ Prefs.prototype =
         filter.add_pattern("*.gif");
         filter.add_pattern("*.svg");
         filter.add_pattern("*.ico");
-        dialog.add_filter(filter);
-        let response = dialog.run();
+        this.dialogAppviewIcon.add_filter(filter);
+        let response = this.dialogAppviewIcon.run();
         if(response == -3)
         {
-            this.appviewIconFilename = dialog.get_filename();
+            this.appviewIconFilename = this.dialogAppviewIcon.get_filename();
             if (this.appviewIconFilename != iconPath)
             {
                 iconPath = this.appviewIconFilename;
                 this.loadAppviewIcon();
             }
         }
-        if(response == -5)
+        if(response == -1)
         {
-            this.appviewIconFilename = APPVIEWICONPATH;
+            this.appviewIconFilename = APPVIEWICON;
             this.loadAppviewIcon();
         }
-        dialog.destroy();
+        this.dialogAppviewIcon.disconnect(this.updatePreview);
+        this.dialogAppviewIcon.destroy();
     },
 
     loadAppviewIcon: function()
@@ -628,10 +662,30 @@ Prefs.prototype =
         }
         catch (e)
         {
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(APPVIEWICONPATH, 24, 24, null);
-            this.settings.set_string("appview-button-icon", APPVIEWICONPATH);
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(APPVIEWICON, 24, 24, null);
+            this.settings.set_string("appview-button-icon", APPVIEWICON);
         }
         this.valueAppviewButtonIcon.set_from_pixbuf(pixbuf);
+    },
+
+    loadAppviewIconPreview: function()
+    {
+        let pixbuf;
+        if (this.initAppviewIconPath != null)
+            this.previewFilename = this.initAppviewIconPath;
+        else
+            this.previewFilename = this.dialogAppviewIcon.get_preview_filename();
+        try
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.previewFilename, 24, 24, null);
+            this.preview.set_from_pixbuf(pixbuf);
+            have_preview = true;
+        }
+        catch (e)
+        {
+            have_preview = false;
+        }
+        this.dialogAppviewIcon.set_preview_widget_active(have_preview);
     },
 
     changeHideActivities: function(object, pspec)
@@ -782,18 +836,6 @@ Prefs.prototype =
         this.settings.set_enum("appearance-four", "1");
         this.settings.set_enum("appearance-five", "0");
         this.setActive();
-    },
-
-    loadIcon: function(path) {
-        let pixbuf;
-        try {
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, 24, 24, null);
-        } catch (e) {
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(DEFAULTDESKTOPICONPATH, 24, 24, null);
-            this.settings.set_string("desktop-button-icon", DEFAULTDESKTOPICONPATH);
-            this.iconPath = DEFAULTDESKTOPICONPATH;
-        }
-        this.valueDesktopButtonIcon.set_from_pixbuf(pixbuf);
     },
 
     scrollWindowPrefs: function()
