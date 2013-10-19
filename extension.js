@@ -41,6 +41,8 @@ const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
 const NOHOTCORNER = 54321;
+const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
+const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 
 function init(extensionMeta)
 {
@@ -291,6 +293,8 @@ TaskBar.prototype =
             if (this.settings.get_boolean("first-start"))
             {
                 Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+                this.settings.set_string("desktop-button-icon", DESKTOPICON);
+                this.settings.set_string("appview-button-icon", APPVIEWICON);
                 this.settings.set_boolean("first-start", false);
             }
         }
@@ -299,6 +303,8 @@ TaskBar.prototype =
             if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode == 'user'))
             {
                 Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+                this.settings.set_string("desktop-button-icon", DESKTOPICON);
+                this.settings.set_string("appview-button-icon", APPVIEWICON);
                 this.settings.set_boolean("first-start", false);
             }
         }
