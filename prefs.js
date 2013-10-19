@@ -32,6 +32,7 @@ const _ = Gettext.gettext;
 
 const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
+const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function (x) { return + x; });
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
