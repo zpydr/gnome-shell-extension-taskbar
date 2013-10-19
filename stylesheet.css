@@ -49,7 +49,7 @@
 
 .tkb-task-button:active-task-no-frame
 {
-
+    border-radius: 5px;
 }
 
 .tkb-preview

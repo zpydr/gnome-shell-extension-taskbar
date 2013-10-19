@@ -124,7 +124,7 @@ TaskBar.prototype =
         //Hide Default Application Menu
         this.initHideDefaultAppMenu();
 
-        //Active Task Frame
+        //Active Task Frame / Background Color
         this.activeTaskFrame();
 
         //Init Windows Manage Callbacks
@@ -573,9 +573,12 @@ TaskBar.prototype =
         }
     },
 
-    //Active Task Frame
+    //Active Task Frame / Background Color
     activeTaskFrame: function()
     {
+        this.backgroundColor = this.settings.get_string("active-task-background-color");
+        this.backgroundStyleColor = "background-color: " + this.backgroundColor;
+        this.backgroundStyleNone = "background-color: #00000000";
         if (this.settings.get_boolean("active-task-frame"))
             this.activeTask = "active-task-frame";
         else
@@ -754,6 +757,7 @@ TaskBar.prototype =
                     {
                         windowTask.minimize(global.get_current_time());
                         buttonTask.remove_style_pseudo_class(this.activeTask);
+                        buttonTask.set_style(this.backgroundStyleNone);
                     }
                 },
                 this
@@ -781,15 +785,20 @@ TaskBar.prototype =
                         {
                             windowTask.activate(global.get_current_time());
                             buttonTask.add_style_pseudo_class(this.activeTask);
+                            buttonTask.set_style(this.backgroundStyleColor);
                         }
                         else if (! Main.overview.visible)
                         {
                             windowTask.minimize(global.get_current_time());
                             buttonTask.remove_style_pseudo_class(this.activeTask);
+                            buttonTask.set_style(this.backgroundStyleNone);
                         }
                     }
                     else
+                    {
                         buttonTask.remove_style_pseudo_class(this.activeTask);
+                        buttonTask.set_style(this.backgroundStyleNone);
+                    }
                 },
                 this
             );
@@ -814,6 +823,7 @@ TaskBar.prototype =
                 {
                     windowTask.activate(global.get_current_time());
                     buttonTask.add_style_pseudo_class(this.activeTask);
+                    buttonTask.set_style(this.backgroundStyleColor);
                 }
             },
             this
@@ -862,9 +872,15 @@ TaskBar.prototype =
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
                     if (windowTask == window)
+                    {
                         buttonTask.add_style_pseudo_class(this.activeTask);
+                        buttonTask.set_style(this.backgroundStyleColor);
+                    }
                     else
+                    {
                         buttonTask.remove_style_pseudo_class(this.activeTask);
+                        buttonTask.set_style(this.backgroundStyleNone);
+                    }
                 },
                 this
             );
@@ -899,7 +915,10 @@ TaskBar.prototype =
             buttonTask.connect("leave-event", Lang.bind(this, this.hidePreview))
         ];
         if (window.has_focus())
+        {
             buttonTask.add_style_pseudo_class(this.activeTask);
+            buttonTask.set_style(this.backgroundStyleColor);
+        }
         if (this.settings.get_boolean("display-tasks"))
             this.boxMainTasks.add_actor(buttonTask);
         this.tasksList.push([ window, buttonTask, signalsTask ]);
