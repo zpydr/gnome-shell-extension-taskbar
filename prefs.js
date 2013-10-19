@@ -383,7 +383,7 @@ Prefs.prototype =
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
         labelLink2.set_always_show_image(true);
         this.grid.attach(labelLink2, 1, 42, 1, 1);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 29"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 30"});
         this.grid.attach(labelVersion, 3, 42, 3, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
