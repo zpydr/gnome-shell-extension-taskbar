@@ -374,14 +374,16 @@ Prefs.prototype =
         let linkImage2 = new Gtk.Image({file: HOMEICON});
         let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
-        labelLink1.set_always_show_image(true);
+        if (ShellVersion[1] !== 4)
+            labelLink1.set_always_show_image(true);
         let resetButton = new Gtk.Button({label: _("RESET ALL")});
         resetButton.connect('clicked', Lang.bind(this, this.reset));
         this.grid.attach(resetButton, 3, 41, 3, 1);
         this.grid.attach(labelLink1, 1, 41, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
-        labelLink2.set_always_show_image(true);
+        if (ShellVersion[1] !== 4)
+            labelLink2.set_always_show_image(true);
         this.grid.attach(labelLink2, 1, 42, 1, 1);
         let labelVersion = new Gtk.Label({label: _("Version")+" 30"});
         this.grid.attach(labelVersion, 3, 42, 3, 1);
