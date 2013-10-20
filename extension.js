@@ -288,9 +288,9 @@ TaskBar.prototype =
     //First Start
     firstStart: function()
     {
-        if this.settings.get_string("desktop-button-icon" === "default")
+        if (this.settings.get_string("desktop-button-icon") == "default")
             this.settings.set_string("desktop-button-icon", DESKTOPICON);
-        if this.settings.get_string("appview-button-icon" === "default")
+        if (this.settings.get_string("appview-button-icon") == "default")
             this.settings.set_string("appview-button-icon", APPVIEWICON);
         if (ShellVersion[1] === 4)
         {
