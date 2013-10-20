@@ -288,7 +288,7 @@ TaskBar.prototype =
     //First Start
     firstStart: function()
     {
-            if (ShellVersion[1] === 4)
+        if (ShellVersion[1] === 4)
         {
             if (this.settings.get_boolean("first-start"))
             {
@@ -584,7 +584,6 @@ TaskBar.prototype =
     {
         this.backgroundColor = this.settings.get_string("active-task-background-color");
         this.backgroundStyleColor = "background-color: " + this.backgroundColor;
-        this.backgroundStyleNone = "background-color: #00000000";
         if (this.settings.get_boolean("active-task-frame"))
             this.activeTask = "active-task-frame";
         else
@@ -757,18 +756,29 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
+                    if (windowTask.has_focus())
+                    {
+                        this.lastFocusedWindow = windowTask;
+                        this.lastFocusedButton = buttonTask;
+                    }
                     if (this.desktopView && (! Main.overview.visible))
                         windowTask.unminimize(global.get_current_time());
                     else
                     {
                         windowTask.minimize(global.get_current_time());
                         buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.set_style(this.backgroundStyleNone);
+                        buttonTask.set_style("None");
                     }
                 },
                 this
             );
             this.desktopView = ! this.desktopView;
+            if (! this.desktopView)
+            {
+                this.lastFocusedWindow.activate(global.get_current_time());
+                this.lastFocusedButton.add_style_pseudo_class(this.activeTask);
+                this.lastFocusedButton.set_style(this.backgroundStyleColor);
+            }
             if (Main.overview.visible)
                 Main.overview.hide();
         }
@@ -778,6 +788,7 @@ TaskBar.prototype =
 
     onClickTaskButton: function(button, pspec, window)
     {
+        let activeWindows = false;
         let numButton = pspec.get_button();
         if (numButton == LEFTBUTTON) //Left Button
         {
@@ -785,6 +796,11 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
+                    if (windowTask.has_focus())
+                    {
+                        this.lastFocusedWindow = windowTask;
+                        this.lastFocusedButton = buttonTask;
+                    }
                     if (windowTask == window)
                     {
                         if (! windowTask.has_focus())
@@ -792,23 +808,27 @@ TaskBar.prototype =
                             windowTask.activate(global.get_current_time());
                             buttonTask.add_style_pseudo_class(this.activeTask);
                             buttonTask.set_style(this.backgroundStyleColor);
+                            activeWindows = true;
                         }
                         else if (! Main.overview.visible)
                         {
                             windowTask.minimize(global.get_current_time());
                             buttonTask.remove_style_pseudo_class(this.activeTask);
-                            buttonTask.set_style(this.backgroundStyleNone);
+                            buttonTask.set_style("None");
                         }
                     }
                     else
                     {
                         buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.set_style(this.backgroundStyleNone);
+                        buttonTask.set_style("None");
                     }
                 },
                 this
             );
-            this.desktopView = false;
+            if (activeWindows)
+                this.desktopView = false;
+            else
+                this.desktopView = true;
             if (Main.overview.visible)
                 Main.overview.hide();
         }
@@ -885,7 +905,7 @@ TaskBar.prototype =
                     else
                     {
                         buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.set_style(this.backgroundStyleNone);
+                        buttonTask.set_style("None");
                     }
                 },
                 this
