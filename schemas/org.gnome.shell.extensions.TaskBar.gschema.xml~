@@ -123,7 +123,7 @@
             <description/>
         </key>
         <key name="desktop-button-icon" type="s">
-            <default>'default'</default>
+            <default>"Extension.path + '/images/desktop-button-default.png'"</default>
             <summary>Desktop Button Icon</summary>
             <description/>
         </key>
@@ -149,7 +149,7 @@
             <description/>
         </key>
         <key name="appview-button-icon" type="s">
-            <default>'default'</default>
+            <default>"Extension.path + '/images/appview-button-default.svg'"</default>
             <summary>Desktop Button Icon</summary>
             <description/>
         </key>
