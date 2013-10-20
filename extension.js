@@ -292,9 +292,9 @@ TaskBar.prototype =
         {
             if (this.settings.get_boolean("first-start"))
             {
-                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_string("desktop-button-icon", DESKTOPICON);
                 this.settings.set_string("appview-button-icon", APPVIEWICON);
+                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_boolean("first-start", false);
             }
         }
@@ -302,9 +302,9 @@ TaskBar.prototype =
         {
             if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode == 'user'))
             {
-                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_string("desktop-button-icon", DESKTOPICON);
                 this.settings.set_string("appview-button-icon", APPVIEWICON);
+                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_boolean("first-start", false);
             }
         }
