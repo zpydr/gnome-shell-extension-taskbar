@@ -749,6 +749,7 @@ TaskBar.prototype =
 
     onClickDesktopButton: function(button, pspec)
     {
+        this.activeTasks();
         let numButton = pspec.get_button();
         if (numButton == LEFTBUTTON) //Left Button
         {
@@ -756,25 +757,14 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    if (windowTask.has_focus())
-                    {
-                        this.lastFocusedWindow = windowTask;
-                        this.lastFocusedButton = buttonTask;
-                    }
                     if (this.desktopView && (! Main.overview.visible))
                         windowTask.unminimize(global.get_current_time());
                     else
-                    {
-                        windowTask.minimize();
-                        buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.set_style("None");
-                    }
+                        windowTask.minimize(global.get_current_time());
                 },
                 this
             );
             this.desktopView = ! this.desktopView;
-            if (! this.desktopView)
-                this.lastFocusedWindow.activate(global.get_current_time());
             if (Main.overview.visible)
                 Main.overview.hide();
         }
@@ -784,7 +774,6 @@ TaskBar.prototype =
 
     onClickTaskButton: function(button, pspec, window)
     {
-        let activeWindows = false;
         let numButton = pspec.get_button();
         if (numButton == LEFTBUTTON) //Left Button
         {
@@ -792,37 +781,16 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    if (windowTask.has_focus())
-                    {
-                        this.lastFocusedWindow = windowTask;
-                        this.lastFocusedButton = buttonTask;
-                    }
                     if (windowTask == window)
                     {
                         if (! windowTask.has_focus())
-                        {
                             windowTask.activate(global.get_current_time());
-                            activeWindows = true;
-                        }
                         else if (! Main.overview.visible)
-                        {
-                            windowTask.minimize();
-                            buttonTask.remove_style_pseudo_class(this.activeTask);
-                            buttonTask.set_style("None");
-                        }
-                    }
-                    else
-                    {
-                        buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.set_style("None");
+                            windowTask.minimize(global.get_current_time());
                     }
                 },
                 this
             );
-            if (activeWindows)
-                this.desktopView = false;
-            else
-                this.desktopView = true;
             if (Main.overview.visible)
                 Main.overview.hide();
         }
@@ -844,7 +812,6 @@ TaskBar.prototype =
             },
             this
         );
-        this.desktopView = false;
         if (Main.overview.visible)
             Main.overview.hide();
     },
@@ -852,7 +819,6 @@ TaskBar.prototype =
     //Taskslist
     onWindowsListChanged: function(windowsList, type, window)
     {
-        this.desktopView = false;
         if (type == 0) //Add all windows (On init or workspace change)
         {
             this.cleanTasksList();
@@ -863,19 +829,34 @@ TaskBar.prototype =
                 },
                 this
             );
-            this.desktopView = false;
             this.hidePreview();
         }
         else if (type == 1) //Add window
-        {
             this.addTaskInList(window);
-            this.desktopView = false;
-        }
         else if (type == 2) //Remove window
         {
             this.removeTaskInList(window);
             this.hidePreview();
         }
+    },
+
+    //Active Tasks
+    activeTasks: function(window)
+    {
+        let active = false;
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                if (! windowTask.minimized)
+                    active = true;
+            },
+            this
+        );
+        if (active == true)
+            this.desktopView = false;
+        else
+            this.desktopView = true;
     },
 
     //Task Style
@@ -901,7 +882,21 @@ TaskBar.prototype =
                 this
             );
         }
-        this.desktopView = false;
+        if (type == 2) //Minimized
+        {
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    if (windowTask == window)
+                    {
+                        buttonTask.remove_style_pseudo_class(this.activeTask);
+                        buttonTask.set_style("None");
+                    }
+                },
+                this
+            );
+        }
     },
 
     //Task Index
@@ -930,12 +925,12 @@ TaskBar.prototype =
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.hidePreview))
         ];
-/*        if (window.has_focus())
+        if (window.has_focus())
         {
             buttonTask.add_style_pseudo_class(this.activeTask);
             buttonTask.set_style(this.backgroundStyleColor);
         }
-*/        if (this.settings.get_boolean("display-tasks"))
+        if (this.settings.get_boolean("display-tasks"))
             this.boxMainTasks.add_actor(buttonTask);
         this.tasksList.push([ window, buttonTask, signalsTask ]);
     },

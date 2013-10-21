@@ -102,6 +102,8 @@ Windows.prototype =
         }
         else if (type == 1) //Title changed
             this.callbackWindowChanged.call(this.callBackThis, window, 1);
+        else if (type == 2) //Minimized
+            this.callbackWindowChanged.call(this.callBackThis, window, 2);
     },
 
     onWindowAdded: function(workspace, window)
@@ -141,7 +143,8 @@ Windows.prototype =
             let objectAndSignals = [
                 window, [
                     window.connect('notify::appears-focused', Lang.bind(this, this.onWindowChanged, 0)),
-                    window.connect('notify::title', Lang.bind(this, this.onWindowChanged, 1))
+                    window.connect('notify::title', Lang.bind(this, this.onWindowChanged, 1)),
+                    window.connect('notify::minimized', Lang.bind(this, this.onWindowChanged, 2))
                 ]
             ];
             this.windowsSignals.push(objectAndSignals);
