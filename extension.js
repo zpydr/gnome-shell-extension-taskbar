@@ -765,7 +765,7 @@ TaskBar.prototype =
                         windowTask.unminimize(global.get_current_time());
                     else
                     {
-                        windowTask.minimize(global.get_current_time());
+                        windowTask.minimize();
                         buttonTask.remove_style_pseudo_class(this.activeTask);
                         buttonTask.set_style("None");
                     }
@@ -774,11 +774,7 @@ TaskBar.prototype =
             );
             this.desktopView = ! this.desktopView;
             if (! this.desktopView)
-            {
                 this.lastFocusedWindow.activate(global.get_current_time());
-                this.lastFocusedButton.add_style_pseudo_class(this.activeTask);
-                this.lastFocusedButton.set_style(this.backgroundStyleColor);
-            }
             if (Main.overview.visible)
                 Main.overview.hide();
         }
@@ -806,13 +802,11 @@ TaskBar.prototype =
                         if (! windowTask.has_focus())
                         {
                             windowTask.activate(global.get_current_time());
-                            buttonTask.add_style_pseudo_class(this.activeTask);
-                            buttonTask.set_style(this.backgroundStyleColor);
                             activeWindows = true;
                         }
                         else if (! Main.overview.visible)
                         {
-                            windowTask.minimize(global.get_current_time());
+                            windowTask.minimize();
                             buttonTask.remove_style_pseudo_class(this.activeTask);
                             buttonTask.set_style("None");
                         }
@@ -846,11 +840,7 @@ TaskBar.prototype =
             {
                 let [windowTask, buttonTask, signalsTask] = task;
                 if ((windowTask == window) && (! windowTask.has_focus()))
-                {
                     windowTask.activate(global.get_current_time());
-                    buttonTask.add_style_pseudo_class(this.activeTask);
-                    buttonTask.set_style(this.backgroundStyleColor);
-                }
             },
             this
         );
@@ -940,12 +930,12 @@ TaskBar.prototype =
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.hidePreview))
         ];
-        if (window.has_focus())
+/*        if (window.has_focus())
         {
             buttonTask.add_style_pseudo_class(this.activeTask);
             buttonTask.set_style(this.backgroundStyleColor);
         }
-        if (this.settings.get_boolean("display-tasks"))
+*/        if (this.settings.get_boolean("display-tasks"))
             this.boxMainTasks.add_actor(buttonTask);
         this.tasksList.push([ window, buttonTask, signalsTask ]);
     },
