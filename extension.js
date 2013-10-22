@@ -114,7 +114,7 @@ TaskBar.prototype =
         this.initHideActivities();
 
         //Disable Hot Corner
-        if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
+        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10))
         {
             //Extended Barriers Support
             this.barriers = global.display.supports_extended_barriers();
@@ -202,7 +202,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.show();
             else if (ShellVersion[1] === 6)
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -289,10 +289,9 @@ TaskBar.prototype =
     //First Start
     firstStart: function()
     {
-        if ((this.settings.get_string("desktop-button-icon") == "default") |
-            (this.settings.get_string("appview-button-icon") == "default"))
+        if (this.settings.get_string("desktop-button-icon") == "default")
         {
-            this.settings.set_string("desktop-button-icon", DESKTOPICON); 
+            this.settings.set_string("desktop-button-icon", DESKTOPICON);
             this.settings.set_string("appview-button-icon", APPVIEWICON);
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
             this.settings.set_boolean("first-start", false);
@@ -496,7 +495,7 @@ TaskBar.prototype =
                     Main.panel._activitiesButton._hotCorner._corner.show();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -514,7 +513,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.hide();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.hide();
-            else if ((ShellVersion[1] === 8) | (ShellVersion[1] === 10))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = NOHOTCORNER;
@@ -1014,7 +1013,7 @@ TaskBar.prototype =
         }
         //Hide current preview if necessary
         this.hidePreview();
-        if ((this.settings.get_boolean("display-label")) | (this.settings.get_boolean("display-thumbnail")))
+        if ((this.settings.get_boolean("display-label")) || (this.settings.get_boolean("display-thumbnail")))
         {
             if (this.settings.get_int("preview-delay") == 0)
                 this.showPreview2(button, window);

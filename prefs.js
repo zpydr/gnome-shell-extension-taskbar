@@ -394,7 +394,7 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink2.set_always_show_image(true);
         this.grid.attach(labelLink2, 1, 43, 1, 1);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 33"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 34"});
         this.grid.attach(labelVersion, 3, 43, 3, 1);
 
         let labelSpace1 = new Gtk.Label({label: "\t", xalign: 0});
@@ -834,6 +834,7 @@ Prefs.prototype =
         this.valueCloseButton.set_active(0);
         this.valueActiveTaskFrame.set_active(true);
         this.valueHoverSwitchTask.set_active(false);
+        this.valueHoverDelay.set_value(500);
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueFontSize.set_value(16);
