@@ -122,6 +122,12 @@
             <summary>Switch Task on Hover</summary>
             <description/>
         </key>
+        <key name="hover-delay" type="i">
+            <range min="0" max="1000"/>
+            <default>500</default>
+            <summary>Delay before Hover</summary>
+            <description/>
+        </key>
         <key name="desktop-button-icon" type="s">
             <default>'default'</default>
             <summary>Desktop Button Icon</summary>
