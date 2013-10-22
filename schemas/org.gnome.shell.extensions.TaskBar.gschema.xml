@@ -124,7 +124,7 @@
         </key>
         <key name="hover-delay" type="i">
             <range min="0" max="1000"/>
-            <default>500</default>
+            <default>350</default>
             <summary>Delay before Hover</summary>
             <description/>
         </key>
