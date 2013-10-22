@@ -64,6 +64,7 @@ TaskBar.prototype =
     tasksList: new Array(),
     desktopView: null,
     previewTimer: null,
+    previewTimer2: null,
     preview: null,
     favoriteapp: null,
 
@@ -779,7 +780,7 @@ TaskBar.prototype =
     onClickTaskButton: function(button, pspec, window)
     {
         let numButton = pspec.get_button();
-        if (numButton == LEFTBUTTON) //Left Button
+        if ((numButton == LEFTBUTTON) && (! this.settings.get_boolean("hover-switch-task"))) //Left Button (Hover deactivated)
         {
             this.tasksList.forEach(
                 function(task)
@@ -807,17 +808,22 @@ TaskBar.prototype =
     //Switch Task on Hover
     onHoverSwitchTask: function(button, window)
     {
-        this.tasksList.forEach(
-            function(task)
-            {
-                let [windowTask, buttonTask, signalsTask] = task;
-                if ((windowTask == window) && (! windowTask.has_focus()))
-                    windowTask.activate(global.get_current_time());
-            },
-            this
-        );
-        if (Main.overview.visible)
+        if (! this.resetHover)
+        {
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    if ((windowTask == window) && (! windowTask.has_focus()))
+                        windowTask.activate(global.get_current_time());
+                },
+                this
+            );
+            if (Main.overview.visible)
             Main.overview.hide();
+        }
+        Mainloop.source_remove(this.previewTimer2);
+        this.previewTimer2 = null;
     },
 
     //Taskslist
@@ -927,7 +933,7 @@ TaskBar.prototype =
         let signalsTask = [
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
-            buttonTask.connect("leave-event", Lang.bind(this, this.hidePreview))
+            buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
         if (window.has_focus())
         {
@@ -997,8 +1003,15 @@ TaskBar.prototype =
     showPreview: function(button, pspec, window)
     {
         //Switch Task on Hover
+        this.resetHover = false;
         if (this.settings.get_boolean("hover-switch-task"))
-            this.onHoverSwitchTask(button, window);
+        {
+            if (this.settings.get_int("hover-delay") == 0)
+                this.onHoverSwitchTask(button, window);
+            else
+                this.previewTimer2 = Mainloop.timeout_add(this.settings.get_int("hover-delay"),
+                    Lang.bind(this, this.onHoverSwitchTask, button, window));
+        }
         //Hide current preview if necessary
         this.hidePreview();
         if ((this.settings.get_boolean("display-label")) | (this.settings.get_boolean("display-thumbnail")))
@@ -1083,6 +1096,15 @@ TaskBar.prototype =
             x = Math.min(x, parentWidth - labelWidth - 6);
         }
         this.preview.set_position(x, y);
+    },
+
+    resetPreview: function(button, window)
+    {
+        //Reset Hover
+        this.resetHover = true;
+        Mainloop.source_remove(this.previewTimer2);
+        this.previewTimer2 = null;
+        this.hidePreview();
     },
 
     hidePreview: function()
