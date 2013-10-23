@@ -578,7 +578,7 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 1, 2, 1, 1);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 34"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 35"});
         this.gridTaskBar.attach(labelVersion, 3, 2, 3, 1);
 
         let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
