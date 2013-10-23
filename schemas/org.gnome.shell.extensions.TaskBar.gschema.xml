@@ -133,6 +133,11 @@
             <summary>Desktop Button Icon</summary>
             <description/>
         </key>
+        <key name="desktop-button-icon-changed" type="b">
+            <default>false</default>
+            <summary>Desktop Button Icon Changed</summary>
+            <description/>
+        </key>
         <key name="desktop-button-right-click" type="b">
             <default>true</default>
             <summary>Desktop Button Right Click</summary>
@@ -156,7 +161,12 @@
         </key>
         <key name="appview-button-icon" type="s">
             <default>'default'</default>
-            <summary>Desktop Button Icon</summary>
+            <summary>Appview Button Icon</summary>
+            <description/>
+        </key>
+        <key name="appview-button-icon-changed" type="b">
+            <default>false</default>
+            <summary>Appview Button Icon Changed</summary>
             <description/>
         </key>
         <key name="hide-activities" type="b">
