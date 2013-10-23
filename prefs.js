@@ -306,6 +306,7 @@ Prefs.prototype =
         this.valueDesktopButtonIcon = new Gtk.Image();
         this.desktopIconFilename = this.settings.get_string("desktop-button-icon");
         this.loadDesktopIcon();
+        this.settings.set_boolean("desktop-button-icon-changed", true);
         this.valueDesktopButtonIcon2 = new Gtk.Button({image: this.valueDesktopButtonIcon});
         this.valueDesktopButtonIcon2.connect('clicked', Lang.bind(this, this.changeDesktopButtonIcon));
         this.gridButtons.attach(this.valueDesktopButtonIcon2, 4, 1, 2, 1);
@@ -341,6 +342,7 @@ Prefs.prototype =
         this.valueAppviewButtonIcon = new Gtk.Image();
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
         this.loadAppviewIcon();
+        this.settings.set_boolean("appview-button-icon-changed", true);
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 5, 2, 1);
@@ -592,7 +594,7 @@ Prefs.prototype =
         let labelSpaceTaskBar6 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTaskBar.attach(labelSpaceTaskBar6, 0, 3, 1, 1);
 
-	    notebook.show_all();
+        notebook.show_all();
         return notebook;
     },
 

@@ -41,8 +41,6 @@ const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
 const NOHOTCORNER = 54321;
-const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
-const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 
 function init(extensionMeta)
 {
@@ -289,14 +287,7 @@ TaskBar.prototype =
     //First Start
     firstStart: function()
     {
-        if (this.settings.get_string("desktop-button-icon") == "default")
-        {
-            this.settings.set_string("desktop-button-icon", DESKTOPICON);
-            this.settings.set_string("appview-button-icon", APPVIEWICON);
-            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-            this.settings.set_boolean("first-start", false);
-        }
-        else if (ShellVersion[1] === 4)
+        if (ShellVersion[1] === 4)
         {
             if (this.settings.get_boolean("first-start"))
             {
@@ -397,7 +388,10 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-showapps-button"))
         {
             let iconPath = this.settings.get_string("appview-button-icon");
-            this.showAppsIcon = Gio.icon_new_for_string(iconPath);
+            if (! this.settings.get_boolean("appview-button-icon-changed"))
+                this.showAppsIcon = Gio.icon_new_for_string(this.extensionMeta.path + '/images/appview-button-default.svg');
+            else
+                this.showAppsIcon = Gio.icon_new_for_string(iconPath);
             this.iconShowApps = new St.Icon(
             {
                 gicon: this.showAppsIcon,
@@ -449,7 +443,10 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-desktop-button"))
         {
             let iconPath = this.settings.get_string("desktop-button-icon");
-            this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
+            if (! this.settings.get_boolean("desktop-button-icon-changed"))
+                this.desktopButtonIcon = Gio.icon_new_for_string(this.extensionMeta.path + '/images/desktop-button-default.png');
+            else
+                this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
             let iconDesktop = new St.Icon(
             {
                 gicon: this.desktopButtonIcon,
