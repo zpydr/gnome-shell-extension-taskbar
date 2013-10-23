@@ -73,7 +73,7 @@ function initTranslations(domain) {
 function buildPrefsWidget()
 {
     let prefs = new Prefs(schema);
-    return prefs.scrollWindowPrefs();
+    return prefs.buildPrefsWidget();
 }
 
 function Prefs(schema)
@@ -89,20 +89,28 @@ Prefs.prototype =
     {
         let settings = new Lib.Settings(schema);
         this.settings = settings.getSettings();
-        this.buildPrefsWidget();
     },
 
     buildPrefsWidget: function()
     {
-        this.notebook = new Gtk.Notebook();
+        let notebook = new Gtk.Notebook();
+        notebook.set_scrollable(true);
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
 
         this.gridComponents = new Gtk.Grid();
         this.gridComponents.margin = this.gridComponents.row_spacing = 10;
         this.gridComponents.column_spacing = 2;
+        let scrollWindowComponents = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowComponents.add_with_viewport(this.gridComponents);
+        scrollWindowComponents.show_all();
         let labelComponents = new Gtk.Label({label: "Elements"});
-        this.notebook.append_page(this.gridComponents, labelComponents);
+        notebook.append_page(scrollWindowComponents, labelComponents);
 
         let labelDisplayTasks = new Gtk.Label({label: _("Tasks"), xalign: 0});
         this.gridComponents.attach(labelDisplayTasks, 1, 1, 1, 1);
@@ -150,8 +158,16 @@ Prefs.prototype =
         this.gridSettings = new Gtk.Grid();
         this.gridSettings.margin = this.gridSettings.row_spacing = 10;
         this.gridSettings.column_spacing = 2;
+        let scrollWindowSettings = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowSettings.add_with_viewport(this.gridSettings);
+        scrollWindowSettings.show_all();
         let labelSettings = new Gtk.Label({label: "Settings"});
-        this.notebook.append_page(this.gridSettings, labelSettings);
+        notebook.append_page(scrollWindowSettings, labelSettings);
 
         let labelPanelPosition = new Gtk.Label({label: _("Align Position\non Top Panel"), xalign: 0});
         this.gridSettings.attach(labelPanelPosition, 1, 1, 1, 1);
@@ -206,8 +222,16 @@ Prefs.prototype =
         this.gridTasks = new Gtk.Grid();
         this.gridTasks.margin = this.gridTasks.row_spacing = 10;
         this.gridTasks.column_spacing = 2;
+        let scrollWindowTasks = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowTasks.add_with_viewport(this.gridTasks);
+        scrollWindowTasks.show_all();
         let labelTasks = new Gtk.Label({label: "Tasks"});
-        this.notebook.append_page(this.gridTasks, labelTasks);
+        notebook.append_page(scrollWindowTasks, labelTasks);
 
         let labelCloseButton = new Gtk.Label({label: _("Close Tasks"), xalign: 0});
         this.gridTasks.attach(labelCloseButton, 1, 1, 1, 1);
@@ -266,8 +290,16 @@ Prefs.prototype =
         this.gridButtons = new Gtk.Grid();
         this.gridButtons.margin = this.gridButtons.row_spacing = 10;
         this.gridButtons.column_spacing = 2;
+        let scrollWindowButtons = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowButtons.add_with_viewport(this.gridButtons);
+        scrollWindowButtons.show_all();
         let labelButtons = new Gtk.Label({label: "Buttons"});
-        this.notebook.append_page(this.gridButtons, labelButtons);
+        notebook.append_page(scrollWindowButtons, labelButtons);
 
         let labelDesktopButtonIcon = new Gtk.Label({label: _("Desktop Button Icon"), xalign: 0});
         this.gridButtons.attach(labelDesktopButtonIcon, 1, 1, 1, 1);
@@ -329,8 +361,16 @@ Prefs.prototype =
         this.gridMisc = new Gtk.Grid();
         this.gridMisc.margin = this.gridMisc.row_spacing = 10;
         this.gridMisc.column_spacing = 2;
+        let scrollWindowMisc = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowMisc.add_with_viewport(this.gridMisc);
+        scrollWindowMisc.show_all();
         let labelMisc = new Gtk.Label({label: "Misc"});
-        this.notebook.append_page(this.gridMisc, labelMisc);
+        notebook.append_page(scrollWindowMisc, labelMisc);
 
         let labelHideActivities = new Gtk.Label({label: _("Hide Activities"), xalign: 0});
         this.gridMisc.attach(labelHideActivities, 1, 1, 1, 1);
@@ -369,8 +409,16 @@ Prefs.prototype =
         this.gridPreview = new Gtk.Grid();
         this.gridPreview.margin = this.gridPreview.row_spacing = 10;
         this.gridPreview.column_spacing = 2;
+        let scrollWindowPreview = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowPreview.add_with_viewport(this.gridPreview);
+        scrollWindowPreview.show_all();
         let labelPreview = new Gtk.Label({label: "Preview"});
-        this.notebook.append_page(this.gridPreview, labelPreview);
+        notebook.append_page(scrollWindowPreview, labelPreview);
 
         let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
         this.gridPreview.attach(labelDisplayLabel, 1, 1, 1, 1);
@@ -422,8 +470,16 @@ Prefs.prototype =
         this.gridAppearance = new Gtk.Grid();
         this.gridAppearance.margin = this.gridAppearance.row_spacing = 10;
         this.gridAppearance.column_spacing = 2;
-        let labelAppearance = new Gtk.Label({label: "Order"});
-        this.notebook.append_page(this.gridAppearance, labelAppearance);
+        let scrollWindowAppearance = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowAppearance.add_with_viewport(this.gridAppearance);
+        scrollWindowAppearance.show_all();
+        let labelAppearance = new Gtk.Label({label: "Appearance"});
+        notebook.append_page(scrollWindowAppearance, labelAppearance);
 
         let labelLeftToRight = new Gtk.Label({ label: _("Appearance\nFrom Left to Right"), use_markup: true, xalign: 0 });
         this.gridAppearance.attach(labelLeftToRight, 1, 1, 1, 1);
@@ -494,8 +550,16 @@ Prefs.prototype =
         this.gridTaskBar = new Gtk.Grid();
         this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
         this.gridTaskBar.column_spacing = 2;
+        let scrollWindowTaskBar = new Gtk.ScrolledWindow(
+        {
+            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
+            'hexpand': true, 'vexpand': true
+        });
+        scrollWindowTaskBar.add_with_viewport(this.gridTaskBar);
+        scrollWindowTaskBar.show_all();
         let labelTaskBar = new Gtk.Label({label: "TaskBar"});
-        this.notebook.append_page(this.gridTaskBar, labelTaskBar);
+        notebook.append_page(scrollWindowTaskBar, labelTaskBar);
 
         let linkImage1 = new Gtk.Image({file: HOMEICON});
         let linkImage2 = new Gtk.Image({file: HOMEICON});
@@ -527,6 +591,9 @@ Prefs.prototype =
         this.gridTaskBar.attach(labelSpaceTaskBar5, 6, 1, 1, 1);
         let labelSpaceTaskBar6 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTaskBar.attach(labelSpaceTaskBar6, 0, 3, 1, 1);
+
+	    notebook.show_all();
+        return notebook;
     },
 
     changeDisplayTasks: function(object, pspec)
@@ -971,18 +1038,5 @@ Prefs.prototype =
         this.settings.set_enum("appearance-four", "1");
         this.settings.set_enum("appearance-five", "0");
         this.setActive();
-    },
-
-    scrollWindowPrefs: function()
-    {
-        let scrollWindow = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindow.add_with_viewport(this.notebook);
-        scrollWindow.show_all();
-        return scrollWindow;
     }
 }
