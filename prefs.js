@@ -36,6 +36,7 @@ const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
+const RESETCOLOR = '#00000000';
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 const HOMEICON = Extension.path + '/images/settings-home.png';
@@ -109,7 +110,7 @@ Prefs.prototype =
         });
         scrollWindowComponents.add_with_viewport(this.gridComponents);
         scrollWindowComponents.show_all();
-        let labelComponents = new Gtk.Label({label: "Elements"});
+        let labelComponents = new Gtk.Label({label: "Components"});
         notebook.append_page(scrollWindowComponents, labelComponents);
 
         let labelDisplayTasks = new Gtk.Label({label: _("Tasks"), xalign: 0});
@@ -254,7 +255,7 @@ Prefs.prototype =
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
-        this.valueActiveTaskBackgroundColor = new Gtk.ColorButton();
+        this.valueActiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Background Color"});
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
@@ -569,17 +570,17 @@ Prefs.prototype =
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink1.set_always_show_image(true);
-        let resetButton = new Gtk.Button({label: _("RESET ALL")});
-        resetButton.connect('clicked', Lang.bind(this, this.reset));
-        this.gridTaskBar.attach(resetButton, 3, 1, 3, 1);
-        this.gridTaskBar.attach(labelLink1, 1, 1, 1, 1);
+        let labelVersion = new Gtk.Label({label: _("Version")+" 35"});
+        this.gridTaskBar.attach(labelVersion, 1, 1, 1, 1);
+        this.gridTaskBar.attach(labelLink1, 3, 1, 3, 1);
         let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink2.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink2, 1, 2, 1, 1);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 35"});
-        this.gridTaskBar.attach(labelVersion, 3, 2, 3, 1);
+        this.gridTaskBar.attach(labelLink2, 3, 2, 3, 1);
+        let resetButton = new Gtk.Button({label: _("RESET ALL")});
+        resetButton.connect('clicked', Lang.bind(this, this.reset));
+        this.gridTaskBar.attach(resetButton, 1, 2, 1, 1);
 
         let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 0, 1, 1);
@@ -592,7 +593,7 @@ Prefs.prototype =
         let labelSpaceTaskBar5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTaskBar.attach(labelSpaceTaskBar5, 6, 1, 1, 1);
         let labelSpaceTaskBar6 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar6, 0, 3, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar6, 0, 4, 1, 1);
 
         notebook.show_all();
         return notebook;
@@ -1020,6 +1021,11 @@ Prefs.prototype =
         this.valueIconSize.set_value(22);
         this.valueCloseButton.set_active(0);
         this.valueActiveTaskFrame.set_active(true);
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueActiveTaskBackgroundColor.set_rgba(rgba);
+        this.settings.set_string("active-task-background-color", RESETCOLOR);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
         this.valueDesktopButtonRightClick.set_active(true);
