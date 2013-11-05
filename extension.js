@@ -838,7 +838,7 @@ TaskBar.prototype =
     {
         if (! this.resetHover)
         {
-let activeWorkspace = global.screen.get_active_workspace();
+            let activeWorkspace = global.screen.get_active_workspace();
             this.tasksList.forEach(
                 function(task)
                 {
@@ -851,9 +851,9 @@ let activeWorkspace = global.screen.get_active_workspace();
                             windowWorkspace.activate(global.get_current_time());
                             windowTask.activate(global.get_current_time());
                         }
-                    else if (! windowTask.has_focus())
-                        windowTask.activate(global.get_current_time());
-}
+                        else if (! windowTask.has_focus())
+                            windowTask.activate(global.get_current_time());
+                    }
                 },
                 this
             );
@@ -880,14 +880,13 @@ let activeWorkspace = global.screen.get_active_workspace();
             this.hidePreview();
         }
         else if (type == 1) //Add window
-{
+        {
             this.addTaskInList(window);
-}
+        }
         else if (type == 2) //Remove window
         {
             this.removeTaskInList(window);
             this.hidePreview();
-
         }
     },
 

@@ -43,8 +43,8 @@ Windows.prototype =
         this.callbackWindowChanged = callbackWindowChanged;
 
         //Init WindowsList
-this.onWorkspaceChanged();
-this.buildWindowsList();
+        this.onWorkspaceChanged();
+        this.buildWindowsList();
 
 
 
@@ -56,7 +56,7 @@ this.buildWindowsList();
     destruct: function()
     {
         //Remove window manager signals
-  //      global.screen.disconnect(this.workspaceSwitchSignal);
+        global.screen.disconnect(this.workspaceSwitchSignal);
         global.screen.disconnect(this.nWorkspacesSignal);
 
         //Remove workspace signals
@@ -95,8 +95,7 @@ this.buildWindowsList();
             let activeWorkspace = global.screen.get_workspace_by_index(i);
             this.windowAddedSignal = activeWorkspace.connect_after('window-added', Lang.bind(this, this.buildWindowsList));
             this.windowRemovedSignal = activeWorkspace.connect_after('window-removed', Lang.bind(this, this.buildWindowsList));
-      }
-
+        }
     },
 
     buildWindowsList: function()
@@ -120,8 +119,6 @@ this.buildWindowsList();
 
         //Call User Callback
         this.callbackWindowsListChanged.call(this.callBackThis, this.windowsList, 0, null);
-
-
     },
 
     onWindowChanged: function(window, object, type)
