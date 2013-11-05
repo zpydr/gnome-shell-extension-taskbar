@@ -46,8 +46,6 @@ Windows.prototype =
         this.onWorkspaceChanged();
         this.buildWindowsList();
 
-
-
         //Add window manager signals
         this.workspaceSwitchSignal = global.screen.connect('workspace-switched', Lang.bind(this, this.buildWindowsList));
         this.nWorkspacesSignal = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.onWorkspaceChanged));
