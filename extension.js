@@ -17,10 +17,13 @@
 //  zpydr@linuxwaves.com
 
 const Clutter = imports.gi.Clutter;
+const Gdk = imports.gi.Gdk;
+const GdkPixbuf = imports.gi.GdkPixbuf;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
+const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
 const St = imports.gi.St;
 
@@ -183,7 +186,8 @@ TaskBar.prototype =
             this.settings.connect("changed::appearance-four", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::appearance-five", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged))
+            this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged))
         ];
     },
 
@@ -330,7 +334,9 @@ TaskBar.prototype =
         else if (this.panelBox == 3)
             this.newBox = Main.panel._rightBox;
         this.children = this.newBox.get_children().length;
-        this.settings.set_int("position-max-right", this.children);
+        let positionMaxRight = this.settings.get_int("position-max-right");
+        if (positionMaxRight !== this.children)
+            this.settings.set_int("position-max-right", this.children);
     },
 
     onBoxChanged: function()
@@ -388,10 +394,17 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-showapps-button"))
         {
             let iconPath = this.settings.get_string("appview-button-icon");
-            if (! this.settings.get_boolean("appview-button-icon-changed"))
-                this.showAppsIcon = Gio.icon_new_for_string(this.extensionMeta.path + '/images/appview-button-default.svg');
-            else
-                this.showAppsIcon = Gio.icon_new_for_string(iconPath);
+            let pixbuf;
+            try
+            {
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
+            }
+            catch (e)
+            {
+                iconPath = this.extensionMeta.path + '/images/appview-button-default.svg';
+                this.settings.set_string("appview-button-icon", iconPath);
+            }
+            this.showAppsIcon = Gio.icon_new_for_string(iconPath);
             this.iconShowApps = new St.Icon(
             {
                 gicon: this.showAppsIcon,
@@ -415,26 +428,31 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-workspace-button"))
         {
             //Connect Workspace Changes
-            this.workspaceSwitchedId = global.screen.connect('workspace-switched', Lang.bind(this, this.onParamChanged));
-            this.nWorkspacesId = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.onParamChanged));
+            this.workspaceSwitchedId = global.screen.connect('workspace-switched', Lang.bind(this, this.updateWorkspaces));
+            this.nWorkspacesId = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.updateWorkspaces));
 
-            this.activeWorkspaceIndex = global.screen.get_active_workspace().index();
-            this.totalWorkspace = global.screen.n_workspaces - 1;
-            let labelWorkspaceIndex = this.activeWorkspaceIndex + 1;
-            let labelTotalWorkspace = this.totalWorkspace + 1;
-            if (this.settings.get_enum("workspace-button-index") == 1)
-                this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
-            else if (this.settings.get_enum("workspace-button-index") == 0)
-                this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
-            this.fontSize = this.settings.get_int('font-size');
-            this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
             this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
             let signalWorkspace = this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
-            this.buttonWorkspace.set_child(this.labelWorkspace);
-            let boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            boxWorkspace.add_actor(this.buttonWorkspace);
-            this.boxMainWorkspaceButton.add_actor(boxWorkspace);
+            this.updateWorkspaces();
+            this.boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxWorkspace.add_actor(this.buttonWorkspace);
+            this.boxMainWorkspaceButton.add_actor(this.boxWorkspace);
         }
+    },
+
+    updateWorkspaces: function()
+    {
+        this.activeWorkspaceIndex = global.screen.get_active_workspace().index();
+        this.totalWorkspace = global.screen.n_workspaces - 1;
+        let labelWorkspaceIndex = this.activeWorkspaceIndex + 1;
+        let labelTotalWorkspace = this.totalWorkspace + 1;
+        if (this.settings.get_enum("workspace-button-index") == 1)
+            this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
+        else if (this.settings.get_enum("workspace-button-index") == 0)
+            this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
+        this.fontSize = this.settings.get_int('font-size');
+        this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
+        this.buttonWorkspace.set_child(this.labelWorkspace);
     },
 
     //Add Desktop Button
@@ -443,10 +461,17 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-desktop-button"))
         {
             let iconPath = this.settings.get_string("desktop-button-icon");
-            if (! this.settings.get_boolean("desktop-button-icon-changed"))
-                this.desktopButtonIcon = Gio.icon_new_for_string(this.extensionMeta.path + '/images/desktop-button-default.png');
-            else
-                this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
+            let pixbuf;
+            try
+            {
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
+            }
+            catch (e)
+            {
+                iconPath = this.extensionMeta.path + '/images/desktop-button-default.png';
+                this.settings.set_string("desktop-button-icon", iconPath);
+            }
+            this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
             let iconDesktop = new St.Icon(
             {
                 gicon: this.desktopButtonIcon,
@@ -612,8 +637,8 @@ TaskBar.prototype =
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
         let h = null;
-        h = (this.iconSize + this.bottomPanelVertical + 4);
-        this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-h);
+        h = (this.bottomPanelVertical + 4);
+        this.bottomPanelActor.set_position(primary.x, primary.y + primary.height - h - this.iconSize);
         this.bottomPanelActor.set_size(primary.width, -1);
         Main.messageTray.actor.set_anchor_point(0, h);
         if (ShellVersion[1] !== 4)
@@ -775,6 +800,7 @@ TaskBar.prototype =
 
     onClickTaskButton: function(button, pspec, window)
     {
+        let activeWorkspace = global.screen.get_active_workspace();
         let numButton = pspec.get_button();
         if ((numButton == LEFTBUTTON) && (! this.settings.get_boolean("hover-switch-task"))) //Left Button (Hover deactivated)
         {
@@ -782,9 +808,15 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
+                    let windowWorkspace = windowTask.get_workspace();
                     if (windowTask == window)
                     {
-                        if (! windowTask.has_focus())
+                        if (windowWorkspace !== activeWorkspace)
+                        {
+                            windowWorkspace.activate(global.get_current_time());
+                            windowTask.activate(global.get_current_time());
+                        }
+                        else if (! windowTask.has_focus())
                             windowTask.activate(global.get_current_time());
                         else if (! Main.overview.visible)
                             windowTask.minimize(global.get_current_time());
@@ -806,12 +838,22 @@ TaskBar.prototype =
     {
         if (! this.resetHover)
         {
+let activeWorkspace = global.screen.get_active_workspace();
             this.tasksList.forEach(
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    if ((windowTask == window) && (! windowTask.has_focus()))
+                    let windowWorkspace = windowTask.get_workspace();
+                    if (windowTask == window)
+                    {
+                        if (windowWorkspace !== activeWorkspace)
+                        {
+                            windowWorkspace.activate(global.get_current_time());
+                            windowTask.activate(global.get_current_time());
+                        }
+                    else if (! windowTask.has_focus())
                         windowTask.activate(global.get_current_time());
+}
                 },
                 this
             );
@@ -838,11 +880,14 @@ TaskBar.prototype =
             this.hidePreview();
         }
         else if (type == 1) //Add window
+{
             this.addTaskInList(window);
+}
         else if (type == 2) //Remove window
         {
             this.removeTaskInList(window);
             this.hidePreview();
+
         }
     },
 
@@ -850,11 +895,13 @@ TaskBar.prototype =
     activeTasks: function(window)
     {
         let active = false;
+        let activeWorkspace = global.screen.get_active_workspace();
         this.tasksList.forEach(
             function(task)
             {
                 let [windowTask, buttonTask, signalsTask] = task;
-                if (! windowTask.minimized)
+                let workspaceTask = windowTask.get_workspace();
+                if ((! windowTask.minimized) && (workspaceTask == activeWorkspace))
                     active = true;
             },
             this
@@ -931,6 +978,12 @@ TaskBar.prototype =
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
+        //Display tasks of All Workspaces
+        if (! this.settings.get_boolean("tasks-all-workspaces"))
+        {
+            let workspace = global.screen.get_active_workspace();
+            buttonTask.visible = window.located_on_workspace(workspace);
+        }
         if (window.has_focus())
         {
             buttonTask.add_style_pseudo_class(this.activeTask);

@@ -102,6 +102,11 @@
             <summary>Icon Size</summary>
             <description/>
         </key>
+        <key name="tasks-all-workspaces" type="b">
+            <default>false</default>
+            <summary>Display Tasks from all Workspaces</summary>
+            <description/>
+        </key>
         <key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-style">
             <default>'off'</default>
             <summary>Middle/Right Click to Close Task</summary>
@@ -129,13 +134,8 @@
             <description/>
         </key>
         <key name="desktop-button-icon" type="s">
-            <default>'default'</default>
+            <default>'desktopbuttonicon'</default>
             <summary>Desktop Button Icon</summary>
-            <description/>
-        </key>
-        <key name="desktop-button-icon-changed" type="b">
-            <default>false</default>
-            <summary>Desktop Button Icon Changed</summary>
             <description/>
         </key>
         <key name="desktop-button-right-click" type="b">
@@ -160,13 +160,8 @@
             <description/>
         </key>
         <key name="appview-button-icon" type="s">
-            <default>'default'</default>
+            <default>'appviewbuttonicon'</default>
             <summary>Appview Button Icon</summary>
-            <description/>
-        </key>
-        <key name="appview-button-icon-changed" type="b">
-            <default>false</default>
-            <summary>Appview Button Icon Changed</summary>
             <description/>
         </key>
         <key name="hide-activities" type="b">

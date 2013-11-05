@@ -234,24 +234,30 @@ Prefs.prototype =
         let labelTasks = new Gtk.Label({label: "Tasks"});
         notebook.append_page(scrollWindowTasks, labelTasks);
 
+        let labelAllWorkspaces = new Gtk.Label({label: _("Tasks from\nAll Workspaces"), xalign: 0});
+        this.gridTasks.attach(labelAllWorkspaces, 1, 1, 1, 1);
+        this.valueAllWorkspaces = new Gtk.Switch({active: this.settings.get_boolean("tasks-all-workspaces")});
+        this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
+        this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 2, 1);
+
         let labelCloseButton = new Gtk.Label({label: _("Close Tasks"), xalign: 0});
-        this.gridTasks.attach(labelCloseButton, 1, 1, 1, 1);
+        this.gridTasks.attach(labelCloseButton, 1, 2, 1, 1);
         this.valueCloseButton = new Gtk.ComboBoxText();
         this.valueCloseButton.append_text(_("OFF"));
         this.valueCloseButton.append_text(_("Middle Click"));
         this.valueCloseButton.append_text(_("Right Click"));
         this.valueCloseButton.set_active(this.settings.get_enum("close-button"));
         this.valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton));
-        this.gridTasks.attach(this.valueCloseButton, 3, 1, 3, 1);
+        this.gridTasks.attach(this.valueCloseButton, 3, 2, 3, 1);
 
         let labelActiveTaskFrame = new Gtk.Label({label: _("Active Task Frame"), xalign: 0});
-        this.gridTasks.attach(labelActiveTaskFrame, 1, 2, 1, 1);
+        this.gridTasks.attach(labelActiveTaskFrame, 1, 3, 1, 1);
         this.valueActiveTaskFrame = new Gtk.Switch({active: this.settings.get_boolean("active-task-frame")});
         this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
-        this.gridTasks.attach(this.valueActiveTaskFrame, 4, 2, 2, 1);
+        this.gridTasks.attach(this.valueActiveTaskFrame, 4, 3, 2, 1);
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task\nBackground Color"), xalign: 0});
-        this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 3, 1, 1);
+        this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 4, 1, 1);
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
@@ -259,21 +265,21 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
-        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 3, 2, 1);
+        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 4, 2, 1);
 
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
-        this.gridTasks.attach(labelHoverSwitchTask, 1, 4, 1, 1);
+        this.gridTasks.attach(labelHoverSwitchTask, 1, 5, 1, 1);
         this.valueHoverSwitchTask = new Gtk.Switch({active: this.settings.get_boolean("hover-switch-task")});
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
-        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 4, 2, 1);
+        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 5, 2, 1);
 
         let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" [350] "+_("(ms)"), xalign: 0});
-        this.gridTasks.attach(labelHoverDelay, 1, 5, 2, 1);
+        this.gridTasks.attach(labelHoverDelay, 1, 6, 2, 1);
         this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 50});
         let value2HoverDelay = new Gtk.SpinButton({adjustment: this.valueHoverDelay, snap_to_ticks: true});
         value2HoverDelay.set_value(this.settings.get_int("hover-delay"));
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
-        this.gridTasks.attach(value2HoverDelay, 3, 5, 3, 1);
+        this.gridTasks.attach(value2HoverDelay, 3, 6, 3, 1);
 
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks1, 0, 0, 1, 1);
@@ -286,7 +292,7 @@ Prefs.prototype =
         let labelSpaceTasks5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks5, 6, 1, 1, 1);
         let labelSpaceTasks6 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks6, 0, 6, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks6, 0, 7, 1, 1);
 
         this.gridButtons = new Gtk.Grid();
         this.gridButtons.margin = this.gridButtons.row_spacing = 10;
@@ -304,10 +310,9 @@ Prefs.prototype =
 
         let labelDesktopButtonIcon = new Gtk.Label({label: _("Desktop Button Icon"), xalign: 0});
         this.gridButtons.attach(labelDesktopButtonIcon, 1, 1, 1, 1);
-        this.valueDesktopButtonIcon = new Gtk.Image();
         this.desktopIconFilename = this.settings.get_string("desktop-button-icon");
+        this.valueDesktopButtonIcon = new Gtk.Image();
         this.loadDesktopIcon();
-        this.settings.set_boolean("desktop-button-icon-changed", true);
         this.valueDesktopButtonIcon2 = new Gtk.Button({image: this.valueDesktopButtonIcon});
         this.valueDesktopButtonIcon2.connect('clicked', Lang.bind(this, this.changeDesktopButtonIcon));
         this.gridButtons.attach(this.valueDesktopButtonIcon2, 4, 1, 2, 1);
@@ -340,10 +345,9 @@ Prefs.prototype =
 
         let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
         this.gridButtons.attach(labelAppviewButtonIcon, 1, 5, 1, 1);
-        this.valueAppviewButtonIcon = new Gtk.Image();
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
+        this.valueAppviewButtonIcon = new Gtk.Image();
         this.loadAppviewIcon();
-        this.settings.set_boolean("appview-button-icon-changed", true);
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 5, 2, 1);
@@ -689,6 +693,11 @@ Prefs.prototype =
         this.settings.set_int("icon-size", this.valueIconSize.get_value());
     },
 
+    changeAllWorkspaces: function(object)
+    {
+        this.settings.set_boolean("tasks-all-workspaces", object.active);
+    },
+
     changeCloseButton: function(object)
     {
         this.settings.set_enum("close-button", this.valueCloseButton.get_active());
@@ -739,16 +748,16 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogDesktopIcon.add_filter(filter);
         let response = this.dialogDesktopIcon.run();
-        if(response == -3)
+        if(response == -3) //Open
         {
             this.desktopIconFilename = this.dialogDesktopIcon.get_filename();
-            if (this.desktopIconFilename != iconPath)
+            if (this.desktopIconFilename !== iconPath)
             {
                 iconPath = this.desktopIconFilename;
                 this.loadDesktopIcon();
             }
         }
-        if(response == -1)
+        if(response == -1) //Reset
         {
             this.desktopIconFilename = DESKTOPICON;
             this.loadDesktopIcon();
@@ -763,14 +772,16 @@ Prefs.prototype =
         try
         {
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.desktopIconFilename, 24, 24, null);
-            this.settings.set_string("desktop-button-icon", this.desktopIconFilename);
         }
         catch (e)
         {
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(DESKTOPICON, 24, 24, null);
-            this.settings.set_string("desktop-button-icon", DESKTOPICON);
+            this.desktopIconFilename = DESKTOPICON;
         }
         this.valueDesktopButtonIcon.set_from_pixbuf(pixbuf);
+        let settings = this.settings.get_string("desktop-button-icon");
+        if (this.desktopIconFilename !== settings)
+            this.settings.set_string("desktop-button-icon", this.desktopIconFilename);
     },
 
     loadDesktopIconPreview: function()
@@ -841,7 +852,7 @@ Prefs.prototype =
         if(response == -3)
         {
             this.appviewIconFilename = this.dialogAppviewIcon.get_filename();
-            if (this.appviewIconFilename != iconPath)
+            if (this.appviewIconFilename !== iconPath)
             {
                 iconPath = this.appviewIconFilename;
                 this.loadAppviewIcon();
@@ -862,14 +873,16 @@ Prefs.prototype =
         try
         {
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.appviewIconFilename, 24, 24, null);
-            this.settings.set_string("appview-button-icon", this.appviewIconFilename);
         }
         catch (e)
         {
             pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(APPVIEWICON, 24, 24, null);
-            this.settings.set_string("appview-button-icon", APPVIEWICON);
+            this.appviewIconFilename = APPVIEWICON;
         }
         this.valueAppviewButtonIcon.set_from_pixbuf(pixbuf);
+        let settings = this.settings.get_string("appview-button-icon");
+        if (this.appviewIconFilename !== settings)
+            this.settings.set_string("appview-button-icon", this.appviewIconFilename);
     },
 
     loadAppviewIconPreview: function()
@@ -1019,6 +1032,7 @@ Prefs.prototype =
         this.valueBottomPanel.set_active(false);
         this.valueBottomPanelVertical.set_value(0);        
         this.valueIconSize.set_value(22);
+        this.valueAllWorkspaces.set_active(false);
         this.valueCloseButton.set_active(0);
         this.valueActiveTaskFrame.set_active(true);
         let color = RESETCOLOR;

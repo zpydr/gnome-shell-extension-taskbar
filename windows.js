@@ -43,20 +43,32 @@ Windows.prototype =
         this.callbackWindowChanged = callbackWindowChanged;
 
         //Init WindowsList
-        this.onWorkspaceChanged();
+this.onWorkspaceChanged();
+this.buildWindowsList();
+
+
 
         //Add window manager signals
-        this.workspaceSwitchSignal = global.screen.connect('workspace-switched', Lang.bind(this, this.onWorkspaceChanged));
+        this.workspaceSwitchSignal = global.screen.connect('workspace-switched', Lang.bind(this, this.buildWindowsList));
+        this.nWorkspacesSignal = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.onWorkspaceChanged));
     },
 
     destruct: function()
     {
         //Remove window manager signals
-        global.screen.disconnect(this.workspaceSwitchSignal);
+  //      global.screen.disconnect(this.workspaceSwitchSignal);
+        global.screen.disconnect(this.nWorkspacesSignal);
 
         //Remove workspace signals
-        this.workspace.disconnect(this.windowAddedSignal);
-        this.workspace.disconnect(this.windowRemovedSignal);
+        let totalWorkspaces = global.screen.n_workspaces;
+        for (let i = 0; i < totalWorkspaces; i++)
+        {
+            let activeWorkspace = global.screen.get_workspace_by_index(i);
+            activeWorkspace.disconnect(this.windowAddedSignal);
+            activeWorkspace.disconnect(this.windowRemovedSignal);
+        }
+        this.windowAddedSignal = null;
+        this.windowRemovedSignal = null;
 
         //Clean windows list
         this.cleanWindowsList();
@@ -65,32 +77,51 @@ Windows.prototype =
     onWorkspaceChanged: function()
     {
         //Remove workspace signals if necessary
-        if (this.windowAddedSignal != null)
-            this.workspace.disconnect(this.windowAddedSignal);
-        if (this.windowRemovedSignal != null)
-            this.workspace.disconnect(this.windowRemovedSignal);
+        let totalWorkspaces = global.screen.n_workspaces;
+        for (let i = 0; i < totalWorkspaces; i++)
+        {
+            let activeWorkspace = global.screen.get_workspace_by_index(i);
+            if (this.windowAddedSignal != null)
+                activeWorkspace.disconnect(this.windowAddedSignal);
+            if (this.windowRemovedSignal != null)
+                activeWorkspace.disconnect(this.windowRemovedSignal);
+        }
+        this.windowAddedSignal = null;
+        this.windowRemovedSignal = null;
 
+        //Add workspace signals
+        for (let i = 0; i < totalWorkspaces; i++)
+        {
+            let activeWorkspace = global.screen.get_workspace_by_index(i);
+            this.windowAddedSignal = activeWorkspace.connect_after('window-added', Lang.bind(this, this.buildWindowsList));
+            this.windowRemovedSignal = activeWorkspace.connect_after('window-removed', Lang.bind(this, this.buildWindowsList));
+      }
+
+    },
+
+    buildWindowsList: function()
+    {
         //Clean windows list
         this.cleanWindowsList();
 
-        //Get current workspace
-        this.workspace = global.screen.get_active_workspace();
-
         //Build windows list
-        this.workspace.list_windows().reverse().forEach(
-            function(window)
-            {
-                this.addWindowInList(window);
-            },
-            this
-        );
+        let totalWorkspaces = global.screen.n_workspaces;
+        for (let i = 0; i < totalWorkspaces; i++)
+        {
+            let activeWorkspace = global.screen.get_workspace_by_index(i);
+            activeWorkspace.list_windows().reverse().forEach(
+                function(window)
+                {
+                    this.addWindowInList(window);
+                },
+                this
+            );
+        }
 
         //Call User Callback
         this.callbackWindowsListChanged.call(this.callBackThis, this.windowsList, 0, null);
 
-        //Add workspace signals
-        this.windowAddedSignal = this.workspace.connect_after('window-added', Lang.bind(this, this.onWindowAdded));
-        this.windowRemovedSignal = this.workspace.connect_after('window-removed', Lang.bind(this, this.onWindowRemoved));
+
     },
 
     onWindowChanged: function(window, object, type)
