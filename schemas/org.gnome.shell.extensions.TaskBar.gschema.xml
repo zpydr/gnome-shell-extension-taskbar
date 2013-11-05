@@ -102,6 +102,24 @@
             <summary>Icon Size</summary>
             <description/>
         </key>
+        <key name="icon-size-bottom" type="i">
+            <range min="1" max="96"/>
+            <default>22</default>
+            <summary>Icon Size</summary>
+            <description/>
+        </key>
+        <key name="font-size" type="i">
+            <range min="1" max="96"/>
+            <default>16</default>
+            <summary>Icon Size</summary>
+            <description/>
+        </key>
+        <key name="font-size-bottom" type="i">
+            <range min="1" max="96"/>
+            <default>16</default>
+            <summary>Icon Size</summary>
+            <description/>
+        </key>
         <key name="tasks-all-workspaces" type="b">
             <default>false</default>
             <summary>Display Tasks from all Workspaces</summary>
@@ -118,7 +136,7 @@
             <description/>
         </key>
         <key name="active-task-background-color" type="s">
-            <default>'#00000000'</default>
+            <default>'rgba(0,0,0,0)'</default>
             <summary>Active Task Background Color</summary>
             <description/>
         </key>
@@ -151,12 +169,6 @@
         <key name="workspace-button-index" enum="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
             <default>'index'</default>
             <summary>Workspace Button Index</summary>
-            <description/>
-        </key>
-        <key name="font-size" type="i">
-            <range min="1" max="96"/>
-            <default>16</default>
-            <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">

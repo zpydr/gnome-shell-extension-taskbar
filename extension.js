@@ -39,7 +39,6 @@ const Windows = Extension.imports.windows;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
-const RESETCOLOR = '#00000000';
 const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
@@ -164,7 +163,9 @@ TaskBar.prototype =
         this.settingSignals =
         [
             this.settings.connect("changed::icon-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::icon-size-bottom", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::font-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::font-size-bottom", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::panel-box", Lang.bind(this, this.onBoxChanged)),
             this.settings.connect("changed::panel-position", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-favorites", Lang.bind(this, this.onParamChanged)),
@@ -451,7 +452,10 @@ TaskBar.prototype =
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
         else if (this.settings.get_enum("workspace-button-index") == 0)
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
-        this.fontSize = this.settings.get_int('font-size');
+        if (this.settings.get_boolean("bottom-panel"))
+            this.fontSize = this.settings.get_int('font-size-bottom');
+        else
+            this.fontSize = this.settings.get_int('font-size');
         this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
         this.buttonWorkspace.set_child(this.labelWorkspace);
     },
@@ -632,6 +636,7 @@ TaskBar.prototype =
     //Bottom Panel
     bottomPanel: function(h)
     {
+        this.iconSize = this.settings.get_int('icon-size-bottom');
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.fullscreenChangedId = null;
         if (ShellVersion[1] === 4)

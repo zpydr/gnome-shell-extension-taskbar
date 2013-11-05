@@ -20,7 +20,7 @@ Favorites - add from dash
 Align position on the top panel
 Bottom panel
 Icon size
-Display tasks from all workspaces
+Tasks on all workspaces
 Activate tasks on hover
 Thumbnail/label-preview
 Hide activities
