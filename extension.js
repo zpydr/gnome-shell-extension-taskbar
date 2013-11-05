@@ -23,7 +23,6 @@ const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
-const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
 const St = imports.gi.St;
 
@@ -581,6 +580,22 @@ TaskBar.prototype =
                 }
             }
         }
+        else if (ShellVersion[1] === 10)
+        {
+            this.appMenuActor = Main.panel.statusArea.appMenu.actor;
+            if (this.settings.get_boolean("hide-default-application-menu"))
+            {
+                this.appMenuActor.hide();
+                this.hidingId = Main.overview.connect('hiding', function ()
+                {
+                    Main.panel.statusArea.appMenu.actor.hide();
+                });
+                this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
+                {
+                    Main.panel.statusArea.appMenu.actor.hide();
+                });
+            }
+        }
         else
         {
             this.appMenuActor = Main.panel.statusArea.appMenu.actor;
@@ -594,13 +609,6 @@ TaskBar.prototype =
                 {
                     Main.panel.statusArea.appMenu.actor.hide();
                 });
-                if (ShellVersion[1] === 10)
-                {
-	            this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
-                    {
-                        Main.panel.statusArea.appMenu.actor.hide();
-                    });
-                }
             }
         }
     },
