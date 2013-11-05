@@ -710,7 +710,7 @@ Prefs.prototype =
     changeIconSizeBottom: function(object)
     {
         if (! this.settings.get_boolean("bottom-panel"))
-            this.value2IconSizeBottom.set_value(this.settings.get_int("icon-size-bottom"));
+            this.valueIconSizeBottom.set_value(this.settings.get_int("icon-size-bottom"));
         else
             this.settings.set_int("icon-size-bottom", this.valueIconSizeBottom.get_value());
     },
@@ -723,7 +723,7 @@ Prefs.prototype =
     changeFontSizeBottom: function(object)
     {
         if (! this.settings.get_boolean("bottom-panel"))
-            this.value2FontSizeBottom.set_value(this.settings.get_int("font-size-bottom"));
+            this.valueFontSizeBottom.set_value(this.settings.get_int("font-size-bottom"));
         else
             this.settings.set_int("font-size-bottom", this.valueFontSizeBottom.get_value());
     },
