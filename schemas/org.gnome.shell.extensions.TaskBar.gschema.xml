@@ -122,6 +122,11 @@
             <summary>Active Task Background Color</summary>
             <description/>
         </key>
+        <key name="active-task-background-color-set" type="b">
+            <default>false</default>
+            <summary>Active Task Background Color</summary>
+            <description/>
+        </key>
         <key name="hover-switch-task" type="b">
             <default>false</default>
             <summary>Switch Task on Hover</summary>

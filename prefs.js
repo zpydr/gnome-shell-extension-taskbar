@@ -267,19 +267,23 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
         this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 4, 2, 1);
 
+        this.value2ActiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("active-task-background-color-set")});
+        this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
+        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 5, 2, 1);
+
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
-        this.gridTasks.attach(labelHoverSwitchTask, 1, 5, 1, 1);
+        this.gridTasks.attach(labelHoverSwitchTask, 1, 6, 1, 1);
         this.valueHoverSwitchTask = new Gtk.Switch({active: this.settings.get_boolean("hover-switch-task")});
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
-        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 5, 2, 1);
+        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 6, 2, 1);
 
         let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" [350] "+_("(ms)"), xalign: 0});
-        this.gridTasks.attach(labelHoverDelay, 1, 6, 2, 1);
+        this.gridTasks.attach(labelHoverDelay, 1, 7, 2, 1);
         this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 50});
         let value2HoverDelay = new Gtk.SpinButton({adjustment: this.valueHoverDelay, snap_to_ticks: true});
         value2HoverDelay.set_value(this.settings.get_int("hover-delay"));
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
-        this.gridTasks.attach(value2HoverDelay, 3, 6, 3, 1);
+        this.gridTasks.attach(value2HoverDelay, 3, 7, 3, 1);
 
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks1, 0, 0, 1, 1);
@@ -292,7 +296,7 @@ Prefs.prototype =
         let labelSpaceTasks5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks5, 6, 1, 1, 1);
         let labelSpaceTasks6 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks6, 0, 7, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks6, 0, 8, 1, 1);
 
         this.gridButtons = new Gtk.Grid();
         this.gridButtons.margin = this.gridButtons.row_spacing = 10;
@@ -714,6 +718,11 @@ Prefs.prototype =
         this.settings.set_string("active-task-background-color", this.backgroundColor);
     },
 
+    changeActiveTaskBackgroundColorSet: function(object)
+    {
+        this.settings.set_boolean("active-task-background-color-set", object.active);
+    },
+
     changeHoverSwitchTask: function(object)
     {
         this.settings.set_boolean("hover-switch-task", object.active);
@@ -1040,6 +1049,7 @@ Prefs.prototype =
         rgba.parse(color);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.settings.set_string("active-task-background-color", RESETCOLOR);
+        this.value2ActiveTaskBackgroundColor.set_active(false);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
         this.valueDesktopButtonRightClick.set_active(true);

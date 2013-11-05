@@ -39,6 +39,7 @@ const Windows = Extension.imports.windows;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
+const RESETCOLOR = '#00000000';
 const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
@@ -175,6 +176,7 @@ TaskBar.prototype =
             this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::active-task-background-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::active-task-background-color-set", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-tasks", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
             this.settings.connect("changed::disable-hotcorner", Lang.bind(this, this.disableHotCorner)),
@@ -617,7 +619,10 @@ TaskBar.prototype =
     activeTaskFrame: function()
     {
         this.backgroundColor = this.settings.get_string("active-task-background-color");
-        this.backgroundStyleColor = "background-color: " + this.backgroundColor;
+        if (this.settings.get_boolean("active-task-background-color-set"))
+            this.backgroundStyleColor = "background-color: " + this.backgroundColor;
+        else
+            this.backgroundStyleColor = "None";
         if (this.settings.get_boolean("active-task-frame"))
             this.activeTask = "active-task-frame";
         else
