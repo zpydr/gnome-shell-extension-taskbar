@@ -650,8 +650,8 @@ TaskBar.prototype =
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
         let h = null;
-        h = (this.bottomPanelVertical + 4);
-        this.bottomPanelActor.set_position(primary.x, primary.y + primary.height - h - this.iconSize);
+        h = (this.iconSize + this.bottomPanelVertical + 4);
+        this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-h);
         this.bottomPanelActor.set_size(primary.width, -1);
         Main.messageTray.actor.set_anchor_point(0, h);
         if (ShellVersion[1] !== 4)

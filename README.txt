@@ -1,4 +1,4 @@
-GNOME Shell Extension TaskBar Version 36 for GNOME 3.4 / 3.6 / 3.8 / 3.10
+GNOME Shell Extension TaskBar Version 37 for GNOME 3.4 / 3.6 / 3.8 / 3.10
 https://extensions.gnome.org/extension/584/taskbar/
 https://github.com/zpydr/gnome-shell-extension-taskbar/
 https://launchpad.net/gnome-shell-extension-taskbar/
@@ -20,6 +20,7 @@ Favorites - add from dash
 Align position on the top panel
 Bottom panel
 Icon size
+Display Tasks from all Workspaces
 Activate tasks on hover
 Thumbnail/label-preview
 Hide activities
