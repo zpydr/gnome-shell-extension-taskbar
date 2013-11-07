@@ -39,6 +39,14 @@
         <value value="3" nick="showappsbutton"/>
         <value value="4" nick="favorites"/>
     </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.separator-style">
+        <value value="0" nick="separator1"/>
+        <value value="1" nick="separator2"/>
+        <value value="2" nick="separator3"/>
+        <value value="3" nick="separator4"/>
+        <value value="4" nick="separator5"/>
+        <value value="5" nick="separator6"/>
+    </enum>
     <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
         <key name="first-start" type="b">
             <default>true</default>
@@ -186,6 +194,143 @@
             <summary>Hide Activities</summary>
             <description/>
         </key>
+        <key name="separator-one" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-two" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-three" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-four" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-five" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-six" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-one-bottom" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-two-bottom" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-three-bottom" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-four-bottom" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-five-bottom" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-six-bottom" type="b">
+            <default>false</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-one-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-two-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-three-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-four-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-five-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-six-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-one-bottom-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-two-bottom-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-three-bottom-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-four-bottom-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-five-bottom-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-six-bottom-size" type="i">
+            <range min="1" max="2000"/>
+            <default>20</default>
+            <summary>Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-selection" enum="org.gnome.shell.extensions.TaskBar.separator-style">
+            <default>'separator1'</default>
+            <summary>Separator Selection</summary>
+            <description/>
+        </key>
         <key name="disable-hotcorner" type="b">
             <default>false</default>
             <summary>Disable Hot Corner</summary>
@@ -223,29 +368,39 @@
             <summary>Delay before Preview</summary>
             <description/>
         </key>
-        <key name="appearance-one" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
-            <default>'favorites'</default>
-            <summary>Appearance One</summary>
-            <description/>
-        </key>
-        <key name="appearance-two" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
-            <default>'showappsbutton'</default>
-            <summary>Appearance Two</summary>
-            <description/>
-        </key>
-        <key name="appearance-three" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
-            <default>'workspacebutton'</default>
-            <summary>Appearance Three</summary>
-            <description/>
-        </key>
-        <key name="appearance-four" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
-            <default>'desktopbutton'</default>
-            <summary>Appearance Four</summary>
-            <description/>
-        </key>
-        <key name="appearance-five" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
+        <key name="appearance-selection" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
             <default>'tasks'</default>
-            <summary>Appearance Five</summary>
+            <summary>Align Component</summary>
+            <description/>
+        </key>
+        <key name="position-tasks" type="i">
+            <range min="0" max="4"/>
+            <default>4</default>
+            <summary>Position Tasks</summary>
+            <description/>
+        </key>
+        <key name="position-desktop-button" type="i">
+            <range min="0" max="4"/>
+            <default>3</default>
+            <summary>Position Desktop Button</summary>
+            <description/>
+        </key>
+        <key name="position-workspace-button" type="i">
+            <range min="0" max="4"/>
+            <default>2</default>
+            <summary>Position Workspace Button</summary>
+            <description/>
+        </key>
+        <key name="position-appview-button" type="i">
+            <range min="0" max="4"/>
+            <default>1</default>
+            <summary>Position Appview Button</summary>
+            <description/>
+        </key>
+        <key name="position-favorites" type="i">
+            <range min="0" max="4"/>
+            <default>0</default>
+            <summary>Position Favorites</summary>
             <description/>
         </key>
     </schema>
