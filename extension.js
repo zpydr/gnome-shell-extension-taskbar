@@ -149,77 +149,6 @@ TaskBar.prototype =
         this.setSignals();
     },
 
-    //Add Separators
-    addSeparators: function()
-    {
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-one"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-one-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorOneWidth = this.settings.get_int("separator-one-bottom-size");
-            else
-                this.separatorOneWidth = this.settings.get_int("separator-one-size");
-            this.boxSeparatorOne = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorOne.set_width(this.separatorOneWidth);
-            this.boxMainSeparatorOne.add_actor(this.boxSeparatorOne);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-two"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-two-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorTwoWidth = this.settings.get_int("separator-two-bottom-size");
-            else
-                this.separatorTwoWidth = this.settings.get_int("separator-two-size");
-            this.boxSeparatorTwo = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorTwo.set_width(this.separatorTwoWidth);
-            this.boxMainSeparatorTwo.add_actor(this.boxSeparatorTwo);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-three"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-three-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorThreeWidth = this.settings.get_int("separator-three-bottom-size");
-            else
-                this.separatorThreeWidth = this.settings.get_int("separator-three-size");
-            this.boxSeparatorThree = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorThree.set_width(this.separatorThreeWidth);
-            this.boxMainSeparatorThree.add_actor(this.boxSeparatorThree);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-four"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-four-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorFourWidth = this.settings.get_int("separator-four-bottom-size");
-            else
-                this.separatorFourWidth = this.settings.get_int("separator-four-size");
-            this.boxSeparatorFour = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorFour.set_width(this.separatorFourWidth);
-            this.boxMainSeparatorFour.add_actor(this.boxSeparatorFour);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-five"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-five-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorFiveWidth = this.settings.get_int("separator-five-bottom-size");
-            else
-                this.separatorFiveWidth = this.settings.get_int("separator-five-size");
-            this.boxSeparatorFive = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorFive.set_width(this.separatorFiveWidth);
-            this.boxMainSeparatorFive.add_actor(this.boxSeparatorFive);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-six"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-six-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorSixWidth = this.settings.get_int("separator-six-bottom-size");
-            else
-                this.separatorSixWidth = this.settings.get_int("separator-six-size");
-            this.boxSeparatorSix = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorSix.set_width(this.separatorSixWidth);
-            this.boxMainSeparatorSix.add_actor(this.boxSeparatorSix);
-        }
-    },
-
     disable: function()
     {
         //Show Activities if hidden
@@ -622,6 +551,77 @@ TaskBar.prototype =
             let boxDesktop = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             boxDesktop.add_actor(buttonDesktop);
             this.boxMainDesktopButton.add_actor(boxDesktop);
+        }
+    },
+
+    //Add Separators
+    addSeparators: function()
+    {
+        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-one"))) ||
+            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-one-bottom"))))
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+                this.separatorOneWidth = this.settings.get_int("separator-one-bottom-size");
+            else
+                this.separatorOneWidth = this.settings.get_int("separator-one-size");
+            this.boxSeparatorOne = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxSeparatorOne.set_width(this.separatorOneWidth);
+            this.boxMainSeparatorOne.add_actor(this.boxSeparatorOne);
+        }
+        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-two"))) ||
+            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-two-bottom"))))
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+                this.separatorTwoWidth = this.settings.get_int("separator-two-bottom-size");
+            else
+                this.separatorTwoWidth = this.settings.get_int("separator-two-size");
+            this.boxSeparatorTwo = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxSeparatorTwo.set_width(this.separatorTwoWidth);
+            this.boxMainSeparatorTwo.add_actor(this.boxSeparatorTwo);
+        }
+        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-three"))) ||
+            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-three-bottom"))))
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+                this.separatorThreeWidth = this.settings.get_int("separator-three-bottom-size");
+            else
+                this.separatorThreeWidth = this.settings.get_int("separator-three-size");
+            this.boxSeparatorThree = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxSeparatorThree.set_width(this.separatorThreeWidth);
+            this.boxMainSeparatorThree.add_actor(this.boxSeparatorThree);
+        }
+        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-four"))) ||
+            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-four-bottom"))))
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+                this.separatorFourWidth = this.settings.get_int("separator-four-bottom-size");
+            else
+                this.separatorFourWidth = this.settings.get_int("separator-four-size");
+            this.boxSeparatorFour = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxSeparatorFour.set_width(this.separatorFourWidth);
+            this.boxMainSeparatorFour.add_actor(this.boxSeparatorFour);
+        }
+        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-five"))) ||
+            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-five-bottom"))))
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+                this.separatorFiveWidth = this.settings.get_int("separator-five-bottom-size");
+            else
+                this.separatorFiveWidth = this.settings.get_int("separator-five-size");
+            this.boxSeparatorFive = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxSeparatorFive.set_width(this.separatorFiveWidth);
+            this.boxMainSeparatorFive.add_actor(this.boxSeparatorFive);
+        }
+        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-six"))) ||
+            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-six-bottom"))))
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+                this.separatorSixWidth = this.settings.get_int("separator-six-bottom-size");
+            else
+                this.separatorSixWidth = this.settings.get_int("separator-six-size");
+            this.boxSeparatorSix = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            this.boxSeparatorSix.set_width(this.separatorSixWidth);
+            this.boxMainSeparatorSix.add_actor(this.boxSeparatorSix);
         }
     },
 
