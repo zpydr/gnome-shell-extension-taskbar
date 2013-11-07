@@ -1368,10 +1368,35 @@ Prefs.prototype =
         this.valueDisplayFavoritesLabel.set_active(true);
         this.valuePreviewSize.set_value(350);
         this.valuePreviewDelay.set_value(500);
+        this.valueSeparatorOne.set_active(false);
+        this.valueSeparatorTwo.set_active(false);
+        this.valueSeparatorThree.set_active(false);
+        this.valueSeparatorFour.set_active(false);
+        this.valueSeparatorFive.set_active(false);
+        this.valueSeparatorSix.set_active(false);
+        this.valueSeparatorOneBottom.set_active(false);
+        this.valueSeparatorTwoBottom.set_active(false);
+        this.valueSeparatorThreeBottom.set_active(false);
+        this.valueSeparatorFourBottom.set_active(false);
+        this.valueSeparatorFiveBottom.set_active(false);
+        this.valueSeparatorSixBottom.set_active(false);
+        this.settings.set_int("separator-one-size", 20);
+        this.settings.set_int("separator-two-size", 20);
+        this.settings.set_int("separator-three-size", 20);
+        this.settings.set_int("separator-four-size", 20);
+        this.settings.set_int("separator-five-size", 20);
+        this.settings.set_int("separator-six-size", 20);
+        this.settings.set_int("separator-one-bottom-size", 20);
+        this.settings.set_int("separator-two-bottom-size", 20);
+        this.settings.set_int("separator-three-bottom-size", 20);
+        this.settings.set_int("separator-four-bottom-size", 20);
+        this.settings.set_int("separator-five-bottom-size", 20);
+        this.settings.set_int("separator-six-bottom-size", 20);
         this.settings.set_int("position-tasks", 4);
         this.settings.set_int("position-desktop-button", 3);
         this.settings.set_int("position-workspace-button", 2);
         this.settings.set_int("position-appview-button", 1);
         this.settings.set_int("position-favorites", 0);
+        this.changeSeparatorSelection();
     }
 }
