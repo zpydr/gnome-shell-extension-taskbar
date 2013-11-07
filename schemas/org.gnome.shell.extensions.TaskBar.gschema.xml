@@ -194,6 +194,16 @@
             <summary>Hide Activities</summary>
             <description/>
         </key>
+        <key name="disable-hotcorner" type="b">
+            <default>false</default>
+            <summary>Disable Hot Corner</summary>
+            <description/>
+        </key>
+        <key name="hide-default-application-menu" type="b">
+            <default>false</default>
+            <summary>Hide Default Application Menu</summary>
+            <description/>
+        </key>
         <key name="separator-one" type="b">
             <default>false</default>
             <summary>Separator</summary>
@@ -329,16 +339,6 @@
         <key name="separator-selection" enum="org.gnome.shell.extensions.TaskBar.separator-style">
             <default>'separator1'</default>
             <summary>Separator Selection</summary>
-            <description/>
-        </key>
-        <key name="disable-hotcorner" type="b">
-            <default>false</default>
-            <summary>Disable Hot Corner</summary>
-            <description/>
-        </key>
-        <key name="hide-default-application-menu" type="b">
-            <default>false</default>
-            <summary>Hide Default Application Menu</summary>
             <description/>
         </key>
         <key name="display-label" type="b">
