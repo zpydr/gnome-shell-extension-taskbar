@@ -1064,7 +1064,7 @@ Prefs.prototype =
             this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-one"))
+                if ((this.settings.get_boolean("separator-one")) && (! this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-one-size", this.value2SeparatorSize.get_value());
                 else
                     this.value2SeparatorSize.set_value(this.settings.get_int("separator-one-size"));
@@ -1072,7 +1072,7 @@ Prefs.prototype =
             this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-one-bottom"))
+                if ((this.settings.get_boolean("separator-one-bottom")) && (this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-one-bottom-size", this.value2SeparatorSizeBottom.get_value());
                 else
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
@@ -1085,7 +1085,7 @@ Prefs.prototype =
             this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-two"))
+                if ((this.settings.get_boolean("separator-two")) && (! this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-two-size", this.value2SeparatorSize.get_value());
                 else
                     this.value2SeparatorSize.set_value(this.settings.get_int("separator-two-size"));
@@ -1093,7 +1093,7 @@ Prefs.prototype =
             this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-two-bottom"))
+                if ((this.settings.get_boolean("separator-two-bottom")) && (this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-two-bottom-size", this.value2SeparatorSizeBottom.get_value());
                 else
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
@@ -1106,7 +1106,7 @@ Prefs.prototype =
             this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-three"))
+                if ((this.settings.get_boolean("separator-three")) && (! this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-three-size", this.value2SeparatorSize.get_value());
                 else
                     this.value2SeparatorSize.set_value(this.settings.get_int("separator-three-size"));
@@ -1114,7 +1114,7 @@ Prefs.prototype =
             this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-three-bottom"))
+                if ((this.settings.get_boolean("separator-three-bottom")) && (this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-three-bottom-size", this.value2SeparatorSizeBottom.get_value());
                 else
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
@@ -1127,7 +1127,7 @@ Prefs.prototype =
             this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-four"))
+                if ((this.settings.get_boolean("separator-four")) && (! this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-four-size", this.value2SeparatorSize.get_value());
                 else
                     this.value2SeparatorSize.set_value(this.settings.get_int("separator-four-size"));
@@ -1135,7 +1135,7 @@ Prefs.prototype =
             this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-four-bottom"))
+                if ((this.settings.get_boolean("separator-four-bottom")) && (this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-four-bottom-size", this.value2SeparatorSizeBottom.get_value());
                 else
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
@@ -1148,7 +1148,7 @@ Prefs.prototype =
             this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-five"))
+                if ((this.settings.get_boolean("separator-five")) && (! this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-five-size", this.value2SeparatorSize.get_value());
                 else
                     this.value2SeparatorSize.set_value(this.settings.get_int("separator-five-size"));
@@ -1156,7 +1156,7 @@ Prefs.prototype =
             this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-five-bottom"))
+                if ((this.settings.get_boolean("separator-five-bottom")) && (this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-five-bottom-size", this.value2SeparatorSizeBottom.get_value());
                 else
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
@@ -1169,7 +1169,7 @@ Prefs.prototype =
             this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-six"))
+                if ((this.settings.get_boolean("separator-six")) && (! this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-six-size", this.value2SeparatorSize.get_value());
                 else
                     this.value2SeparatorSize.set_value(this.settings.get_int("separator-six-size"));
@@ -1177,7 +1177,7 @@ Prefs.prototype =
             this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
             Lang.bind(this, function()
             {
-                if (this.settings.get_boolean("separator-six-bottom"))
+                if ((this.settings.get_boolean("separator-six-bottom")) && (this.settings.get_boolean("bottom-panel")))
                     this.settings.set_int("separator-six-bottom-size", this.value2SeparatorSizeBottom.get_value());
                 else
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-six-bottom-size"));
