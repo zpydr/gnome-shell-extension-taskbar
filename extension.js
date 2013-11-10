@@ -145,6 +145,10 @@ TaskBar.prototype =
         //Order of Appearance
         this.appearanceOrder();
 
+        //Preferences Hover Event        
+        this.hoverEvent();
+        this.hoverSeparatorEvent();
+
         //Reinit Extension on Param Change
         this.setSignals();
     },
@@ -303,6 +307,8 @@ TaskBar.prototype =
             this.settings.connect("changed::separator-four-bottom-size", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-five-bottom-size", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-six-bottom-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
+            this.settings.connect("changed::hover-separator-event", Lang.bind(this, this.hoverSeparatorEvent))
         ];
     },
 
@@ -749,6 +755,59 @@ TaskBar.prototype =
                     Main.panel.statusArea.appMenu.actor.hide();
                 });
             }
+        }
+    },
+
+    //Preferences Hover Component Event
+    hoverEvent: function()
+    {
+        this.hoverComponent = this.settings.get_int("hover-event");
+        this.hoverStyle = "background-color: red; border-radius: 5px";
+        if (this.hoverComponent === 1)
+            this.boxMainTasks.set_style(this.hoverStyle);
+        else if (this.hoverComponent === 2)
+            this.boxMainDesktopButton.set_style(this.hoverStyle);
+        else if (this.hoverComponent === 3)
+            this.boxMainWorkspaceButton.set_style(this.hoverStyle);
+        else if (this.hoverComponent === 4)
+            this.boxMainShowAppsButton.set_style(this.hoverStyle);
+        else if (this.hoverComponent === 5)
+            this.boxMainFavorites.set_style(this.hoverStyle);
+        else if (this.hoverComponent === 0)
+        {
+            this.boxMainTasks.set_style("None");
+            this.boxMainDesktopButton.set_style("None");
+            this.boxMainWorkspaceButton.set_style("None");
+            this.boxMainShowAppsButton.set_style("None");
+            this.boxMainFavorites.set_style("None");
+        }
+    },
+
+    //Preferences Hover Separator Event
+    hoverSeparatorEvent: function()
+    {
+        this.hoverSeparator = this.settings.get_int("hover-separator-event");
+        this.hoverSeparatorStyle = "background-color: red; border-radius: 5px";
+        if (this.hoverSeparator === 1)
+            this.boxMainSeparatorOne.set_style(this.hoverSeparatorStyle);
+        else if (this.hoverSeparator === 2)
+            this.boxMainSeparatorTwo.set_style(this.hoverSeparatorStyle);
+        else if (this.hoverSeparator === 3)
+            this.boxMainSeparatorThree.set_style(this.hoverSeparatorStyle);
+        else if (this.hoverSeparator === 4)
+            this.boxMainSeparatorFour.set_style(this.hoverSeparatorStyle);
+        else if (this.hoverSeparator === 5)
+            this.boxMainSeparatorFive.set_style(this.hoverSeparatorStyle);
+        else if (this.hoverSeparator === 6)
+            this.boxMainSeparatorSix.set_style(this.hoverSeparatorStyle);
+        else if (this.hoverSeparator === 0)
+        {
+            this.boxMainSeparatorOne.set_style("None");
+            this.boxMainSeparatorTwo.set_style("None");
+            this.boxMainSeparatorThree.set_style("None");
+            this.boxMainSeparatorFour.set_style("None");
+            this.boxMainSeparatorFive.set_style("None");
+            this.boxMainSeparatorSix.set_style("None");
         }
     },
 

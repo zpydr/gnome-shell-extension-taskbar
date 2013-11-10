@@ -40,12 +40,12 @@
         <value value="4" nick="favorites"/>
     </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.separator-style">
-        <value value="0" nick="separator1"/>
-        <value value="1" nick="separator2"/>
-        <value value="2" nick="separator3"/>
-        <value value="3" nick="separator4"/>
-        <value value="4" nick="separator5"/>
-        <value value="5" nick="separator6"/>
+        <value value="0" nick="separatorone"/>
+        <value value="1" nick="separatortwo"/>
+        <value value="2" nick="separatorthree"/>
+        <value value="3" nick="separatorfour"/>
+        <value value="4" nick="separatorfive"/>
+        <value value="5" nick="separatorsix"/>
     </enum>
     <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
         <key name="first-start" type="b">
@@ -102,6 +102,18 @@
             <range min="-100" max="100"/>
             <default>0</default>
             <summary>Vertical Bottom Panel Position</summary>
+            <description/>
+        </key>
+        <key name="hover-event" type="i">
+            <range min="0" max="5"/>
+            <default>0</default>
+            <summary>Hover Event</summary>
+            <description/>
+        </key>
+        <key name="hover-separator-event" type="i">
+            <range min="0" max="6"/>
+            <default>0</default>
+            <summary>Hover Separator Event</summary>
             <description/>
         </key>
         <key name="icon-size" type="i">
@@ -337,7 +349,7 @@
             <description/>
         </key>
         <key name="separator-selection" enum="org.gnome.shell.extensions.TaskBar.separator-style">
-            <default>'separator1'</default>
+            <default>'separatorone'</default>
             <summary>Separator Selection</summary>
             <description/>
         </key>

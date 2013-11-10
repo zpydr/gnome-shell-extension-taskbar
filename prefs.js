@@ -160,6 +160,16 @@ Prefs.prototype =
         let value2AppearanceName = new Gtk.Button({label: ">"});
         valueAppearanceName.connect('clicked', Lang.bind(this, this.changeAppearanceLeft));
         value2AppearanceName.connect('clicked', Lang.bind(this, this.changeAppearanceRight));
+        valueAppearanceName.connect('enter-notify-event', Lang.bind(this, this.onHoverEvent));
+        valueAppearanceName.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-event", 0);
+        }));
+        value2AppearanceName.connect('enter-notify-event', Lang.bind(this, this.onHoverEvent));
+        value2AppearanceName.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-event", 0);
+        }));
         this.gridComponents.attach(valueAppearanceName, 3, 6, 1, 1);
         this.gridComponents.attach(value2AppearanceName, 4, 6, 1, 1);
 
@@ -417,54 +427,234 @@ Prefs.prototype =
         this.gridSeparator.attach(labelSeparatorOne, 1, 2, 1, 1);
         this.valueSeparatorOne = new Gtk.Switch({active: this.settings.get_boolean("separator-one")});
         this.valueSeparatorOne.connect('notify::active', Lang.bind(this, this.changeSeparatorOne));
+        this.valueSeparatorOne.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (! this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 1);
+                if (! this.settings.get_boolean("separator-one"))
+                    this.settings.set_boolean("separator-one", true);
+            }
+        }));
+        this.valueSeparatorOne.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-one")) && (! this.valueSeparatorOne.get_active()))
+                this.settings.set_boolean("separator-one", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorOne, 4, 2, 1, 1);
         this.valueSeparatorOneBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-one-bottom")});
         this.valueSeparatorOneBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorOneBottom));
+        this.valueSeparatorOneBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 1);
+                if (! this.settings.get_boolean("separator-one-bottom"))
+                    this.settings.set_boolean("separator-one-bottom", true);
+            }
+        }));
+        this.valueSeparatorOneBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-one-bottom")) && (! this.valueSeparatorOneBottom.get_active()))
+                this.settings.set_boolean("separator-one-bottom", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorOneBottom, 7, 2, 1, 1);
 
         let labelSeparatorTwo = new Gtk.Label({label: _("Separator 2"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorTwo, 1, 3, 1, 1);
         this.valueSeparatorTwo = new Gtk.Switch({active: this.settings.get_boolean("separator-two")});
         this.valueSeparatorTwo.connect('notify::active', Lang.bind(this, this.changeSeparatorTwo));
+        this.valueSeparatorTwo.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (! this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 2);
+                if (! this.settings.get_boolean("separator-two"))
+                    this.settings.set_boolean("separator-two", true);
+            }
+        }));
+        this.valueSeparatorTwo.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-two")) && (! this.valueSeparatorTwo.get_active()))
+                this.settings.set_boolean("separator-two", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorTwo, 4, 3, 1, 1);
         this.valueSeparatorTwoBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-two-bottom")});
         this.valueSeparatorTwoBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorTwoBottom));
+        this.valueSeparatorTwoBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 2);
+                if (! this.settings.get_boolean("separator-two-bottom"))
+                    this.settings.set_boolean("separator-two-bottom", true);
+            }
+        }));
+        this.valueSeparatorTwoBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-two-bottom")) && (! this.valueSeparatorTwoBottom.get_active()))
+                this.settings.set_boolean("separator-two-bottom", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorTwoBottom, 7, 3, 1, 1);
 
         let labelSeparatorThree = new Gtk.Label({label: _("Separator 3"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorThree, 1, 4, 1, 1);
         this.valueSeparatorThree = new Gtk.Switch({active: this.settings.get_boolean("separator-three")});
         this.valueSeparatorThree.connect('notify::active', Lang.bind(this, this.changeSeparatorThree));
+        this.valueSeparatorThree.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (! this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 3);
+                if (! this.settings.get_boolean("separator-three"))
+                    this.settings.set_boolean("separator-three", true);
+            }
+        }));
+        this.valueSeparatorThree.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-three")) && (! this.valueSeparatorThree.get_active()))
+                this.settings.set_boolean("separator-three", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorThree, 4, 4, 1, 1);
         this.valueSeparatorThreeBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-three-bottom")});
         this.valueSeparatorThreeBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorThreeBottom));
+        this.valueSeparatorThreeBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 3);
+                if (! this.settings.get_boolean("separator-three-bottom"))
+                    this.settings.set_boolean("separator-three-bottom", true);
+            }
+        }));
+        this.valueSeparatorThreeBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-three-bottom")) && (! this.valueSeparatorThreeBottom.get_active()))
+                this.settings.set_boolean("separator-three-bottom", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorThreeBottom, 7, 4, 1, 1);
 
         let labelSeparatorFour = new Gtk.Label({label: _("Separator 4"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorFour, 1, 5, 1, 1);
         this.valueSeparatorFour = new Gtk.Switch({active: this.settings.get_boolean("separator-four")});
         this.valueSeparatorFour.connect('notify::active', Lang.bind(this, this.changeSeparatorFour));
+        this.valueSeparatorFour.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (! this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 4);
+                if (! this.settings.get_boolean("separator-four"))
+                    this.settings.set_boolean("separator-four", true);
+            }
+        }));
+        this.valueSeparatorFour.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-four")) && (! this.valueSeparatorFour.get_active()))
+                this.settings.set_boolean("separator-four", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorFour, 4, 5, 1, 1);
         this.valueSeparatorFourBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-four-bottom")});
         this.valueSeparatorFourBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorFourBottom));
+        this.valueSeparatorFourBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 4);
+                if (! this.settings.get_boolean("separator-four-bottom"))
+                    this.settings.set_boolean("separator-four-bottom", true);
+            }
+        }));
+        this.valueSeparatorFourBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-four-bottom")) && (! this.valueSeparatorFourBottom.get_active()))
+                this.settings.set_boolean("separator-four-bottom", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorFourBottom, 7, 5, 1, 1);
 
         let labelSeparatorFive = new Gtk.Label({label: _("Separator 5"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorFive, 1, 6, 1, 1);
         this.valueSeparatorFive = new Gtk.Switch({active: this.settings.get_boolean("separator-five")});
         this.valueSeparatorFive.connect('notify::active', Lang.bind(this, this.changeSeparatorFive));
+        this.valueSeparatorFive.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (! this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 5);
+                if (! this.settings.get_boolean("separator-five"))
+                    this.settings.set_boolean("separator-five", true);
+            }
+        }));
+        this.valueSeparatorFive.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-five")) && (! this.valueSeparatorFive.get_active()))
+                this.settings.set_boolean("separator-five", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorFive, 4, 6, 1, 1);
         this.valueSeparatorFiveBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-five-bottom")});
         this.valueSeparatorFiveBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorFiveBottom));
+        this.valueSeparatorFiveBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 5);
+                if (! this.settings.get_boolean("separator-five-bottom"))
+                    this.settings.set_boolean("separator-five-bottom", true);
+            }
+        }));
+        this.valueSeparatorFiveBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-five-bottom")) && (! this.valueSeparatorFiveBottom.get_active()))
+                this.settings.set_boolean("separator-five-bottom", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorFiveBottom, 7, 6, 1, 1);
 
         let labelSeparatorSix = new Gtk.Label({label: _("Separator 6\t(Right)"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorSix, 1, 7, 1, 1);
         this.valueSeparatorSix = new Gtk.Switch({active: this.settings.get_boolean("separator-six")});
         this.valueSeparatorSix.connect('notify::active', Lang.bind(this, this.changeSeparatorSix));
+        this.valueSeparatorSix.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (! this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 6);
+                if (! this.settings.get_boolean("separator-six"))
+                    this.settings.set_boolean("separator-six", true);
+            }
+        }));
+        this.valueSeparatorSix.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-six")) && (! this.valueSeparatorSix.get_active()))
+                this.settings.set_boolean("separator-six", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorSix, 4, 7, 1, 1);
         this.valueSeparatorSixBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-six-bottom")});
         this.valueSeparatorSixBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorSixBottom));
+        this.valueSeparatorSixBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            if (this.settings.get_boolean("bottom-panel"))
+            {
+                this.settings.set_int("hover-separator-event", 6);
+                if (! this.settings.get_boolean("separator-six-bottom"))
+                    this.settings.set_boolean("separator-six-bottom", true);
+            }
+        }));
+        this.valueSeparatorSixBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+            if ((this.settings.get_boolean("separator-six-bottom")) && (! this.valueSeparatorSixBottom.get_active()))
+                this.settings.set_boolean("separator-six-bottom", false);
+        }));
         this.gridSeparator.attach(this.valueSeparatorSixBottom, 7, 7, 1, 1);
 
         let valueSeparatorBox = new Gtk.Box();
@@ -477,16 +667,36 @@ Prefs.prototype =
         this.valueSeparator.append_text(_("Separator 5"));
         this.valueSeparator.append_text(_("Separator 6"));
         this.separatorSelection = this.settings.get_enum("separator-selection");
-        this.valueSeparator.set_active(this.separatorSelection);
+        this.valueSeparator.set_active(this.settings.get_enum("separator-selection"));
         this.valueSeparator.connect('changed', Lang.bind(this, this.changeSeparatorSelection));
         valueSeparatorBox.add(labelSeparatorBox);
         valueSeparatorBox.add(this.valueSeparator);
         this.gridSeparator.attach(valueSeparatorBox, 1, 8, 1, 1);
         this.valueSeparatorSize = new Gtk.Adjustment({lower: 1, upper: 2000, step_increment: 1});
         this.value2SeparatorSize = new Gtk.SpinButton({adjustment: this.valueSeparatorSize, snap_to_ticks: true});
+        this.value2SeparatorSize.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            this.hoverSeparator = this.settings.get_enum("separator-selection");
+            if (! this.settings.get_boolean("bottom-panel"))
+                this.settings.set_int("hover-separator-event", this.hoverSeparator + 1);
+        }));
+        this.value2SeparatorSize.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+        }));
         this.gridSeparator.attach(this.value2SeparatorSize, 3, 8, 2, 1);
         this.valueSeparatorSizeBottom = new Gtk.Adjustment({lower: 1, upper: 2000, step_increment: 1});
         this.value2SeparatorSizeBottom = new Gtk.SpinButton({adjustment: this.valueSeparatorSizeBottom, snap_to_ticks: true});
+        this.value2SeparatorSizeBottom.connect('enter-notify-event', Lang.bind(this, function()
+        {
+            this.hoverSeparator = this.settings.get_enum("separator-selection");
+            if (this.settings.get_boolean("bottom-panel"))
+                this.settings.set_int("hover-separator-event", this.hoverSeparator + 1);
+        }));
+        this.value2SeparatorSizeBottom.connect('leave-notify-event', Lang.bind(this, function()
+        {
+            this.settings.set_int("hover-separator-event", 0);
+        }));
         this.gridSeparator.attach(this.value2SeparatorSizeBottom, 6, 8, 2, 1);
         this.changeSeparatorSize();
 
@@ -681,6 +891,12 @@ Prefs.prototype =
     changeAppearanceSelection: function(object)
     {
         this.settings.set_enum("appearance-selection", this.valueAppearance.get_active());
+    },
+
+    onHoverEvent: function(object)
+    {
+        this.hoverComponent = this.settings.get_enum("appearance-selection");
+        this.settings.set_int("hover-event", this.hoverComponent + 1);
     },
 
     changePanelPositionLeft: function()
@@ -989,67 +1205,104 @@ Prefs.prototype =
 
     changeSeparatorOne: function(object, pspec)
     {
-        this.settings.set_boolean("separator-one", object.active);
+        if (this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorOne.set_active(this.settings.get_boolean("separator-one"));
+        else
+            this.settings.set_boolean("separator-one", object.active);
     },
 
     changeSeparatorTwo: function(object, pspec)
     {
-        this.settings.set_boolean("separator-two", object.active);
+        if (this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorTwo.set_active(this.settings.get_boolean("separator-two"));
+        else
+            this.settings.set_boolean("separator-two", object.active);
     },
 
     changeSeparatorThree: function(object, pspec)
     {
-        this.settings.set_boolean("separator-three", object.active);
+        if (this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorThree.set_active(this.settings.get_boolean("separator-three"));
+        else
+            this.settings.set_boolean("separator-three", object.active);
     },
 
     changeSeparatorFour: function(object, pspec)
     {
-        this.settings.set_boolean("separator-four", object.active);
+        if (this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorFour.set_active(this.settings.get_boolean("separator-four"));
+        else
+            this.settings.set_boolean("separator-four", object.active);
     },
 
     changeSeparatorFive: function(object, pspec)
     {
-        this.settings.set_boolean("separator-five", object.active);
+        if (this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorFive.set_active(this.settings.get_boolean("separator-five"));
+        else
+            this.settings.set_boolean("separator-five", object.active);
     },
 
     changeSeparatorSix: function(object, pspec)
     {
-        this.settings.set_boolean("separator-six", object.active);
+        if (this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorSix.set_active(this.settings.get_boolean("separator-six"));
+        else
+            this.settings.set_boolean("separator-six", object.active);
     },
 
     changeSeparatorOneBottom: function(object, pspec)
     {
-        this.settings.set_boolean("separator-one-bottom", object.active);
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorOneBottom.set_active(this.settings.get_boolean("separator-one-bottom"));
+        else
+            this.settings.set_boolean("separator-one-bottom", object.active);
     },
 
     changeSeparatorTwoBottom: function(object, pspec)
     {
-        this.settings.set_boolean("separator-two-bottom", object.active);
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorTwoBottom.set_active(this.settings.get_boolean("separator-two-bottom"));
+        else
+            this.settings.set_boolean("separator-two-bottom", object.active);
     },
 
     changeSeparatorThreeBottom: function(object, pspec)
     {
-        this.settings.set_boolean("separator-three-bottom", object.active);
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorThreeBottom.set_active(this.settings.get_boolean("separator-three-bottom"));
+        else
+            this.settings.set_boolean("separator-three-bottom", object.active);
     },
 
     changeSeparatorFourBottom: function(object, pspec)
     {
-        this.settings.set_boolean("separator-four-bottom", object.active);
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorFourBottom.set_active(this.settings.get_boolean("separator-four-bottom"));
+        else
+            this.settings.set_boolean("separator-four-bottom", object.active);
     },
 
     changeSeparatorFiveBottom: function(object, pspec)
     {
-        this.settings.set_boolean("separator-five-bottom", object.active);
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorFiveBottom.set_active(this.settings.get_boolean("separator-five-bottom"));
+        else
+            this.settings.set_boolean("separator-five-bottom", object.active);
     },
 
     changeSeparatorSixBottom: function(object, pspec)
     {
-        this.settings.set_boolean("separator-six-bottom", object.active);
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueSeparatorSixBottom.set_active(this.settings.get_boolean("separator-six-bottom"));
+        else
+            this.settings.set_boolean("separator-six-bottom", object.active);
     },
 
     changeSeparatorSelection: function(object)
     {
         this.separatorSelection = this.valueSeparator.get_active();
+        this.settings.set_enum("separator-selection", this.separatorSelection);
         this.value2SeparatorSize.disconnect(this.valueSeparatorSizeId);
         this.value2SeparatorSizeBottom.disconnect(this.valueSeparatorSizeBottomId);
         this.changeSeparatorSize();
@@ -1342,6 +1595,8 @@ Prefs.prototype =
         this.valueDisplayShowAppsButton.set_active(true);
         this.settings.set_boolean("display-favorites", false);
         this.valueDisplayFavorites.set_active(false);
+        this.settings.set_int("hover-event", 0);
+        this.settings.set_int("hover-separator-event", 0);
         this.settings.set_int("panel-position", 1);
         this.settings.set_int("panel-box", 1);
         this.settings.set_int("position-max-right", 9);
