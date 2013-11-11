@@ -104,6 +104,12 @@
             <summary>Vertical Bottom Panel Position</summary>
             <description/>
         </key>
+        <key name="position-bottom-box" type="i">
+            <range min="0" max="2"/>
+            <default>0</default>
+            <summary>Left Center or Right Bottom Box</summary>
+            <description/>
+        </key>
         <key name="hover-event" type="i">
             <range min="0" max="5"/>
             <default>0</default>
@@ -150,6 +156,11 @@
             <summary>Middle/Right Click to Close Task</summary>
             <description/>
         </key>
+        <key name="scroll-tasks" type="b">
+            <default>false</default>
+            <summary>Scroll Tasks</summary>
+            <description/>
+        </key>
         <key name="active-task-frame" type="b">
             <default>true</default>
             <summary>Active Task Frame</summary>
@@ -189,6 +200,11 @@
         <key name="workspace-button-index" enum="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
             <default>'index'</default>
             <summary>Workspace Button Index</summary>
+            <description/>
+        </key>
+        <key name="scroll-workspaces" type="b">
+            <default>false</default>
+            <summary>Scroll Workspaces</summary>
             <description/>
         </key>
         <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">

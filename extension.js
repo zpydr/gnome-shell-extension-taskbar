@@ -282,6 +282,7 @@ TaskBar.prototype =
             this.settings.connect("changed::position-favorites", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-one", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-two", Lang.bind(this, this.onParamChanged)),
@@ -502,7 +503,8 @@ TaskBar.prototype =
             this.nWorkspacesId = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.updateWorkspaces));
 
             this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
-            let signalWorkspace = this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
+            this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
+            this.buttonWorkspace.connect("scroll-event", Lang.bind(this, this.onScrollWorkspaceButton));
             this.updateWorkspaces();
             this.boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             this.boxWorkspace.add_actor(this.buttonWorkspace);
@@ -831,19 +833,21 @@ TaskBar.prototype =
         this.iconSize = this.settings.get_int('icon-size-bottom');
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.fullscreenChangedId = null;
+        this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
+                                                   name: 'bottomPanel'});
         if (ShellVersion[1] === 4)
-        {
-            this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
-                                                       name: 'bottomPanel',
-                                                       reactive: false });
-        }
+            this.bottomPanelActor.set_reactive(false);
         else
-        {
-            this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
-                                                       name: 'bottomPanel',
-                                                       reactive: true });
-        }
-        this.bottomPanelActor.add_actor(this.boxMain);
+            this.bottomPanelActor.set_reactive(true);
+        this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
+        if (this.positionBoxBottomSettings === 0)
+            this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.START });
+        if (this.positionBoxBottomSettings === 1)
+            this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.MIDDLE });
+        if (this.positionBoxBottomSettings === 2)
+            this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.END });
+        this.positionBoxBottom.add_actor(this.boxMain);
+        this.bottomPanelActor.add_actor(this.positionBoxBottom);
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
         let h = null;
@@ -1043,6 +1047,84 @@ TaskBar.prototype =
             window.delete(global.get_current_time());
     },
 
+    //Scroll Events
+    onScrollWorkspaceButton: function(button, event)
+    {
+        if (this.settings.get_boolean("scroll-workspaces"))
+        {
+            let scrollDirection = event.get_scroll_direction();
+            if (scrollDirection == Clutter.ScrollDirection.UP)
+            {
+            if (this.activeWorkspaceIndex == this.totalWorkspace)
+                this.activeWorkspaceIndex = -1;
+            let newActiveWorkspace = global.screen.get_workspace_by_index(this.activeWorkspaceIndex + 1);
+            newActiveWorkspace.activate(global.get_current_time());
+            }
+            if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            {
+                if (this.activeWorkspaceIndex == 0)
+                    this.activeWorkspaceIndex = this.totalWorkspace + 1;
+                let newActiveWorkspace = global.screen.get_workspace_by_index(this.activeWorkspaceIndex - 1);
+                newActiveWorkspace.activate(global.get_current_time());
+            }
+        }
+    },
+
+    onScrollTaskButton: function(button, event)
+    {
+        if (this.settings.get_boolean("scroll-tasks"))
+        {
+            this.nextTask = false;
+            this.previousTask = null;
+            let focusWindow = global.display.focus_window;
+            let activeWorkspace = global.screen.get_active_workspace();
+            let scrollDirection = event.get_scroll_direction();
+            if (scrollDirection == Clutter.ScrollDirection.UP)
+            {
+                this.tasksList.forEach(
+                    function(task)
+                    {
+                        let [windowTask, buttonTask, signalsTask] = task;
+                        let windowWorkspace = windowTask.get_workspace();
+                        if (this.nextTask)
+                        {
+                            if (windowWorkspace !== activeWorkspace)
+                                windowWorkspace.activate(global.get_current_time());
+                            windowTask.activate(global.get_current_time());
+                            this.nextTask = false;
+                        }
+                        if (windowTask === focusWindow)
+                            this.nextTask = true;
+                    },
+                    this
+                );
+                if (Main.overview.visible)
+                    Main.overview.hide();
+            }
+            else if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            {
+                this.tasksList.forEach(
+                    function(task)
+                    {
+                        let [windowTask, buttonTask, signalsTask] = task;
+                        if ((windowTask == focusWindow) && (this.previousTask !== null))
+                        {
+                            let [windowTask, buttonTask, signalsTask] = this.previousTask;
+                            let windowWorkspace = windowTask.get_workspace();
+                            if (windowWorkspace !== activeWorkspace)
+                                windowWorkspace.activate(global.get_current_time());
+                            windowTask.activate(global.get_current_time());
+                        }
+                        this.previousTask = task;
+                    },
+                    this
+                );
+                if (Main.overview.visible)
+                    Main.overview.hide();
+            }
+        }
+    },
+
     //Switch Task on Hover
     onHoverSwitchTask: function(button, window)
     {
@@ -1184,6 +1266,7 @@ TaskBar.prototype =
         let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
         let signalsTask = [
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
+            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
