@@ -856,7 +856,7 @@ Prefs.prototype =
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink1.set_always_show_image(true);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 37"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 38"});
         this.gridTaskBar.attach(labelVersion, 1, 1, 1, 1);
         this.gridTaskBar.attach(labelLink1, 3, 1, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
