@@ -1279,7 +1279,15 @@ TaskBar.prototype =
         if (! this.settings.get_boolean("tasks-all-workspaces"))
         {
             let workspace = global.screen.get_active_workspace();
-            buttonTask.visible = window.located_on_workspace(workspace);
+            if ((ShellVersion[1] === 4) || (ShellVersion[1] === 4))
+            {
+                if (window.get_workspace == workspace)
+                    buttonTask.show();
+                else
+                    buttonTask.hide();
+            }
+            else
+                buttonTask.visible = window.located_on_workspace(workspace);
         }
         if (window.has_focus())
         {
