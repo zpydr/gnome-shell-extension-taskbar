@@ -36,6 +36,7 @@ const Lib = Extension.imports.lib;
 const Prefs = Extension.imports.prefs;
 const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function (x) { return + x; });
 const Windows = Extension.imports.windows;
+const Windows34 = Extension.imports.windows34;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
@@ -140,7 +141,10 @@ TaskBar.prototype =
         this.activeTaskFrame();
 
         //Init Windows Manage Callbacks
-        this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
+        if (((ShellVersion[1] === 4) || (ShellVersion[1] === 6)) && (! this.settings.get_boolean("tasks-all-workspaces")))
+            this.windows = new Windows34.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
+        else
+            this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
 
         //Order of Appearance
         this.appearanceOrder();
@@ -1279,14 +1283,7 @@ TaskBar.prototype =
         if (! this.settings.get_boolean("tasks-all-workspaces"))
         {
             let workspace = global.screen.get_active_workspace();
-            if ((ShellVersion[1] === 4) || (ShellVersion[1] === 4))
-            {
-                if (window.get_workspace == workspace)
-                    buttonTask.show();
-                else
-                    buttonTask.hide();
-            }
-            else
+            if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 6) && (! this.settings.get_boolean("tasks-all-workspaces")))
                 buttonTask.visible = window.located_on_workspace(workspace);
         }
         if (window.has_focus())
