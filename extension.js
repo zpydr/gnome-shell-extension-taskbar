@@ -836,18 +836,23 @@ TaskBar.prototype =
         this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
                                                    name: 'bottomPanel'});
         if (ShellVersion[1] === 4)
+        {
             this.bottomPanelActor.set_reactive(false);
+            this.bottomPanelActor.add_actor(this.boxMain);
+        }
         else
+        {
             this.bottomPanelActor.set_reactive(true);
-        this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
-        if (this.positionBoxBottomSettings === 0)
-            this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.START });
-        if (this.positionBoxBottomSettings === 1)
-            this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.MIDDLE });
-        if (this.positionBoxBottomSettings === 2)
-            this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.END });
-        this.positionBoxBottom.add_actor(this.boxMain);
-        this.bottomPanelActor.add_actor(this.positionBoxBottom);
+            this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
+            if (this.positionBoxBottomSettings === 0)
+                this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.START });
+            if (this.positionBoxBottomSettings === 1)
+                this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.MIDDLE });
+            if (this.positionBoxBottomSettings === 2)
+                this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.END });
+            this.positionBoxBottom.add_actor(this.boxMain);
+            this.bottomPanelActor.add_actor(this.positionBoxBottom);
+        }
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
         let h = null;
