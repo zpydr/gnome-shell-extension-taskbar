@@ -68,6 +68,7 @@ TaskBar.prototype =
     previewTimer2: null,
     preview: null,
     favoriteapp: null,
+    h: null,
 
     init: function(extensionMeta, schema)
     {
@@ -859,7 +860,6 @@ TaskBar.prototype =
         }
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
-        let h = null;
         h = (this.iconSize + this.bottomPanelVertical + 4);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-h);
         this.bottomPanelActor.set_size(primary.width, -1);
