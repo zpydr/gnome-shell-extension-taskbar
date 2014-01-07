@@ -1271,6 +1271,8 @@ TaskBar.prototype =
     //Add Tasks
     addTaskInList: function(window)
     {
+            
+            let app = Shell.WindowTracker.get_default().get_window_app(window);
             //We add a label to the button. 
             //To-Do: Also adding an option in preferences to enable or disable the label would be a nice feature.
             let box = new St.BoxLayout({ style_class: "tkb-task-button-box"});
