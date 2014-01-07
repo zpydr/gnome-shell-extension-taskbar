@@ -20,7 +20,9 @@
 
 #bottomPanel {
     color: #ffffff;
-    background-color: black;
+    background-color: rgba(0,0,0,0.9);
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 .tkb-box
@@ -33,23 +35,33 @@
 
 }
 
+.tkb-task-button-label{
+	padding-left: 4px;
+	padding-top:3px;
+	font-size:0.8em;
+}
+
 .tkb-task-button
 {
-    padding-left: 3px;
-    padding-right: 3px;
-    border: 1px;
+	border: 1px solid rgb(0,0,0);
+    padding: 3px 10px;
+    margin: 1px 3px;
+    max-width:115px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tkb-task-button:active-task-frame
 {
-    border: 1px solid gray;
-    border-radius: 5px;
+    border: 1px solid rgb(50,50,50);
+    border-radius: 3px;
     background-image: url("images/active-task-background.svg");
 }
 
 .tkb-task-button:active-task-no-frame
 {
-    border-radius: 5px;
+    border-radius: 3px;
+    border: 1px solid rgb(0,0,0); /*this color should match the background of the panel */
 }
 
 .tkb-preview
