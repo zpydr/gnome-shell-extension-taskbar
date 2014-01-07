@@ -1272,20 +1272,20 @@ TaskBar.prototype =
     addTaskInList: function(window)
     {
             
-            let app = Shell.WindowTracker.get_default().get_window_app(window);
-            //We add a label to the button. 
-            //To-Do: Also adding an option in preferences to enable or disable the label would be a nice feature.
-            let box = new St.BoxLayout({ style_class: "tkb-task-button-box"});
-            //To-Do: add some logic for changing the title of the button when the title of the window changes 
-            //      (i.e. when switching tabs in a window)
-            let labelTask =  new St.Label({ text: (window.get_title()+""), style_class: 'tkb-task-button-label' });         
-            let iconTask = app.create_icon_texture(this.iconSize);
-            box.add_actor(iconTask);
-            box.add_actor(labelTask);      
+        let app = Shell.WindowTracker.get_default().get_window_app(window);
+        //We add a label to the button. 
+        //To-Do: Also adding an option in preferences to enable or disable the label would be a nice feature.
+        let box = new St.BoxLayout({ style_class: "tkb-task-button-box"});
+        //To-Do: add some logic for changing the title of the button when the title of the window changes 
+        //      (i.e. when switching tabs in a window)
+        let labelTask =  new St.Label({ text: (window.get_title()+""), style_class: 'tkb-task-button-label' });         
+        let iconTask = app.create_icon_texture(this.iconSize);
+        box.add_actor(iconTask);
+        box.add_actor(labelTask);      
     
-            let buttonTask = new St.Button({ style_class: "tkb-task-button", child: box  });
+        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: box  });
    
-            let signalsTask = [
+        let signalsTask = [
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
             buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
