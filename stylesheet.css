@@ -23,6 +23,8 @@
     background-color: rgba(0,0,0,0.9);
     padding-top: 1px;
     padding-bottom: 1px;
+    border-top: 1px solid rgb(80, 80, 80);
+    box-shadow: 0 0 3px 1px;
 }
 
 .tkb-box
@@ -36,34 +38,44 @@
 }
 
 .tkb-task-button-label{
-	padding-left: 4px;
-	padding-top:3px;
-	font-size:0.8em;
+    padding-left: 4px;
+    padding-top:3px;
+    font-size:0.8em;
 }
+
 
 .tkb-task-button
 {
-	border: 1px solid rgb(0,0,0);
+    border: 1px solid rgb(0,0,0);
     padding: 3px 10px;
-    margin: 1px 3px;
-    max-width:115px;
+    margin: 1px 2px;
+    max-width:135px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.tkb-task-button:hover
+{
+    border-radius: 2px;
+    border: 1px solid rgb(50,50,50);
+    background-image: url("images/active-task-background.svg");
+    padding: 3px 10px;
+
 }
 
 .tkb-task-button:active-task-frame
 {
     border: 1px solid rgb(50,50,50);
-    border-radius: 3px;
+    border-radius: 2px;
     background-image: url("images/active-task-background.svg");
+    padding: 4px 9px 2px 11px;
+
 }
 
 .tkb-task-button:active-task-no-frame
 {
-    border-radius: 3px;
     border: 1px solid rgb(0,0,0); /*this color should match the background of the panel */
 }
-
 .tkb-preview
 {
     background-color: rgba(0,0,0,0.9);
