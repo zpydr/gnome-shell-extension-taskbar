@@ -43,13 +43,12 @@
     font-size:0.8em;
 }
 
-
 .tkb-task-button
 {
     border: 1px solid rgb(0,0,0);
     padding: 3px 10px;
     margin: 1px 2px;
-    max-width:135px;
+    max-width: 135px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

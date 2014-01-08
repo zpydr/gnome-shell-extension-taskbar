@@ -1026,16 +1026,15 @@ TaskBar.prototype =
     {
         let activeWorkspace = global.screen.get_active_workspace();
         let numButton = pspec.get_button();
-        if ((numButton == LEFTBUTTON) )//&& (! this.settings.get_boolean("hover-switch-task"))) //Left Button (Hover deactivated)
+        if ((numButton == LEFTBUTTON) && (! this.settings.get_boolean("hover-switch-task"))) //Left Button (Hover deactivated)
         {
             this.tasksList.forEach(
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    let windowWorkspace = windowTask.get_workspace();        
+                    let windowWorkspace = windowTask.get_workspace();
                     if (windowTask == window)
                     {
-                      
                         if (windowWorkspace !== activeWorkspace)
                         {
                             windowWorkspace.activate(global.get_current_time());
@@ -1217,8 +1216,8 @@ TaskBar.prototype =
     //Task Style
     onWindowChanged: function(window, type)
     {
-        
-        this.tasksList.forEach(
+        if(this.settings.get_boolean("text-buttons")){
+            this.tasksList.forEach(
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
@@ -1230,7 +1229,7 @@ TaskBar.prototype =
                 },
                 this
             );
-
+        }
         if (type == 0) //Focus
         {
             this.tasksList.forEach(
@@ -1299,7 +1298,6 @@ TaskBar.prototype =
         else{
              bchild = app.create_icon_texture(this.iconSize);
         }
-        
     
         let buttonTask = new St.Button({ style_class: "tkb-task-button", child: bchild });
         let signalsTask = [            
@@ -1384,7 +1382,6 @@ TaskBar.prototype =
     {
         //Switch Task on Hover
         this.resetHover = false;
-
         if (this.settings.get_boolean("hover-switch-task"))
         {
             if (this.settings.get_int("hover-delay") == 0)
@@ -1443,9 +1440,9 @@ TaskBar.prototype =
             function(task)
             {
                 let [windowTask, buttonTask, signalsTask] = task;
-              if(windowTask==window) {
-                buttonTask.add_style_pseudo_class("hover");
-            }
+                if(windowTask==window) {
+                    buttonTask.add_style_pseudo_class("hover");
+                }
             },
             this
         );
@@ -1506,7 +1503,6 @@ TaskBar.prototype =
         Mainloop.source_remove(this.previewTimer2);
         this.previewTimer2 = null;
         this.hidePreview();
-       
     },
 
     hidePreview: function()

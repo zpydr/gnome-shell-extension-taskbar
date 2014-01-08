@@ -283,7 +283,7 @@
             <description/>
         </key>
         <key name="text-buttons" type="b">
-            <default>true</default>
+            <default>false</default>
             <summary>Text on Buttons</summary>
             <description/>
         </key>
