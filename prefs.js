@@ -1685,7 +1685,7 @@ Prefs.prototype =
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueScrollWorkspaces.set_active(false);
-        this.valueTextButtons.set_active(true);
+        this.valueTextButtons.set_active(false);
         this.valueShowAppsButtonToggle.set_active(0);
         this.valueHideActivities.set_active(false);
         this.valueDisableHotCorner.set_active(false);
