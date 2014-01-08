@@ -40,8 +40,8 @@ const RESETCOLOR = 'rgba(0,0,0,0)';
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 const HOMEICON = Extension.path + '/images/settings-home.png';
-const MAILICON = Extension.path + '/images/settings-mail.png';
-const DONATEICON = Extension.path + '/images/settings-donate.png';
+const NEXTICON = Extension.path + '/images/settings-next.png';
+const PREVIOUSICON = Extension.path + '/images/settings-previous.png';
 
 function init()
 {
@@ -410,6 +410,13 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
+
+
+        let labelTextButtons = new Gtk.Label({label: _("Show Text on Task Buttons"), xalign: 0});
+        this.gridButtons.attach(labelTextButtons, 1, 7, 1, 1);
+        this.valueTextButtons = new Gtk.Switch({active: this.settings.get_boolean("text-buttons")});
+        this.valueTextButtons.connect('notify::active', Lang.bind(this, this.changeTextButtons));
+        this.gridButtons.attach(this.valueTextButtons, 4, 7, 1, 1);
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons1, 0, 7, 1, 1);
@@ -852,8 +859,6 @@ Prefs.prototype =
 
         let linkImage1 = new Gtk.Image({file: HOMEICON});
         let linkImage2 = new Gtk.Image({file: HOMEICON});
-        let linkImage3 = new Gtk.Image({file: MAILICON});
-        let linkImage4 = new Gtk.Image({file: DONATEICON});
         let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
@@ -869,19 +874,9 @@ Prefs.prototype =
         let resetButton = new Gtk.Button({label: _("RESET ALL")});
         resetButton.connect('clicked', Lang.bind(this, this.reset));
         this.gridTaskBar.attach(resetButton, 1, 2, 1, 1);
-        let labelLink3 = new Gtk.LinkButton ({image: linkImage3, label: " zpydr@linuxwaves.com",
-            uri: "mailto:zpydr@linuxwaves.com", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink3.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink3, 3, 3, 1, 1);
-        let labelLink4 = new Gtk.LinkButton ({image: linkImage4, label: " Donate",
-            uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink4.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink4, 3, 4, 1, 1);
 
         let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 5, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 3, 1, 1);
         let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
         let labelSpaceTaskBar3 = new Gtk.Label({label: "8/8", xalign: 1});
@@ -1180,6 +1175,10 @@ Prefs.prototype =
     changeScrollWorkspaces: function(object)
     {
         this.settings.set_boolean("scroll-workspaces", object.active);
+    },
+    changeTextButtons: function(object)
+    {
+        this.settings.set_boolean("text-buttons", object.active);
     },
 
     changeShowAppsButtonToggle: function(object)
@@ -1686,6 +1685,7 @@ Prefs.prototype =
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueScrollWorkspaces.set_active(false);
+        this.valueTextButtons.set_active(true);
         this.valueShowAppsButtonToggle.set_active(0);
         this.valueHideActivities.set_active(false);
         this.valueDisableHotCorner.set_active(false);
