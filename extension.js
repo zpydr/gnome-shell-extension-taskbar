@@ -1404,9 +1404,9 @@ TaskBar.prototype =
             function(task)
             {
                 let [windowTask, buttonTask, signalsTask] = task;
-              if(windowTask==window) {
-               buttonTask.add_style_pseudo_class("hover");
-           }
+              	if(windowTask==window) {
+               	    buttonTask.add_style_pseudo_class("hover");
+           	}
             },
             this
         );
