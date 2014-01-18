@@ -1,0 +1,213 @@
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2013 zpydr
+#  Copyright (C) 2014 tuhaihe(Chinese translation)
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@linuxwaves.com
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-15 14:20+0200\n"
+"PO-Revision-Date: 2014-01-18 10:36+0800\n"
+"Last-Translator: tuhaihe <1132321739qq@gmail.com>\n"
+"Language: zh_CN\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: prefs.js:74
+msgid "Components"
+msgstr "组件"
+
+#: prefs.js:107
+msgid "Adjustments"
+msgstr "调整"
+
+#: prefs.js:110
+msgid "Align Position"
+msgstr "分配位置"
+
+#: prefs.js:119
+msgid "Icon Size"
+msgstr "图标大小"
+
+#: prefs.js:127
+msgid "Close Tasks"
+msgstr "关闭任务"
+
+#: prefs.js:130
+msgid "OFF"
+msgstr "关闭"
+
+#: prefs.js:131
+msgid "Middle Click"
+msgstr "中键点击"
+
+#: prefs.js:132
+msgid "Right Click"
+msgstr "右键点击"
+
+#: prefs.js:137
+msgid "Desktop Button Icon"
+msgstr "桌面按钮图标"
+
+#: prefs.js:140
+msgid "Default"
+msgstr "默认"
+
+#: prefs.js:141
+msgid "GNOME"
+msgstr "GNOME"
+
+#: prefs.js:142
+msgid "Dark"
+msgstr "黑色"
+
+#: prefs.js:147
+msgid ""
+"Desktop Button Right Click\n"
+"opens Preferences (this)"
+msgstr ""
+"桌面按钮右键点击\n"
+"打开首选项"
+
+#: prefs.js:153
+msgid "Workspace Button Index"
+msgstr "工作区按钮计数"
+
+#: prefs.js:156
+msgid "Index"
+msgstr "当前位置"
+
+#: prefs.js:157
+msgid "Index/Total"
+msgstr "当前位置/总数"
+
+#: prefs.js:162
+msgid ""
+"Appview Button\n"
+"L/R Click Toggle"
+msgstr ""
+"应用程序视图按钮\n"
+"左/右视图切换"
+
+#: prefs.js:165
+msgid ""
+"L Appview\n"
+"R Overview"
+msgstr ""
+"左：应用程序视图\n"
+"右：活动窗口概览"
+
+#: prefs.js:166
+msgid ""
+"L Overview\n"
+"R Appview"
+msgstr ""
+"左：活动窗口概览\n"
+"右：应用程序视图"
+
+#: prefs.js:171
+msgid "Hide Activities"
+msgstr "隐藏活动视图按钮"
+
+#: prefs.js:177
+msgid "Disable Hot Corner"
+msgstr "禁用热区"
+
+#: prefs.js:183
+msgid "Hide Default App Menu"
+msgstr "隐藏默认的应用程序菜单"
+
+#: prefs.js:189
+msgid ""
+"Possible conflict\n"
+"with other extensions"
+msgstr ""
+"可能与其他扩展\n"
+"造成冲突"
+
+#: prefs.js:192
+msgid "Preview"
+msgstr "预览"
+
+#: prefs.js:195
+msgid "Tasks Label"
+msgstr "任务标签"
+
+#: prefs.js:201
+msgid "Tasks Thumbnail"
+msgstr "任务缩略图"
+
+#: prefs.js:207
+msgid "Favorites Label"
+msgstr "收藏标签"
+
+#: prefs.js:213
+msgid "Thumbnail Size"
+msgstr "缩略图大小"
+
+#: prefs.js:221
+msgid "Preview Delay"
+msgstr "预览延迟"
+
+#: prefs.js:221
+msgid "(ms)"
+msgstr "(毫秒)"
+
+#: prefs.js:229
+msgid "Appearance"
+msgstr "外观"
+
+#: prefs.js:232
+msgid "From Left to Right"
+msgstr "从左到右"
+
+#: prefs.js:77 prefs.js:236 prefs.js:246 prefs.js:256 prefs.js:266
+#: prefs.js:276
+msgid "Tasks"
+msgstr "任务"
+
+#: prefs.js:83 prefs.js:237 prefs.js:247 prefs.js:257 prefs.js:267
+#: prefs.js:277
+msgid "Desktop Button"
+msgstr "桌面按钮"
+
+#: prefs.js:89 prefs.js:238 prefs.js:248 prefs.js:258 prefs.js:268
+#: prefs.js:278
+msgid "Workspace Button"
+msgstr "工作区按钮"
+
+#: prefs.js:95 prefs.js:239 prefs.js:249 prefs.js:259 prefs.js:269
+#: prefs.js:279
+msgid "Appview Button"
+msgstr "应用程序视图按钮"
+
+#: prefs.js:101 prefs.js:240 prefs.js:250 prefs.js:260 prefs.js:270
+#: prefs.js:280
+msgid "Favorites"
+msgstr "收藏"
+
+#: prefs.js:287
+msgid "RESET ALL"
+msgstr "全部重置"
+
+#: prefs.js:294
+msgid "Version"
+msgstr "版本"
