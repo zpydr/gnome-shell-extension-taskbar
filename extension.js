@@ -1299,7 +1299,7 @@ TaskBar.prototype =
         else{
              bchild = app.create_icon_texture(this.iconSize);
         }
-        let bstyle=this.settings.get_boolean("bottom-panel")?'bottom':'top';
+        let bstyle = this.settings.get_boolean("bottom-panel") ? 'bottom' : 'top';
         let buttonTask = new St.Button({ style_class: "tkb-task-button-"+bstyle, child: bchild });
         let signalsTask = [            
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),  
