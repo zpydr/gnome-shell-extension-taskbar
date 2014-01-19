@@ -272,6 +272,7 @@ TaskBar.prototype =
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::text-buttons", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::active-task-background-color", Lang.bind(this, this.onParamChanged)),
@@ -1215,6 +1216,20 @@ TaskBar.prototype =
     //Task Style
     onWindowChanged: function(window, type)
     {
+        if(this.settings.get_boolean("text-buttons")){
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    if (windowTask == window)
+                    {
+                        let label=buttonTask.get_child().get_children()[1];
+                        label.set_text(window.get_title());                        
+                    }
+                },
+                this
+            );
+        }
         if (type == 0) //Focus
         {
             this.tasksList.forEach(
@@ -1272,10 +1287,23 @@ TaskBar.prototype =
     addTaskInList: function(window)
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
-        let signalsTask = [
-            buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
-            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),
+        let bchild;
+
+        if(this.settings.get_boolean("text-buttons")){
+            bchild = new St.BoxLayout({ style_class: "tkb-task-button-box"});
+            let labelTask = new St.Label({ text: (window.get_title()+""), style_class: 'tkb-task-button-label' });
+            let iconTask = app.create_icon_texture(this.iconSize);
+            bchild.add_actor(iconTask);
+            bchild.add_actor(labelTask);
+        }
+        else{
+             bchild = app.create_icon_texture(this.iconSize);
+        }
+        let bstyle = this.settings.get_boolean("bottom-panel") ? 'bottom' : 'top';
+        let buttonTask = new St.Button({ style_class: "tkb-task-button-"+bstyle, child: bchild });
+        let signalsTask = [            
+            buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),  
+            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),          
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
@@ -1373,6 +1401,16 @@ TaskBar.prototype =
                 this.previewTimer = Mainloop.timeout_add(this.settings.get_int("preview-delay"),
                     Lang.bind(this, this.showPreview2, button, window));
         }
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+              	if(windowTask==window) {
+               	    buttonTask.add_style_pseudo_class("hover");
+           	}
+            },
+            this
+        );
     },
 
     showPreview2: function(button, window)
@@ -1399,6 +1437,16 @@ TaskBar.prototype =
         global.stage.add_actor(this.preview);
         this.button = button;
         this.setPreviewPosition();
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                if(windowTask==window) {
+                    buttonTask.add_style_pseudo_class("hover");
+                }
+            },
+            this
+        );
     },
 
     showFavoritesPreview: function(buttonfavorite, favoriteapp)
@@ -1480,5 +1528,13 @@ TaskBar.prototype =
             this.favoritesPreview.destroy();
             this.favoritesPreview = null;
         }
+         this.tasksList.forEach(
+            function(task)
+            {
+               let [windowTask, buttonTask, signalsTask] = task;
+               buttonTask.remove_style_pseudo_class("hover");
+            },
+            this
+        );
     }
 }

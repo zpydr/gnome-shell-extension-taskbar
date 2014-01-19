@@ -411,6 +411,13 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
+
+        let labelTextButtons = new Gtk.Label({label: _("Show Text on Task Buttons"), xalign: 0});
+        this.gridButtons.attach(labelTextButtons, 1, 7, 1, 1);
+        this.valueTextButtons = new Gtk.Switch({active: this.settings.get_boolean("text-buttons")});
+        this.valueTextButtons.connect('notify::active', Lang.bind(this, this.changeTextButtons));
+        this.gridButtons.attach(this.valueTextButtons, 4, 7, 1, 1);
+
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons1, 0, 7, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
@@ -1181,6 +1188,10 @@ Prefs.prototype =
     {
         this.settings.set_boolean("scroll-workspaces", object.active);
     },
+    changeTextButtons: function(object)
+    {
+        this.settings.set_boolean("text-buttons", object.active);
+    },
 
     changeShowAppsButtonToggle: function(object)
     {
@@ -1686,6 +1697,7 @@ Prefs.prototype =
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueScrollWorkspaces.set_active(false);
+        this.valueTextButtons.set_active(false);
         this.valueShowAppsButtonToggle.set_active(0);
         this.valueHideActivities.set_active(false);
         this.valueDisableHotCorner.set_active(false);

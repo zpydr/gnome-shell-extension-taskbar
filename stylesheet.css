@@ -20,7 +20,11 @@
 
 #bottomPanel {
     color: #ffffff;
-    background-color: black;
+    background-color: rgba(0,0,0,0.9);
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border-top: 1px solid rgb(80, 80, 80);
+    box-shadow: 0 0 3px 1px;
 }
 
 .tkb-box
@@ -33,23 +37,70 @@
 
 }
 
-.tkb-task-button
+.tkb-task-button-label{
+    padding-left: 4px;
+    padding-top:3px;
+    font-size:0.8em;
+}
+/* buttons on top panel */
+.tkb-task-button-top
 {
-    padding-left: 3px;
-    padding-right: 3px;
-    border: 1px;
+    padding: 1px 5px;
+    margin: 0 1px;
+    max-width: 135px;
 }
 
-.tkb-task-button:active-task-frame
+.tkb-task-button-top:hover
 {
-    border: 1px solid gray;
-    border-radius: 5px;
+    border-radius: 2px;
+    border: 1px solid rgb(50,50,50);
     background-image: url("images/active-task-background.svg");
+    padding: 0px 4px;
 }
 
-.tkb-task-button:active-task-no-frame
+.tkb-task-button-top:active-task-frame
 {
-    border-radius: 5px;
+    border: 1px solid rgb(50,50,50);
+    border-radius: 2px;
+    background-image: url("images/active-task-background.svg");
+    padding: 0px 4px;
+
+}
+
+.tkb-task-button-top:active-task-no-frame
+{
+
+}
+
+/* bottom panel buttons */
+.tkb-task-button-bottom
+{
+    padding: 4px 11px;
+    margin: 1px 2px;
+    max-width: 135px;
+}
+
+.tkb-task-button-bottom:hover
+{
+    border-radius: 2px;
+    border: 1px solid rgb(50,50,50);
+    background-image: url("images/active-task-background.svg");
+    padding: 3px 10px;
+
+}
+
+.tkb-task-button-bottom:active-task-frame
+{
+    border: 1px solid rgb(50,50,50);
+    border-radius: 2px;
+    background-image: url("images/active-task-background.svg");
+    padding: 4px 9px 2px 11px;
+
+}
+
+.tkb-task-button-bottom:active-task-no-frame
+{
+
 }
 
 .tkb-preview
