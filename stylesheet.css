@@ -75,8 +75,7 @@
 /* bottom panel buttons */
 .tkb-task-button-bottom
 {
-    border: 1px solid rgb(0,0,0);
-    padding: 3px 10px;
+    padding: 4px 11px;
     margin: 1px 2px;
     max-width: 135px;
 }
@@ -101,8 +100,9 @@
 
 .tkb-task-button-bottom:active-task-no-frame
 {
-    border: 1px solid rgb(0,0,0); /*this color should match the background of the panel */
+
 }
+
 .tkb-preview
 {
     background-color: rgba(0,0,0,0.9);
