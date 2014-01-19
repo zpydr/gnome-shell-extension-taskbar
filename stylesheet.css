@@ -42,18 +42,46 @@
     padding-top:3px;
     font-size:0.8em;
 }
+/* buttons on top panel */
+.tkb-task-button-top
+{
+    padding: 1px 5px;
+    margin: 0 1px;
+    max-width: 135px;
+}
 
-.tkb-task-button
+.tkb-task-button-top:hover
+{
+    border-radius: 2px;
+    border: 1px solid rgb(50,50,50);
+    background-image: url("images/active-task-background.svg");
+    padding: 0px 4px;
+}
+
+.tkb-task-button-top:active-task-frame
+{
+    border: 1px solid rgb(50,50,50);
+    border-radius: 2px;
+    background-image: url("images/active-task-background.svg");
+    padding: 0px 4px;
+
+}
+
+.tkb-task-button-top:active-task-no-frame
+{
+
+}
+
+/* bottom panel buttons */
+.tkb-task-button-bottom
 {
     border: 1px solid rgb(0,0,0);
     padding: 3px 10px;
     margin: 1px 2px;
     max-width: 135px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.tkb-task-button:hover
+.tkb-task-button-bottom:hover
 {
     border-radius: 2px;
     border: 1px solid rgb(50,50,50);
@@ -62,7 +90,7 @@
 
 }
 
-.tkb-task-button:active-task-frame
+.tkb-task-button-bottom:active-task-frame
 {
     border: 1px solid rgb(50,50,50);
     border-radius: 2px;
@@ -71,7 +99,7 @@
 
 }
 
-.tkb-task-button:active-task-no-frame
+.tkb-task-button-bottom:active-task-no-frame
 {
     border: 1px solid rgb(0,0,0); /*this color should match the background of the panel */
 }

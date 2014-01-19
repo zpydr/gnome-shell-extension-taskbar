@@ -1288,6 +1288,7 @@ TaskBar.prototype =
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
         let bchild;
+
         if(this.settings.get_boolean("text-buttons")){
             bchild = new St.BoxLayout({ style_class: "tkb-task-button-box"});
             let labelTask = new St.Label({ text: (window.get_title()+""), style_class: 'tkb-task-button-label' });
@@ -1298,8 +1299,8 @@ TaskBar.prototype =
         else{
              bchild = app.create_icon_texture(this.iconSize);
         }
-    
-        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: bchild });
+        let bstyle=this.settings.get_boolean("bottom-panel")?'bottom':'top';
+        let buttonTask = new St.Button({ style_class: "tkb-task-button-"+bstyle, child: bchild });
         let signalsTask = [            
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),  
             buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),          
