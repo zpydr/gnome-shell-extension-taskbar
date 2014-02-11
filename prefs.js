@@ -110,7 +110,7 @@ Prefs.prototype =
         });
         scrollWindowComponents.add_with_viewport(this.gridComponents);
         scrollWindowComponents.show_all();
-        let labelComponents = new Gtk.Label({label: "Components"});
+        let labelComponents = new Gtk.Label({label: _("Components")});
         notebook.append_page(scrollWindowComponents, labelComponents);
 
         let labelDisplayTasks = new Gtk.Label({label: _("Tasks"), xalign: 0});
@@ -199,7 +199,7 @@ Prefs.prototype =
         });
         scrollWindowSettings.add_with_viewport(this.gridSettings);
         scrollWindowSettings.show_all();
-        let labelSettings = new Gtk.Label({label: "Settings"});
+        let labelSettings = new Gtk.Label({label: _("Settings")});
         notebook.append_page(scrollWindowSettings, labelSettings);
 
         let labelPanel3 = new Gtk.Label({label: _("Top Panel"), xalign: 2});
@@ -220,7 +220,7 @@ Prefs.prototype =
         value2IconSizeBottom.connect("value-changed", Lang.bind(this, this.changeIconSizeBottom));
         this.gridSettings.attach(value2IconSizeBottom, 6, 2, 2, 1);
 
-        let labelFontSize = new Gtk.Label({label: _("Font Size" + " [16]" + "\nWorkspace Button"), xalign: 0});
+        let labelFontSize = new Gtk.Label({label: _("Font Size") + " [16]\n" + _("Workspace Button"), xalign: 0});
         this.gridSettings.attach(labelFontSize, 1, 3, 1, 1);
         this.valueFontSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
         let value2FontSize = new Gtk.SpinButton({adjustment: this.valueFontSize, snap_to_ticks: true});
@@ -278,7 +278,7 @@ Prefs.prototype =
         });
         scrollWindowTasks.add_with_viewport(this.gridTasks);
         scrollWindowTasks.show_all();
-        let labelTasks = new Gtk.Label({label: "Tasks"});
+        let labelTasks = new Gtk.Label({label: _("Tasks")});
         notebook.append_page(scrollWindowTasks, labelTasks);
 
         let labelAllWorkspaces = new Gtk.Label({label: _("Tasks on all Workspaces"), xalign: 0});
@@ -360,7 +360,7 @@ Prefs.prototype =
         });
         scrollWindowButtons.add_with_viewport(this.gridButtons);
         scrollWindowButtons.show_all();
-        let labelButtons = new Gtk.Label({label: "Buttons"});
+        let labelButtons = new Gtk.Label({label: _("Buttons")});
         notebook.append_page(scrollWindowButtons, labelButtons);
 
         let labelDesktopButtonRightClick = new Gtk.Label({label: _("Desktop Button Right Click\nopens Preferences (this)"), xalign: 0});
@@ -433,7 +433,7 @@ Prefs.prototype =
         });
         scrollWindowSeparator.add_with_viewport(this.gridSeparator);
         scrollWindowSeparator.show_all();
-        let labelSeparator = new Gtk.Label({label: "Separators"});
+        let labelSeparator = new Gtk.Label({label: _("Separators")});
         notebook.append_page(scrollWindowSeparator, labelSeparator);
 
         let labelPanel5 = new Gtk.Label({label: _("Top Panel"), xalign: 2});
@@ -441,7 +441,7 @@ Prefs.prototype =
         let labelPanel6 = new Gtk.Label({label: _("Bottom Panel"), xalign: 2});
         this.gridSeparator.attach(labelPanel6, 6, 1, 2, 1);
 
-        let labelSeparatorOne = new Gtk.Label({label: _("Separator 1\t(Left)"), xalign: 0});
+        let labelSeparatorOne = new Gtk.Label({label: _("Separator") + " 1\t("+_("Left"+")"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorOne, 1, 2, 1, 1);
         this.valueSeparatorOne = new Gtk.Switch({active: this.settings.get_boolean("separator-one")});
         this.valueSeparatorOne.connect('notify::active', Lang.bind(this, this.changeSeparatorOne));
@@ -480,7 +480,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorOneBottom, 7, 2, 1, 1);
 
-        let labelSeparatorTwo = new Gtk.Label({label: _("Separator 2"), xalign: 0});
+        let labelSeparatorTwo = new Gtk.Label({label: _("Separator")+" 2", xalign: 0});
         this.gridSeparator.attach(labelSeparatorTwo, 1, 3, 1, 1);
         this.valueSeparatorTwo = new Gtk.Switch({active: this.settings.get_boolean("separator-two")});
         this.valueSeparatorTwo.connect('notify::active', Lang.bind(this, this.changeSeparatorTwo));
@@ -519,7 +519,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorTwoBottom, 7, 3, 1, 1);
 
-        let labelSeparatorThree = new Gtk.Label({label: _("Separator 3"), xalign: 0});
+        let labelSeparatorThree = new Gtk.Label({label: _("Separator")+" 3", xalign: 0});
         this.gridSeparator.attach(labelSeparatorThree, 1, 4, 1, 1);
         this.valueSeparatorThree = new Gtk.Switch({active: this.settings.get_boolean("separator-three")});
         this.valueSeparatorThree.connect('notify::active', Lang.bind(this, this.changeSeparatorThree));
@@ -558,7 +558,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorThreeBottom, 7, 4, 1, 1);
 
-        let labelSeparatorFour = new Gtk.Label({label: _("Separator 4"), xalign: 0});
+        let labelSeparatorFour = new Gtk.Label({label: _("Separator")+" 4", xalign: 0});
         this.gridSeparator.attach(labelSeparatorFour, 1, 5, 1, 1);
         this.valueSeparatorFour = new Gtk.Switch({active: this.settings.get_boolean("separator-four")});
         this.valueSeparatorFour.connect('notify::active', Lang.bind(this, this.changeSeparatorFour));
@@ -597,7 +597,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorFourBottom, 7, 5, 1, 1);
 
-        let labelSeparatorFive = new Gtk.Label({label: _("Separator 5"), xalign: 0});
+        let labelSeparatorFive = new Gtk.Label({label: _("Separator")+" 5", xalign: 0});
         this.gridSeparator.attach(labelSeparatorFive, 1, 6, 1, 1);
         this.valueSeparatorFive = new Gtk.Switch({active: this.settings.get_boolean("separator-five")});
         this.valueSeparatorFive.connect('notify::active', Lang.bind(this, this.changeSeparatorFive));
@@ -636,7 +636,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorFiveBottom, 7, 6, 1, 1);
 
-        let labelSeparatorSix = new Gtk.Label({label: _("Separator 6\t(Right)"), xalign: 0});
+        let labelSeparatorSix = new Gtk.Label({label: _("Separator")+" 6\t("+_("Right")+")", xalign: 0});
         this.gridSeparator.attach(labelSeparatorSix, 1, 7, 1, 1);
         this.valueSeparatorSix = new Gtk.Switch({active: this.settings.get_boolean("separator-six")});
         this.valueSeparatorSix.connect('notify::active', Lang.bind(this, this.changeSeparatorSix));
@@ -678,12 +678,12 @@ Prefs.prototype =
         let valueSeparatorBox = new Gtk.Box();
         let labelSeparatorBox = new Gtk.Label({label: _("Resize "), xalign: 0});
         this.valueSeparator = new Gtk.ComboBoxText();
-        this.valueSeparator.append_text(_("Separator 1"));
-        this.valueSeparator.append_text(_("Separator 2"));
-        this.valueSeparator.append_text(_("Separator 3"));
-        this.valueSeparator.append_text(_("Separator 4"));
-        this.valueSeparator.append_text(_("Separator 5"));
-        this.valueSeparator.append_text(_("Separator 6"));
+        this.valueSeparator.append_text(_("Separator")+" 1");
+        this.valueSeparator.append_text(_("Separator")+" 2");
+        this.valueSeparator.append_text(_("Separator")+" 3");
+        this.valueSeparator.append_text(_("Separator")+" 4");
+        this.valueSeparator.append_text(_("Separator")+" 5");
+        this.valueSeparator.append_text(_("Separator")+" 6");
         this.separatorSelection = this.settings.get_enum("separator-selection");
         this.valueSeparator.set_active(this.settings.get_enum("separator-selection"));
         this.valueSeparator.connect('changed', Lang.bind(this, this.changeSeparatorSelection));
@@ -744,7 +744,7 @@ Prefs.prototype =
         });
         scrollWindowPreview.add_with_viewport(this.gridPreview);
         scrollWindowPreview.show_all();
-        let labelPreview = new Gtk.Label({label: "Preview"});
+        let labelPreview = new Gtk.Label({label: _("Preview")});
         notebook.append_page(scrollWindowPreview, labelPreview);
 
         let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
@@ -803,7 +803,7 @@ Prefs.prototype =
         });
         scrollWindowMisc.add_with_viewport(this.gridMisc);
         scrollWindowMisc.show_all();
-        let labelMisc = new Gtk.Label({label: "Misc"});
+        let labelMisc = new Gtk.Label({label: _("Misc")});
         notebook.append_page(scrollWindowMisc, labelMisc);
 
         let labelHideActivities = new Gtk.Label({label: _("Hide Activities"), xalign: 0});
@@ -874,7 +874,7 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink3.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink3, 3, 3, 1, 1);
-        let labelLink4 = new Gtk.LinkButton ({image: linkImage4, label: " Donate",
+        let labelLink4 = new Gtk.LinkButton ({image: linkImage4, label: " "+_("Donate"),
             uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink4.set_always_show_image(true);
