@@ -1,7 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2013 zpydr
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@linuxwaves.com
 #
 msgid ""
 msgstr ""
@@ -23,23 +36,23 @@ msgid "Components"
 msgstr "Komponenten"
 
 #: prefs.js:77
-msgid "Show Tasks"
+msgid "Tasks"
 msgstr "Aktive Anwendungen"
 
 #: prefs.js:83
-msgid "Show Desktop Button"
-msgstr "Schreibtisch-Knopf"
+msgid "Desktop Button"
+msgstr "Schreibtischknopf"
 
 #: prefs.js:89
-msgid "Show Workspace Button"
-msgstr "Arbeitsflächen-Umschalter"
+msgid "Workspace Button"
+msgstr "Arbeitsflächenumschalter"
 
 #: prefs.js:95
-msgid "Show Apps/Overview Button"
-msgstr "Schaltfläche für Anwendungen/Übersicht"
+msgid "Appview Button"
+msgstr "Anwendungenknopf"
 
 #: prefs.js:101
-msgid "Show Favorites"
+msgid "Favorites"
 msgstr "Favoriten"
 
 #: prefs.js:107
@@ -72,7 +85,7 @@ msgstr "Rechtsklick"
 
 #: prefs.js:137
 msgid "Desktop Button Icon"
-msgstr "Symbol des Schreibtisch-Knopfes"
+msgstr "Symbol des Schreibtischknopfes"
 
 #: prefs.js:140
 msgid "Default"
@@ -91,12 +104,12 @@ msgid ""
 "Desktop Button Right Click\n"
 "opens Preferences (this)"
 msgstr ""
-"Rechtsklick auf Schreibtisch-Knopf\n"
+"Rechtsklick auf Schreibtischknopf\n"
 "öffnet diese Einstellungen"
 
 #: prefs.js:153
 msgid "Workspace Button Index"
-msgstr "Arbeitsflächen-Umschalter zeigt"
+msgstr "Arbeitsflächenumschalter zeigt"
 
 #: prefs.js:156
 msgid "Index"
@@ -108,10 +121,10 @@ msgstr "Index/Gesamt"
 
 #: prefs.js:162
 msgid ""
-"Show Apps/Overview\n"
-"Button L/R Click Toggle"
+"Appview Button\n"
+"L/R Click Toggle"
 msgstr ""
-"Anwendungen/Übersicht anzeigen\n"
+"Anwendungenknopf\n"
 "Links-/Rechtsklick-Zuordnung"
 
 #: prefs.js:165
@@ -132,15 +145,15 @@ msgstr ""
 
 #: prefs.js:171
 msgid "Hide Activities"
-msgstr "Aktivitäten-Schaltfläche entfernen"
+msgstr "Aktivitäten entfernen"
 
 #: prefs.js:177
 msgid "Disable Hot Corner"
-msgstr "\"Hot Corner\" deaktivieren"
+msgstr "»Hot Corner«" deaktivieren"
 
 #: prefs.js:183
 msgid "Hide Default App Menu"
-msgstr "Standard-Fenstermenü ausblenden"
+msgstr "Standard Anwendungsmenü ausblenden"
 
 #: prefs.js:189
 msgid ""
@@ -155,15 +168,15 @@ msgid "Preview"
 msgstr "Vorschau"
 
 #: prefs.js:195
-msgid "Show Tasks Label"
+msgid "Tasks Label"
 msgstr "Programmname anzeigen"
 
 #: prefs.js:201
-msgid "Show Tasks Thumbnail"
+msgid "Tasks Thumbnail"
 msgstr "Vorschaubild anzeigen"
 
 #: prefs.js:207
-msgid "Show Favorites Label"
+msgid "Favorites Label"
 msgstr "Bei Favoriten Name anzeigen"
 
 #: prefs.js:213
@@ -172,7 +185,7 @@ msgstr "Vorschaubildgröße"
 
 #: prefs.js:221
 msgid "Preview Delay"
-msgstr "Vorschau-Verzögerung"
+msgstr "Vorschauverzögerung"
 
 #: prefs.js:221
 msgid "(ms)"
@@ -192,15 +205,15 @@ msgstr "Aktive Anwendungen"
 
 #: prefs.js:237 prefs.js:247 prefs.js:257 prefs.js:267 prefs.js:277
 msgid "Desktop Button"
-msgstr "Schreibtisch-Knopf"
+msgstr "Schreibtischknopf"
 
 #: prefs.js:238 prefs.js:248 prefs.js:258 prefs.js:268 prefs.js:278
 msgid "Workspace Button"
-msgstr "Arbeitsflächen-Umschalter"
+msgstr "Arbeitsflächenumschalter"
 
 #: prefs.js:239 prefs.js:249 prefs.js:259 prefs.js:269 prefs.js:279
-msgid "Show Apps Button"
-msgstr "Anwendungen-Schaltfläche"
+msgid "Appview Button"
+msgstr "Anwendungenknopf"
 
 #: prefs.js:240 prefs.js:250 prefs.js:260 prefs.js:270 prefs.js:280
 msgid "Favorites"

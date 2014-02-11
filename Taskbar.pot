@@ -1,7 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2013 zpydr
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@linuxwaves.com
 #
 #, fuzzy
 msgid ""
@@ -22,23 +35,23 @@ msgid "Components"
 msgstr ""
 
 #: prefs.js:77
-msgid "Show Tasks"
+msgid "Tasks"
 msgstr ""
 
 #: prefs.js:83
-msgid "Show Desktop Button"
+msgid "Desktop Button"
 msgstr ""
 
 #: prefs.js:89
-msgid "Show Workspace Button"
+msgid "Workspace Button"
 msgstr ""
 
 #: prefs.js:95
-msgid "Show Apps/Overview Button"
+msgid "Appview Button"
 msgstr ""
 
 #: prefs.js:101
-msgid "Show Favorites"
+msgid "Favorites"
 msgstr ""
 
 #: prefs.js:107
@@ -105,8 +118,8 @@ msgstr ""
 
 #: prefs.js:162
 msgid ""
-"Show Apps/Overview\n"
-"Button L/R Click Toggle"
+"Appview Button\n"
+"L/R Click Toggle"
 msgstr ""
 
 #: prefs.js:165
@@ -144,15 +157,15 @@ msgid "Preview"
 msgstr ""
 
 #: prefs.js:195
-msgid "Show Tasks Label"
+msgid "Tasks Label"
 msgstr ""
 
 #: prefs.js:201
-msgid "Show Tasks Thumbnail"
+msgid "Tasks Thumbnail"
 msgstr ""
 
 #: prefs.js:207
-msgid "Show Favorites Label"
+msgid "Favorites Label"
 msgstr ""
 
 #: prefs.js:213
@@ -188,7 +201,7 @@ msgid "Workspace Button"
 msgstr ""
 
 #: prefs.js:239 prefs.js:249 prefs.js:259 prefs.js:269 prefs.js:279
-msgid "Show Apps Button"
+msgid "Appview Button"
 msgstr ""
 
 #: prefs.js:240 prefs.js:250 prefs.js:260 prefs.js:270 prefs.js:280
