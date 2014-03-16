@@ -17,8 +17,6 @@
 //  zpydr@linuxwaves.com
 
 const Clutter = imports.gi.Clutter;
-const Gdk = imports.gi.Gdk;
-const GdkPixbuf = imports.gi.GdkPixbuf;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
@@ -36,7 +34,6 @@ const Lib = Extension.imports.lib;
 const Prefs = Extension.imports.prefs;
 const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function (x) { return + x; });
 const Windows = Extension.imports.windows;
-const Windows34 = Extension.imports.windows34;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
@@ -44,6 +41,8 @@ const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
 const NOHOTCORNER = 54321;
+const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
+const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 
 function init(extensionMeta)
 {
@@ -68,7 +67,6 @@ TaskBar.prototype =
     previewTimer2: null,
     preview: null,
     favoriteapp: null,
-    h: null,
 
     init: function(extensionMeta, schema)
     {
@@ -98,12 +96,6 @@ TaskBar.prototype =
         this.boxMainWorkspaceButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainDesktopButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainSeparatorOne = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainSeparatorTwo = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainSeparatorThree = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainSeparatorFour = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainSeparatorFive = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainSeparatorSix = new St.BoxLayout({ style_class: "tkb-box" });
         this.onPositionChanged();
 
         //Add Favorites
@@ -117,9 +109,6 @@ TaskBar.prototype =
 
         //Add Desktop Button
         this.addDesktopButton();
-
-        //Add Separators
-        this.addSeparators();
 
         //Hide Activities
         this.initHideActivities();
@@ -142,20 +131,62 @@ TaskBar.prototype =
         this.activeTaskFrame();
 
         //Init Windows Manage Callbacks
-        if (((ShellVersion[1] === 4) || (ShellVersion[1] === 6)) && (! this.settings.get_boolean("tasks-all-workspaces")))
-            this.windows = new Windows34.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
-        else
-            this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
+        this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
 
         //Order of Appearance
-        this.appearanceOrder();
-
-        //Preferences Hover Event        
-        this.hoverEvent();
-        this.hoverSeparatorEvent();
+        this.appearances =
+        [
+            ("appearance-one"),
+            ("appearance-two"),
+            ("appearance-three"),
+            ("appearance-four"),
+            ("appearance-five")
+        ];
+        this.appearances.forEach(
+            function(appearance)
+            {
+                if (this.settings.get_enum(appearance) == 0)
+                    this.boxMain.add_actor(this.boxMainTasks);
+                else if (this.settings.get_enum(appearance) == 1)
+                    this.boxMain.add_actor(this.boxMainDesktopButton);
+                else if (this.settings.get_enum(appearance) == 2)
+                    this.boxMain.add_actor(this.boxMainWorkspaceButton);
+                else if (this.settings.get_enum(appearance) == 3)
+                    this.boxMain.add_actor(this.boxMainShowAppsButton);
+                else if (this.settings.get_enum(appearance) == 4)
+                    this.boxMain.add_actor(this.boxMainFavorites);
+            },
+            this
+        );
 
         //Reinit Extension on Param Change
-        this.setSignals();
+        this.settingSignals =
+        [
+            this.settings.connect("changed::icon-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::font-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::panel-box", Lang.bind(this, this.onBoxChanged)),
+            this.settings.connect("changed::panel-position", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-favorites", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-showapps-button", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-workspace-button", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::active-task-background-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-tasks", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
+            this.settings.connect("changed::disable-hotcorner", Lang.bind(this, this.disableHotCorner)),
+            this.settings.connect("changed::hide-default-application-menu", Lang.bind(this, this.hideDefaultAppMenu)),
+            this.settings.connect("changed::appearance-one", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::appearance-two", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::appearance-three", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::appearance-four", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::appearance-five", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged))
+        ];
     },
 
     disable: function()
@@ -255,73 +286,17 @@ TaskBar.prototype =
         this.cleanTasksList();
     },
 
-    setSignals: function()
-    {
-        //Reinit Extension on Param Change
-        this.settingSignals =
-        [
-            this.settings.connect("changed::icon-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::icon-size-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::font-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::font-size-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::panel-box", Lang.bind(this, this.onBoxChanged)),
-            this.settings.connect("changed::panel-position", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::display-favorites", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::display-showapps-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::display-workspace-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::active-task-background-color", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::active-task-background-color-set", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::display-tasks", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
-            this.settings.connect("changed::disable-hotcorner", Lang.bind(this, this.disableHotCorner)),
-            this.settings.connect("changed::hide-default-application-menu", Lang.bind(this, this.hideDefaultAppMenu)),
-            this.settings.connect("changed::position-tasks", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-desktop-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-workspace-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-appview-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-favorites", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-one", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-two", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-three", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-four", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-five", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-six", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-one-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-two-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-three-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-four-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-five-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-six-bottom", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-one-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-two-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-three-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-four-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-five-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-six-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-one-bottom-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-two-bottom-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-three-bottom-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-four-bottom-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-five-bottom-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::separator-six-bottom-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
-            this.settings.connect("changed::hover-separator-event", Lang.bind(this, this.hoverSeparatorEvent))
-        ];
-    },
-
     //First Start
     firstStart: function()
     {
-        if (ShellVersion[1] === 4)
+        if (this.settings.get_string("desktop-button-icon") == "default")
+        {
+            this.settings.set_string("desktop-button-icon", DESKTOPICON);
+            this.settings.set_string("appview-button-icon", APPVIEWICON);
+            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+            this.settings.set_boolean("first-start", false);
+        }
+        else if (ShellVersion[1] === 4)
         {
             if (this.settings.get_boolean("first-start"))
             {
@@ -364,61 +339,13 @@ TaskBar.prototype =
         else if (this.panelBox == 3)
             this.newBox = Main.panel._rightBox;
         this.children = this.newBox.get_children().length;
-        let positionMaxRight = this.settings.get_int("position-max-right");
-        if (positionMaxRight !== this.children)
-            this.settings.set_int("position-max-right", this.children);
+        this.settings.set_int("position-max-right", this.children);
     },
 
     onBoxChanged: function()
     {
         this.newBox.remove_child(this.boxMain);
         this.defineBoxChanged();
-    },
-
-    appearanceOrder: function()
-    {
-        this.appearances =
-        [
-            ("position-tasks"),
-            ("position-desktop-button"),
-            ("position-workspace-button"),
-            ("position-appview-button"),
-            ("position-favorites")
-        ];
-        this.boxMain.add_actor(this.boxMainSeparatorOne);
-        for (let i = 0; i <= 4; i++)
-        {
-            this.appearances.forEach(
-                function(appearance)
-                {
-                    let positionAppearance = this.settings.get_int(appearance);
-                    if (positionAppearance == i)
-                    {
-                        if (appearance == "position-tasks")
-                            this.boxMain.add_actor(this.boxMainTasks);
-                        else if (appearance == "position-desktop-button")
-                            this.boxMain.add_actor(this.boxMainDesktopButton);
-                        else if (appearance == "position-workspace-button")
-                            this.boxMain.add_actor(this.boxMainWorkspaceButton);
-                        else if (appearance == "position-appview-button")
-                            this.boxMain.add_actor(this.boxMainShowAppsButton);
-                        else if (appearance == "position-favorites")
-                            this.boxMain.add_actor(this.boxMainFavorites);
-                    }
-                },
-                this
-            );
-            if (i == 0)
-                this.boxMain.add_actor(this.boxMainSeparatorTwo);
-            else if (i == 1)
-                this.boxMain.add_actor(this.boxMainSeparatorThree);
-            else if (i == 2)
-                this.boxMain.add_actor(this.boxMainSeparatorFour);
-            else if (i == 3)
-                this.boxMain.add_actor(this.boxMainSeparatorFive);
-            else if (i == 4)
-                this.boxMain.add_actor(this.boxMainSeparatorSix);
-        }    
     },
 
     //Add Favorites
@@ -470,16 +397,6 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-showapps-button"))
         {
             let iconPath = this.settings.get_string("appview-button-icon");
-            let pixbuf;
-            try
-            {
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
-            }
-            catch (e)
-            {
-                iconPath = this.extensionMeta.path + '/images/appview-button-default.svg';
-                this.settings.set_string("appview-button-icon", iconPath);
-            }
             this.showAppsIcon = Gio.icon_new_for_string(iconPath);
             this.iconShowApps = new St.Icon(
             {
@@ -504,35 +421,26 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-workspace-button"))
         {
             //Connect Workspace Changes
-            this.workspaceSwitchedId = global.screen.connect('workspace-switched', Lang.bind(this, this.updateWorkspaces));
-            this.nWorkspacesId = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.updateWorkspaces));
+            this.workspaceSwitchedId = global.screen.connect('workspace-switched', Lang.bind(this, this.onParamChanged));
+            this.nWorkspacesId = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.onParamChanged));
 
-            this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
-            this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
-            this.buttonWorkspace.connect("scroll-event", Lang.bind(this, this.onScrollWorkspaceButton));
-            this.updateWorkspaces();
-            this.boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxWorkspace.add_actor(this.buttonWorkspace);
-            this.boxMainWorkspaceButton.add_actor(this.boxWorkspace);
-        }
-    },
-
-    updateWorkspaces: function()
-    {
-        this.activeWorkspaceIndex = global.screen.get_active_workspace().index();
-        this.totalWorkspace = global.screen.n_workspaces - 1;
-        let labelWorkspaceIndex = this.activeWorkspaceIndex + 1;
-        let labelTotalWorkspace = this.totalWorkspace + 1;
-        if (this.settings.get_enum("workspace-button-index") == 1)
-            this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
-        else if (this.settings.get_enum("workspace-button-index") == 0)
-            this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
-        if (this.settings.get_boolean("bottom-panel"))
-            this.fontSize = this.settings.get_int('font-size-bottom');
-        else
+            this.activeWorkspaceIndex = global.screen.get_active_workspace().index();
+            this.totalWorkspace = global.screen.n_workspaces - 1;
+            let labelWorkspaceIndex = this.activeWorkspaceIndex + 1;
+            let labelTotalWorkspace = this.totalWorkspace + 1;
+            if (this.settings.get_enum("workspace-button-index") == 1)
+                this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
+            else if (this.settings.get_enum("workspace-button-index") == 0)
+                this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
             this.fontSize = this.settings.get_int('font-size');
-        this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
-        this.buttonWorkspace.set_child(this.labelWorkspace);
+            this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
+            this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
+            let signalWorkspace = this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
+            this.buttonWorkspace.set_child(this.labelWorkspace);
+            let boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+            boxWorkspace.add_actor(this.buttonWorkspace);
+            this.boxMainWorkspaceButton.add_actor(boxWorkspace);
+        }
     },
 
     //Add Desktop Button
@@ -541,16 +449,6 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-desktop-button"))
         {
             let iconPath = this.settings.get_string("desktop-button-icon");
-            let pixbuf;
-            try
-            {
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
-            }
-            catch (e)
-            {
-                iconPath = this.extensionMeta.path + '/images/desktop-button-default.png';
-                this.settings.set_string("desktop-button-icon", iconPath);
-            }
             this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
             let iconDesktop = new St.Icon(
             {
@@ -564,77 +462,6 @@ TaskBar.prototype =
             let boxDesktop = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             boxDesktop.add_actor(buttonDesktop);
             this.boxMainDesktopButton.add_actor(boxDesktop);
-        }
-    },
-
-    //Add Separators
-    addSeparators: function()
-    {
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-one"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-one-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorOneWidth = this.settings.get_int("separator-one-bottom-size");
-            else
-                this.separatorOneWidth = this.settings.get_int("separator-one-size");
-            this.boxSeparatorOne = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorOne.set_width(this.separatorOneWidth);
-            this.boxMainSeparatorOne.add_actor(this.boxSeparatorOne);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-two"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-two-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorTwoWidth = this.settings.get_int("separator-two-bottom-size");
-            else
-                this.separatorTwoWidth = this.settings.get_int("separator-two-size");
-            this.boxSeparatorTwo = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorTwo.set_width(this.separatorTwoWidth);
-            this.boxMainSeparatorTwo.add_actor(this.boxSeparatorTwo);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-three"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-three-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorThreeWidth = this.settings.get_int("separator-three-bottom-size");
-            else
-                this.separatorThreeWidth = this.settings.get_int("separator-three-size");
-            this.boxSeparatorThree = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorThree.set_width(this.separatorThreeWidth);
-            this.boxMainSeparatorThree.add_actor(this.boxSeparatorThree);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-four"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-four-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorFourWidth = this.settings.get_int("separator-four-bottom-size");
-            else
-                this.separatorFourWidth = this.settings.get_int("separator-four-size");
-            this.boxSeparatorFour = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorFour.set_width(this.separatorFourWidth);
-            this.boxMainSeparatorFour.add_actor(this.boxSeparatorFour);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-five"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-five-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorFiveWidth = this.settings.get_int("separator-five-bottom-size");
-            else
-                this.separatorFiveWidth = this.settings.get_int("separator-five-size");
-            this.boxSeparatorFive = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorFive.set_width(this.separatorFiveWidth);
-            this.boxMainSeparatorFive.add_actor(this.boxSeparatorFive);
-        }
-        if (((! this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-six"))) ||
-            ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_boolean("separator-six-bottom"))))
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-                this.separatorSixWidth = this.settings.get_int("separator-six-bottom-size");
-            else
-                this.separatorSixWidth = this.settings.get_int("separator-six-size");
-            this.boxSeparatorSix = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxSeparatorSix.set_width(this.separatorSixWidth);
-            this.boxMainSeparatorSix.add_actor(this.boxSeparatorSix);
         }
     },
 
@@ -732,22 +559,6 @@ TaskBar.prototype =
                 }
             }
         }
-        else if (ShellVersion[1] === 10)
-        {
-            this.appMenuActor = Main.panel.statusArea.appMenu.actor;
-            if (this.settings.get_boolean("hide-default-application-menu"))
-            {
-                this.appMenuActor.hide();
-                this.hidingId = Main.overview.connect('hiding', function ()
-                {
-                    Main.panel.statusArea.appMenu.actor.hide();
-                });
-                this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
-                {
-                    Main.panel.statusArea.appMenu.actor.hide();
-                });
-            }
-        }
         else
         {
             this.appMenuActor = Main.panel.statusArea.appMenu.actor;
@@ -761,60 +572,14 @@ TaskBar.prototype =
                 {
                     Main.panel.statusArea.appMenu.actor.hide();
                 });
+                if (ShellVersion[1] === 10)
+                {
+	            this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
+                    {
+                        Main.panel.statusArea.appMenu.actor.hide();
+                    });
+                }
             }
-        }
-    },
-
-    //Preferences Hover Component Event
-    hoverEvent: function()
-    {
-        this.hoverComponent = this.settings.get_int("hover-event");
-        this.hoverStyle = "background-color: red; border-radius: 5px";
-        if (this.hoverComponent === 1)
-            this.boxMainTasks.set_style(this.hoverStyle);
-        else if (this.hoverComponent === 2)
-            this.boxMainDesktopButton.set_style(this.hoverStyle);
-        else if (this.hoverComponent === 3)
-            this.boxMainWorkspaceButton.set_style(this.hoverStyle);
-        else if (this.hoverComponent === 4)
-            this.boxMainShowAppsButton.set_style(this.hoverStyle);
-        else if (this.hoverComponent === 5)
-            this.boxMainFavorites.set_style(this.hoverStyle);
-        else if (this.hoverComponent === 0)
-        {
-            this.boxMainTasks.set_style("None");
-            this.boxMainDesktopButton.set_style("None");
-            this.boxMainWorkspaceButton.set_style("None");
-            this.boxMainShowAppsButton.set_style("None");
-            this.boxMainFavorites.set_style("None");
-        }
-    },
-
-    //Preferences Hover Separator Event
-    hoverSeparatorEvent: function()
-    {
-        this.hoverSeparator = this.settings.get_int("hover-separator-event");
-        this.hoverSeparatorStyle = "background-color: red; border-radius: 5px";
-        if (this.hoverSeparator === 1)
-            this.boxMainSeparatorOne.set_style(this.hoverSeparatorStyle);
-        else if (this.hoverSeparator === 2)
-            this.boxMainSeparatorTwo.set_style(this.hoverSeparatorStyle);
-        else if (this.hoverSeparator === 3)
-            this.boxMainSeparatorThree.set_style(this.hoverSeparatorStyle);
-        else if (this.hoverSeparator === 4)
-            this.boxMainSeparatorFour.set_style(this.hoverSeparatorStyle);
-        else if (this.hoverSeparator === 5)
-            this.boxMainSeparatorFive.set_style(this.hoverSeparatorStyle);
-        else if (this.hoverSeparator === 6)
-            this.boxMainSeparatorSix.set_style(this.hoverSeparatorStyle);
-        else if (this.hoverSeparator === 0)
-        {
-            this.boxMainSeparatorOne.set_style("None");
-            this.boxMainSeparatorTwo.set_style("None");
-            this.boxMainSeparatorThree.set_style("None");
-            this.boxMainSeparatorFour.set_style("None");
-            this.boxMainSeparatorFive.set_style("None");
-            this.boxMainSeparatorSix.set_style("None");
         }
     },
 
@@ -822,10 +587,7 @@ TaskBar.prototype =
     activeTaskFrame: function()
     {
         this.backgroundColor = this.settings.get_string("active-task-background-color");
-        if (this.settings.get_boolean("active-task-background-color-set"))
-            this.backgroundStyleColor = "background-color: " + this.backgroundColor;
-        else
-            this.backgroundStyleColor = "None";
+        this.backgroundStyleColor = "background-color: " + this.backgroundColor;
         if (this.settings.get_boolean("active-task-frame"))
             this.activeTask = "active-task-frame";
         else
@@ -835,31 +597,24 @@ TaskBar.prototype =
     //Bottom Panel
     bottomPanel: function(h)
     {
-        this.iconSize = this.settings.get_int('icon-size-bottom');
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.fullscreenChangedId = null;
-        this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
-                                                   name: 'bottomPanel'});
         if (ShellVersion[1] === 4)
         {
-            this.bottomPanelActor.set_reactive(false);
-            this.bottomPanelActor.add_actor(this.boxMain);
+            this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
+                                                       name: 'bottomPanel',
+                                                       reactive: false });
         }
         else
         {
-            this.bottomPanelActor.set_reactive(true);
-            this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
-            if (this.positionBoxBottomSettings === 0)
-                this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.START });
-            if (this.positionBoxBottomSettings === 1)
-                this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.MIDDLE });
-            if (this.positionBoxBottomSettings === 2)
-                this.positionBoxBottom = new St.Bin({ x_expand: true, x_align: St.Align.END });
-            this.positionBoxBottom.add_actor(this.boxMain);
-            this.bottomPanelActor.add_actor(this.positionBoxBottom);
+            this.bottomPanelActor = new St.BoxLayout({ style_class: 'bottom-panel',
+                                                       name: 'bottomPanel',
+                                                       reactive: true });
         }
+        this.bottomPanelActor.add_actor(this.boxMain);
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         let primary = Main.layoutManager.primaryMonitor;
+        let h = null;
         h = (this.iconSize + this.bottomPanelVertical + 4);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-h);
         this.bottomPanelActor.set_size(primary.width, -1);
@@ -1023,7 +778,6 @@ TaskBar.prototype =
 
     onClickTaskButton: function(button, pspec, window)
     {
-        let activeWorkspace = global.screen.get_active_workspace();
         let numButton = pspec.get_button();
         if ((numButton == LEFTBUTTON) && (! this.settings.get_boolean("hover-switch-task"))) //Left Button (Hover deactivated)
         {
@@ -1031,15 +785,9 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    let windowWorkspace = windowTask.get_workspace();
                     if (windowTask == window)
                     {
-                        if (windowWorkspace !== activeWorkspace)
-                        {
-                            windowWorkspace.activate(global.get_current_time());
-                            windowTask.activate(global.get_current_time());
-                        }
-                        else if (! windowTask.has_focus())
+                        if (! windowTask.has_focus())
                             windowTask.activate(global.get_current_time());
                         else if (! Main.overview.visible)
                             windowTask.minimize(global.get_current_time());
@@ -1056,105 +804,17 @@ TaskBar.prototype =
             window.delete(global.get_current_time());
     },
 
-    //Scroll Events
-    onScrollWorkspaceButton: function(button, event)
-    {
-        if (this.settings.get_boolean("scroll-workspaces"))
-        {
-            let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
-            {
-            if (this.activeWorkspaceIndex == this.totalWorkspace)
-                this.activeWorkspaceIndex = -1;
-            let newActiveWorkspace = global.screen.get_workspace_by_index(this.activeWorkspaceIndex + 1);
-            newActiveWorkspace.activate(global.get_current_time());
-            }
-            if (scrollDirection == Clutter.ScrollDirection.DOWN)
-            {
-                if (this.activeWorkspaceIndex == 0)
-                    this.activeWorkspaceIndex = this.totalWorkspace + 1;
-                let newActiveWorkspace = global.screen.get_workspace_by_index(this.activeWorkspaceIndex - 1);
-                newActiveWorkspace.activate(global.get_current_time());
-            }
-        }
-    },
-
-    onScrollTaskButton: function(button, event)
-    {
-        if (this.settings.get_boolean("scroll-tasks"))
-        {
-            this.nextTask = false;
-            this.previousTask = null;
-            let focusWindow = global.display.focus_window;
-            let activeWorkspace = global.screen.get_active_workspace();
-            let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
-            {
-                this.tasksList.forEach(
-                    function(task)
-                    {
-                        let [windowTask, buttonTask, signalsTask] = task;
-                        let windowWorkspace = windowTask.get_workspace();
-                        if (this.nextTask)
-                        {
-                            if (windowWorkspace !== activeWorkspace)
-                                windowWorkspace.activate(global.get_current_time());
-                            windowTask.activate(global.get_current_time());
-                            this.nextTask = false;
-                        }
-                        if (windowTask === focusWindow)
-                            this.nextTask = true;
-                    },
-                    this
-                );
-                if (Main.overview.visible)
-                    Main.overview.hide();
-            }
-            else if (scrollDirection == Clutter.ScrollDirection.DOWN)
-            {
-                this.tasksList.forEach(
-                    function(task)
-                    {
-                        let [windowTask, buttonTask, signalsTask] = task;
-                        if ((windowTask == focusWindow) && (this.previousTask !== null))
-                        {
-                            let [windowTask, buttonTask, signalsTask] = this.previousTask;
-                            let windowWorkspace = windowTask.get_workspace();
-                            if (windowWorkspace !== activeWorkspace)
-                                windowWorkspace.activate(global.get_current_time());
-                            windowTask.activate(global.get_current_time());
-                        }
-                        this.previousTask = task;
-                    },
-                    this
-                );
-                if (Main.overview.visible)
-                    Main.overview.hide();
-            }
-        }
-    },
-
     //Switch Task on Hover
     onHoverSwitchTask: function(button, window)
     {
         if (! this.resetHover)
         {
-            let activeWorkspace = global.screen.get_active_workspace();
             this.tasksList.forEach(
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    let windowWorkspace = windowTask.get_workspace();
-                    if (windowTask == window)
-                    {
-                        if (windowWorkspace !== activeWorkspace)
-                        {
-                            windowWorkspace.activate(global.get_current_time());
-                            windowTask.activate(global.get_current_time());
-                        }
-                        else if (! windowTask.has_focus())
-                            windowTask.activate(global.get_current_time());
-                    }
+                    if ((windowTask == window) && (! windowTask.has_focus()))
+                        windowTask.activate(global.get_current_time());
                 },
                 this
             );
@@ -1181,9 +841,7 @@ TaskBar.prototype =
             this.hidePreview();
         }
         else if (type == 1) //Add window
-        {
             this.addTaskInList(window);
-        }
         else if (type == 2) //Remove window
         {
             this.removeTaskInList(window);
@@ -1195,13 +853,11 @@ TaskBar.prototype =
     activeTasks: function(window)
     {
         let active = false;
-        let activeWorkspace = global.screen.get_active_workspace();
         this.tasksList.forEach(
             function(task)
             {
                 let [windowTask, buttonTask, signalsTask] = task;
-                let workspaceTask = windowTask.get_workspace();
-                if ((! windowTask.minimized) && (workspaceTask == activeWorkspace))
+                if (! windowTask.minimized)
                     active = true;
             },
             this
@@ -1271,21 +927,27 @@ TaskBar.prototype =
     //Add Tasks
     addTaskInList: function(window)
     {
+
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
+        
+// adding a label to the button. Adding an option in preferences to enable or disable the label would be a nice addition.
+        let box = new St.BoxLayout({ style_class: "tkb-task-button-box"});
+        let labelTask =  new St.Label({ text: (window.get_title()+""), style_class: 'tkb-task-button-label' });         
+        let iconTask = app.create_icon_texture(this.iconSize);
+        box.add_actor(iconTask);
+        box.add_actor(labelTask);      
+          
+
+        //  let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
+        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: box  });
+
+
+
         let signalsTask = [
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
-            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
-        //Display tasks of All Workspaces
-        if (! this.settings.get_boolean("tasks-all-workspaces"))
-        {
-            let workspace = global.screen.get_active_workspace();
-            if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 6) && (! this.settings.get_boolean("tasks-all-workspaces")))
-                buttonTask.visible = window.located_on_workspace(workspace);
-        }
         if (window.has_focus())
         {
             buttonTask.add_style_pseudo_class(this.activeTask);
