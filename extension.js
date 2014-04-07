@@ -1000,15 +1000,21 @@ TaskBar.prototype =
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
         this.bottomPanelActor.set_size(primary.width, -1);
         if (ShellVersion[1] !== 4)
+        {
             Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
-        this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
+            this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
+            {
+                Main.messageTray.actor.set_anchor_point(0, this.height);
+            }));
+            this.messageTrayHidingId = Main.messageTray.connect('hiding', Lang.bind(this, function()
+            {
+                Main.messageTray.actor.set_anchor_point(0, 0);
+            }));
+        }
+        if (ShellVersion[1] === 4)
         {
             Main.messageTray.actor.set_anchor_point(0, this.height);
-        }));
-        this.messageTrayHidingId = Main.messageTray.connect('hiding', Lang.bind(this, function()
-        {
-            Main.messageTray.actor.set_anchor_point(0, 0);
-        }));
+        }
         if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
         {
             this.fullscreenChangedId = global.screen.connect('in-fullscreen-changed', Lang.bind(this, function()
