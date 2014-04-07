@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   GNOME Shell Extension TaskBar
-  Copyright (C) 2013 zpydr
+  Copyright (C) 2014 zpydr
+
+  Version 38
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -124,25 +126,25 @@
         </key>
         <key name="icon-size" type="i">
             <range min="1" max="96"/>
-            <default>22</default>
+            <default>24</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="icon-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>22</default>
+            <default>24</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="font-size" type="i">
             <range min="1" max="96"/>
-            <default>16</default>
+            <default>17</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="font-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>16</default>
+            <default>17</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
@@ -174,6 +176,21 @@
         <key name="active-task-background-color-set" type="b">
             <default>false</default>
             <summary>Active Task Background Color</summary>
+            <description/>
+        </key>
+        <key name="top-panel-background-color" type="s">
+            <default>'rgba(0,0,0,1)'</default>
+            <summary>Top Panel Background Color</summary>
+            <description/>
+        </key>
+        <key name="top-panel-background-alpha" type="b">
+            <default>false</default>
+            <summary>Top Panel Background Alpha</summary>
+            <description/>
+        </key>
+        <key name="bottom-panel-background-color" type="s">
+            <default>'rgba(0,0,0,1)'</default>
+            <summary>Bottom Panel Background Color</summary>
             <description/>
         </key>
         <key name="hover-switch-task" type="b">
@@ -215,6 +232,21 @@
         <key name="appview-button-icon" type="s">
             <default>'appviewbuttonicon'</default>
             <summary>Appview Button Icon</summary>
+            <description/>
+        </key>
+        <key name="display-tray-button" type="b">
+            <default>false</default>
+            <summary>Display Tray Button</summary>
+            <description/>
+        </key>
+        <key name="tray-button-icon" type="s">
+            <default>'traybuttonicon'</default>
+            <summary>Tray Button Icon</summary>
+            <description/>
+        </key>
+        <key name="hover-tray-button" type="b">
+            <default>false</default>
+            <summary>Activate Tray on Hover</summary>
             <description/>
         </key>
         <key name="hide-activities" type="b">

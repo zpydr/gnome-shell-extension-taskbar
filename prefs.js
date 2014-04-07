@@ -1,5 +1,7 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2013 zpydr
+//  Copyright (C) 2014 zpydr
+//
+//  Version 38
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -37,11 +39,14 @@ const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function
 const schema = "org.gnome.shell.extensions.TaskBar";
 
 const RESETCOLOR = 'rgba(0,0,0,0)';
+const BLACKCOLOR = 'rgba(0,0,0,1)';
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
+const TRAYICON = Extension.path + '/images/bottom-panel-tray-button.svg';
 const HOMEICON = Extension.path + '/images/settings-home.png';
 const MAILICON = Extension.path + '/images/settings-mail.png';
-const DONATEICON = Extension.path + '/images/settings-donate.png';
+const GNOMEICON = Extension.path + '/images/settings-gnome.png';
+const FSFICON = Extension.path + '/images/settings-fsf.png';
 
 function init()
 {
@@ -110,7 +115,7 @@ Prefs.prototype =
         });
         scrollWindowComponents.add_with_viewport(this.gridComponents);
         scrollWindowComponents.show_all();
-        let labelComponents = new Gtk.Label({label: "Components"});
+        let labelComponents = new Gtk.Label({label: _("Components")});
         notebook.append_page(scrollWindowComponents, labelComponents);
 
         let labelDisplayTasks = new Gtk.Label({label: _("Tasks"), xalign: 0});
@@ -199,7 +204,7 @@ Prefs.prototype =
         });
         scrollWindowSettings.add_with_viewport(this.gridSettings);
         scrollWindowSettings.show_all();
-        let labelSettings = new Gtk.Label({label: "Settings"});
+        let labelSettings = new Gtk.Label({label: _("Settings")});
         notebook.append_page(scrollWindowSettings, labelSettings);
 
         let labelPanel3 = new Gtk.Label({label: _("Top Panel"), xalign: 2});
@@ -207,7 +212,7 @@ Prefs.prototype =
         let labelPanel4 = new Gtk.Label({label: _("Bottom Panel"), xalign: 2});
         this.gridSettings.attach(labelPanel4, 6, 1, 2, 1);
 
-        let labelIconSize = new Gtk.Label({label: _("Icon Size")+" [22]", xalign: 0});
+        let labelIconSize = new Gtk.Label({label: _("Icon Size")+" [24]", xalign: 0});
         this.gridSettings.attach(labelIconSize, 1, 2, 1, 1);
         this.valueIconSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
         let value2IconSize = new Gtk.SpinButton({adjustment: this.valueIconSize, snap_to_ticks: true});
@@ -220,7 +225,7 @@ Prefs.prototype =
         value2IconSizeBottom.connect("value-changed", Lang.bind(this, this.changeIconSizeBottom));
         this.gridSettings.attach(value2IconSizeBottom, 6, 2, 2, 1);
 
-        let labelFontSize = new Gtk.Label({label: _("Font Size" + " [16]" + "\nWorkspace Button"), xalign: 0});
+        let labelFontSize = new Gtk.Label({label: _("Font Size") + " [17]\n" + _("Workspace Button"), xalign: 0});
         this.gridSettings.attach(labelFontSize, 1, 3, 1, 1);
         this.valueFontSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
         let value2FontSize = new Gtk.SpinButton({adjustment: this.valueFontSize, snap_to_ticks: true});
@@ -256,11 +261,30 @@ Prefs.prototype =
         this.value2BottomPanelVertical.connect("value-changed", Lang.bind(this, this.changeBottomPanelVertical));
         this.gridSettings.attach(this.value2BottomPanelVertical, 6, 5, 2, 1);
 
+        let labelPanelBackgroundColor = new Gtk.Label({label: _("Background Color"), xalign: 0});
+        this.gridSettings.attach(labelPanelBackgroundColor, 1, 6, 1, 1);
+        let colorTop = this.settings.get_string("top-panel-background-color");
+        let rgbaTop = new Gdk.RGBA();
+        rgbaTop.parse(colorTop);
+        this.valueTopPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Top Panel Background Color"});
+        this.valueTopPanelBackgroundColor.set_use_alpha(true);
+        this.valueTopPanelBackgroundColor.set_rgba(rgbaTop);
+        this.valueTopPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeTopPanelBackgroundColor));
+        this.gridSettings.attach(this.valueTopPanelBackgroundColor, 3, 6, 2, 1);
+        let colorBottom = this.settings.get_string("bottom-panel-background-color");
+        let rgbaBottom = new Gdk.RGBA();
+        rgbaBottom.parse(colorBottom);
+        this.valueBottomPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Bottom Panel Background Color"});
+        this.valueBottomPanelBackgroundColor.set_use_alpha(true);
+        this.valueBottomPanelBackgroundColor.set_rgba(rgbaBottom);
+        this.valueBottomPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeBottomPanelBackgroundColor));
+        this.gridSettings.attach(this.valueBottomPanelBackgroundColor, 6, 6, 2, 1);
+
         let labelSpaceSettings1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSettings.attach(labelSpaceSettings1, 0, 6, 1, 1);
+        this.gridSettings.attach(labelSpaceSettings1, 0, 7, 1, 1);
         let labelSpaceSettings2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridSettings.attach(labelSpaceSettings2, 2, 2, 1, 1);
-        let labelSpaceSettings3 = new Gtk.Label({label: "\t\t", xalign: 0});
+        let labelSpaceSettings3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSettings.attach(labelSpaceSettings3, 5, 0, 1, 1);
         let labelSpaceSettings4 = new Gtk.Label({label: "2/8", xalign: 1});
         this.gridSettings.attach(labelSpaceSettings4, 8, 0, 1, 1);
@@ -278,7 +302,7 @@ Prefs.prototype =
         });
         scrollWindowTasks.add_with_viewport(this.gridTasks);
         scrollWindowTasks.show_all();
-        let labelTasks = new Gtk.Label({label: "Tasks"});
+        let labelTasks = new Gtk.Label({label: _("Tasks")});
         notebook.append_page(scrollWindowTasks, labelTasks);
 
         let labelAllWorkspaces = new Gtk.Label({label: _("Tasks on all Workspaces"), xalign: 0});
@@ -342,7 +366,7 @@ Prefs.prototype =
         this.gridTasks.attach(labelSpaceTasks1, 0, 9, 1, 1);
         let labelSpaceTasks2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridTasks.attach(labelSpaceTasks2, 2, 0, 1, 1);
-        let labelSpaceTasks3 = new Gtk.Label({label: "\t\t", xalign: 0});
+        let labelSpaceTasks3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
         let labelSpaceTasks4 = new Gtk.Label({label: "3/8", xalign: 1});
         this.gridTasks.attach(labelSpaceTasks4, 5, 0, 1, 1);
@@ -360,7 +384,7 @@ Prefs.prototype =
         });
         scrollWindowButtons.add_with_viewport(this.gridButtons);
         scrollWindowButtons.show_all();
-        let labelButtons = new Gtk.Label({label: "Buttons"});
+        let labelButtons = new Gtk.Label({label: _("Buttons")});
         notebook.append_page(scrollWindowButtons, labelButtons);
 
         let labelDesktopButtonRightClick = new Gtk.Label({label: _("Desktop Button Right Click\nopens Preferences (this)"), xalign: 0});
@@ -411,11 +435,32 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
+        let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
+        this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
+        this.valueTrayButton = new Gtk.Switch({active: this.settings.get_boolean("display-tray-button")});
+        this.valueTrayButton.connect('notify::active', Lang.bind(this, this.changeDisplayTrayButton));
+        this.gridButtons.attach(this.valueTrayButton, 4, 7, 1, 1);
+
+        let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
+        this.gridButtons.attach(labelTrayButtonIcon, 1, 8, 1, 1);
+        this.trayIconFilename = this.settings.get_string("tray-button-icon");
+        this.valueTrayButtonIcon = new Gtk.Image();
+        this.loadTrayIcon();
+        this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
+        this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
+        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 8, 1, 1);
+
+        let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
+        this.gridButtons.attach(labelHoverTrayButton, 1, 9, 1, 1);
+        this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
+        this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
+        this.gridButtons.attach(this.valueHoverTrayButton, 4, 9, 1, 1);
+
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons1, 0, 7, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons1, 0, 10, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
-        let labelSpaceButtons3 = new Gtk.Label({label: "\t\t", xalign: 0});
+        let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons3, 3, 1, 1, 1);
         let labelSpaceButtons4 = new Gtk.Label({label: "4/8", xalign: 1});
         this.gridButtons.attach(labelSpaceButtons4, 6, 0, 1, 1);
@@ -433,7 +478,7 @@ Prefs.prototype =
         });
         scrollWindowSeparator.add_with_viewport(this.gridSeparator);
         scrollWindowSeparator.show_all();
-        let labelSeparator = new Gtk.Label({label: "Separators"});
+        let labelSeparator = new Gtk.Label({label: _("Separators")});
         notebook.append_page(scrollWindowSeparator, labelSeparator);
 
         let labelPanel5 = new Gtk.Label({label: _("Top Panel"), xalign: 2});
@@ -441,7 +486,7 @@ Prefs.prototype =
         let labelPanel6 = new Gtk.Label({label: _("Bottom Panel"), xalign: 2});
         this.gridSeparator.attach(labelPanel6, 6, 1, 2, 1);
 
-        let labelSeparatorOne = new Gtk.Label({label: _("Separator 1\t(Left)"), xalign: 0});
+        let labelSeparatorOne = new Gtk.Label({label: _("Separator") + " 1\t("+_("Left"+")"), xalign: 0});
         this.gridSeparator.attach(labelSeparatorOne, 1, 2, 1, 1);
         this.valueSeparatorOne = new Gtk.Switch({active: this.settings.get_boolean("separator-one")});
         this.valueSeparatorOne.connect('notify::active', Lang.bind(this, this.changeSeparatorOne));
@@ -480,7 +525,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorOneBottom, 7, 2, 1, 1);
 
-        let labelSeparatorTwo = new Gtk.Label({label: _("Separator 2"), xalign: 0});
+        let labelSeparatorTwo = new Gtk.Label({label: _("Separator")+" 2", xalign: 0});
         this.gridSeparator.attach(labelSeparatorTwo, 1, 3, 1, 1);
         this.valueSeparatorTwo = new Gtk.Switch({active: this.settings.get_boolean("separator-two")});
         this.valueSeparatorTwo.connect('notify::active', Lang.bind(this, this.changeSeparatorTwo));
@@ -519,7 +564,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorTwoBottom, 7, 3, 1, 1);
 
-        let labelSeparatorThree = new Gtk.Label({label: _("Separator 3"), xalign: 0});
+        let labelSeparatorThree = new Gtk.Label({label: _("Separator")+" 3", xalign: 0});
         this.gridSeparator.attach(labelSeparatorThree, 1, 4, 1, 1);
         this.valueSeparatorThree = new Gtk.Switch({active: this.settings.get_boolean("separator-three")});
         this.valueSeparatorThree.connect('notify::active', Lang.bind(this, this.changeSeparatorThree));
@@ -558,7 +603,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorThreeBottom, 7, 4, 1, 1);
 
-        let labelSeparatorFour = new Gtk.Label({label: _("Separator 4"), xalign: 0});
+        let labelSeparatorFour = new Gtk.Label({label: _("Separator")+" 4", xalign: 0});
         this.gridSeparator.attach(labelSeparatorFour, 1, 5, 1, 1);
         this.valueSeparatorFour = new Gtk.Switch({active: this.settings.get_boolean("separator-four")});
         this.valueSeparatorFour.connect('notify::active', Lang.bind(this, this.changeSeparatorFour));
@@ -597,7 +642,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorFourBottom, 7, 5, 1, 1);
 
-        let labelSeparatorFive = new Gtk.Label({label: _("Separator 5"), xalign: 0});
+        let labelSeparatorFive = new Gtk.Label({label: _("Separator")+" 5", xalign: 0});
         this.gridSeparator.attach(labelSeparatorFive, 1, 6, 1, 1);
         this.valueSeparatorFive = new Gtk.Switch({active: this.settings.get_boolean("separator-five")});
         this.valueSeparatorFive.connect('notify::active', Lang.bind(this, this.changeSeparatorFive));
@@ -636,7 +681,7 @@ Prefs.prototype =
         }));
         this.gridSeparator.attach(this.valueSeparatorFiveBottom, 7, 6, 1, 1);
 
-        let labelSeparatorSix = new Gtk.Label({label: _("Separator 6\t(Right)"), xalign: 0});
+        let labelSeparatorSix = new Gtk.Label({label: _("Separator")+" 6\t("+_("Right")+")", xalign: 0});
         this.gridSeparator.attach(labelSeparatorSix, 1, 7, 1, 1);
         this.valueSeparatorSix = new Gtk.Switch({active: this.settings.get_boolean("separator-six")});
         this.valueSeparatorSix.connect('notify::active', Lang.bind(this, this.changeSeparatorSix));
@@ -678,12 +723,12 @@ Prefs.prototype =
         let valueSeparatorBox = new Gtk.Box();
         let labelSeparatorBox = new Gtk.Label({label: _("Resize "), xalign: 0});
         this.valueSeparator = new Gtk.ComboBoxText();
-        this.valueSeparator.append_text(_("Separator 1"));
-        this.valueSeparator.append_text(_("Separator 2"));
-        this.valueSeparator.append_text(_("Separator 3"));
-        this.valueSeparator.append_text(_("Separator 4"));
-        this.valueSeparator.append_text(_("Separator 5"));
-        this.valueSeparator.append_text(_("Separator 6"));
+        this.valueSeparator.append_text(_("Separator")+" 1");
+        this.valueSeparator.append_text(_("Separator")+" 2");
+        this.valueSeparator.append_text(_("Separator")+" 3");
+        this.valueSeparator.append_text(_("Separator")+" 4");
+        this.valueSeparator.append_text(_("Separator")+" 5");
+        this.valueSeparator.append_text(_("Separator")+" 6");
         this.separatorSelection = this.settings.get_enum("separator-selection");
         this.valueSeparator.set_active(this.settings.get_enum("separator-selection"));
         this.valueSeparator.connect('changed', Lang.bind(this, this.changeSeparatorSelection));
@@ -724,7 +769,7 @@ Prefs.prototype =
         this.gridSeparator.attach(labelSpaceSeparator2, 2, 0, 1, 1);
         let labelSpaceSeparator3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator3, 3, 0, 1, 1);
-        let labelSpaceSeparator4 = new Gtk.Label({label: "\t\t", xalign: 0});
+        let labelSpaceSeparator4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator4, 5, 0, 1, 1);
         let labelSpaceSeparator5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator5, 6, 0, 1, 1);
@@ -744,7 +789,7 @@ Prefs.prototype =
         });
         scrollWindowPreview.add_with_viewport(this.gridPreview);
         scrollWindowPreview.show_all();
-        let labelPreview = new Gtk.Label({label: "Preview"});
+        let labelPreview = new Gtk.Label({label: _("Preview")});
         notebook.append_page(scrollWindowPreview, labelPreview);
 
         let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
@@ -803,7 +848,7 @@ Prefs.prototype =
         });
         scrollWindowMisc.add_with_viewport(this.gridMisc);
         scrollWindowMisc.show_all();
-        let labelMisc = new Gtk.Label({label: "Misc"});
+        let labelMisc = new Gtk.Label({label: _("Misc")});
         notebook.append_page(scrollWindowMisc, labelMisc);
 
         let labelHideActivities = new Gtk.Label({label: _("Hide Activities"), xalign: 0});
@@ -853,7 +898,11 @@ Prefs.prototype =
         let linkImage1 = new Gtk.Image({file: HOMEICON});
         let linkImage2 = new Gtk.Image({file: HOMEICON});
         let linkImage3 = new Gtk.Image({file: MAILICON});
-        let linkImage4 = new Gtk.Image({file: DONATEICON});
+        let linkImage4 = new Gtk.Image({file: MAILICON});
+        let linkImage5 = new Gtk.Image({file: DESKTOPICON});
+        let linkImage6 = new Gtk.Image({file: GNOMEICON});
+        let linkImage7 = new Gtk.Image({file: FSFICON});
+
         let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
@@ -866,22 +915,37 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 3, 2, 1, 1);
-        let resetButton = new Gtk.Button({label: _("RESET ALL")});
-        resetButton.connect('clicked', Lang.bind(this, this.reset));
-        this.gridTaskBar.attach(resetButton, 1, 2, 1, 1);
-        let labelLink3 = new Gtk.LinkButton ({image: linkImage3, label: " zpydr@linuxwaves.com",
+        let bugReport = new Gtk.LinkButton ({label: _("Send Bug Report"),
+            uri: "mailto:zpydr@linuxwaves.com?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 38%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            bugReport.set_always_show_image(true);
+        this.gridTaskBar.attach(bugReport, 1, 2, 1, 1);
+        let labelLink3 = new Gtk.LinkButton ({image: linkImage4, label: " zpydr@linuxwaves.com",
             uri: "mailto:zpydr@linuxwaves.com", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink3.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink3, 3, 3, 1, 1);
-        let labelLink4 = new Gtk.LinkButton ({image: linkImage4, label: " Donate",
+        let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
             uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink4.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink4, 3, 4, 1, 1);
+        let labelLink5 = new Gtk.LinkButton ({image: linkImage6, label: " "+_("Become a Friend of GNOME"),
+            uri: "https://www.gnome.org/friends/", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            labelLink5.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink5, 3, 5, 1, 1);
+        let resetButton = new Gtk.Button({label: _("RESET ALL !")});
+        resetButton.connect('clicked', Lang.bind(this, this.reset));
+        this.gridTaskBar.attach(resetButton, 1, 6, 1, 1);
+        let labelLink6 = new Gtk.LinkButton ({image: linkImage7, label: " "+_("Free Software Foundation"),
+            uri: "https://www.fsf.org/", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            labelLink6.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
 
         let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 5, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 7, 1, 1);
         let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
         let labelSpaceTaskBar3 = new Gtk.Label({label: "8/8", xalign: 1});
@@ -1076,6 +1140,23 @@ Prefs.prototype =
         this.settings.set_boolean("active-task-background-color-set", object.active);
     },
 
+    changeTopPanelBackgroundColor: function()
+    {
+        this.topPanelBackgroundColor = this.valueTopPanelBackgroundColor.get_rgba().to_string();
+        this.settings.set_string("top-panel-background-color", this.topPanelBackgroundColor);
+        this.alpha = this.valueTopPanelBackgroundColor.get_alpha();
+        if (this.alpha < 65535)
+            this.settings.set_boolean("top-panel-background-alpha", true);
+        else
+            this.settings.set_boolean("top-panel-background-alpha", false);
+    },
+
+    changeBottomPanelBackgroundColor: function()
+    {
+        this.bottomPanelBackgroundColor = this.valueBottomPanelBackgroundColor.get_rgba().to_string();
+        this.settings.set_string("bottom-panel-background-color", this.bottomPanelBackgroundColor);
+    },
+
     changeHoverSwitchTask: function(object)
     {
         this.settings.set_boolean("hover-switch-task", object.active);
@@ -1265,6 +1346,96 @@ Prefs.prototype =
             have_preview = false;
         }
         this.dialogAppviewIcon.set_preview_widget_active(have_preview);
+    },
+
+    changeDisplayTrayButton: function(object, pspec)
+    {
+        this.settings.set_boolean("display-tray-button", object.active);
+    },
+
+    changeTrayButtonIcon: function()
+    {
+        let iconPath = this.settings.get_string("tray-button-icon");
+        this.dialogTrayIcon = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Tray Button Icon"), action: Gtk.FileChooserAction.OPEN });
+        this.dialogTrayIcon.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
+        this.dialogTrayIcon.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
+        this.dialogTrayIcon.add_button("RESET", Gtk.ResponseType.NONE);
+        this.dialogTrayIcon.set_filename(iconPath);
+        this.preview = new Gtk.Image();
+        this.dialogTrayIcon.set_preview_widget(this.preview);
+        this.dialogTrayIcon.set_use_preview_label(false);
+        this.initTrayIconPath = iconPath;
+        this.loadTrayIconPreview();
+        this.initTrayIconPath = null;
+        this.updatePreview = this.dialogTrayIcon.connect("update-preview", Lang.bind(this, this.loadTrayIconPreview));
+        let filter = new Gtk.FileFilter();
+        filter.set_name(_("Images"));
+        filter.add_pattern("*.png");
+        filter.add_pattern("*.jpg");
+        filter.add_pattern("*.gif");
+        filter.add_pattern("*.svg");
+        filter.add_pattern("*.ico");
+        this.dialogTrayIcon.add_filter(filter);
+        let response = this.dialogTrayIcon.run();
+        if(response == -3)
+        {
+            this.trayIconFilename = this.dialogTrayIcon.get_filename();
+            if (this.trayIconFilename !== iconPath)
+            {
+                iconPath = this.trayIconFilename;
+                this.loadTrayIcon();
+            }
+        }
+        if(response == -1)
+        {
+            this.trayIconFilename = TRAYICON;
+            this.loadTrayIcon();
+        }
+        this.dialogTrayIcon.disconnect(this.updatePreview);
+        this.dialogTrayIcon.destroy();
+    },
+
+    loadTrayIcon: function()
+    {
+        let pixbuf;
+        try
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.trayIconFilename, 24, 24, null);
+        }
+        catch (e)
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(TRAYICON, 24, 24, null);
+            this.trayIconFilename = TRAYICON;
+        }
+        this.valueTrayButtonIcon.set_from_pixbuf(pixbuf);
+        let settings = this.settings.get_string("tray-button-icon");
+        if (this.trayIconFilename !== settings)
+            this.settings.set_string("tray-button-icon", this.trayIconFilename);
+    },
+
+    loadTrayIconPreview: function()
+    {
+        let pixbuf;
+        if (this.initTrayIconPath != null)
+            this.previewFilename = this.initTrayIconPath;
+        else
+            this.previewFilename = this.dialogTrayIcon.get_preview_filename();
+        try
+        {
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(this.previewFilename, 48, 48, null);
+            this.preview.set_from_pixbuf(pixbuf);
+            have_preview = true;
+        }
+        catch (e)
+        {
+            have_preview = false;
+        }
+        this.dialogTrayIcon.set_preview_widget_active(have_preview);
+    },
+
+    changeHoverTrayButton: function(object, pspec)
+    {
+        this.settings.set_boolean("hover-tray-button", object.active);
     },
 
     changeSeparatorOne: function(object, pspec)
@@ -1663,14 +1834,14 @@ Prefs.prototype =
         this.settings.set_int("bottom-panel-vertical", 0);
         this.valueBottomPanelVertical.set_value(0);
         this.settings.set_int("position-bottom-box", 0);
-        this.settings.set_int("icon-size", 22);
-        this.valueIconSize.set_value(22);
-        this.settings.set_int("icon-size-bottom", 22);
-        this.valueIconSizeBottom.set_value(22);
-        this.settings.set_int("font-size", 16);
-        this.valueFontSize.set_value(16);
-        this.settings.set_int("font-size-bottom", 16);
-        this.valueFontSizeBottom.set_value(16);
+        this.settings.set_int("icon-size", 24);
+        this.valueIconSize.set_value(24);
+        this.settings.set_int("icon-size-bottom", 24);
+        this.valueIconSizeBottom.set_value(24);
+        this.settings.set_int("font-size", 17);
+        this.valueFontSize.set_value(17);
+        this.settings.set_int("font-size-bottom", 17);
+        this.valueFontSizeBottom.set_value(17);
         this.valueAllWorkspaces.set_active(false);
         this.valueCloseButton.set_active(0);
         this.valueScrollTasks.set_active(false);
@@ -1681,6 +1852,8 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.settings.set_string("active-task-background-color", RESETCOLOR);
         this.value2ActiveTaskBackgroundColor.set_active(false);
+        this.settings.set_string("top-panel-background-color", BLACKCOLOR);
+        this.settings.set_string("bottom-panel-background-color", BLACKCOLOR);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
         this.valueDesktopButtonRightClick.set_active(true);

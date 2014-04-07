@@ -1,5 +1,5 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 38 for GNOME 3.4 / 3.6 / 3.8 / 3.10**  
+**GNOME Shell Extension TaskBar Version 38 for GNOME 3.4 / 3.6 / 3.8 / 3.10 / 3.12**  
 zpydr@linuxwaves.com        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
@@ -10,7 +10,7 @@ https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/       
                 
-**![Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S)**                
+![Donate for Taskbar](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S)                
                 
 TaskBar displays icons of running applications on the top panel or alternatively on a new bottom panel.        
 Activate, minimize or close tasks with a simple click.          
@@ -25,20 +25,22 @@ Align position on the top panel
 Bottom panel            
 Icon size               
 Tasks on all workspaces          
-Activate tasks on hover              
+Activate tasks on hover  
+Separators              
 Thumbnail/label-preview         
 Hide activities                 
 Disable hot corner              
 Hide default application menu - simultaneously integrates the menu into                         
 applications like empathy, nautilus, etc.   
         
+Chinese language support by tuhaihe         
 German language support by jonnius, to-ba    
 Credit to Xes, flubshi, rogst, Baltix   
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_23.png)
         
 GNOME Shell Extension TaskBar           
-Copyright (C) 2013 zpydr             
+Copyright (C) 2014 zpydr             
                 
 This program is free software: you can redistribute it and/or modify            
 it under the terms of the GNU General Public License as published by            
@@ -56,5 +58,3 @@ along with this program. If not, see https://www.gnu.org/licenses/.
 zpydr@linuxwaves.com            
                 
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
-                
-**![Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S)**
