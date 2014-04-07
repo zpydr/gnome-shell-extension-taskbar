@@ -277,6 +277,11 @@ TaskBar.prototype =
         this.boxMain = null;
         this.newBox = null;
         this.cleanTasksList();
+        Main.panel.actor.set_style("None");
+        Main.panel._leftCorner.actor.show();
+        Main.panel._rightCorner.actor.show();
+        Main.panel._leftCorner.actor.set_style("None");
+        Main.panel._rightCorner.actor.set_style("None");
     },
 
     setSignals: function()
