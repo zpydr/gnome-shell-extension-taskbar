@@ -965,9 +965,18 @@ TaskBar.prototype =
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
         this.bottomPanelActor.set_style(this.bottomPanelBackgroundStyle);
         this.bottomPanelActor.set_reactive(false);
-        this.positionBoxBottomStart = new St.BoxLayout();
-        this.positionBoxBottomMiddle = new St.BoxLayout();
-        this.positionBoxBottomEnd = new St.BoxLayout();
+        if (ShellVersion[1] === 4)
+        {
+            this.positionBoxBottomStart = new St.BoxLayout();
+            this.positionBoxBottomMiddle = new St.BoxLayout();
+            this.positionBoxBottomEnd = new St.BoxLayout();
+        }
+        else
+        {
+            this.positionBoxBottomStart = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.START });
+            this.positionBoxBottomMiddle = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.MIDDLE });
+            this.positionBoxBottomEnd = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.END });
+        }
         this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
         if (this.positionBoxBottomSettings === 0)
             this.positionBoxBottomStart.add_actor(this.boxMain);
@@ -983,10 +992,22 @@ TaskBar.prototype =
         }
         else
             this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
-        this.bottomPanelActor.add(this.positionBoxBottomStart, { x_align: St.Align.START, expand: true, x_fill: false });
-        this.bottomPanelActor.add(this.positionBoxBottomMiddle, { x_align: St.Align.MIDDLE, expand: true, x_fill: false });
-        this.bottomPanelActor.add(this.positionBoxBottomEnd, { x_align: St.Align.END, expand: true, x_fill: false });
-        Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, visibleInFullscreen: false });
+        if (ShellVersion[1] === 4)
+            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, vilsibleInFullscreen: false });
+        else
+            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
+        if (ShellVersion[1] === 4)
+        {
+            this.bottomPanelActor.add(this.positionBoxBottomStart, { x_align: St.Align.START, expand: true, x_fill: false });
+            this.bottomPanelActor.add(this.positionBoxBottomMiddle, { x_align: St.Align.MIDDLE, expand: true, x_fill: false });
+            this.bottomPanelActor.add(this.positionBoxBottomEnd, { x_align: St.Align.END, expand: true, x_fill: false });
+        }
+        else
+        {
+            this.bottomPanelActor.add_actor(this.positionBoxBottomStart);
+            this.bottomPanelActor.add_actor(this.positionBoxBottomMiddle);
+            this.bottomPanelActor.add_actor(this.positionBoxBottomEnd);
+        }
         let primary = Main.layoutManager.primaryMonitor;
         this.height = (this.iconSize + this.bottomPanelVertical + 2);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
@@ -1006,6 +1027,32 @@ TaskBar.prototype =
         else if (ShellVersion[1] === 4)
         {
             Main.messageTray.actor.set_anchor_point(0, this.height);
+        }
+        if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        {
+            this.fullscreenChangedId = global.screen.connect('in-fullscreen-changed', Lang.bind(this, function()
+            {
+                this.updateAnchorPoint();
+            }));
+        }
+        else
+        {
+            this.fullscreenChangedId = Main.layoutManager.connect('primary-fullscreen-changed', Lang.bind(this, function()
+            {
+                this.updateAnchorPoint();
+            }));
+        }
+    },
+
+    updateAnchorPoint: function()
+    {
+        if (this.bottomPanelActor.visible)
+        {
+            this.bottomPanelActor.hide();
+        }
+        else
+        {
+            this.bottomPanelActor.show();
         }
     },
 
