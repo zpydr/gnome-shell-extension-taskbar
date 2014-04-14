@@ -965,7 +965,7 @@ TaskBar.prototype =
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
         this.bottomPanelActor.set_style(this.bottomPanelBackgroundStyle);
         this.bottomPanelActor.set_reactive(false);
-        if (ShellVersion[1] === 4)
+        if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
             this.positionBoxBottomStart = new St.BoxLayout();
             this.positionBoxBottomMiddle = new St.BoxLayout();
@@ -996,7 +996,7 @@ TaskBar.prototype =
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, visibleInFullscreen: false });
         else
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
-        if (ShellVersion[1] === 4)
+        if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
             this.bottomPanelActor.add(this.positionBoxBottomStart, { x_align: St.Align.START, expand: true, x_fill: false });
             this.bottomPanelActor.add(this.positionBoxBottomMiddle, { x_align: St.Align.MIDDLE, expand: true, x_fill: false });
