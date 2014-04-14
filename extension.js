@@ -993,7 +993,7 @@ TaskBar.prototype =
         else
             this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
         if (ShellVersion[1] === 4)
-            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, vilsibleInFullscreen: false });
+            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, visibleInFullscreen: false });
         else
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
         if (ShellVersion[1] === 4)
