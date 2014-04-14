@@ -1029,8 +1029,6 @@ TaskBar.prototype =
         else if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
             Main.messageTray.actor.set_anchor_point(0, this.height);
-            if (ShellVersion[1] === 6)
-            	Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
         }
         if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
         {
