@@ -1035,9 +1035,9 @@ TaskBar.prototype =
                 this.updateAnchorPoint();
             }));
         }
-        else
+        else if ((ShellVersion[1] === 6) || (ShellVersion[1] === 8))
         {
-            this.fullscreenChangedId = Main.layoutManager.connect('primary-fullscreen-changed', Lang.bind(this, function()
+            this.fullscreenChangedId = Main.layoutManager.connect('fullscreen-changed', Lang.bind(this, function()
             {
                 this.updateAnchorPoint();
             }));
