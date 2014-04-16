@@ -995,7 +995,7 @@ TaskBar.prototype =
         if (ShellVersion[1] === 4)
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, visibleInFullscreen: false });
         else
-            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true });
+            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
         if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
             this.bottomPanelActor.add(this.positionBoxBottomStart, { x_align: St.Align.START, expand: true, x_fill: false });
@@ -1029,32 +1029,6 @@ TaskBar.prototype =
         else if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
             Main.messageTray.actor.set_anchor_point(0, this.height);
-        }
-        if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
-        {
-            this.fullscreenChangedId = global.screen.connect('in-fullscreen-changed', Lang.bind(this, function()
-            {
-                this.updateAnchorPoint();
-            }));
-        }
-        else if ((ShellVersion[1] === 6) || (ShellVersion[1] === 8))
-        {
-            this.fullscreenChangedId = Main.layoutManager.connect('primary-fullscreen-changed', Lang.bind(this, function()
-            {
-                this.updateAnchorPoint();
-            }));
-        }
-    },
-
-    updateAnchorPoint: function()
-    {
-        if (this.bottomPanelActor.visible)
-        {
-            this.bottomPanelActor.hide();
-        }
-        else
-        {
-            this.bottomPanelActor.show();
         }
     },
 
