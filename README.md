@@ -1,6 +1,6 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
 **GNOME Shell Extension TaskBar Version 38 for GNOME 3.4 / 3.6 / 3.8 / 3.10 / 3.12**  
-zpydr@linuxwaves.com        
+zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
 https://launchpad.net/gnome-shell-extension-taskbar/            
@@ -55,6 +55,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License               
 along with this program. If not, see https://www.gnu.org/licenses/.              
                 
-zpydr@linuxwaves.com            
+zpydr@openmailbox.org            
                 
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
