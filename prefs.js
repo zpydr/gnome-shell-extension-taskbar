@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//  zpydr@linuxwaves.com
+//  zpydr@openmailbox.org
 
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
@@ -920,8 +920,8 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 2, 1, 1);
-        let labelLink3 = new Gtk.LinkButton ({image: linkImage4, label: " zpydr@linuxwaves.com",
-            uri: "mailto:zpydr@linuxwaves.com", xalign: 0 });
+        let labelLink3 = new Gtk.LinkButton ({image: linkImage4, label: " zpydr@openmailbox.org",
+            uri: "mailto:zpydr@openmailbox.org", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink3.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink3, 3, 3, 1, 1);
