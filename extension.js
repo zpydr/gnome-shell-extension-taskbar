@@ -31,6 +31,7 @@ const St = imports.gi.St;
 const AppFavorites = imports.ui.appFavorites;
 const Layout = imports.ui.layout;
 const Main = imports.ui.main;
+const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
@@ -223,16 +224,6 @@ TaskBar.prototype =
             this.changedId = null;
         }
 
-        //Disconnect Fullscreen Signal
-        if (this.fullscreenChangedId != null)
-        {
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
-                global.screen.disconnect(this.fullscreenChangedId);
-            else
-                Main.layoutManager.disconnect(this.fullscreenChangedId);
-            this.fullscreenChangedId = null;
-        }
-
         //Disconnect Message Tray Showing Signal
         if (this.messageTrayShowingId != null)
         {
@@ -247,6 +238,10 @@ TaskBar.prototype =
             this.messageTrayHidingId = null;
         }
 
+        //Reset Message Tray
+        if (this.showTray != null)
+            MessageTray.MessageTray.prototype._showTray = this.showTray;
+        
         //Disconnect Setting Signals
         if (this.settingSignals != null) 
         {
@@ -376,6 +371,9 @@ TaskBar.prototype =
     //Align Position
     onPositionChanged: function()
     {
+        this.showTray = null;
+        this.messageTrayShowingId = null;
+        this.messageTrayHidingId = null;
         this.bottomPanelEndIndicator = false;
         if (this.settings.get_boolean("bottom-panel"))
             this.bottomPanel();
@@ -955,9 +953,6 @@ TaskBar.prototype =
     //Bottom Panel
     bottomPanel: function()
     {
-        this.fullscreenChangedId = null;
-        this.messageTrayShowingId = null;
-        this.messageTrayHidingId = null;
         this.iconSize = this.settings.get_int('icon-size-bottom');
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
@@ -1014,7 +1009,6 @@ TaskBar.prototype =
         this.bottomPanelActor.set_size(primary.width, -1);
         if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
         {
-            Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
             this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
             {
                 Main.messageTray.actor.set_anchor_point(0, this.height);
@@ -1028,7 +1022,19 @@ TaskBar.prototype =
         }
         else if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
-            Main.messageTray.actor.set_anchor_point(0, this.height);
+            bottomPanelHeight = null;
+            newShowTray = null;
+            bottomPanelHeight = this.height;
+            this.showTray = MessageTray.MessageTray.prototype._showTray;
+            newShowTray = function()
+            {
+                this._tween(this.actor, '_trayState', MessageTray.State.SHOWN,
+                { y: - this.actor.height - bottomPanelHeight,
+                  time: MessageTray.ANIMATION_TIME,
+                  transition: 'easeOutQuad'
+                });
+            };
+            MessageTray.MessageTray.prototype._showTray = newShowTray;
         }
     },
 
