@@ -242,7 +242,6 @@ TaskBar.prototype =
         if (this.showTray != null)
         {
             MessageTray.MessageTray.prototype._showTray = this.showTray;
-            Main.messageTray._notificationWidget.set_anchor_point(0, 0);        
         }
 
         //Disconnect Setting Signals
@@ -1010,17 +1009,17 @@ TaskBar.prototype =
         this.height = (this.iconSize + this.bottomPanelVertical + 2);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
         this.bottomPanelActor.set_size(primary.width, -1);
+        if (ShellVersion[1] !== 4)
+            Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
         if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
         {
             this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
             {
                 Main.messageTray.actor.set_anchor_point(0, this.height);
-                Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
             }));
             this.messageTrayHidingId = Main.messageTray.connect('hiding', Lang.bind(this, function()
             {
                 Main.messageTray.actor.set_anchor_point(0, 0);
-                Main.messageTray._notificationWidget.set_anchor_point(0, 0);
             }));
         }
         else if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
@@ -1038,8 +1037,6 @@ TaskBar.prototype =
                 });
             };
             MessageTray.MessageTray.prototype._showTray = newShowTray;
-            if (ShellVersion[1] === 6)
-                Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
         }
     },
 
