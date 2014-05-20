@@ -240,8 +240,11 @@ TaskBar.prototype =
 
         //Reset Message Tray
         if (this.showTray != null)
+        {
             MessageTray.MessageTray.prototype._showTray = this.showTray;
-        
+            Main.messageTray._notificationWidget.set_anchor_point(0, 0);        
+        }
+
         //Disconnect Setting Signals
         if (this.settingSignals != null) 
         {
@@ -1035,6 +1038,8 @@ TaskBar.prototype =
                 });
             };
             MessageTray.MessageTray.prototype._showTray = newShowTray;
+            if (ShellVersion[1] === 6)
+                Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
         }
     },
 
