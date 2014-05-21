@@ -242,6 +242,11 @@ TaskBar.prototype =
         if (this.showTray != null)
         {
             MessageTray.MessageTray.prototype._showTray = this.showTray;
+            if (ShellVersion[1] === 4)
+            {
+                Main.layoutManager.removeChrome(Main.layoutManager.trayBox);
+                Main.layoutManager.addChrome(Main.layoutManager.trayBox, { visibleInFullscreen: true });
+            }
         }
 
         //Disconnect Setting Signals
@@ -1011,6 +1016,11 @@ TaskBar.prototype =
         this.bottomPanelActor.set_size(primary.width, -1);
         if (ShellVersion[1] !== 4)
             Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
+        if (ShellVersion[1] === 4)
+        {
+            Main.layoutManager.removeChrome(Main.layoutManager.trayBox);
+            Main.layoutManager.addChrome(Main.layoutManager.trayBox, { visibleInFullscreen: false });
+        }
         if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
         {
             this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
