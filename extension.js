@@ -20,7 +20,6 @@
 
 const Clutter = imports.gi.Clutter;
 const Gdk = imports.gi.Gdk;
-const GdkPixbuf = imports.gi.GdkPixbuf;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Lang = imports.lang;
@@ -224,6 +223,20 @@ TaskBar.prototype =
             this.changedId = null;
         }
 
+        //Disconnect Message Tray Sources Added Signal
+        if (this.messageTrayCountAddedId != null)
+        {
+            Main.messageTray.disconnect(this.messageTrayCountAddedId);
+            this.messageTrayCountAddedId = null;
+        }
+
+        //Disconnect Message Tray Sources Removed Signal
+        if (this.messageTrayCountRemovedId != null)
+        {
+            Main.messageTray.disconnect(this.messageTrayCountRemovedId);
+            this.messageTrayCountRemovedId = null;
+        }
+
         //Disconnect Message Tray Showing Signal
         if (this.messageTrayShowingId != null)
         {
@@ -302,7 +315,8 @@ TaskBar.prototype =
             this.settings.connect("changed::display-workspace-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::display-tray-button", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tray-button", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tray-button-empty", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tray-button-icon", Lang.bind(this, this.onParamChanged)),
@@ -512,16 +526,6 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-showapps-button"))
         {
             let iconPath = this.settings.get_string("appview-button-icon");
-            let pixbuf;
-            try
-            {
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
-            }
-            catch (e)
-            {
-                iconPath = this.extensionMeta.path + '/images/appview-button-default.svg';
-                this.settings.set_string("appview-button-icon", iconPath);
-            }
             this.showAppsIcon = Gio.icon_new_for_string(iconPath);
             this.iconShowApps = new St.Icon(
             {
@@ -583,16 +587,6 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-desktop-button"))
         {
             let iconPath = this.settings.get_string("desktop-button-icon");
-            let pixbuf;
-            try
-            {
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
-            }
-            catch (e)
-            {
-                iconPath = this.extensionMeta.path + '/images/desktop-button-default.png';
-                this.settings.set_string("desktop-button-icon", iconPath);
-            }
             this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
             let iconDesktop = new St.Icon(
             {
@@ -683,33 +677,47 @@ TaskBar.prototype =
     //Add Tray Button
     addTrayButton: function()
     {
-        if ((this.settings.get_boolean("display-tray-button")) && (this.settings.get_boolean("bottom-panel")))
+        this.messageTrayCountAddedId = null;
+        this.messageTrayCountRemovedId = null;
+        if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") != 0))
         {
-            let iconPath = this.settings.get_string("tray-button-icon");
-            let pixbuf;
-            try
-            {
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
-            }
-            catch (e)
-            {
-                iconPath = this.extensionMeta.path + '/images/bottom-panel-tray-button.svg';
-                this.settings.set_string("tray-button-icon", iconPath);
-            }
-            this.trayIcon = Gio.icon_new_for_string(iconPath);
-            this.iconTray = new St.Icon(
-            {
-                gicon: this.trayIcon,
-                icon_size: (this.iconSize),
-                style_class: "tkb-desktop-icon"
-            });
             this.buttonTray = new St.Button({ style_class: "tkb-task-button" });
             this.signalTray = 
             [
                 this.buttonTray.connect("button-press-event", Lang.bind(this, this.onClickTrayButton)),
                 this.buttonTray.connect("enter-event", Lang.bind(this, this.onHoverTrayButton))
             ];
-            this.buttonTray.set_child(this.iconTray);
+            if ((this.settings.get_enum("tray-button") == 1) && (this.settings.get_enum("tray-button-empty") == 0))
+                this.messageTrayIcon();
+            else
+            {
+                this.messageTrayCountAddedId = Main.messageTray.connect('source-added', Lang.bind(this, this.messageTrayCount));
+                this.messageTrayCountRemovedId = Main.messageTray.connect('source-removed', Lang.bind(this, this.messageTrayCount));
+                this.messageTrayCount();
+            }
+        }
+    },
+
+    messageTrayCount: function()
+    {
+        indicatorCount = 0;
+        Main.messageTray.getSources().forEach(Lang.bind(this,
+            function(source) {
+                indicatorCount++;
+            }));
+        if (((indicatorCount == 0) && (this.settings.get_enum("tray-button-empty") == 0)) ||
+            ((indicatorCount != 0) && (this.settings.get_enum("tray-button-empty") == 1) && (this.settings.get_enum("tray-button") != 2)) ||
+            ((indicatorCount != 0) && (this.settings.get_enum("tray-button") == 1)))
+            this.messageTrayIcon();
+        else
+        {
+            if ((indicatorCount == 0) && (this.settings.get_enum("tray-button-empty") == 2))
+                this.labelTray = new St.Label();
+            else
+                this.labelTray = new St.Label({ text: (indicatorCount+'') });
+            this.fontSize = this.settings.get_int('font-size-bottom');
+            this.labelTray.style = 'font-size: ' + this.fontSize + 'px' + ';';
+            this.buttonTray.set_child(this.labelTray);
             this.boxTray = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             this.boxTray.add_actor(this.buttonTray);
             this.boxBottomPanelTrayButton.add_actor(this.boxTray);
@@ -717,18 +725,26 @@ TaskBar.prototype =
         }
     },
 
+    messageTrayIcon: function()
+    {
+        let iconPath = this.settings.get_string("tray-button-icon");
+        this.trayIcon = Gio.icon_new_for_string(iconPath);
+        this.iconTray = new St.Icon(
+        {
+            gicon: this.trayIcon,
+            icon_size: (this.iconSize),
+            style_class: "tkb-desktop-icon"
+        });
+        this.buttonTray.set_child(this.iconTray);
+        this.boxTray = new St.BoxLayout({ style_class: "tkb-desktop-box" });
+        this.boxTray.add_actor(this.buttonTray);
+        this.boxBottomPanelTrayButton.add_actor(this.boxTray);
+        this.addTrayOppositeButton();
+    },
+
     addTrayOppositeButton: function()
     {
             let iconPath = this.extensionMeta.path + '/images/transparent-icon.svg';
-            let pixbuf;
-            try
-            {
-                pixbuf = GdkPixbuf.Pixbuf.new_from_file(iconPath);
-            }
-            catch (e)
-            {
-                iconPath = this.extensionMeta.path + '/images/transparent-icon.svg';
-            }
             this.trayOppositeIcon = Gio.icon_new_for_string(iconPath);
             this.iconOppositeTray = new St.Icon(
             {
@@ -1292,6 +1308,7 @@ TaskBar.prototype =
         }
     },
 
+    //Open Tray on Tray Button Hover
     onHoverTrayButton: function()
     {
         if (this.settings.get_boolean("hover-tray-button"))
@@ -1443,7 +1460,7 @@ TaskBar.prototype =
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
-        //Display tasks of All Workspaces
+        //Display Tasks of All Workspaces
         if (! this.settings.get_boolean("tasks-all-workspaces"))
         {
             let workspace = global.screen.get_active_workspace();

@@ -305,7 +305,7 @@ Prefs.prototype =
         let labelTasks = new Gtk.Label({label: _("Tasks")});
         notebook.append_page(scrollWindowTasks, labelTasks);
 
-        let labelAllWorkspaces = new Gtk.Label({label: _("Tasks on all Workspaces"), xalign: 0});
+        let labelAllWorkspaces = new Gtk.Label({label: _("Tasks on All Workspaces"), xalign: 0});
         this.gridTasks.attach(labelAllWorkspaces, 1, 1, 1, 1);
         this.valueAllWorkspaces = new Gtk.Switch({active: this.settings.get_boolean("tasks-all-workspaces")});
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
@@ -437,27 +437,41 @@ Prefs.prototype =
 
         let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
         this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
-        this.valueTrayButton = new Gtk.Switch({active: this.settings.get_boolean("display-tray-button")});
-        this.valueTrayButton.connect('notify::active', Lang.bind(this, this.changeDisplayTrayButton));
-        this.gridButtons.attach(this.valueTrayButton, 4, 7, 1, 1);
+        this.valueTrayButton = new Gtk.ComboBoxText();
+        this.valueTrayButton.append_text(_("OFF"));
+        this.valueTrayButton.append_text(_("Icon"));
+        this.valueTrayButton.append_text(_("Index"));
+        this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
+        this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
+        this.gridButtons.attach(this.valueTrayButton, 3, 7, 2, 1);
+
+        let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
+        this.gridButtons.attach(labelTrayButtonEmpty, 1, 8, 1, 1);
+        this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
+        this.valueTrayButtonEmpty.append_text(_("Show Icon"));
+        this.valueTrayButtonEmpty.append_text(_("Show 0"));
+        this.valueTrayButtonEmpty.append_text(_("Hide"));
+        this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
+        this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
+        this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 8, 2, 1);
 
         let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonIcon, 1, 8, 1, 1);
+        this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
         this.trayIconFilename = this.settings.get_string("tray-button-icon");
         this.valueTrayButtonIcon = new Gtk.Image();
         this.loadTrayIcon();
         this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
         this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
-        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 8, 1, 1);
+        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 9, 1, 1);
 
         let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
-        this.gridButtons.attach(labelHoverTrayButton, 1, 9, 1, 1);
+        this.gridButtons.attach(labelHoverTrayButton, 1, 10, 1, 1);
         this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
         this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
-        this.gridButtons.attach(this.valueHoverTrayButton, 4, 9, 1, 1);
+        this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons1, 0, 10, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons1, 0, 11, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
         let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
@@ -916,7 +930,7 @@ Prefs.prototype =
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 3, 2, 1, 1);
         let bugReport = new Gtk.LinkButton ({label: _("Send Bug Report"),
-            uri: "mailto:zpydr@linuxwaves.com?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 39%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 39%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
         if (ShellVersion[1] !== 4)
             bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 2, 1, 1);
@@ -1348,9 +1362,14 @@ Prefs.prototype =
         this.dialogAppviewIcon.set_preview_widget_active(have_preview);
     },
 
-    changeDisplayTrayButton: function(object, pspec)
+    changeDisplayTrayButton: function(object)
     {
-        this.settings.set_boolean("display-tray-button", object.active);
+        this.settings.set_enum("tray-button", this.valueTrayButton.get_active());
+    },
+
+    changeDisplayTrayButtonEmpty: function(object)
+    {
+        this.settings.set_enum("tray-button-empty", this.valueTrayButtonEmpty.get_active());
     },
 
     changeTrayButtonIcon: function()
@@ -1860,6 +1879,8 @@ Prefs.prototype =
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueScrollWorkspaces.set_active(false);
         this.valueShowAppsButtonToggle.set_active(0);
+        this.valueTrayButton.set_active(0);
+        this.valueTrayButtonEmpty.set_active(0);
         this.valueHideActivities.set_active(false);
         this.valueDisableHotCorner.set_active(false);
         this.valueHideDefaultApplicationMenu.set_active(false);

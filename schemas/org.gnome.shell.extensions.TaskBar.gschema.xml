@@ -49,6 +49,16 @@
         <value value="4" nick="separatorfive"/>
         <value value="5" nick="separatorsix"/>
     </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.tray-button-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="icon"/>
+        <value value="2" nick="index"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.tray-button-empty-style">
+        <value value="0" nick="icon"/>
+        <value value="1" nick="zero"/>
+        <value value="2" nick="hide"/>
+    </enum>
     <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
         <key name="first-start" type="b">
             <default>true</default>
@@ -234,9 +244,14 @@
             <summary>Appview Button Icon</summary>
             <description/>
         </key>
-        <key name="display-tray-button" type="b">
-            <default>false</default>
+        <key name="tray-button" enum="org.gnome.shell.extensions.TaskBar.tray-button-style">
+            <default>'off'</default>
             <summary>Display Tray Button</summary>
+            <description/>
+        </key>
+        <key name="tray-button-empty" enum="org.gnome.shell.extensions.TaskBar.tray-button-empty-style">
+            <default>'icon'</default>
+            <summary>When Tray is Empty</summary>
             <description/>
         </key>
         <key name="tray-button-icon" type="s">
