@@ -735,7 +735,6 @@ TaskBar.prototype =
             this.boxTray = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             this.boxTray.add_actor(this.buttonTray);
             this.boxBottomPanelTrayButton.add_actor(this.boxTray);
-            this.addTrayOppositeButton();
         }
     },
 
@@ -753,24 +752,6 @@ TaskBar.prototype =
         this.boxTray = new St.BoxLayout({ style_class: "tkb-desktop-box" });
         this.boxTray.add_actor(this.buttonTray);
         this.boxBottomPanelTrayButton.add_actor(this.boxTray);
-        this.addTrayOppositeButton();
-    },
-
-    addTrayOppositeButton: function()
-    {
-            let iconPath = this.extensionMeta.path + '/images/transparent-icon.svg';
-            this.trayOppositeIcon = Gio.icon_new_for_string(iconPath);
-            this.iconOppositeTray = new St.Icon(
-            {
-                gicon: this.trayOppositeIcon,
-                icon_size: (this.iconSize),
-                style_class: "tkb-desktop-icon"
-            });
-            this.buttonOppositeTray = new St.Button({ style_class: "tkb-task-button" });
-            this.buttonOppositeTray.set_child(this.iconOppositeTray);
-            this.boxOppositeTray = new St.BoxLayout({ style_class: "tkb-desktop-box" });
-            this.boxOppositeTray.add_actor(this.buttonOppositeTray);
-            this.boxBottomPanelOppositeTrayButton.add_actor(this.boxOppositeTray);
     },
 
     //Hide Activities
