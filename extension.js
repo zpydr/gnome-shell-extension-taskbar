@@ -994,10 +994,7 @@ TaskBar.prototype =
         if (this.positionBoxBottomSettings === 0)
             this.positionBoxBottomStart.add_actor(this.boxMain);
         if (this.positionBoxBottomSettings === 1)
-        {
             this.positionBoxBottomMiddle.add_actor(this.boxMain);
-            this.positionBoxBottomStart.add_actor(this.boxBottomPanelOppositeTrayButton);
-        }
         if (this.positionBoxBottomSettings === 2)
         {
             this.positionBoxBottomEnd.add_actor(this.boxMain);
