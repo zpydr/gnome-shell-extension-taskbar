@@ -226,14 +226,20 @@ TaskBar.prototype =
         //Disconnect Message Tray Sources Added Signal
         if (this.messageTrayCountAddedId != null)
         {
-            Main.messageTray.disconnect(this.messageTrayCountAddedId);
+            if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
+                Main.messageTray._summary.disconnect(this.messageTrayCountAddedId);
+            else
+                Main.messageTray.disconnect(this.messageTrayCountAddedId);
             this.messageTrayCountAddedId = null;
         }
 
         //Disconnect Message Tray Sources Removed Signal
         if (this.messageTrayCountRemovedId != null)
         {
-            Main.messageTray.disconnect(this.messageTrayCountRemovedId);
+            if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
+                Main.messageTray._summary.disconnect(this.messageTrayCountRemovedId);
+            else
+                Main.messageTray.disconnect(this.messageTrayCountRemovedId);
             this.messageTrayCountRemovedId = null;
         }
 
@@ -691,8 +697,16 @@ TaskBar.prototype =
                 this.messageTrayIcon();
             else
             {
-                this.messageTrayCountAddedId = Main.messageTray.connect('source-added', Lang.bind(this, this.messageTrayCount));
-                this.messageTrayCountRemovedId = Main.messageTray.connect('source-removed', Lang.bind(this, this.messageTrayCount));
+                if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
+                {
+                    this.messageTrayCountAddedId = Main.messageTray._summary.connect('actor-added', Lang.bind(this, this.messageTrayCount));
+                    this.messageTrayCountRemovedId = Main.messageTray._summary.connect('actor-removed', Lang.bind(this, this.messageTrayCount));
+                }
+                else
+                {
+                    this.messageTrayCountAddedId = Main.messageTray.connect('source-added', Lang.bind(this, this.messageTrayCount));
+                    this.messageTrayCountRemovedId = Main.messageTray.connect('source-removed', Lang.bind(this, this.messageTrayCount));
+                }
                 this.messageTrayCount();
             }
         }
@@ -700,11 +714,11 @@ TaskBar.prototype =
 
     messageTrayCount: function()
     {
-        indicatorCount = 0;
-        Main.messageTray.getSources().forEach(Lang.bind(this,
-            function(source) {
-                indicatorCount++;
-            }));
+        let indicatorCount = 0;
+        if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
+            indicatorCount = Main.messageTray._summary.get_children().length;
+        else
+            indicatorCount = Main.messageTray.getSources().length;
         if (((indicatorCount == 0) && (this.settings.get_enum("tray-button-empty") == 0)) ||
             ((indicatorCount != 0) && (this.settings.get_enum("tray-button-empty") == 1) && (this.settings.get_enum("tray-button") != 2)) ||
             ((indicatorCount != 0) && (this.settings.get_enum("tray-button") == 1)))
