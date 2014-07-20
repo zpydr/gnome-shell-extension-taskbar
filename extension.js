@@ -289,7 +289,8 @@ TaskBar.prototype =
 
         //Disconnect Texture Cache Signals
         St.TextureCache.get_default().disconnect(this.iconThemeChangedId);
-        
+        this.iconThemeChangedId = null;
+
         //Hide current preview if necessary
         this.hidePreview();
 
