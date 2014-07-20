@@ -314,7 +314,7 @@ Prefs.prototype =
 
         let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [8] " + "(" + _("Tasks") + ")", xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
-        this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 1, upper: 100, step_increment: 1});
+        this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
         value2TasksContainerWidth.set_value(this.settings.get_int("tasks-container-width"));
         value2TasksContainerWidth.connect("value-changed", Lang.bind(this, this.changeTasksContainerWidth));

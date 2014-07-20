@@ -101,7 +101,10 @@ TaskBar.prototype =
         this.boxMainDesktopButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box" });
         this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
-        this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
+        if (this.tasksContainerWidth == 0)
+            this.newTasksContainerWidth == -1;
+        else 
+            this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
         this.boxMainTasks.set_width(this.newTasksContainerWidth);
         this.boxMainSeparatorOne = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainSeparatorTwo = new St.BoxLayout({ style_class: "tkb-box" });
