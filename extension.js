@@ -103,7 +103,7 @@ TaskBar.prototype =
         this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
         if (this.tasksContainerWidth == 0)
             this.newTasksContainerWidth = -1;
-        else 
+        else
             this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
         this.boxMainTasks.set_width(this.newTasksContainerWidth);
         this.boxMainSeparatorOne = new St.BoxLayout({ style_class: "tkb-box" });
@@ -286,6 +286,9 @@ TaskBar.prototype =
             );
             this.settingSignals = null;
         }
+
+        //Disconnect Texture Cache Signals
+        St.TextureCache.get_default().disconnect(this.iconThemeChangedId);
         
         //Hide current preview if necessary
         this.hidePreview();
@@ -409,6 +412,7 @@ TaskBar.prototype =
         this.messageTrayShowingId = null;
         this.messageTrayHidingId = null;
         this.bottomPanelEndIndicator = false;
+        this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         if (this.settings.get_boolean("bottom-panel"))
             this.bottomPanel();
         else
