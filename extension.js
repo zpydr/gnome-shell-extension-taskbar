@@ -113,7 +113,7 @@ TaskBar.prototype =
         //Add Favorites
         this.addFavorites();
 
-        //Add Show Apps Button
+        //Add Appview Button
         this.addShowAppsButton();
 
         //Add Workspace Button
@@ -345,6 +345,7 @@ TaskBar.prototype =
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tasks-container-width", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-one", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-two", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-three", Lang.bind(this, this.onParamChanged)),
@@ -1343,6 +1344,7 @@ TaskBar.prototype =
     {
         if (type == 0) //Add all windows (On init or workspace change)
         {
+            this.countTasks = null;
             this.cleanTasksList();
             windowsList.forEach(
                 function(window)
@@ -1464,6 +1466,13 @@ TaskBar.prototype =
             buttonTask.add_style_pseudo_class(this.activeTask);
             buttonTask.set_style(this.backgroundStyleColor);
         }
+        this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
+        this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
+        this.countTasks ++;
+        if (this.countTasks > this.tasksContainerWidth)
+            this.boxMainTasks.set_width(-1);
+        else
+            this.boxMainTasks.set_width(this.newTasksContainerWidth);
         if (this.settings.get_boolean("display-tasks"))
             this.boxMainTasks.add_actor(buttonTask);
         this.tasksList.push([ window, buttonTask, signalsTask ]);
@@ -1485,6 +1494,13 @@ TaskBar.prototype =
             );
             buttonTask.destroy();
             this.tasksList.splice(index, 1);
+            this.countTasks --;
+            if (this.countTasks <= 0)
+                this.countTasks == 0;
+            if (this.countTasks > this.tasksContainerWidth)
+                this.boxMainTasks.set_width(-1);
+            else
+                this.boxMainTasks.set_width(this.newTasksContainerWidth);
             return true;
         }
         else
@@ -1506,6 +1522,7 @@ TaskBar.prototype =
             );
             buttonTask.destroy();
             this.tasksList.splice(i, 1);
+            this.countTasks = null;
         };
     },
 

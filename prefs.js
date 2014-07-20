@@ -101,6 +101,7 @@ Prefs.prototype =
     {
         let notebook = new Gtk.Notebook();
         notebook.set_scrollable(true);
+        notebook.popup_enable(true);
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
 
@@ -115,7 +116,7 @@ Prefs.prototype =
         });
         scrollWindowComponents.add_with_viewport(this.gridComponents);
         scrollWindowComponents.show_all();
-        let labelComponents = new Gtk.Label({label: _("Components")});
+        let labelComponents = new Gtk.Label({label: _("Overview")});
         notebook.append_page(scrollWindowComponents, labelComponents);
 
         let labelDisplayTasks = new Gtk.Label({label: _("Tasks"), xalign: 0});
@@ -204,7 +205,7 @@ Prefs.prototype =
         });
         scrollWindowSettings.add_with_viewport(this.gridSettings);
         scrollWindowSettings.show_all();
-        let labelSettings = new Gtk.Label({label: _("Settings")});
+        let labelSettings = new Gtk.Label({label: _("Panels")});
         notebook.append_page(scrollWindowSettings, labelSettings);
 
         let labelPanel3 = new Gtk.Label({label: _("Top Panel"), xalign: 2});
@@ -253,7 +254,7 @@ Prefs.prototype =
         this.gridSettings.attach(valuePanelPositionBottom, 6, 4, 1, 1);
         this.gridSettings.attach(value2PanelPositionBottom, 7, 4, 1, 1);
 
-        let labelBottomPanelVertical = new Gtk.Label({label: _("Vertical Adjustment")+" [0]", xalign: 0});
+        let labelBottomPanelVertical = new Gtk.Label({label: _("Anchor Point")+" [0]", xalign: 0});
         this.gridSettings.attach(labelBottomPanelVertical, 1, 5, 1, 1);
         this.valueBottomPanelVertical = new Gtk.Adjustment({lower: -100, upper: 100, step_increment: 1});
         this.value2BottomPanelVertical = new Gtk.SpinButton({adjustment: this.valueBottomPanelVertical, snap_to_ticks: true});
@@ -311,30 +312,38 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [8] " + "(" + _("Tasks") + ")", xalign: 0});
+        this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
+        this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 1, upper: 100, step_increment: 1});
+        let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
+        value2TasksContainerWidth.set_value(this.settings.get_int("tasks-container-width"));
+        value2TasksContainerWidth.connect("value-changed", Lang.bind(this, this.changeTasksContainerWidth));
+        this.gridTasks.attach(value2TasksContainerWidth, 3, 2, 2, 1);
+
         let labelCloseButton = new Gtk.Label({label: _("Close Tasks"), xalign: 0});
-        this.gridTasks.attach(labelCloseButton, 1, 2, 1, 1);
+        this.gridTasks.attach(labelCloseButton, 1, 4, 1, 1);
         this.valueCloseButton = new Gtk.ComboBoxText();
         this.valueCloseButton.append_text(_("OFF"));
         this.valueCloseButton.append_text(_("Middle Click"));
         this.valueCloseButton.append_text(_("Right Click"));
         this.valueCloseButton.set_active(this.settings.get_enum("close-button"));
         this.valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton));
-        this.gridTasks.attach(this.valueCloseButton, 3, 2, 2, 1);
+        this.gridTasks.attach(this.valueCloseButton, 3, 4, 2, 1);
 
         let labelScrollTasks = new Gtk.Label({label: _("Scroll Tasks"), xalign: 0});
-        this.gridTasks.attach(labelScrollTasks, 1, 3, 1, 1);
+        this.gridTasks.attach(labelScrollTasks, 1, 5, 1, 1);
         this.valueScrollTasks = new Gtk.Switch({active: this.settings.get_boolean("scroll-tasks")});
         this.valueScrollTasks.connect('notify::active', Lang.bind(this, this.changeScrollTasks));
-        this.gridTasks.attach(this.valueScrollTasks, 4, 3, 1, 1);
+        this.gridTasks.attach(this.valueScrollTasks, 4, 5, 1, 1);
 
         let labelActiveTaskFrame = new Gtk.Label({label: _("Active Task Frame"), xalign: 0});
-        this.gridTasks.attach(labelActiveTaskFrame, 1, 4, 1, 1);
+        this.gridTasks.attach(labelActiveTaskFrame, 1, 6, 1, 1);
         this.valueActiveTaskFrame = new Gtk.Switch({active: this.settings.get_boolean("active-task-frame")});
         this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
-        this.gridTasks.attach(this.valueActiveTaskFrame, 4, 4, 1, 1);
+        this.gridTasks.attach(this.valueActiveTaskFrame, 4, 6, 1, 1);
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task\nBackground Color"), xalign: 0});
-        this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 5, 1, 1);
+        this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 7, 1, 1);
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
@@ -342,28 +351,28 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
-        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 5, 1, 1);
+        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 7, 1, 1);
 
         this.value2ActiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("active-task-background-color-set")});
         this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
-        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 6, 1, 1);
+        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 8, 1, 1);
 
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
-        this.gridTasks.attach(labelHoverSwitchTask, 1, 7, 1, 1);
+        this.gridTasks.attach(labelHoverSwitchTask, 1, 9, 1, 1);
         this.valueHoverSwitchTask = new Gtk.Switch({active: this.settings.get_boolean("hover-switch-task")});
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
-        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 7, 1, 1);
+        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 9, 1, 1);
 
         let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" [350] "+_("(ms)"), xalign: 0});
-        this.gridTasks.attach(labelHoverDelay, 1, 8, 2, 1);
+        this.gridTasks.attach(labelHoverDelay, 1, 10, 2, 1);
         this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 50});
         let value2HoverDelay = new Gtk.SpinButton({adjustment: this.valueHoverDelay, snap_to_ticks: true});
         value2HoverDelay.set_value(this.settings.get_int("hover-delay"));
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
-        this.gridTasks.attach(value2HoverDelay, 3, 8, 2, 1);
+        this.gridTasks.attach(value2HoverDelay, 3, 10, 2, 1);
 
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks1, 0, 9, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks1, 0, 11, 1, 1);
         let labelSpaceTasks2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridTasks.attach(labelSpaceTasks2, 2, 0, 1, 1);
         let labelSpaceTasks3 = new Gtk.Label({label: "\t", xalign: 0});
@@ -906,7 +915,7 @@ Prefs.prototype =
         });
         scrollWindowTaskBar.add_with_viewport(this.gridTaskBar);
         scrollWindowTaskBar.show_all();
-        let labelTaskBar = new Gtk.Label({label: "TaskBar"});
+        let labelTaskBar = new Gtk.Label({label: "About"});
         notebook.append_page(scrollWindowTaskBar, labelTaskBar);
 
         let linkImage1 = new Gtk.Image({file: HOMEICON});
@@ -1126,6 +1135,11 @@ Prefs.prototype =
     changeAllWorkspaces: function(object)
     {
         this.settings.set_boolean("tasks-all-workspaces", object.active);
+    },
+
+    changeTasksContainerWidth: function(object)
+    {
+        this.settings.set_int("tasks-container-width", this.valueTasksContainerWidth.get_value());
     },
 
     changeCloseButton: function(object)
@@ -1862,6 +1876,7 @@ Prefs.prototype =
         this.settings.set_int("font-size-bottom", 17);
         this.valueFontSizeBottom.set_value(17);
         this.valueAllWorkspaces.set_active(false);
+        this.valueTasksContainerWidth.set_value(8);
         this.valueCloseButton.set_active(0);
         this.valueScrollTasks.set_active(false);
         this.valueActiveTaskFrame.set_active(true);

@@ -163,6 +163,12 @@
             <summary>Display Tasks from all Workspaces</summary>
             <description/>
         </key>
+        <key name="tasks-container-width" type="i">
+            <range min="1" max="100"/>
+            <default>8</default>
+            <summary>Tasks Container Width</summary>
+            <description/>
+        </key>
         <key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-style">
             <default>'off'</default>
             <summary>Middle/Right Click to Close Task</summary>
