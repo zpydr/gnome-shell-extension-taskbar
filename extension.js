@@ -102,7 +102,7 @@ TaskBar.prototype =
         this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box" });
         this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
         if (this.tasksContainerWidth == 0)
-            this.newTasksContainerWidth == -1;
+            this.newTasksContainerWidth = -1;
         else 
             this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
         this.boxMainTasks.set_width(this.newTasksContainerWidth);
