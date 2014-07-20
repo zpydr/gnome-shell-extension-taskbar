@@ -100,6 +100,9 @@ TaskBar.prototype =
         this.boxMainWorkspaceButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainDesktopButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box" });
+        this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
+        this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
+        this.boxMainTasks.set_width(this.newTasksContainerWidth);
         this.boxMainSeparatorOne = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainSeparatorTwo = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainSeparatorThree = new St.BoxLayout({ style_class: "tkb-box" });
@@ -1466,7 +1469,6 @@ TaskBar.prototype =
             buttonTask.add_style_pseudo_class(this.activeTask);
             buttonTask.set_style(this.backgroundStyleColor);
         }
-        this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
         this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
         this.countTasks ++;
         if (this.countTasks > this.tasksContainerWidth)
