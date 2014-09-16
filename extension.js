@@ -334,6 +334,7 @@ TaskBar.prototype =
             this.settings.connect("changed::tray-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tray-button-empty", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::text-buttons", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::appview-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tray-button-icon", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::active-task-frame", Lang.bind(this, this.onParamChanged)),
@@ -1353,14 +1354,26 @@ TaskBar.prototype =
     //Taskslist
     onWindowsListChanged: function(windowsList, type, window)
     {
+        let boxWidth = 400;
+
+        //Calculate how much space we have to fit the left panel in.
+        //If the user has hidden or moved the center panel, we have extra space.  Otherwise, don't stomp on the center panel.
+        let leftPanelWidth = Main.panel.actor.get_width() - Main.panel._rightBox.get_width();
+        if(Main.panel._centerBox.get_width() > 0)
+            leftPanelWidth = leftPanelWidth - Main.panel._centerBox.get_transformed_position()[0];
+    	    
+        if( (windowsList.length * (boxWidth + 25)) > leftPanelWidth)  // +25 accounts for padding and border
+            boxWidth = Math.floor( (leftPanelWidth - (windowsList.length * 25)) / windowsList.length);
+    	
         if (type == 0) //Add all windows (On init or workspace change)
         {
             this.countTasks = null;
             this.cleanTasksList();
+            
             windowsList.forEach(
                 function(window)
                 {
-                    this.addTaskInList(window);
+                    this.addTaskInList(window, boxWidth);
                 },
                 this
             );
@@ -1368,7 +1381,7 @@ TaskBar.prototype =
         }
         else if (type == 1) //Add window
         {
-            this.addTaskInList(window);
+            this.addTaskInList(window, boxWidth);
         }
         else if (type == 2) //Remove window
         {
@@ -1401,6 +1414,20 @@ TaskBar.prototype =
     //Task Style
     onWindowChanged: function(window, type)
     {
+	if(this.settings.get_boolean("text-buttons")){
+	    this.tasksList.forEach(
+	        function(task)
+		{
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    if (windowTask == window)
+                    {
+                        let label=buttonTask.get_child().get_children()[1];
+                        label.set_text(window.get_title());
+                    }
+                },
+	        this
+	    );
+	}
         if (type == 0) //Focus
         {
             this.tasksList.forEach(
@@ -1455,13 +1482,34 @@ TaskBar.prototype =
     },
 
     //Add Tasks
-    addTaskInList: function(window)
+    addTaskInList: function(window, boxWidth)
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
+        let bchild;
+        
+        if(this.settings.get_boolean("text-buttons"))
+        {
+            bchild = new St.BoxLayout({ style_class: "tkb-task-button-box" });
+            let labelTask = new St.Label({ text: (window.get_title()+""), style_class: 'tkb-task-button-label' });
+            let iconTask = app.create_icon_texture(this.iconSize);
+            bchild.add_actor(iconTask);
+            bchild.add_actor(labelTask);
+            if(boxWidth !== null)
+                bchild.set_width(boxWidth);
+        }
+        else
+        {
+            bchild = app.create_icon_texture(this.iconSize);
+        }
+        	
+        let bstyle = this.settings.get_boolean("bottom-panel") ? 'bottom' : 'top';
+        if(this.settings.get_boolean("text-buttons"))
+            bstyle = bstyle + " text-button";
+        
+        let buttonTask = new St.Button({ style_class: "tkb-task-button-"+bstyle, child: bchild });
         let signalsTask = [
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
-            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),
+            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)), 
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
@@ -1479,10 +1527,12 @@ TaskBar.prototype =
         }
         this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
         this.countTasks ++;
-        if (this.countTasks > this.tasksContainerWidth)
+        if (this.countTasks > this.tasksContainerWidth || this.settings.get_boolean("text-buttons"))
             this.boxMainTasks.set_width(-1);
         else
+        {
             this.boxMainTasks.set_width(this.newTasksContainerWidth);
+        }
         if (this.settings.get_boolean("display-tasks"))
             this.boxMainTasks.add_actor(buttonTask);
         this.tasksList.push([ window, buttonTask, signalsTask ]);
@@ -1573,6 +1623,17 @@ TaskBar.prototype =
                 this.previewTimer = Mainloop.timeout_add(this.settings.get_int("preview-delay"),
                     Lang.bind(this, this.showPreview2, button, window));
         }
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                if(windowTask==window)
+                {
+                    buttonTask.add_style_pseudo_class("hover");
+                }
+            },
+            this
+        ); 
     },
 
     showPreview2: function(button, window)
@@ -1599,6 +1660,17 @@ TaskBar.prototype =
         global.stage.add_actor(this.preview);
         this.button = button;
         this.setPreviewPosition();
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                if(windowTask==window)
+                {
+                    buttonTask.add_style_pseudo_class("hover");
+                }
+            },
+            this
+        );
     },
 
     showFavoritesPreview: function(buttonfavorite, favoriteapp)
@@ -1629,7 +1701,7 @@ TaskBar.prototype =
         let node = this.preview.get_theme_node();
         let yOffset = node.get_length('-y-offset');
         let y = null;
-        if (this.settings.get_boolean("bottom-panel"))
+        if (this.settings.get_boolean("bottom-panel") || Main.layoutManager.panelBox.y != 0) //This also takes in to account the 'bottom panel' extension
             y = stageY - labelHeight - yOffset;
         else
             y = stageY + itemHeight + yOffset;
@@ -1680,5 +1752,13 @@ TaskBar.prototype =
             this.favoritesPreview.destroy();
             this.favoritesPreview = null;
         }
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                buttonTask.remove_style_pseudo_class("hover");
+            },
+            this
+        );
     }
 }

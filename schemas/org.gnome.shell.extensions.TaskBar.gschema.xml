@@ -484,5 +484,10 @@
             <summary>Position Favorites</summary>
             <description/>
         </key>
+        <key name="text-buttons" type="b">
+            <default>false</default>
+            <summary>Text on Buttons</summary>
+            <description/>
+        </key>
     </schema>
 </schemalist>

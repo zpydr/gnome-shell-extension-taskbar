@@ -329,21 +329,27 @@ Prefs.prototype =
         this.valueCloseButton.set_active(this.settings.get_enum("close-button"));
         this.valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton));
         this.gridTasks.attach(this.valueCloseButton, 3, 4, 2, 1);
+        
+        let labelTextButtons = new Gtk.Label({label: _("Text Labels on Tasks"), xalign: 0});
+        this.gridTasks.attach(labelTextButtons, 1, 5, 1, 1);
+        this.valueTextButtons = new Gtk.Switch({active: this.settings.get_boolean("text-buttons")});
+        this.valueTextButtons.connect('notify::active', Lang.bind(this, this.changeTextButtons));
+        this.gridTasks.attach(this.valueTextButtons, 4, 5, 1, 1);
 
         let labelScrollTasks = new Gtk.Label({label: _("Scroll Tasks"), xalign: 0});
-        this.gridTasks.attach(labelScrollTasks, 1, 5, 1, 1);
+        this.gridTasks.attach(labelScrollTasks, 1, 6, 1, 1);
         this.valueScrollTasks = new Gtk.Switch({active: this.settings.get_boolean("scroll-tasks")});
         this.valueScrollTasks.connect('notify::active', Lang.bind(this, this.changeScrollTasks));
-        this.gridTasks.attach(this.valueScrollTasks, 4, 5, 1, 1);
+        this.gridTasks.attach(this.valueScrollTasks, 4, 6, 1, 1);
 
         let labelActiveTaskFrame = new Gtk.Label({label: _("Active Task Frame"), xalign: 0});
-        this.gridTasks.attach(labelActiveTaskFrame, 1, 6, 1, 1);
+        this.gridTasks.attach(labelActiveTaskFrame, 1, 7, 1, 1);
         this.valueActiveTaskFrame = new Gtk.Switch({active: this.settings.get_boolean("active-task-frame")});
         this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
-        this.gridTasks.attach(this.valueActiveTaskFrame, 4, 6, 1, 1);
+        this.gridTasks.attach(this.valueActiveTaskFrame, 4, 7, 1, 1);
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task\nBackground Color"), xalign: 0});
-        this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 7, 1, 1);
+        this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 8, 1, 1);
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
@@ -351,25 +357,25 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
-        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 7, 1, 1);
+        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 8, 1, 1);
 
         this.value2ActiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("active-task-background-color-set")});
         this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
-        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 8, 1, 1);
+        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 9, 1, 1);
 
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
-        this.gridTasks.attach(labelHoverSwitchTask, 1, 9, 1, 1);
+        this.gridTasks.attach(labelHoverSwitchTask, 1, 10, 1, 1);
         this.valueHoverSwitchTask = new Gtk.Switch({active: this.settings.get_boolean("hover-switch-task")});
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
-        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 9, 1, 1);
+        this.gridTasks.attach(this.valueHoverSwitchTask, 4, 10, 1, 1);
 
         let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" [350] "+_("(ms)"), xalign: 0});
-        this.gridTasks.attach(labelHoverDelay, 1, 10, 2, 1);
+        this.gridTasks.attach(labelHoverDelay, 1, 11, 2, 1);
         this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 50});
         let value2HoverDelay = new Gtk.SpinButton({adjustment: this.valueHoverDelay, snap_to_ticks: true});
         value2HoverDelay.set_value(this.settings.get_int("hover-delay"));
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
-        this.gridTasks.attach(value2HoverDelay, 3, 10, 2, 1);
+        this.gridTasks.attach(value2HoverDelay, 3, 11, 2, 1);
 
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks1, 0, 11, 1, 1);
@@ -1290,6 +1296,11 @@ Prefs.prototype =
     {
         this.settings.set_boolean("scroll-workspaces", object.active);
     },
+    
+    changeTextButtons: function(object)
+    {
+        this.settings.set_boolean("text-buttons", object.active);
+    },
 
     changeShowAppsButtonToggle: function(object)
     {
@@ -1893,6 +1904,7 @@ Prefs.prototype =
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueScrollWorkspaces.set_active(false);
+        this.valueTextButtons.set_active(false);
         this.valueShowAppsButtonToggle.set_active(0);
         this.valueTrayButton.set_active(0);
         this.valueTrayButtonEmpty.set_active(0);
