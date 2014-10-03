@@ -1359,7 +1359,7 @@ TaskBar.prototype =
         //Calculate how much space we have to fit the left panel in.
         //If the user has hidden or moved the center panel, we have extra space.  Otherwise, don't stomp on the center panel.
         let leftPanelWidth = Main.panel.actor.get_width() - Main.panel._rightBox.get_width();
-        if(Main.panel._centerBox.get_width() > 0)
+        if(Main.panel._centerBox.get_width() > 0 && !this.settings.get_boolean("bottom-panel"))
             leftPanelWidth = leftPanelWidth - Main.panel._centerBox.get_transformed_position()[0];
     	    
         if( (windowsList.length * (boxWidth + 25)) > leftPanelWidth)  // +25 accounts for padding and border
