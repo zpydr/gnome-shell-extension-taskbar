@@ -41,10 +41,45 @@
     border: 1px;
 }
 
-.tkb-task-button:active-task-frame
+.tkb-task-button-label
+{
+    padding-left: 4px;
+    font-size:1em;
+}
+ 
+.tkb-task-button-top.text-button,
+.tkb-task-button-bottom.text-button
+{
+    padding: 1px 5px;
+    margin: 0 1px;
+    border: 1px solid rgba(255,255,255,0);
+}
+
+.tkb-task-button-top.text-button:hover,
+.tkb-task-button-bottom.text-button:hover
+{
+    
+    border: 1px solid rgba(255,255,255,.75);
+    background-image: url("images/active-task-background.svg");
+}
+
+.tkb-task-button:active-task-frame,
+.tkb-task-button-top:active-task-frame,
+.tkb-task-button-bottom:active-task-frame,
+.tkb-task-button-top.text-button:active-task-frame,
+.tkb-task-button-bottom.text-button:active-task-frame,
+
 {
     border: 1px solid gray;
     border-radius: 5px;
+    background-image: url("images/active-task-background.svg");
+}
+
+.tkb-task-button-top.text-button:active-task-frame,
+.tkb-task-button-bottom.text-button:active-task-frame
+{
+    border-radius: 0px;
+    border: 1px solid rgb(255,255,255);
     background-image: url("images/active-task-background.svg");
 }
 
