@@ -1,5 +1,5 @@
-GNOME Shell Extension TaskBar Version 38 for GNOME 3.4 / 3.6 / 3.8 / 3.10
-zpydr@linuxwaves.com
+GNOME Shell Extension TaskBar Version 39 for GNOME 3.4 / 3.6 / 3.8 / 3.10 / 3.12
+zpydr@openmailbox.org
 https://extensions.gnome.org/extension/584/taskbar/
 https://github.com/zpydr/gnome-shell-extension-taskbar/
 https://launchpad.net/gnome-shell-extension-taskbar/
@@ -15,25 +15,30 @@ TaskBar is a dock-like windows list on the top/bottom bar.
 
 Options:
 Desktop button - toggle desktop view
-Workspace button - switch workspaces Left/Right-click: cycle forward/backwards
-Appview button - Leftclick: toggle appview / Rightclick: toggle overview
+Workspace button - switch workspaces left/right-click: cycle forward/backwards
+Appview button - left/right-click: toggle appview/overview
 Favorites - add from dash
-Align position on the top panel
-Bottom panel
-Icon size
+Align position
+Icon/font size
+Top/bottom panel background color + opacity
+Bottom panel tray button - activate the message tray
 Tasks on all workspaces
+Close tasks with a right/middle click
 Activate tasks on hover
+Scroll tasks/workspaces
+Separators
 Thumbnail/label-preview
 Hide activities
 Disable hot corner
-Hide default application menu - simultaneously integrates the menu into
+Hide default application menu - simultaneously integrates the menu into 
 applications like empathy, nautilus, etc.
 
+Chinese language support by tuhaihe
 German language support by jonnius, to-ba
 Credit to Xes, flubshi, rogst, Baltix
 
 GNOME Shell Extension TaskBar
-Copyright (C) 2013 zpydr
+Copyright (C) 2014 zpydr
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,4 +53,4 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see https://www.gnu.org/licenses/.
 
-zpydr@linuxwaves.com
+zpydr@openmailbox.org

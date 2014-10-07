@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   GNOME Shell Extension TaskBar
-  Copyright (C) 2013 zpydr
+  Copyright (C) 2014 zpydr
+
+  Version 39
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -16,7 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  zpydr@linuxwaves.com
+  zpydr@openmailbox.org
 -->
 <schemalist gettext-domain="gnome-shell-extensions-TaskBar">
     <enum id="org.gnome.shell.extensions.TaskBar.close-button-style">
@@ -46,6 +48,16 @@
         <value value="3" nick="separatorfour"/>
         <value value="4" nick="separatorfive"/>
         <value value="5" nick="separatorsix"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.tray-button-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="icon"/>
+        <value value="2" nick="index"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.tray-button-empty-style">
+        <value value="0" nick="icon"/>
+        <value value="1" nick="zero"/>
+        <value value="2" nick="hide"/>
     </enum>
     <schema path="/org/gnome/shell/extensions/TaskBar/" id="org.gnome.shell.extensions.TaskBar">
         <key name="first-start" type="b">
@@ -124,31 +136,37 @@
         </key>
         <key name="icon-size" type="i">
             <range min="1" max="96"/>
-            <default>22</default>
+            <default>24</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="icon-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>22</default>
+            <default>24</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="font-size" type="i">
             <range min="1" max="96"/>
-            <default>16</default>
+            <default>17</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="font-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>16</default>
+            <default>17</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="tasks-all-workspaces" type="b">
             <default>false</default>
             <summary>Display Tasks from all Workspaces</summary>
+            <description/>
+        </key>
+        <key name="tasks-container-width" type="i">
+            <range min="0" max="100"/>
+            <default>8</default>
+            <summary>Tasks Container Width</summary>
             <description/>
         </key>
         <key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-style">
@@ -174,6 +192,21 @@
         <key name="active-task-background-color-set" type="b">
             <default>false</default>
             <summary>Active Task Background Color</summary>
+            <description/>
+        </key>
+        <key name="top-panel-background-color" type="s">
+            <default>'rgba(0,0,0,1)'</default>
+            <summary>Top Panel Background Color</summary>
+            <description/>
+        </key>
+        <key name="top-panel-background-alpha" type="b">
+            <default>false</default>
+            <summary>Top Panel Background Alpha</summary>
+            <description/>
+        </key>
+        <key name="bottom-panel-background-color" type="s">
+            <default>'rgba(0,0,0,1)'</default>
+            <summary>Bottom Panel Background Color</summary>
             <description/>
         </key>
         <key name="hover-switch-task" type="b">
@@ -215,6 +248,26 @@
         <key name="appview-button-icon" type="s">
             <default>'appviewbuttonicon'</default>
             <summary>Appview Button Icon</summary>
+            <description/>
+        </key>
+        <key name="tray-button" enum="org.gnome.shell.extensions.TaskBar.tray-button-style">
+            <default>'off'</default>
+            <summary>Display Tray Button</summary>
+            <description/>
+        </key>
+        <key name="tray-button-empty" enum="org.gnome.shell.extensions.TaskBar.tray-button-empty-style">
+            <default>'icon'</default>
+            <summary>When Tray is Empty</summary>
+            <description/>
+        </key>
+        <key name="tray-button-icon" type="s">
+            <default>'traybuttonicon'</default>
+            <summary>Tray Button Icon</summary>
+            <description/>
+        </key>
+        <key name="hover-tray-button" type="b">
+            <default>false</default>
+            <summary>Activate Tray on Hover</summary>
             <description/>
         </key>
         <key name="hide-activities" type="b">
