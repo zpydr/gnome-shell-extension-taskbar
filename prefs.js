@@ -509,7 +509,7 @@ Prefs.prototype =
         let labelPanel6 = new Gtk.Label({label: _("Bottom Panel"), xalign: 2});
         this.gridSeparator.attach(labelPanel6, 6, 1, 2, 1);
 
-        let labelSeparatorOne = new Gtk.Label({label: _("Separator") + " 1\t("+_("Left"+")"), xalign: 0});
+        let labelSeparatorOne = new Gtk.Label({label: _("Separator") + " 1\t("+_("Left")+")", xalign: 0});
         this.gridSeparator.attach(labelSeparatorOne, 1, 2, 1, 1);
         this.valueSeparatorOne = new Gtk.Switch({active: this.settings.get_boolean("separator-one")});
         this.valueSeparatorOne.connect('notify::active', Lang.bind(this, this.changeSeparatorOne));
