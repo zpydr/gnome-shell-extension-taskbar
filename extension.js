@@ -138,7 +138,7 @@ TaskBar.prototype =
         this.initHideActivities();
 
         //Disable Hot Corner
-        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             //Extended Barriers Support
             this.barriers = global.display.supports_extended_barriers();
@@ -187,7 +187,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.show();
             else if (ShellVersion[1] === 6)
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -200,7 +200,7 @@ TaskBar.prototype =
         if (this.settings.get_boolean("hide-default-application-menu"))
         {
             this.appMenuActor.show();
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
@@ -796,7 +796,7 @@ TaskBar.prototype =
                     Main.panel._activitiesButton._hotCorner._corner.show();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -814,7 +814,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.hide();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.hide();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = NOHOTCORNER;
@@ -834,7 +834,7 @@ TaskBar.prototype =
             let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
             xsettings.set_value('overrides', variant);
             this.appMenuActor.show();
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
@@ -860,7 +860,7 @@ TaskBar.prototype =
                 }
             }
         }
-        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             this.appMenuActor = Main.panel.statusArea.appMenu.actor;
             if (this.settings.get_boolean("hide-default-application-menu"))
@@ -1041,7 +1041,7 @@ TaskBar.prototype =
             Main.layoutManager.removeChrome(Main.layoutManager.trayBox);
             Main.layoutManager.addChrome(Main.layoutManager.trayBox, { visibleInFullscreen: false });
         }
-        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
             {
@@ -1102,7 +1102,7 @@ TaskBar.prototype =
                     Main.overview.hide();
             }
         }
-        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             if (numButton == this.leftbutton) //Left Button
             {
