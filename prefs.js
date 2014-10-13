@@ -100,7 +100,6 @@ Prefs.prototype =
     buildPrefsWidget: function()
     {
         let notebook = new Gtk.Notebook();
-        this.notebook = notebook;
         notebook.set_scrollable(true);
         notebook.popup_enable(true);
         this.newValueAppearance = null;
@@ -285,9 +284,15 @@ Prefs.prototype =
         this.valueBottomPanelBackgroundColor.set_rgba(rgbaBottom);
         this.valueBottomPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeBottomPanelBackgroundColor));
         this.gridSettings.attach(this.valueBottomPanelBackgroundColor, 6, 6, 2, 1);
+        this.resetTopPanelBackgroundColorButton = new Gtk.Button({label: _("Reset Color")});
+        this.resetTopPanelBackgroundColorButton.connect('clicked', Lang.bind(this, this.resetTopPanelBackgroundColor));
+        this.gridSettings.attach(this.resetTopPanelBackgroundColorButton, 3, 7, 2, 1);
+        this.resetBottomPanelBackgroundColorButton = new Gtk.Button({label: _("Reset Color")});
+        this.resetBottomPanelBackgroundColorButton.connect('clicked', Lang.bind(this, this.resetBottomPanelBackgroundColor));
+        this.gridSettings.attach(this.resetBottomPanelBackgroundColorButton, 6, 7, 2, 1);
 
         let labelSpaceSettings1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSettings.attach(labelSpaceSettings1, 0, 7, 1, 1);
+        this.gridSettings.attach(labelSpaceSettings1, 0, 8, 1, 1);
         let labelSpaceSettings2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridSettings.attach(labelSpaceSettings2, 2, 2, 1, 1);
         let labelSpaceSettings3 = new Gtk.Label({label: "\t", xalign: 0});
@@ -317,7 +322,7 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
-        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [0] " + "(" + _("Tasks") + ")", xalign: 0});
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [0] " + "(" + _("Tasks") + ")\n[Not Complete]", xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
@@ -1188,6 +1193,24 @@ Prefs.prototype =
     {
         this.bottomPanelBackgroundColor = this.valueBottomPanelBackgroundColor.get_rgba().to_string();
         this.settings.set_string("bottom-panel-background-color", this.bottomPanelBackgroundColor);
+    },
+
+    resetTopPanelBackgroundColor: function()
+    {
+        this.settings.set_string("top-panel-background-color", "unset");
+        let topPanelOriginalBackgroundColor = this.settings.get_string("top-panel-original-background-color");
+        let rgbaTopColor = new Gdk.RGBA();
+        rgbaTopColor.parse(topPanelOriginalBackgroundColor);
+        this.valueTopPanelBackgroundColor.set_rgba(rgbaTopColor);
+    },
+
+    resetBottomPanelBackgroundColor: function()
+    {
+        this.settings.set_string("bottom-panel-background-color", "unset");
+        let bottomPanelOriginalBackgroundColor = this.settings.get_string("bottom-panel-original-background-color");
+        let rgbaBottomColor = new Gdk.RGBA();
+        rgbaBottomColor.parse(bottomPanelOriginalBackgroundColor);
+        this.valueBottomPanelBackgroundColor.set_rgba(rgbaBottomColor);
     },
 
     changeHoverSwitchTask: function(object)
