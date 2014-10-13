@@ -39,7 +39,7 @@ const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function
 const schema = "org.gnome.shell.extensions.TaskBar";
 
 const RESETCOLOR = 'rgba(0,0,0,0)';
-const BLACKCOLOR = 'rgba(0,0,0,1)';
+
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 const TRAYICON = Extension.path + '/images/bottom-panel-tray-button.svg';
@@ -100,6 +100,7 @@ Prefs.prototype =
     buildPrefsWidget: function()
     {
         let notebook = new Gtk.Notebook();
+        this.notebook = notebook;
         notebook.set_scrollable(true);
         notebook.popup_enable(true);
         this.newValueAppearance = null;
@@ -262,9 +263,11 @@ Prefs.prototype =
         this.value2BottomPanelVertical.connect("value-changed", Lang.bind(this, this.changeBottomPanelVertical));
         this.gridSettings.attach(this.value2BottomPanelVertical, 6, 5, 2, 1);
 
-        let labelPanelBackgroundColor = new Gtk.Label({label: _("Background Color"), xalign: 0});
+        let labelPanelBackgroundColor = new Gtk.Label({label: _("Panel Background\nColor / Opacity"), xalign: 0});
         this.gridSettings.attach(labelPanelBackgroundColor, 1, 6, 1, 1);
         let colorTop = this.settings.get_string("top-panel-background-color");
+        if (colorTop === 'unset')
+            colorTop = this.settings.get_string("top-panel-original-background-color");
         let rgbaTop = new Gdk.RGBA();
         rgbaTop.parse(colorTop);
         this.valueTopPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Top Panel Background Color"});
@@ -273,6 +276,8 @@ Prefs.prototype =
         this.valueTopPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeTopPanelBackgroundColor));
         this.gridSettings.attach(this.valueTopPanelBackgroundColor, 3, 6, 2, 1);
         let colorBottom = this.settings.get_string("bottom-panel-background-color");
+        if (colorBottom === 'unset')
+            colorBottom = this.settings.get_string("bottom-panel-original-background-color");
         let rgbaBottom = new Gdk.RGBA();
         rgbaBottom.parse(colorBottom);
         this.valueBottomPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Bottom Panel Background Color"});
@@ -312,7 +317,7 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
-        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [8] " + "(" + _("Tasks") + ")", xalign: 0});
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [0] " + "(" + _("Tasks") + ")", xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
@@ -342,7 +347,7 @@ Prefs.prototype =
         this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
         this.gridTasks.attach(this.valueActiveTaskFrame, 4, 6, 1, 1);
 
-        let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task\nBackground Color"), xalign: 0});
+        let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task Background\nColor / Opacity"), xalign: 0});
         this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 7, 1, 1);
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
@@ -426,7 +431,7 @@ Prefs.prototype =
         this.valueScrollWorkspaces.connect('notify::active', Lang.bind(this, this.changeScrollWorkspaces));
         this.gridButtons.attach(this.valueScrollWorkspaces, 4, 4, 1, 1);
 
-        let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nL/R Click Toggle"), xalign: 0});
+        let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft / Right Click Toggle"), xalign: 0});
         this.gridButtons.attach(labelShowAppsButtonToggle, 1, 5, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
@@ -1876,7 +1881,7 @@ Prefs.prototype =
         this.settings.set_int("font-size-bottom", 17);
         this.valueFontSizeBottom.set_value(17);
         this.valueAllWorkspaces.set_active(false);
-        this.valueTasksContainerWidth.set_value(8);
+        this.valueTasksContainerWidth.set_value(0);
         this.valueCloseButton.set_active(0);
         this.valueScrollTasks.set_active(false);
         this.valueActiveTaskFrame.set_active(true);
@@ -1886,8 +1891,13 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.settings.set_string("active-task-background-color", RESETCOLOR);
         this.value2ActiveTaskBackgroundColor.set_active(false);
-        this.settings.set_string("top-panel-background-color", BLACKCOLOR);
-        this.settings.set_string("bottom-panel-background-color", BLACKCOLOR);
+        this.settings.set_string("top-panel-background-color", "unset");
+        this.settings.set_string("bottom-panel-background-color", "unset");
+        let topPanelOriginalBackgroundColor = this.settings.get_string("top-panel-original-background-color");
+        let rgba2 = new Gdk.RGBA();
+        rgba2.parse(topPanelOriginalBackgroundColor);
+        this.valueTopPanelBackgroundColor.set_rgba(rgba2);
+        this.valueBottomPanelBackgroundColor.set_rgba(rgba2);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
         this.valueDesktopButtonRightClick.set_active(true);
