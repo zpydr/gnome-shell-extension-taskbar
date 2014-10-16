@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2014 zpydr
 //
-//  Version 39
+//  Version 40
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ const Windows34 = Extension.imports.windows34;
 const schema = "org.gnome.shell.extensions.TaskBar";
 
 const RESETBOTTOMPANELCOLOR = 'rgba(0,0,0,1)';
+
 const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
@@ -114,6 +115,11 @@ TaskBar.prototype =
         this.boxMainSeparatorSix = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxBottomPanelTrayButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxBottomPanelOppositeTrayButton = new St.BoxLayout({ style_class: "tkb-box" });
+
+        //Top Panel Background Color
+        this.changeTopPanelBackgroundColor();
+
+        //Set TaskBar Position
         this.onPositionChanged();
 
         //Add Favorites
@@ -138,7 +144,7 @@ TaskBar.prototype =
         this.initHideActivities();
 
         //Disable Hot Corner
-        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             //Extended Barriers Support
             this.barriers = global.display.supports_extended_barriers();
@@ -153,9 +159,6 @@ TaskBar.prototype =
 
         //Active Task Frame / Background Color
         this.activeTaskFrame();
-
-        //Top Panel Background Color
-        this.changeTopPanelBackgroundColor();
 
         //Init Windows Manage Callbacks
         if (((ShellVersion[1] === 4) || (ShellVersion[1] === 6)) && (! this.settings.get_boolean("tasks-all-workspaces")))
@@ -187,7 +190,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.show();
             else if (ShellVersion[1] === 6)
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -200,7 +203,7 @@ TaskBar.prototype =
         if (this.settings.get_boolean("hide-default-application-menu"))
         {
             this.appMenuActor.show();
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
@@ -308,11 +311,11 @@ TaskBar.prototype =
         this.boxMain = null;
         this.newBox = null;
         this.cleanTasksList();
-        Main.panel.actor.set_style("None");
+        Main.panel.actor.set_style(this.originalTopPanelStyle);
         Main.panel._leftCorner.actor.show();
         Main.panel._rightCorner.actor.show();
-        Main.panel._leftCorner.actor.set_style("None");
-        Main.panel._rightCorner.actor.set_style("None");
+        Main.panel._leftCorner.actor.set_style(this.originalLeftPanelCornerStyle);
+        Main.panel._rightCorner.actor.set_style(this.originalRightPanelCornerStyle);
     },
 
     setSignals: function()
@@ -588,7 +591,7 @@ TaskBar.prototype =
         let labelWorkspaceIndex = this.activeWorkspaceIndex + 1;
         let labelTotalWorkspace = this.totalWorkspace + 1;
         if (this.settings.get_enum("workspace-button-index") == 1)
-            this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"/"+labelTotalWorkspace) });
+            this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex + "/" + labelTotalWorkspace) });
         else if (this.settings.get_enum("workspace-button-index") == 0)
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
         if (this.settings.get_boolean("bottom-panel"))
@@ -796,7 +799,7 @@ TaskBar.prototype =
                     Main.panel._activitiesButton._hotCorner._corner.show();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -814,7 +817,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.hide();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.hide();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = NOHOTCORNER;
@@ -834,7 +837,7 @@ TaskBar.prototype =
             let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
             xsettings.set_value('overrides', variant);
             this.appMenuActor.show();
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
@@ -860,7 +863,7 @@ TaskBar.prototype =
                 }
             }
         }
-        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             this.appMenuActor = Main.panel.statusArea.appMenu.actor;
             if (this.settings.get_boolean("hide-default-application-menu"))
@@ -963,20 +966,36 @@ TaskBar.prototype =
     //Top Panel Background Color
     changeTopPanelBackgroundColor: function()
     {
+        this.originalTopPanelStyle = Main.panel.actor.get_style();
+        this.originalLeftPanelCornerStyle = Main.panel._leftCorner.actor.get_style();
+        this.originalRightPanelCornerStyle = Main.panel._rightCorner.actor.get_style();
         this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
-        this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor;
-        Main.panel.actor.set_style(this.topPanelBackgroundStyle);
-        if (this.settings.get_boolean("top-panel-background-alpha"))
+        if (this.topPanelBackgroundColor === "unset")
         {
-            Main.panel._leftCorner.actor.hide();
-            Main.panel._rightCorner.actor.hide();
+            //Get Native Panel Background Color
+            let tpobc = Main.panel.actor.get_theme_node().get_background_color();
+            let topPanelOriginalBackgroundColor = 'rgba(%d, %d, %d, %d)'.format(tpobc.red, tpobc.green, tpobc.blue, tpobc.alpha);
+            this.settings.set_string("top-panel-original-background-color", topPanelOriginalBackgroundColor);
+            this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
+            if (this.bottomPanelBackgroundColor === "unset")
+                this.settings.set_string("bottom-panel-original-background-color", topPanelOriginalBackgroundColor);
         }
         else
         {
-            Main.panel._leftCorner.actor.show();
-            Main.panel._rightCorner.actor.show();
-            Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor);
-            Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor);
+            this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor;
+            Main.panel.actor.set_style(this.topPanelBackgroundStyle);
+            if (this.settings.get_boolean("top-panel-background-alpha"))
+            {
+                Main.panel._leftCorner.actor.hide();
+                Main.panel._rightCorner.actor.hide();
+            }
+            else
+            {
+                Main.panel._leftCorner.actor.show();
+                Main.panel._rightCorner.actor.show();
+                Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor);
+                Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor);
+            }
         }
     },
 
@@ -986,6 +1005,8 @@ TaskBar.prototype =
         this.iconSize = this.settings.get_int('icon-size-bottom');
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
+        if (this.bottomPanelBackgroundColor === "unset")
+            this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-original-background-color");
         this.bottomPanelBackgroundStyle = "background-color: " + this.bottomPanelBackgroundColor;
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
         this.bottomPanelActor.set_style(this.bottomPanelBackgroundStyle);
@@ -1041,7 +1062,7 @@ TaskBar.prototype =
             Main.layoutManager.removeChrome(Main.layoutManager.trayBox);
             Main.layoutManager.addChrome(Main.layoutManager.trayBox, { visibleInFullscreen: false });
         }
-        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
             {
@@ -1102,7 +1123,7 @@ TaskBar.prototype =
                     Main.overview.hide();
             }
         }
-        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12))
+        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14))
         {
             if (numButton == this.leftbutton) //Left Button
             {

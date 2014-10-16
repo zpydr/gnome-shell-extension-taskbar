@@ -1,5 +1,5 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 39 for GNOME 3.4 / 3.6 / 3.8 / 3.10 / 3.12**  
+**GNOME Shell Extension TaskBar Version 40 for GNOME 3.4 - 3.14**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
