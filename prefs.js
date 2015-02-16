@@ -102,6 +102,7 @@ Prefs.prototype =
         let notebook = new Gtk.Notebook();
         notebook.set_scrollable(true);
         notebook.popup_enable(true);
+        notebook.set_size_request(800,500);
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
 
