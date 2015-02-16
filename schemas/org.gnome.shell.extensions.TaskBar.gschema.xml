@@ -250,9 +250,14 @@
             <summary>Scroll Workspaces</summary>
             <description/>
         </key>
-        <key name="invert-scroll" type="b">
+        <key name="invert-scroll-workspace" type="b">
             <default>true</default>
-            <summary>Invert Scroll Direction</summary>
+            <summary>Invert Workspace Scroll Direction</summary>
+            <description/>
+        </key>
+        <key name="invert-scroll-tasks" type="b">
+            <default>true</default>
+            <summary>Invert Tasks Scroll Direction</summary>
             <description/>
         </key>
         <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">

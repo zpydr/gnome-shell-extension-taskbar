@@ -1261,8 +1261,8 @@ TaskBar.prototype =
         if (this.settings.get_boolean("scroll-workspaces"))
         {
             let scrollDirection = event.get_scroll_direction();
-            let up   = (this.settings.get_boolean("invert-scroll") ? Clutter.ScrollDirection.UP : Clutter.ScrollDirection.DOWN);
-            let down = (this.settings.get_boolean("invert-scroll") ? Clutter.ScrollDirection.DOWN : Clutter.ScrollDirection.UP);
+            let up   = (this.settings.get_boolean("invert-scroll-workspace") ? Clutter.ScrollDirection.UP : Clutter.ScrollDirection.DOWN);
+            let down = (this.settings.get_boolean("invert-scroll-workspace") ? Clutter.ScrollDirection.DOWN : Clutter.ScrollDirection.UP);
 
             if (scrollDirection == up)
             {
@@ -1290,7 +1290,9 @@ TaskBar.prototype =
             let focusWindow = global.display.focus_window;
             let activeWorkspace = global.screen.get_active_workspace();
             let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
+            let up   = (this.settings.get_boolean("invert-scroll-tasks") ? Clutter.ScrollDirection.UP : Clutter.ScrollDirection.DOWN);
+            let down = (this.settings.get_boolean("invert-scroll-tasks") ? Clutter.ScrollDirection.DOWN : Clutter.ScrollDirection.UP);
+            if (scrollDirection == up)
             {
                 this.tasksList.forEach(
                     function(task)
@@ -1312,7 +1314,7 @@ TaskBar.prototype =
                 if (Main.overview.visible)
                     Main.overview.hide();
             }
-            else if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            else if (scrollDirection == down)
             {
                 this.tasksList.forEach(
                     function(task)
