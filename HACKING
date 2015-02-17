@@ -1,0 +1,20 @@
+Installation
+------------
+
+To install this extension from the git repository, copy the contents to the 
+local gnome extensions directory :
+
+  cp -r * ~/.local/share/gnome-shell/extensions/TaskBar@zpydr/
+
+
+Development
+-----------
+
+If you are making changes to the schema, run :
+
+  glib-compile-schemas schemas/ 
+
+If you are adding new text, recreate the .pot file :
+
+  xgettext -k_ -kN_ -o TaskBar.pot prefs.js
+
