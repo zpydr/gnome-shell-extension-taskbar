@@ -22,6 +22,7 @@ const Clutter = imports.gi.Clutter;
 const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
+const Gtk = imports.gi.Gtk;
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
 const Shell = imports.gi.Shell;
@@ -32,6 +33,8 @@ const Layout = imports.ui.layout;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
+const PanelMenu = imports.ui.panelMenu;
+const PopupMenu = imports.ui.popupMenu;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -100,13 +103,14 @@ TaskBar.prototype =
         this.boxMainShowAppsButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainWorkspaceButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainDesktopButton = new St.BoxLayout({ style_class: "tkb-box" });
-        this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box" });
+        this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box", reactive: true });
         this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
         if (this.tasksContainerWidth == 0)
             this.newTasksContainerWidth = -1;
         else
             this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
         this.boxMainTasks.set_width(this.newTasksContainerWidth);
+        this.boxMainTasksId = this.boxMainTasks.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
         this.boxMainSeparatorOne = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainSeparatorTwo = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainSeparatorThree = new St.BoxLayout({ style_class: "tkb-box" });
@@ -175,10 +179,23 @@ TaskBar.prototype =
 
         //Reinit Extension on Param Change
         this.setSignals();
+        this.setSystemSignals();
     },
 
     disable: function()
     {
+        //Disconnect Overview Signals
+        if (this.overviewHidingId != null)
+        {
+            Main.overview.disconnect(this.overviewHidingId);
+            this.overviewHidingId = null;
+        }
+        if (this.overviewShowingId != null)
+        {
+            Main.overview.disconnect(this.overviewShowingId);
+            this.overviewShowingId = null;
+        }
+
         //Show Activities if hidden
         if (this.settings.get_boolean("hide-activities"))
             this.activitiesActor.show();
@@ -290,12 +307,29 @@ TaskBar.prototype =
             this.settingSignals = null;
         }
 
+        //Disconnect Monitor Change Signals
+        if (this.monitorChangedId != null)
+        {
+            global.screen.disconnect(this.monitorChangedId);
+            this.monitorChangedId = null;
+        }
+
         //Disconnect Texture Cache Signals
-        St.TextureCache.get_default().disconnect(this.iconThemeChangedId);
-        this.iconThemeChangedId = null;
+        if (this.iconThemeChangedId != null)
+        {
+            St.TextureCache.get_default().disconnect(this.iconThemeChangedId);
+            this.iconThemeChangedId = null;
+        }
 
         //Hide current preview if necessary
         this.hidePreview();
+
+        //Disconnect Tasks Container Scroll Signals 
+        if (this.boxMainTasksId != null)
+        {
+            this.boxMainTasks.disconnect(this.boxMainTasksId);
+            this.boxMainTasksId = null;
+        }
 
         //Remove TaskBar
         this.windows.destruct();
@@ -308,7 +342,9 @@ TaskBar.prototype =
             Main.messageTray._notificationWidget.set_anchor_point(0, 0);
         if (this.newBox != null)
             this.newBox.remove_child(this.boxMain);
-        this.boxMain = null;
+        this.mainBox = null;
+        if (this.boxMain != null)
+            this.boxMain = null;
         this.newBox = null;
         this.cleanTasksList();
         Main.panel.actor.set_style(this.originalTopPanelStyle);
@@ -334,6 +370,7 @@ TaskBar.prototype =
             this.settings.connect("changed::display-workspace-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::overview", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tray-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tray-button-empty", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
@@ -388,6 +425,24 @@ TaskBar.prototype =
         ];
     },
 
+    //Monitor Change, Icon Theme Change, Hide TaskBar in Overview Mode
+    setSystemSignals: function()
+    {
+        this.monitorChangedId = null;
+        this.iconThemeChangedId = null;
+        this.mainBox = null;
+        this.overviewHidingId = null;
+        this.overviewShowingId = null;
+        this.monitorChangedId = global.screen.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
+        this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
+        if (! this.settings.get_boolean("overview"))
+        {
+            this.mainBox = this.boxMain;
+            this.overviewHidingId = Main.overview.connect('hiding', Lang.bind(this, this.showMainBox));
+            this.overviewShowingId = Main.overview.connect('showing', Lang.bind(this, this.hideMainBox));
+        }
+    },
+
     //First Start
     firstStart: function()
     {
@@ -416,7 +471,6 @@ TaskBar.prototype =
         this.messageTrayShowingId = null;
         this.messageTrayHidingId = null;
         this.bottomPanelEndIndicator = false;
-        this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         if (this.settings.get_boolean("bottom-panel"))
             this.bottomPanel();
         else
@@ -496,6 +550,17 @@ TaskBar.prototype =
         }
         if (this.bottomPanelEndIndicator)
             this.boxMain.add_actor(this.boxBottomPanelTrayButton);
+    },
+
+    //Hide TaskBar in Overview
+    showMainBox: function()
+    {
+        this.mainBox.show();
+    },
+
+    hideMainBox: function()
+    {
+        this.mainBox.hide();
     },
 
     //Add Favorites
@@ -594,11 +659,7 @@ TaskBar.prototype =
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex + "/" + labelTotalWorkspace) });
         else if (this.settings.get_enum("workspace-button-index") == 0)
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
-        if (this.settings.get_boolean("bottom-panel"))
-            this.fontSize = this.settings.get_int('font-size-bottom');
-        else
-            this.fontSize = this.settings.get_int('font-size');
-        this.labelWorkspace.style = 'font-size: ' + this.fontSize + 'px' + ';';
+        this.labelWorkspace.style = 'font-size: ' + (this.iconSize * 2 / 3) + 'px' + ';';
         this.buttonWorkspace.set_child(this.labelWorkspace);
     },
 
@@ -744,8 +805,6 @@ TaskBar.prototype =
                 this.labelTray = new St.Label();
             else
                 this.labelTray = new St.Label({ text: (indicatorCount+'') });
-            this.fontSize = this.settings.get_int('font-size-bottom');
-            this.labelTray.style = 'font-size: ' + this.fontSize + 'px' + ';';
             this.buttonTray.set_child(this.labelTray);
             this.boxTray = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             this.boxTray.add_actor(this.buttonTray);
@@ -879,7 +938,7 @@ TaskBar.prototype =
                 });
             }
         }
-        else
+        else if ((ShellVersion[1] === 6) || (ShellVersion[1] === 8))
         {
             this.appMenuActor = Main.panel.statusArea.appMenu.actor;
             if (this.settings.get_boolean("hide-default-application-menu"))
@@ -969,21 +1028,29 @@ TaskBar.prototype =
         this.originalTopPanelStyle = Main.panel.actor.get_style();
         this.originalLeftPanelCornerStyle = Main.panel._leftCorner.actor.get_style();
         this.originalRightPanelCornerStyle = Main.panel._rightCorner.actor.get_style();
+        this.blub = this.settings.get_string("font-size");
+        this.fontColor = 'color: ' + this.blub + ';';
+        this.panelSize = 'font-size: ' + (this.iconSize * 2 / 3) + 'px;';
         this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
-        if (this.topPanelBackgroundColor === "unset")
+        if (this.topPanelBackgroundColor === "unset") 
         {
             //Get Native Panel Background Color
             let tpobc = Main.panel.actor.get_theme_node().get_background_color();
             let topPanelOriginalBackgroundColor = 'rgba(%d, %d, %d, %d)'.format(tpobc.red, tpobc.green, tpobc.blue, tpobc.alpha);
             this.settings.set_string("top-panel-original-background-color", topPanelOriginalBackgroundColor);
+            this.topPanelBackgroundStyle = "background-color: " + topPanelOriginalBackgroundColor + ";";
+            Main.panel.actor.set_style(this.panelSize + ' ' + this.topPanelBackgroundStyle);
+            let children = Main.panel._centerBox.get_children();
             this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
             if (this.bottomPanelBackgroundColor === "unset")
+            {
                 this.settings.set_string("bottom-panel-original-background-color", topPanelOriginalBackgroundColor);
+            }
         }
         else
         {
-            this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor;
-            Main.panel.actor.set_style(this.topPanelBackgroundStyle);
+            this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor + ";";
+            Main.panel.actor.set_style(this.panelSize + ' ' + this.topPanelBackgroundStyle);
             if (this.settings.get_boolean("top-panel-background-alpha"))
             {
                 Main.panel._leftCorner.actor.hide();
@@ -993,8 +1060,8 @@ TaskBar.prototype =
             {
                 Main.panel._leftCorner.actor.show();
                 Main.panel._rightCorner.actor.show();
-                Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor);
-                Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor);
+                Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
+                Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
             }
         }
     },
@@ -1003,13 +1070,14 @@ TaskBar.prototype =
     bottomPanel: function()
     {
         this.iconSize = this.settings.get_int('icon-size-bottom');
+        this.panelSize = 'font-size: ' + (this.iconSize * 2 / 3) + 'px;';
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
         if (this.bottomPanelBackgroundColor === "unset")
             this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-original-background-color");
-        this.bottomPanelBackgroundStyle = "background-color: " + this.bottomPanelBackgroundColor;
+        this.bottomPanelBackgroundStyle = "background-color: " + this.bottomPanelBackgroundColor + ";";
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
-        this.bottomPanelActor.set_style(this.bottomPanelBackgroundStyle);
+        this.bottomPanelActor.set_style(this.panelSize + ' ' + this.bottomPanelBackgroundStyle);
         this.bottomPanelActor.set_reactive(false);
         if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6) || (ShellVersion[1] === 8))
         {
@@ -1287,7 +1355,8 @@ TaskBar.prototype =
             let focusWindow = global.display.focus_window;
             let activeWorkspace = global.screen.get_active_workspace();
             let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
+            if (((scrollDirection == Clutter.ScrollDirection.UP) && (! this.settings.get_boolean("invert-scroll-tasks")))
+                || ((scrollDirection == Clutter.ScrollDirection.DOWN) && (this.settings.get_boolean("invert-scroll-tasks"))))
             {
                 this.tasksList.forEach(
                     function(task)
@@ -1309,7 +1378,8 @@ TaskBar.prototype =
                 if (Main.overview.visible)
                     Main.overview.hide();
             }
-            else if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            else if (((scrollDirection == Clutter.ScrollDirection.DOWN) && (! this.settings.get_boolean("invert-scroll-tasks")))
+                    || ((scrollDirection == Clutter.ScrollDirection.UP) && (this.settings.get_boolean("invert-scroll-tasks"))))
             {
                 this.tasksList.forEach(
                     function(task)
@@ -1485,7 +1555,6 @@ TaskBar.prototype =
         let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
         let signalsTask = [
             buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
-            buttonTask.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton)),
             buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
             buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
         ];
