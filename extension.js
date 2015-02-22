@@ -1074,6 +1074,9 @@ TaskBar.prototype =
     //Bottom Panel
     bottomPanel: function()
     {
+        let bottomPanelHeight,
+            newShowTray;
+        
         this.iconSize = this.settings.get_int('icon-size-bottom');
         this.panelSize = 'font-size: ' + (this.iconSize * 2 / 3) + 'px;';
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
