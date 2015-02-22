@@ -33,8 +33,8 @@ Windows.prototype =
     callbackWindowsListChanged: null,
     callbackWindowChanged: null,
     workspaceSwitchSignal: null,
-    windowAddedSignal: null,
-    windowRemovedSignal: null,
+    windowAddedSignals: new Array(),
+    windowRemovedSignals: new Array(),
     windowsSignals: new Array(),
 
     init: function(callBackThis, callbackWindowsListChanged, callbackWindowChanged)
@@ -66,11 +66,11 @@ Windows.prototype =
         for (let i = 0; i < totalWorkspaces; i++)
         {
             let activeWorkspace = global.screen.get_workspace_by_index(i);
-            activeWorkspace.disconnect(this.windowAddedSignal);
-            activeWorkspace.disconnect(this.windowRemovedSignal);
+            activeWorkspace.disconnect(this.windowAddedSignals[i]);
+            activeWorkspace.disconnect(this.windowRemovedSignals[i]);
         }
-        this.windowAddedSignal = null;
-        this.windowRemovedSignal = null;
+        this.windowAddedSignals = new Array();
+        this.windowRemovedSignals = new Array();
 
         //Clean windows list
         this.cleanWindowsList();
@@ -83,20 +83,20 @@ Windows.prototype =
         for (let i = 0; i < totalWorkspaces; i++)
         {
             let activeWorkspace = global.screen.get_workspace_by_index(i);
-            if (this.windowAddedSignal != null)
-                activeWorkspace.disconnect(this.windowAddedSignal);
-            if (this.windowRemovedSignal != null)
-                activeWorkspace.disconnect(this.windowRemovedSignal);
+            if (this.windowAddedSignals[i] != null)
+                activeWorkspace.disconnect(this.windowAddedSignals[i]);
+            if (this.windowRemovedSignals[i] != null)
+                activeWorkspace.disconnect(this.windowRemovedSignals[i]);
         }
-        this.windowAddedSignal = null;
-        this.windowRemovedSignal = null;
+        this.windowAddedSignals = new Array();
+        this.windowRemovedSignals = new Array();
 
         //Add workspace signals
         for (let i = 0; i < totalWorkspaces; i++)
         {
             let activeWorkspace = global.screen.get_workspace_by_index(i);
-            this.windowAddedSignal = activeWorkspace.connect_after('window-added', Lang.bind(this, this.buildWindowsList));
-            this.windowRemovedSignal = activeWorkspace.connect_after('window-removed', Lang.bind(this, this.buildWindowsList));
+            this.windowAddedSignals.push(activeWorkspace.connect_after('window-added', Lang.bind(this, this.buildWindowsList)));
+            this.windowRemovedSignals.push(activeWorkspace.connect_after('window-removed', Lang.bind(this, this.buildWindowsList)));
         }
     },
 
