@@ -18,11 +18,6 @@
 //
 //  zpydr@openmailbox.org
 
-/* jshint esnext: true, curly: false */
-/* global imports: true */
-/* global global: true */
-
-
 const Clutter = imports.gi.Clutter;
 const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
@@ -79,6 +74,7 @@ TaskBar.prototype =
     previewTimer: null,
     previewTimer2: null,
     preview: null,
+    favoritesPreview: null,
     favoriteapp: null,
 
     init: function(extensionMeta, schema)
@@ -300,7 +296,7 @@ TaskBar.prototype =
         }
 
         //Disconnect Setting Signals
-        if (this.settingSignals !== null)
+        if (this.settingSignals !== null) 
         {
             this.settingSignals.forEach(
                 function(signal)
@@ -329,7 +325,7 @@ TaskBar.prototype =
         //Hide current preview if necessary
         this.hidePreview();
 
-        //Disconnect Tasks Container Scroll Signals
+        //Disconnect Tasks Container Scroll Signals 
         if (this.boxMainTasksId !== null)
         {
             this.boxMainTasks.disconnect(this.boxMainTasksId);
@@ -1074,9 +1070,8 @@ TaskBar.prototype =
     //Bottom Panel
     bottomPanel: function()
     {
-        let bottomPanelHeight,
-            newShowTray;
-        
+        let bottomPanelHeight = null;
+        let newShowTray = null;
         this.iconSize = this.settings.get_int('icon-size-bottom');
         this.panelSize = 'font-size: ' + (this.iconSize * 2 / 3) + 'px;';
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
@@ -1151,8 +1146,6 @@ TaskBar.prototype =
         }
         else if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
         {
-            bottomPanelHeight = null;
-            newShowTray = null;
             bottomPanelHeight = this.height;
             this.showTray = MessageTray.MessageTray.prototype._showTray;
             newShowTray = function()
@@ -1363,8 +1356,8 @@ TaskBar.prototype =
             let focusWindow = global.display.focus_window;
             let activeWorkspace = global.screen.get_active_workspace();
             let scrollDirection = event.get_scroll_direction();
-            if (((scrollDirection === Clutter.ScrollDirection.UP) && (! this.settings.get_boolean("invert-scroll-tasks"))) ||
-            ((scrollDirection === Clutter.ScrollDirection.DOWN) && (this.settings.get_boolean("invert-scroll-tasks"))))
+            if (((scrollDirection === Clutter.ScrollDirection.UP) && (! this.settings.get_boolean("invert-scroll-tasks")))
+                || ((scrollDirection === Clutter.ScrollDirection.DOWN) && (this.settings.get_boolean("invert-scroll-tasks"))))
             {
                 this.tasksList.forEach(
                     function(task)
@@ -1386,8 +1379,8 @@ TaskBar.prototype =
                 if (Main.overview.visible)
                     Main.overview.hide();
             }
-            else if (((scrollDirection === Clutter.ScrollDirection.DOWN) && (! this.settings.get_boolean("invert-scroll-tasks"))) ||
-             ((scrollDirection === Clutter.ScrollDirection.UP) && (this.settings.get_boolean("invert-scroll-tasks"))))
+            else if (((scrollDirection === Clutter.ScrollDirection.DOWN) && (! this.settings.get_boolean("invert-scroll-tasks")))
+                    || ((scrollDirection === Clutter.ScrollDirection.UP) && (this.settings.get_boolean("invert-scroll-tasks"))))
             {
                 this.tasksList.forEach(
                     function(task)

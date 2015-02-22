@@ -881,7 +881,7 @@ Prefs.prototype =
         this.valueHideDefaultApplicationMenu.connect('notify::active', Lang.bind(this, this.changeHideDefaultApplicationMenu));
         this.gridMisc.attach(this.valueHideDefaultApplicationMenu, 3, 3, 1, 1);
 
-        let labelWarning = new Gtk.Label({ label: "<b>! </b>"+_("Possible conflict\nwith other extensions"), use_markup: true, xalign: 0 });
+        let labelWarning = new Gtk.Label({ label: "<b>! </b>"+_("Activating one\nof those 3 options\ncould cause a conflict\nwith other extensions"), use_markup: true, xalign: 0 });
         this.gridMisc.attach(labelWarning, 1, 4, 1, 1);
 
         let labelSpaceMisc1 = new Gtk.Label({label: "\t", xalign: 0});
@@ -1010,7 +1010,7 @@ Prefs.prototype =
             this.panelPosition = this.settings.get_int("panel-position");
             this.panelBox = this.settings.get_int("panel-box");
             this.positionMaxRight = this.settings.get_int("position-max-right");
-            if (this.panelPosition == 0)
+            if (this.panelPosition === 0)
             {
                 if (this.panelBox > 1)
                 {
@@ -1055,9 +1055,9 @@ Prefs.prototype =
         if (this.settings.get_boolean("bottom-panel"))
         {
             this.panelPositionBottom = this.settings.get_int("position-bottom-box");
-            if (this.panelPositionBottom == 1)
+            if (this.panelPositionBottom === 1)
                 this.settings.set_int("position-bottom-box", 0);
-            if (this.panelPositionBottom == 2)
+            if (this.panelPositionBottom === 2)
                 this.settings.set_int("position-bottom-box", 1);
         }
     },
@@ -1067,9 +1067,9 @@ Prefs.prototype =
         if (this.settings.get_boolean("bottom-panel"))
         {
             this.panelPositionBottom = this.settings.get_int("position-bottom-box");
-            if (this.panelPositionBottom == 0)
+            if (this.panelPositionBottom === 0)
                 this.settings.set_int("position-bottom-box", 1);
-            if (this.panelPositionBottom == 1)
+            if (this.panelPositionBottom === 1)
                 this.settings.set_int("position-bottom-box", 2);
         }
     },
@@ -1229,7 +1229,7 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogDesktopIcon.add_filter(filter);
         let response = this.dialogDesktopIcon.run();
-        if(response == -3) //Open
+        if(response === -3) //Open
         {
             this.desktopIconFilename = this.dialogDesktopIcon.get_filename();
             if (this.desktopIconFilename !== iconPath)
@@ -1238,7 +1238,7 @@ Prefs.prototype =
                 this.loadDesktopIcon();
             }
         }
-        if(response == -1) //Reset
+        if(response === -1) //Reset
         {
             this.desktopIconFilename = DESKTOPICON;
             this.loadDesktopIcon();
@@ -1268,7 +1268,7 @@ Prefs.prototype =
     loadDesktopIconPreview: function()
     {
         let pixbuf;
-        if (this.initDesktopIconPath != null)
+        if (this.initDesktopIconPath !== null)
             this.previewFilename = this.initDesktopIconPath;
         else
             this.previewFilename = this.dialogDesktopIcon.get_preview_filename();
@@ -1330,7 +1330,7 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogAppviewIcon.add_filter(filter);
         let response = this.dialogAppviewIcon.run();
-        if(response == -3)
+        if(response === -3)
         {
             this.appviewIconFilename = this.dialogAppviewIcon.get_filename();
             if (this.appviewIconFilename !== iconPath)
@@ -1339,7 +1339,7 @@ Prefs.prototype =
                 this.loadAppviewIcon();
             }
         }
-        if(response == -1)
+        if(response === -1)
         {
             this.appviewIconFilename = APPVIEWICON;
             this.loadAppviewIcon();
@@ -1369,7 +1369,7 @@ Prefs.prototype =
     loadAppviewIconPreview: function()
     {
         let pixbuf;
-        if (this.initAppviewIconPath != null)
+        if (this.initAppviewIconPath !== null)
             this.previewFilename = this.initAppviewIconPath;
         else
             this.previewFilename = this.dialogAppviewIcon.get_preview_filename();
@@ -1420,7 +1420,7 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogTrayIcon.add_filter(filter);
         let response = this.dialogTrayIcon.run();
-        if(response == -3)
+        if(response === -3)
         {
             this.trayIconFilename = this.dialogTrayIcon.get_filename();
             if (this.trayIconFilename !== iconPath)
@@ -1429,7 +1429,7 @@ Prefs.prototype =
                 this.loadTrayIcon();
             }
         }
-        if(response == -1)
+        if(response === -1)
         {
             this.trayIconFilename = TRAYICON;
             this.loadTrayIcon();
@@ -1459,7 +1459,7 @@ Prefs.prototype =
     loadTrayIconPreview: function()
     {
         let pixbuf;
-        if (this.initTrayIconPath != null)
+        if (this.initTrayIconPath !== null)
             this.previewFilename = this.initTrayIconPath;
         else
             this.previewFilename = this.dialogTrayIcon.get_preview_filename();
@@ -1588,7 +1588,7 @@ Prefs.prototype =
 
     changeSeparatorSize: function(object)
     {
-        if (this.separatorSelection == 0)
+        if (this.separatorSelection === 0)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-one-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
@@ -1609,7 +1609,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 1)
+        else if (this.separatorSelection === 1)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-two-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
@@ -1630,7 +1630,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 2)
+        else if (this.separatorSelection === 2)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-three-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
@@ -1651,7 +1651,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 3)
+        else if (this.separatorSelection === 3)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-four-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
@@ -1672,7 +1672,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 4)
+        else if (this.separatorSelection === 4)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-five-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
@@ -1693,7 +1693,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 5)
+        else if (this.separatorSelection === 5)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-six-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-six-bottom-size"));
@@ -1759,38 +1759,38 @@ Prefs.prototype =
     changeAppearanceLeft: function()
     {
         this.appearanceSelection = this.settings.get_enum("appearance-selection");
-        if (this.appearanceSelection == 0)
+        if (this.appearanceSelection === 0)
         {
             if (! this.settings.get_boolean("display-tasks"))
                 return;
             this.appearanceName = "position-tasks";
         }
-        if (this.appearanceSelection == 1)
+        if (this.appearanceSelection === 1)
         {
             if (! this.settings.get_boolean("display-desktop-button"))
                 return;
             this.appearanceName = "position-desktop-button";
         }
-        if (this.appearanceSelection == 2)
+        if (this.appearanceSelection === 2)
         {
             if (! this.settings.get_boolean("display-workspace-button"))
                 return;
             this.appearanceName = "position-workspace-button";
         }
-        if (this.appearanceSelection == 3)
+        if (this.appearanceSelection === 3)
         {
             if (! this.settings.get_boolean("display-showapps-button"))
                 return;
             this.appearanceName = "position-appview-button";
         }
-        if (this.appearanceSelection == 4)
+        if (this.appearanceSelection === 4)
         {
             if (! this.settings.get_boolean("display-favorites"))
                 return;
             this.appearanceName = "position-favorites";
         }
         this.oldValueAppearance = this.settings.get_int(this.appearanceName);
-        if (this.oldValueAppearance == 0)
+        if (this.oldValueAppearance === 0)
             return;
         else
             this.newValueAppearance = this.oldValueAppearance - 1;
@@ -1800,38 +1800,38 @@ Prefs.prototype =
     changeAppearanceRight: function()
     {
         this.appearanceSelection = this.settings.get_enum("appearance-selection");
-        if (this.appearanceSelection == 0)
+        if (this.appearanceSelection === 0)
         {
             if (! this.settings.get_boolean("display-tasks"))
                 return;
             this.appearanceName = "position-tasks";
         }
-        if (this.appearanceSelection == 1)
+        if (this.appearanceSelection === 1)
         {
             if (! this.settings.get_boolean("display-desktop-button"))
                 return;
             this.appearanceName = "position-desktop-button";
         }
-        if (this.appearanceSelection == 2)
+        if (this.appearanceSelection === 2)
         {
             if (! this.settings.get_boolean("display-workspace-button"))
                 return;
             this.appearanceName = "position-workspace-button";
         }
-        if (this.appearanceSelection == 3)
+        if (this.appearanceSelection === 3)
         {
             if (! this.settings.get_boolean("display-showapps-button"))
                 return;
             this.appearanceName = "position-appview-button";
         }
-        if (this.appearanceSelection == 4)
+        if (this.appearanceSelection === 4)
         {
             if (! this.settings.get_boolean("display-favorites"))
                 return;
             this.appearanceName = "position-favorites";
         }
         this.oldValueAppearance = this.settings.get_int(this.appearanceName);
-        if (this.oldValueAppearance == 4)
+        if (this.oldValueAppearance === 4)
             return;
         else
             this.newValueAppearance = this.oldValueAppearance + 1;
@@ -1852,7 +1852,7 @@ Prefs.prototype =
             function(appearance)
             {
                 this.intAppearance = this.settings.get_int(appearance);
-                if (this.intAppearance == this.newValueAppearance)
+                if (this.intAppearance === this.newValueAppearance)
                     this.resetAppearance = appearance;
             },
             this
