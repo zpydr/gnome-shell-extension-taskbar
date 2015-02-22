@@ -141,13 +141,13 @@
         </key>
         <key name="icon-size" type="i">
             <range min="1" max="96"/>
-            <default>24</default>
+            <default>22</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="icon-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>24</default>
+            <default>22</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
