@@ -344,6 +344,7 @@ Prefs.prototype =
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task Background\nColor & Opacity"), xalign: 0});
         this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 8, 1, 1);
+
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
@@ -351,11 +352,11 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
-        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 8, 1, 1);
+        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 3, 8, 1, 1);
 
         this.value2ActiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("active-task-background-color-set")});
         this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
-        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 9, 1, 1);
+        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 8, 1, 1);
 
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
         this.gridTasks.attach(labelHoverSwitchTask, 1, 10, 1, 1);
