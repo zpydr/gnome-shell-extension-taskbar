@@ -1877,10 +1877,10 @@ Prefs.prototype =
         this.settings.set_int("bottom-panel-vertical", 0);
         this.valueBottomPanelVertical.set_value(0);
         this.settings.set_int("position-bottom-box", 0);
-        this.settings.set_int("icon-size", 24);
-        this.valueIconSize.set_value(24);
-        this.settings.set_int("icon-size-bottom", 24);
-        this.valueIconSizeBottom.set_value(24);
+        this.settings.set_int("icon-size", 22);
+        this.valueIconSize.set_value(22);
+        this.settings.set_int("icon-size-bottom", 22);
+        this.valueIconSizeBottom.set_value(22);
         this.valueAllWorkspaces.set_active(false);
         this.valueTasksContainerWidth.set_value(0);
         this.valueCloseButton.set_active(0);
