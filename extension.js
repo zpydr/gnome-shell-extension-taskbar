@@ -398,7 +398,7 @@ TaskBar.prototype =
         }
 
         //Disconnect Setting Signals
-        if (this.settingSignals !== null) 
+        if (this.settingSignals !== null)
         {
             this.settingSignals.forEach(
                 function(signal)
@@ -427,7 +427,7 @@ TaskBar.prototype =
         //Hide current preview if necessary
         this.hidePreview();
 
-        //Disconnect Tasks Container Scroll Signals 
+        //Disconnect Tasks Container Scroll Signals
         if (this.boxMainTasksId !== null)
         {
             this.boxMainTasks.disconnect(this.boxMainTasksId);
