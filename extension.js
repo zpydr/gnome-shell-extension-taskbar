@@ -413,7 +413,7 @@ TaskBar.prototype =
         //Disconnect Monitor Change Signals
         if (this.monitorChangedId !== null)
         {
-            global.screen.disconnect(this.monitorChangedId);
+            Main.layoutManager.disconnect(this.monitorChangedId);
             this.monitorChangedId = null;
         }
 
@@ -536,7 +536,7 @@ TaskBar.prototype =
         this.mainBox = null;
         this.overviewHidingId = null;
         this.overviewShowingId = null;
-        this.monitorChangedId = global.screen.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
+        this.monitorChangedId = Main.layoutManager.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
         this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         if (! this.settings.get_boolean("overview"))
         {
