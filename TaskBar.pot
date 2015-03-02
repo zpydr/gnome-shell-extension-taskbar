@@ -1,29 +1,14 @@
-#  GNOME Shell Extension TaskBar
-#  Copyright (C) 2015 zpydr
-#
-#  Version 41
-#
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
-#  zpydr@openmailbox.org
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-23 23:25+0000\n"
+"POT-Creation-Date: 2014-10-16 23:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,312 +17,310 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: prefs.js:116
+#: prefs.js:119
 msgid "Overview"
 msgstr ""
 
-#: prefs.js:119 prefs.js:152 prefs.js:300
+#: prefs.js:122 prefs.js:155 prefs.js:316 prefs.js:325
 msgid "Tasks"
 msgstr ""
 
-#: prefs.js:125 prefs.js:153
+#: prefs.js:128 prefs.js:156
 msgid "Desktop Button"
 msgstr ""
 
-#: prefs.js:131 prefs.js:154
+#: prefs.js:134 prefs.js:157 prefs.js:229
 msgid "Workspace Button"
 msgstr ""
 
-#: prefs.js:137 prefs.js:155
+#: prefs.js:140 prefs.js:158
 msgid "Appview Button"
 msgstr ""
 
-#: prefs.js:143 prefs.js:156
+#: prefs.js:146 prefs.js:159
 msgid "Favorites"
 msgstr ""
 
-#: prefs.js:150
+#: prefs.js:153
 msgid "Align "
 msgstr ""
 
-#: prefs.js:179 prefs.js:213 prefs.js:504
+#: prefs.js:182 prefs.js:213 prefs.js:519
 msgid "Bottom Panel"
-msgstr ""
-
-#: prefs.js:185
-msgid "TaskBar in Overview"
 msgstr ""
 
 #: prefs.js:208
 msgid "Panels"
 msgstr ""
 
-#: prefs.js:211 prefs.js:502
+#: prefs.js:211 prefs.js:517
 msgid "Top Panel"
 msgstr ""
 
 #: prefs.js:216
-msgid "Panel Height"
+msgid "Icon Size"
 msgstr ""
 
 #: prefs.js:229
+msgid "Font Size"
+msgstr ""
+
+#: prefs.js:242
 msgid "Align TaskBar"
 msgstr ""
 
-#: prefs.js:244
+#: prefs.js:257
 msgid "Anchor Point"
 msgstr ""
 
-#: prefs.js:252
+#: prefs.js:265
 msgid ""
 "Panel Background\n"
-"Color & Opacity"
+"Color / Opacity"
 msgstr ""
 
-#: prefs.js:274 prefs.js:277
+#: prefs.js:287 prefs.js:290
 msgid "Reset Color"
 msgstr ""
 
-#: prefs.js:303
+#: prefs.js:319
 msgid "Tasks on All Workspaces"
 msgstr ""
 
-#: prefs.js:309
+#: prefs.js:325
 msgid "Tasks Container Width"
 msgstr ""
 
-#: prefs.js:317
+#: prefs.js:333
 msgid "Close Tasks"
 msgstr ""
 
-#: prefs.js:320 prefs.js:448
+#: prefs.js:336 prefs.js:460
 msgid "OFF"
 msgstr ""
 
-#: prefs.js:321
+#: prefs.js:337
 msgid "Middle Click"
 msgstr ""
 
-#: prefs.js:322
+#: prefs.js:338
 msgid "Right Click"
 msgstr ""
 
-#: prefs.js:327
+#: prefs.js:343
 msgid "Scroll Tasks"
 msgstr ""
 
-#: prefs.js:333
-msgid "Invert Scroll Tasks"
-msgstr ""
-
-#: prefs.js:339
+#: prefs.js:349
 msgid "Active Task Frame"
 msgstr ""
 
-#: prefs.js:345
+#: prefs.js:355
 msgid ""
 "Active Task Background\n"
-"Color & Opacity"
+"Color / Opacity"
 msgstr ""
 
-#: prefs.js:361
+#: prefs.js:370
 msgid "Activate Tasks on Hover"
 msgstr ""
 
-#: prefs.js:367
+#: prefs.js:376
 msgid "Hover Delay"
 msgstr ""
 
-#: prefs.js:394
+#: prefs.js:376 prefs.js:854
+msgid "(ms)"
+msgstr ""
+
+#: prefs.js:406
 msgid "Buttons"
 msgstr ""
 
-#: prefs.js:397
+#: prefs.js:409
 msgid ""
 "Desktop Button Right Click\n"
 "opens Preferences (this)"
 msgstr ""
 
-#: prefs.js:403
+#: prefs.js:415
 msgid "Desktop Button Icon"
 msgstr ""
 
-#: prefs.js:412
+#: prefs.js:424
 msgid "Workspace Button Index"
 msgstr ""
 
-#: prefs.js:415 prefs.js:450
+#: prefs.js:427 prefs.js:462
 msgid "Index"
 msgstr ""
 
-#: prefs.js:416
+#: prefs.js:428
 msgid "Index/Total"
 msgstr ""
 
-#: prefs.js:421
+#: prefs.js:433
 msgid "Scroll Workspaces"
 msgstr ""
 
-#: prefs.js:427
+#: prefs.js:439
 msgid ""
 "Appview Button\n"
-"Left & Right Click Toggle"
+"Left / Right Click Toggle"
 msgstr ""
 
-#: prefs.js:430
+#: prefs.js:442
 msgid ""
 "L Appview\n"
 "R Overview"
 msgstr ""
 
-#: prefs.js:431
+#: prefs.js:443
 msgid ""
 "L Overview\n"
 "R Appview"
 msgstr ""
 
-#: prefs.js:436
+#: prefs.js:448
 msgid "Appview Button Icon"
 msgstr ""
 
-#: prefs.js:445
+#: prefs.js:457
 msgid "Bottom Panel Tray Button"
 msgstr ""
 
-#: prefs.js:449
+#: prefs.js:461
 msgid "Icon"
 msgstr ""
 
-#: prefs.js:455
+#: prefs.js:467
 msgid "When Tray is Empty"
 msgstr ""
 
-#: prefs.js:458
+#: prefs.js:470
 msgid "Show Icon"
 msgstr ""
 
-#: prefs.js:459
+#: prefs.js:471
 msgid "Show 0"
 msgstr ""
 
-#: prefs.js:460
+#: prefs.js:472
 msgid "Hide"
 msgstr ""
 
-#: prefs.js:465
+#: prefs.js:477
 msgid "Tray Button Icon"
 msgstr ""
 
-#: prefs.js:474
+#: prefs.js:486
 msgid "Activate Tray on Hover"
 msgstr ""
 
-#: prefs.js:499
+#: prefs.js:514
 msgid "Separators"
 msgstr ""
 
-#: prefs.js:507 prefs.js:546 prefs.js:585 prefs.js:624 prefs.js:663
-#: prefs.js:702 prefs.js:744 prefs.js:745 prefs.js:746 prefs.js:747
-#: prefs.js:748 prefs.js:749
+#: prefs.js:522 prefs.js:561 prefs.js:600 prefs.js:639 prefs.js:678
+#: prefs.js:717 prefs.js:759 prefs.js:760 prefs.js:761 prefs.js:762
+#: prefs.js:763 prefs.js:764
 msgid "Separator"
 msgstr ""
 
-#: prefs.js:507
+#: prefs.js:522
 msgid "Left"
 msgstr ""
 
-#: prefs.js:702
+#: prefs.js:717
 msgid "Right"
 msgstr ""
 
-#: prefs.js:742
+#: prefs.js:757
 msgid "Resize "
 msgstr ""
 
-#: prefs.js:807
+#: prefs.js:825
 msgid "Preview"
 msgstr ""
 
-#: prefs.js:810
+#: prefs.js:828
 msgid "Tasks Label"
 msgstr ""
 
-#: prefs.js:816
+#: prefs.js:834
 msgid "Tasks Thumbnail"
 msgstr ""
 
-#: prefs.js:822
+#: prefs.js:840
 msgid "Favorites Label"
 msgstr ""
 
-#: prefs.js:828
+#: prefs.js:846
 msgid "Thumbnail Size"
 msgstr ""
 
-#: prefs.js:836
+#: prefs.js:854
 msgid "Preview Delay"
 msgstr ""
 
-#: prefs.js:863
+#: prefs.js:884
 msgid "Misc"
 msgstr ""
 
-#: prefs.js:866
+#: prefs.js:887
 msgid "Hide Activities"
 msgstr ""
 
-#: prefs.js:872
+#: prefs.js:893
 msgid "Disable Hot Corner"
 msgstr ""
 
-#: prefs.js:878
+#: prefs.js:899
 msgid "Hide Default App Menu"
 msgstr ""
 
-#: prefs.js:884
+#: prefs.js:905
 msgid ""
-"Activating one\n"
-"of those 3 options\n"
-"could cause a conflict\n"
+"Possible conflict\n"
 "with other extensions"
 msgstr ""
 
-#: prefs.js:919
+#: prefs.js:943
 msgid "Version"
 msgstr ""
 
-#: prefs.js:927
+#: prefs.js:951
 msgid "Send Bug Report"
 msgstr ""
 
-#: prefs.js:937
+#: prefs.js:961
 msgid "Donate for TaskBar"
 msgstr ""
 
-#: prefs.js:942
+#: prefs.js:966
 msgid "Become a Friend of GNOME"
 msgstr ""
 
-#: prefs.js:947
+#: prefs.js:971
 msgid "RESET ALL !"
 msgstr ""
 
-#: prefs.js:950
+#: prefs.js:974
 msgid "Free Software Foundation"
 msgstr ""
 
-#: prefs.js:1211
+#: prefs.js:1229
 msgid "TaskBar Preferences - Desktop Button Icon"
 msgstr ""
 
-#: prefs.js:1224 prefs.js:1325 prefs.js:1415
+#: prefs.js:1242 prefs.js:1343 prefs.js:1433
 msgid "Images"
 msgstr ""
 
-#: prefs.js:1312
+#: prefs.js:1330
 msgid "TaskBar Preferences - Appview Button Icon"
 msgstr ""
 
-#: prefs.js:1402
+#: prefs.js:1420
 msgid "TaskBar Preferences - Tray Button Icon"
 msgstr ""

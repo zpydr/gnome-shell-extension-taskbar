@@ -1,12 +1,9 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 41 for GNOME 3.4 - 3.14**  
+**GNOME Shell Extension TaskBar Version 40 for GNOME 3.4 - 3.14**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
 https://launchpad.net/gnome-shell-extension-taskbar/            
-                
-Arch Linux User Repository              
-https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
 Ubuntu PPA Repository                   
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                        
         
@@ -23,7 +20,7 @@ Workspace button - switch workspaces left/right-click: cycle forward/backwards
 Appview button - left/right-click: toggle appview/overview      
 Favorites - add from dash       
 Align position      
-Resize panels + contents        
+Icon/font size      
 Top/bottom panel background color + opacity     
 Bottom panel tray button - activate the message tray        
 Tasks on all workspaces         
@@ -39,12 +36,12 @@ applications like empathy, nautilus, etc.
         
 Chinese language support by tuhaihe         
 German language support by jonnius, to-ba       
-Credit to Xes, flubshi, rogst, Baltix, skoslowski, rgeary1, hkskoglund      
+Credit to Xes, flubshi, rogst, Baltix       
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_23.png)
         
 GNOME Shell Extension TaskBar           
-Copyright (C) 2015 zpydr             
+Copyright (C) 2014 zpydr             
                 
 This program is free software: you can redistribute it and/or modify            
 it under the terms of the GNU General Public License as published by            
