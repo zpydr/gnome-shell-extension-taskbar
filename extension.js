@@ -871,11 +871,11 @@ TaskBar.prototype =
                 this.appMenuActor.hide();
                 this.hidingId = Main.overview.connect('hiding', function ()
                 {
-                    Main.panel.statusArea.appMenu.actor.destroy();
+                    Main.panel.statusArea.appMenu.actor.hide();
                 });
                 this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
                 {
-                    Main.panel.statusArea.appMenu.actor.destroy();
+                    Main.panel.statusArea.appMenu.actor.hide();
                 });
             }
         }
@@ -1370,8 +1370,11 @@ TaskBar.prototype =
             if (Main.overview.visible)
             Main.overview.hide();
         }
-        Mainloop.source_remove(this.previewTimer2);
-        this.previewTimer2 = null;
+        if (this.previewTimer2 != null)
+        {
+            Mainloop.source_remove(this.previewTimer2)
+	    this.previewTimer2 = null;
+        }
     },
 
     //Taskslist
@@ -1677,8 +1680,11 @@ TaskBar.prototype =
     {
         //Reset Hover
         this.resetHover = true;
-        Mainloop.source_remove(this.previewTimer2);
-        this.previewTimer2 = null;
+        if (this.previewTimer2 != null)
+        {
+            Mainloop.source_remove(this.previewTimer2)
+            this.previewTimer2 = null;
+        }
         this.hidePreview();
     },
 
