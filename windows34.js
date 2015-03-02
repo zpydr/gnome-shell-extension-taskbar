@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2014 zpydr
+//  Copyright (C) 2015 zpydr
 //
-//  Version 40
+//  Version 41
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -67,9 +67,9 @@ Windows.prototype =
     onWorkspaceChanged: function()
     {
         //Remove workspace signals if necessary
-        if (this.windowAddedSignal != null)
+        if (this.windowAddedSignal !== null)
             this.workspace.disconnect(this.windowAddedSignal);
-        if (this.windowRemovedSignal != null)
+        if (this.windowRemovedSignal !== null)
             this.workspace.disconnect(this.windowRemovedSignal);
 
         //Clean windows list
@@ -97,14 +97,14 @@ Windows.prototype =
 
     onWindowChanged: function(window, object, type)
     {
-        if (type == 0) //Focus changed
+        if (type === 0) //Focus changed
         {
             if (window.appears_focused)
                 this.callbackWindowChanged.call(this.callBackThis, window, 0);
         }
-        else if (type == 1) //Title changed
+        else if (type === 1) //Title changed
             this.callbackWindowChanged.call(this.callBackThis, window, 1);
-        else if (type == 2) //Minimized
+        else if (type === 2) //Minimized
             this.callbackWindowChanged.call(this.callBackThis, window, 2);
     },
 
@@ -125,7 +125,7 @@ Windows.prototype =
         let index = null;
         for (let indexWindow in this.windowsList)
         {
-            if (this.windowsList[indexWindow] == window)
+            if (this.windowsList[indexWindow] === window)
             {
                 index = indexWindow;
                 break;
@@ -137,7 +137,7 @@ Windows.prototype =
     addWindowInList: function(window)
     {
         let index = this.searchWindowInList(window);
-        if (index == null && ! window.is_skip_taskbar())
+        if (index === null && ! window.is_skip_taskbar())
         {
             this.windowsList.push(window);
 
@@ -159,7 +159,7 @@ Windows.prototype =
     removeWindowInList: function(window)
     {
         let index = this.searchWindowInList(window);
-        if (index != null)
+        if (index !== null)
         {
             this.windowsList.splice(index, 1);
 
@@ -167,7 +167,7 @@ Windows.prototype =
             for (let indexSignal in this.windowsSignals)
             {
                 let [object, signals] = this.windowsSignals[indexSignal];
-                if (object == window)
+                if (object === window)
                 {
                     signals.forEach(
                         function(signal)

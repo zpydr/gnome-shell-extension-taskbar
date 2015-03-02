@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2014 zpydr
+//  Copyright (C) 2015 zpydr
 //
-//  Version 40
+//  Version 41
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -102,20 +102,16 @@ Prefs.prototype =
         let notebook = new Gtk.Notebook();
         notebook.set_scrollable(true);
         notebook.popup_enable(true);
-        notebook.set_size_request(800,500);
+        notebook.set_tab_pos(0);
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
 
         this.gridComponents = new Gtk.Grid();
         this.gridComponents.margin = this.gridComponents.row_spacing = 10;
         this.gridComponents.column_spacing = 2;
-        let scrollWindowComponents = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowComponents.add_with_viewport(this.gridComponents);
+
+        let scrollWindowComponents = this.gridComponents;
+
         scrollWindowComponents.show_all();
         let labelComponents = new Gtk.Label({label: _("Overview")});
         notebook.append_page(scrollWindowComponents, labelComponents);
@@ -186,25 +182,28 @@ Prefs.prototype =
         this.valueBottomPanel.connect('notify::active', Lang.bind(this, this.changeBottomPanel));
         this.gridComponents.attach(this.valueBottomPanel, 3, 7, 2, 1);
 
+        let labelOverview = new Gtk.Label({label: _("TaskBar in Overview"), xalign: 0});
+        this.gridComponents.attach(labelOverview, 1, 8, 1, 1);
+        this.valueOverview = new Gtk.Switch({active: this.settings.get_boolean("overview")});
+        this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
+        this.gridComponents.attach(this.valueOverview, 3, 8, 2, 1);
+
         let labelSpaceComponents1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridComponents.attach(labelSpaceComponents1, 0, 8, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents1, 0, 9, 1, 1);
         let labelSpaceComponents2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridComponents.attach(labelSpaceComponents2, 2, 0, 1, 1);
-        let labelSpaceComponents3 = new Gtk.Label({label: "1/8", xalign: 1});
-        this.gridComponents.attach(labelSpaceComponents3, 5, 0, 1, 1);
+        let labelSpaceComponents3 = new Gtk.Label({label: "<b>Overview</b>", xalign: 2, hexpand: true});
+        labelSpaceComponents3.set_use_markup(true);
+        this.gridComponents.attach(labelSpaceComponents3, 0, 0, 5, 1);
         let labelSpaceComponents4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridComponents.attach(labelSpaceComponents4, 5, 1, 1, 1);
 
         this.gridSettings = new Gtk.Grid();
         this.gridSettings.margin = this.gridSettings.row_spacing = 10;
         this.gridSettings.column_spacing = 2;
-        let scrollWindowSettings = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowSettings.add_with_viewport(this.gridSettings);
+
+        let scrollWindowSettings = this.gridSettings;
+
         scrollWindowSettings.show_all();
         let labelSettings = new Gtk.Label({label: _("Panels")});
         notebook.append_page(scrollWindowSettings, labelSettings);
@@ -214,7 +213,7 @@ Prefs.prototype =
         let labelPanel4 = new Gtk.Label({label: _("Bottom Panel"), xalign: 2});
         this.gridSettings.attach(labelPanel4, 6, 1, 2, 1);
 
-        let labelIconSize = new Gtk.Label({label: _("Icon Size")+" [24]", xalign: 0});
+        let labelIconSize = new Gtk.Label({label: _("Panel Height")+" (22 px)", xalign: 0});
         this.gridSettings.attach(labelIconSize, 1, 2, 1, 1);
         this.valueIconSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
         let value2IconSize = new Gtk.SpinButton({adjustment: this.valueIconSize, snap_to_ticks: true});
@@ -226,19 +225,6 @@ Prefs.prototype =
         value2IconSizeBottom.set_value(this.settings.get_int("icon-size-bottom"));
         value2IconSizeBottom.connect("value-changed", Lang.bind(this, this.changeIconSizeBottom));
         this.gridSettings.attach(value2IconSizeBottom, 6, 2, 2, 1);
-
-        let labelFontSize = new Gtk.Label({label: _("Font Size") + " [17]\n" + _("Workspace Button"), xalign: 0});
-        this.gridSettings.attach(labelFontSize, 1, 3, 1, 1);
-        this.valueFontSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
-        let value2FontSize = new Gtk.SpinButton({adjustment: this.valueFontSize, snap_to_ticks: true});
-        value2FontSize.set_value(this.settings.get_int("font-size"));
-        value2FontSize.connect("value-changed", Lang.bind(this, this.changeFontSize));
-        this.gridSettings.attach(value2FontSize, 3, 3, 2, 1);
-        this.valueFontSizeBottom = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
-        let value2FontSizeBottom = new Gtk.SpinButton({adjustment: this.valueFontSizeBottom, snap_to_ticks: true});
-        value2FontSizeBottom.set_value(this.settings.get_int("font-size-bottom"));
-        value2FontSizeBottom.connect("value-changed", Lang.bind(this, this.changeFontSizeBottom));
-        this.gridSettings.attach(value2FontSizeBottom, 6, 3, 2, 1);
 
         let labelPanelPosition = new Gtk.Label({label: _("Align TaskBar"), xalign: 0});
         this.gridSettings.attach(labelPanelPosition, 1, 4, 1, 1);
@@ -255,7 +241,7 @@ Prefs.prototype =
         this.gridSettings.attach(valuePanelPositionBottom, 6, 4, 1, 1);
         this.gridSettings.attach(value2PanelPositionBottom, 7, 4, 1, 1);
 
-        let labelBottomPanelVertical = new Gtk.Label({label: _("Anchor Point")+" [0]", xalign: 0});
+        let labelBottomPanelVertical = new Gtk.Label({label: _("Anchor Point")+" (0 px)", xalign: 0});
         this.gridSettings.attach(labelBottomPanelVertical, 1, 5, 1, 1);
         this.valueBottomPanelVertical = new Gtk.Adjustment({lower: -100, upper: 100, step_increment: 1});
         this.value2BottomPanelVertical = new Gtk.SpinButton({adjustment: this.valueBottomPanelVertical, snap_to_ticks: true});
@@ -263,7 +249,7 @@ Prefs.prototype =
         this.value2BottomPanelVertical.connect("value-changed", Lang.bind(this, this.changeBottomPanelVertical));
         this.gridSettings.attach(this.value2BottomPanelVertical, 6, 5, 2, 1);
 
-        let labelPanelBackgroundColor = new Gtk.Label({label: _("Panel Background\nColor / Opacity"), xalign: 0});
+        let labelPanelBackgroundColor = new Gtk.Label({label: _("Panel Background\nColor & Opacity"), xalign: 0});
         this.gridSettings.attach(labelPanelBackgroundColor, 1, 6, 1, 1);
         let colorTop = this.settings.get_string("top-panel-background-color");
         if (colorTop === 'unset')
@@ -298,21 +284,18 @@ Prefs.prototype =
         this.gridSettings.attach(labelSpaceSettings2, 2, 2, 1, 1);
         let labelSpaceSettings3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSettings.attach(labelSpaceSettings3, 5, 0, 1, 1);
-        let labelSpaceSettings4 = new Gtk.Label({label: "2/8", xalign: 1});
-        this.gridSettings.attach(labelSpaceSettings4, 8, 0, 1, 1);
+        let labelSpaceSettings4 = new Gtk.Label({label: "<b>Panels</b>", xalign: 2, hexpand: true});
+        labelSpaceSettings4.set_use_markup(true);
+        this.gridSettings.attach(labelSpaceSettings4, 0, 0, 8, 1);
         let labelSpaceSettings5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSettings.attach(labelSpaceSettings5, 8, 1, 1, 1);
 
         this.gridTasks = new Gtk.Grid();
         this.gridTasks.margin = this.gridTasks.row_spacing = 10;
         this.gridTasks.column_spacing = 2;
-        let scrollWindowTasks = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowTasks.add_with_viewport(this.gridTasks);
+
+        let scrollWindowTasks = this.gridTasks;
+
         scrollWindowTasks.show_all();
         let labelTasks = new Gtk.Label({label: _("Tasks")});
         notebook.append_page(scrollWindowTasks, labelTasks);
@@ -323,7 +306,7 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
-        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " [0] " + "(" + _("Tasks") + ")\n[Not Complete]", xalign: 0});
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " (0 Tasks)\n[Not Complete]", xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
@@ -346,12 +329,12 @@ Prefs.prototype =
         this.valueScrollTasks = new Gtk.Switch({active: this.settings.get_boolean("scroll-tasks")});
         this.valueScrollTasks.connect('notify::active', Lang.bind(this, this.changeScrollTasks));
         this.gridTasks.attach(this.valueScrollTasks, 4, 5, 1, 1);
-        
-        let labelScrollTasksInvert = new Gtk.Label({label: _("Scroll Direction Inverted"), xalign: 0});
-        this.gridTasks.attach(labelScrollTasksInvert, 1, 6, 1, 1);
-        this.valueScrollTasksInvert = new Gtk.Switch({active: this.settings.get_boolean("invert-scroll-tasks")});
-        this.valueScrollTasksInvert.connect('notify::active', Lang.bind(this, this.changeScrollTasksInvert));
-        this.gridTasks.attach(this.valueScrollTasksInvert, 4, 6, 1, 1);
+
+        let labelInvertScrollTasks = new Gtk.Label({label: _("Invert Scroll Tasks"), xalign: 0});
+        this.gridTasks.attach(labelInvertScrollTasks, 1, 6, 1, 1);
+        this.valueInvertScrollTasks = new Gtk.Switch({active: this.settings.get_boolean("invert-scroll-tasks")});
+        this.valueInvertScrollTasks.connect('notify::active', Lang.bind(this, this.changeInvertScrollTasks));
+        this.gridTasks.attach(this.valueInvertScrollTasks, 4, 6, 1, 1);
 
         let labelActiveTaskFrame = new Gtk.Label({label: _("Active Task Frame"), xalign: 0});
         this.gridTasks.attach(labelActiveTaskFrame, 1, 7, 1, 1);
@@ -359,8 +342,9 @@ Prefs.prototype =
         this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
         this.gridTasks.attach(this.valueActiveTaskFrame, 4, 7, 1, 1);
 
-        let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task Background\nColor / Opacity"), xalign: 0});
+        let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task Background\nColor & Opacity"), xalign: 0});
         this.gridTasks.attach(labelActiveTaskBackgroundColor, 1, 8, 1, 1);
+
         let color = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
@@ -368,11 +352,11 @@ Prefs.prototype =
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
-        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 4, 8, 1, 1);
+        this.gridTasks.attach(this.valueActiveTaskBackgroundColor, 3, 8, 1, 1);
 
         this.value2ActiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("active-task-background-color-set")});
         this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
-        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 9, 1, 1);
+        this.gridTasks.attach(this.value2ActiveTaskBackgroundColor, 4, 8, 1, 1);
 
         let labelHoverSwitchTask = new Gtk.Label({label: _("Activate Tasks on Hover"), xalign: 0});
         this.gridTasks.attach(labelHoverSwitchTask, 1, 10, 1, 1);
@@ -380,7 +364,7 @@ Prefs.prototype =
         this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
         this.gridTasks.attach(this.valueHoverSwitchTask, 4, 10, 1, 1);
 
-        let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" [350] "+_("(ms)"), xalign: 0});
+        let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" (350 ms)", xalign: 0});
         this.gridTasks.attach(labelHoverDelay, 1, 11, 2, 1);
         this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 50});
         let value2HoverDelay = new Gtk.SpinButton({adjustment: this.valueHoverDelay, snap_to_ticks: true});
@@ -394,21 +378,18 @@ Prefs.prototype =
         this.gridTasks.attach(labelSpaceTasks2, 2, 0, 1, 1);
         let labelSpaceTasks3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
-        let labelSpaceTasks4 = new Gtk.Label({label: "3/8", xalign: 1});
-        this.gridTasks.attach(labelSpaceTasks4, 5, 0, 1, 1);
+        let labelSpaceTasks4 = new Gtk.Label({label: "<b>Tasks</b>", xalign: 2, hexpand: true});
+        labelSpaceTasks4.set_use_markup(true);
+        this.gridTasks.attach(labelSpaceTasks4, 0, 0, 5, 1);
         let labelSpaceTasks5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks5, 5, 1, 1, 1);
 
         this.gridButtons = new Gtk.Grid();
         this.gridButtons.margin = this.gridButtons.row_spacing = 10;
         this.gridButtons.column_spacing = 2;
-        let scrollWindowButtons = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowButtons.add_with_viewport(this.gridButtons);
+
+        let scrollWindowButtons = this.gridButtons;
+
         scrollWindowButtons.show_all();
         let labelButtons = new Gtk.Label({label: _("Buttons")});
         notebook.append_page(scrollWindowButtons, labelButtons);
@@ -443,86 +424,77 @@ Prefs.prototype =
         this.valueScrollWorkspaces.connect('notify::active', Lang.bind(this, this.changeScrollWorkspaces));
         this.gridButtons.attach(this.valueScrollWorkspaces, 4, 4, 1, 1);
 
-        let labelScrollWorkspaceInvert = new Gtk.Label({label: _("Scroll Direction Inverted"), xalign: 0});
-        this.gridButtons.attach(labelScrollWorkspaceInvert, 1, 5, 1, 1);
-        this.valueScrollWorkspaceInvert = new Gtk.Switch({active: this.settings.get_boolean("invert-scroll-workspace")});
-        this.valueScrollWorkspaceInvert.connect('notify::active', Lang.bind(this, this.changeScrollWorkspaceInvert));
-        this.gridButtons.attach(this.valueScrollWorkspaceInvert, 4, 5, 1, 1);
-
-        let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft / Right Click Toggle"), xalign: 0});
-        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 6, 1, 1);
+        let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft & Right Click Toggle"), xalign: 0});
+        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 5, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
         this.valueShowAppsButtonToggle.append_text(_("L Overview\nR Appview"));
         this.valueShowAppsButtonToggle.set_active(this.settings.get_enum("showapps-button-toggle"));
         this.valueShowAppsButtonToggle.connect('changed', Lang.bind(this, this.changeShowAppsButtonToggle));
-        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 6, 2, 1);
+        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 5, 2, 1);
 
         let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelAppviewButtonIcon, 1, 7, 1, 1);
+        this.gridButtons.attach(labelAppviewButtonIcon, 1, 6, 1, 1);
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
         this.valueAppviewButtonIcon = new Gtk.Image();
         this.loadAppviewIcon();
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
-        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 7, 1, 1);
+        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
         let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
-        this.gridButtons.attach(labelTrayButton, 1, 8, 1, 1);
+        this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
         this.valueTrayButton = new Gtk.ComboBoxText();
         this.valueTrayButton.append_text(_("OFF"));
         this.valueTrayButton.append_text(_("Icon"));
         this.valueTrayButton.append_text(_("Index"));
         this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
         this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
-        this.gridButtons.attach(this.valueTrayButton, 3, 8, 2, 1);
+        this.gridButtons.attach(this.valueTrayButton, 3, 7, 2, 1);
 
         let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonEmpty, 1, 9, 1, 1);
+        this.gridButtons.attach(labelTrayButtonEmpty, 1, 8, 1, 1);
         this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
         this.valueTrayButtonEmpty.append_text(_("Show Icon"));
         this.valueTrayButtonEmpty.append_text(_("Show 0"));
         this.valueTrayButtonEmpty.append_text(_("Hide"));
         this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
         this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
-        this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 9, 2, 1);
+        this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 8, 2, 1);
 
         let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonIcon, 1, 10, 1, 1);
+        this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
         this.trayIconFilename = this.settings.get_string("tray-button-icon");
         this.valueTrayButtonIcon = new Gtk.Image();
         this.loadTrayIcon();
         this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
         this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
-        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 10, 1, 1);
+        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 9, 1, 1);
 
         let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
-        this.gridButtons.attach(labelHoverTrayButton, 1, 11, 1, 1);
+        this.gridButtons.attach(labelHoverTrayButton, 1, 10, 1, 1);
         this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
         this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
-        this.gridButtons.attach(this.valueHoverTrayButton, 4, 11, 1, 1);
+        this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons1, 0, 12, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons1, 0, 11, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
         let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons3, 3, 1, 1, 1);
-        let labelSpaceButtons4 = new Gtk.Label({label: "4/8", xalign: 1});
-        this.gridButtons.attach(labelSpaceButtons4, 6, 0, 1, 1);
+        let labelSpaceButtons4 = new Gtk.Label({label: "<b>Buttons</b>", xalign: 2, hexpand: true});
+        labelSpaceButtons4.set_use_markup(true);
+        this.gridButtons.attach(labelSpaceButtons4, 0, 0, 6, 1);
         let labelSpaceButtons5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons5, 6, 1, 1, 1);
 
         this.gridSeparator = new Gtk.Grid();
         this.gridSeparator.margin = this.gridSeparator.row_spacing = 10;
         this.gridSeparator.column_spacing = 2;
-        let scrollWindowSeparator = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowSeparator.add_with_viewport(this.gridSeparator);
+
+        let scrollWindowSeparator = this.gridSeparator;
+
         scrollWindowSeparator.show_all();
         let labelSeparator = new Gtk.Label({label: _("Separators")});
         notebook.append_page(scrollWindowSeparator, labelSeparator);
@@ -819,21 +791,18 @@ Prefs.prototype =
         this.gridSeparator.attach(labelSpaceSeparator4, 5, 0, 1, 1);
         let labelSpaceSeparator5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator5, 6, 0, 1, 1);
-        let labelSpaceSeparator6 = new Gtk.Label({label: "5/8", xalign: 1});
-        this.gridSeparator.attach(labelSpaceSeparator6, 8, 0, 1, 1);
+        let labelSpaceSeparator6 = new Gtk.Label({label: "<b>Separators</b>", xalign: 2, hexpand: true});
+        labelSpaceSeparator6.set_use_markup(true);
+        this.gridSeparator.attach(labelSpaceSeparator6, 0, 0, 8, 1);
         let labelSpaceSeparator7 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator7, 8, 1, 1, 1);
 
         this.gridPreview = new Gtk.Grid();
         this.gridPreview.margin = this.gridPreview.row_spacing = 10;
         this.gridPreview.column_spacing = 2;
-        let scrollWindowPreview = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowPreview.add_with_viewport(this.gridPreview);
+
+        let scrollWindowPreview = this.gridPreview;
+
         scrollWindowPreview.show_all();
         let labelPreview = new Gtk.Label({label: _("Preview")});
         notebook.append_page(scrollWindowPreview, labelPreview);
@@ -856,7 +825,7 @@ Prefs.prototype =
         this.valueDisplayFavoritesLabel.connect('notify::active', Lang.bind(this, this.changeDisplayFavoritesLabel));
         this.gridPreview.attach(this.valueDisplayFavoritesLabel, 4, 3, 1, 1);
 
-        let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" [350]", xalign: 0});
+        let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" (350 px)", xalign: 0});
         this.gridPreview.attach(labelPreviewSize, 1, 4, 1, 1);
         this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 50});
         let value2PreviewSize = new Gtk.SpinButton({adjustment: this.valuePreviewSize, snap_to_ticks: true});
@@ -864,7 +833,7 @@ Prefs.prototype =
         value2PreviewSize.connect("value-changed", Lang.bind(this, this.changePreviewSize));
         this.gridPreview.attach(value2PreviewSize, 3, 4, 2, 1);
 
-        let labelPreviewDelay = new Gtk.Label({label: _("Preview Delay")+" [500] "+_("(ms)"), xalign: 0});
+        let labelPreviewDelay = new Gtk.Label({label: _("Preview Delay")+" (500 ms)", xalign: 0});
         this.gridPreview.attach(labelPreviewDelay, 1, 5, 2, 1);
         this.valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 3000, step_increment: 250});
         let value2PreviewDelay = new Gtk.SpinButton({adjustment: this.valuePreviewDelay, snap_to_ticks: true});
@@ -878,21 +847,18 @@ Prefs.prototype =
         this.gridPreview.attach(labelSpacePreview2, 2, 1, 1, 1);
         let labelSpacePreview3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridPreview.attach(labelSpacePreview3, 3, 1, 1, 1);
-        let labelSpacePreview4 = new Gtk.Label({label: "6/8", xalign: 1});
-        this.gridPreview.attach(labelSpacePreview4, 5, 0, 1, 1);
+        let labelSpacePreview4 = new Gtk.Label({label: "<b>Preview</b>", xalign: 2, hexpand: true});
+        labelSpacePreview4.set_use_markup(true);
+        this.gridPreview.attach(labelSpacePreview4, 0, 0, 5, 1);
         let labelSpacePreview5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridPreview.attach(labelSpacePreview5, 5, 1, 1, 1);
 
         this.gridMisc = new Gtk.Grid();
         this.gridMisc.margin = this.gridMisc.row_spacing = 10;
         this.gridMisc.column_spacing = 2;
-        let scrollWindowMisc = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowMisc.add_with_viewport(this.gridMisc);
+
+        let scrollWindowMisc = this.gridMisc;
+
         scrollWindowMisc.show_all();
         let labelMisc = new Gtk.Label({label: _("Misc")});
         notebook.append_page(scrollWindowMisc, labelMisc);
@@ -915,30 +881,27 @@ Prefs.prototype =
         this.valueHideDefaultApplicationMenu.connect('notify::active', Lang.bind(this, this.changeHideDefaultApplicationMenu));
         this.gridMisc.attach(this.valueHideDefaultApplicationMenu, 3, 3, 1, 1);
 
-        let labelWarning = new Gtk.Label({ label: "<b>! </b>"+_("Possible conflict\nwith other extensions"), use_markup: true, xalign: 0 });
+        let labelWarning = new Gtk.Label({ label: "<b>! </b>"+_("Activating one\nof those 3 options\ncould cause a conflict\nwith other extensions"), use_markup: true, xalign: 0 });
         this.gridMisc.attach(labelWarning, 1, 4, 1, 1);
 
         let labelSpaceMisc1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridMisc.attach(labelSpaceMisc1, 0, 5, 1, 1);
         let labelSpaceMisc2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
-        let labelSpaceMisc3 = new Gtk.Label({label: "7/8", xalign: 1});
-        this.gridMisc.attach(labelSpaceMisc3, 4, 0, 1, 1);
+        let labelSpaceMisc3 = new Gtk.Label({label: "<b>Misc</b>", xalign: 2, hexpand: true});
+        labelSpaceMisc3.set_use_markup(true);
+        this.gridMisc.attach(labelSpaceMisc3, 0, 0, 4, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridMisc.attach(labelSpaceMisc4, 4, 1, 1, 1);
 
         this.gridTaskBar = new Gtk.Grid();
         this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
         this.gridTaskBar.column_spacing = 2;
-        let scrollWindowTaskBar = new Gtk.ScrolledWindow(
-        {
-            'hscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'vscrollbar-policy': Gtk.PolicyType.AUTOMATIC,
-            'hexpand': true, 'vexpand': true
-        });
-        scrollWindowTaskBar.add_with_viewport(this.gridTaskBar);
+
+        let scrollWindowTaskBar = this.gridTaskBar;
+
         scrollWindowTaskBar.show_all();
-        let labelTaskBar = new Gtk.Label({label: "About"});
+        let labelTaskBar = new Gtk.Label({label: " About\nTaskBar"});
         notebook.append_page(scrollWindowTaskBar, labelTaskBar);
 
         let linkImage1 = new Gtk.Image({file: HOMEICON});
@@ -953,7 +916,7 @@ Prefs.prototype =
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink1.set_always_show_image(true);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 40"});
+        let labelVersion = new Gtk.Label({label: _("Version")+" 41"});
         this.gridTaskBar.attach(labelVersion, 1, 1, 1, 1);
         this.gridTaskBar.attach(labelLink1, 3, 1, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
@@ -962,7 +925,7 @@ Prefs.prototype =
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 3, 2, 1, 1);
         let bugReport = new Gtk.LinkButton ({label: _("Send Bug Report"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 40%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 41%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
         if (ShellVersion[1] !== 4)
             bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 2, 1, 1);
@@ -994,8 +957,9 @@ Prefs.prototype =
         this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 7, 1, 1);
         let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
-        let labelSpaceTaskBar3 = new Gtk.Label({label: "8/8", xalign: 1});
-        this.gridTaskBar.attach(labelSpaceTaskBar3, 4, 0, 1, 1);
+        let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>About TaskBar</b>", xalign: 2, hexpand: true});
+        labelSpaceTaskBar3.set_use_markup(true);
+        this.gridTaskBar.attach(labelSpaceTaskBar3, 0, 0, 4, 1);
         let labelSpaceTaskBar4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 1, 1, 1);
 
@@ -1046,7 +1010,7 @@ Prefs.prototype =
             this.panelPosition = this.settings.get_int("panel-position");
             this.panelBox = this.settings.get_int("panel-box");
             this.positionMaxRight = this.settings.get_int("position-max-right");
-            if (this.panelPosition == 0)
+            if (this.panelPosition === 0)
             {
                 if (this.panelBox > 1)
                 {
@@ -1091,9 +1055,9 @@ Prefs.prototype =
         if (this.settings.get_boolean("bottom-panel"))
         {
             this.panelPositionBottom = this.settings.get_int("position-bottom-box");
-            if (this.panelPositionBottom == 1)
+            if (this.panelPositionBottom === 1)
                 this.settings.set_int("position-bottom-box", 0);
-            if (this.panelPositionBottom == 2)
+            if (this.panelPositionBottom === 2)
                 this.settings.set_int("position-bottom-box", 1);
         }
     },
@@ -1103,9 +1067,9 @@ Prefs.prototype =
         if (this.settings.get_boolean("bottom-panel"))
         {
             this.panelPositionBottom = this.settings.get_int("position-bottom-box");
-            if (this.panelPositionBottom == 0)
+            if (this.panelPositionBottom === 0)
                 this.settings.set_int("position-bottom-box", 1);
-            if (this.panelPositionBottom == 1)
+            if (this.panelPositionBottom === 1)
                 this.settings.set_int("position-bottom-box", 2);
         }
     },
@@ -1113,6 +1077,11 @@ Prefs.prototype =
     changeBottomPanel: function(object, pspec)
     {
         this.settings.set_boolean("bottom-panel", object.active);
+    },
+
+    changeOverview: function(object, pspec)
+    {
+        this.settings.set_boolean("overview", object.active);
     },
 
     changeBottomPanelVertical: function(object)
@@ -1125,10 +1094,7 @@ Prefs.prototype =
 
     changeIconSize: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueIconSize.set_value(this.settings.get_int("icon-size"));
-        else
-            this.settings.set_int("icon-size", this.valueIconSize.get_value());
+        this.settings.set_int("icon-size", this.valueIconSize.get_value());
     },
 
     changeIconSizeBottom: function(object)
@@ -1141,10 +1107,7 @@ Prefs.prototype =
 
     changeFontSize: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueFontSize.set_value(this.settings.get_int("font-size"));
-        else
-            this.settings.set_int("font-size", this.valueFontSize.get_value());
+
     },
 
     changeFontSizeBottom: function(object)
@@ -1175,6 +1138,11 @@ Prefs.prototype =
         this.settings.set_boolean("scroll-tasks", object.active);
     },
 
+    changeInvertScrollTasks: function(object)
+    {
+        this.settings.set_boolean("invert-scroll-tasks", object.active);
+    },
+
     changeActiveTaskFrame: function(object)
     {
         this.settings.set_boolean("active-task-frame", object.active);
@@ -1184,6 +1152,7 @@ Prefs.prototype =
     {
         this.backgroundColor = this.valueActiveTaskBackgroundColor.get_rgba().to_string();
         this.settings.set_string("active-task-background-color", this.backgroundColor);
+        this.settings.set_string("font-size", this.backgroundColor);
     },
 
     changeActiveTaskBackgroundColorSet: function(object)
@@ -1260,7 +1229,7 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogDesktopIcon.add_filter(filter);
         let response = this.dialogDesktopIcon.run();
-        if(response == -3) //Open
+        if(response === -3) //Open
         {
             this.desktopIconFilename = this.dialogDesktopIcon.get_filename();
             if (this.desktopIconFilename !== iconPath)
@@ -1269,7 +1238,7 @@ Prefs.prototype =
                 this.loadDesktopIcon();
             }
         }
-        if(response == -1) //Reset
+        if(response === -1) //Reset
         {
             this.desktopIconFilename = DESKTOPICON;
             this.loadDesktopIcon();
@@ -1299,7 +1268,7 @@ Prefs.prototype =
     loadDesktopIconPreview: function()
     {
         let pixbuf;
-        if (this.initDesktopIconPath != null)
+        if (this.initDesktopIconPath !== null)
             this.previewFilename = this.initDesktopIconPath;
         else
             this.previewFilename = this.dialogDesktopIcon.get_preview_filename();
@@ -1332,16 +1301,6 @@ Prefs.prototype =
         this.settings.set_boolean("scroll-workspaces", object.active);
     },
 
-    changeScrollWorkspaceInvert: function(object)
-    {
-        this.settings.set_boolean("invert-scroll-workspace", object.active);
-    },
-
-    changeScrollTasksInvert: function(object)
-    {
-        this.settings.set_boolean("invert-scroll-tasks", object.active);
-    },
-
     changeShowAppsButtonToggle: function(object)
     {
         this.settings.set_enum("showapps-button-toggle", this.valueShowAppsButtonToggle.get_active());
@@ -1371,7 +1330,7 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogAppviewIcon.add_filter(filter);
         let response = this.dialogAppviewIcon.run();
-        if(response == -3)
+        if(response === -3)
         {
             this.appviewIconFilename = this.dialogAppviewIcon.get_filename();
             if (this.appviewIconFilename !== iconPath)
@@ -1380,7 +1339,7 @@ Prefs.prototype =
                 this.loadAppviewIcon();
             }
         }
-        if(response == -1)
+        if(response === -1)
         {
             this.appviewIconFilename = APPVIEWICON;
             this.loadAppviewIcon();
@@ -1410,7 +1369,7 @@ Prefs.prototype =
     loadAppviewIconPreview: function()
     {
         let pixbuf;
-        if (this.initAppviewIconPath != null)
+        if (this.initAppviewIconPath !== null)
             this.previewFilename = this.initAppviewIconPath;
         else
             this.previewFilename = this.dialogAppviewIcon.get_preview_filename();
@@ -1461,7 +1420,7 @@ Prefs.prototype =
         filter.add_pattern("*.ico");
         this.dialogTrayIcon.add_filter(filter);
         let response = this.dialogTrayIcon.run();
-        if(response == -3)
+        if(response === -3)
         {
             this.trayIconFilename = this.dialogTrayIcon.get_filename();
             if (this.trayIconFilename !== iconPath)
@@ -1470,7 +1429,7 @@ Prefs.prototype =
                 this.loadTrayIcon();
             }
         }
-        if(response == -1)
+        if(response === -1)
         {
             this.trayIconFilename = TRAYICON;
             this.loadTrayIcon();
@@ -1500,7 +1459,7 @@ Prefs.prototype =
     loadTrayIconPreview: function()
     {
         let pixbuf;
-        if (this.initTrayIconPath != null)
+        if (this.initTrayIconPath !== null)
             this.previewFilename = this.initTrayIconPath;
         else
             this.previewFilename = this.dialogTrayIcon.get_preview_filename();
@@ -1629,7 +1588,7 @@ Prefs.prototype =
 
     changeSeparatorSize: function(object)
     {
-        if (this.separatorSelection == 0)
+        if (this.separatorSelection === 0)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-one-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
@@ -1650,7 +1609,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 1)
+        else if (this.separatorSelection === 1)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-two-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
@@ -1671,7 +1630,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 2)
+        else if (this.separatorSelection === 2)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-three-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
@@ -1692,7 +1651,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 3)
+        else if (this.separatorSelection === 3)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-four-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
@@ -1713,7 +1672,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 4)
+        else if (this.separatorSelection === 4)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-five-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
@@ -1734,7 +1693,7 @@ Prefs.prototype =
                     this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
             }));
         }
-        else if (this.separatorSelection == 5)
+        else if (this.separatorSelection === 5)
         {
             this.value2SeparatorSize.set_value(this.settings.get_int("separator-six-size"));
             this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-six-bottom-size"));
@@ -1800,38 +1759,38 @@ Prefs.prototype =
     changeAppearanceLeft: function()
     {
         this.appearanceSelection = this.settings.get_enum("appearance-selection");
-        if (this.appearanceSelection == 0)
+        if (this.appearanceSelection === 0)
         {
             if (! this.settings.get_boolean("display-tasks"))
                 return;
             this.appearanceName = "position-tasks";
         }
-        if (this.appearanceSelection == 1)
+        if (this.appearanceSelection === 1)
         {
             if (! this.settings.get_boolean("display-desktop-button"))
                 return;
             this.appearanceName = "position-desktop-button";
         }
-        if (this.appearanceSelection == 2)
+        if (this.appearanceSelection === 2)
         {
             if (! this.settings.get_boolean("display-workspace-button"))
                 return;
             this.appearanceName = "position-workspace-button";
         }
-        if (this.appearanceSelection == 3)
+        if (this.appearanceSelection === 3)
         {
             if (! this.settings.get_boolean("display-showapps-button"))
                 return;
             this.appearanceName = "position-appview-button";
         }
-        if (this.appearanceSelection == 4)
+        if (this.appearanceSelection === 4)
         {
             if (! this.settings.get_boolean("display-favorites"))
                 return;
             this.appearanceName = "position-favorites";
         }
         this.oldValueAppearance = this.settings.get_int(this.appearanceName);
-        if (this.oldValueAppearance == 0)
+        if (this.oldValueAppearance === 0)
             return;
         else
             this.newValueAppearance = this.oldValueAppearance - 1;
@@ -1841,38 +1800,38 @@ Prefs.prototype =
     changeAppearanceRight: function()
     {
         this.appearanceSelection = this.settings.get_enum("appearance-selection");
-        if (this.appearanceSelection == 0)
+        if (this.appearanceSelection === 0)
         {
             if (! this.settings.get_boolean("display-tasks"))
                 return;
             this.appearanceName = "position-tasks";
         }
-        if (this.appearanceSelection == 1)
+        if (this.appearanceSelection === 1)
         {
             if (! this.settings.get_boolean("display-desktop-button"))
                 return;
             this.appearanceName = "position-desktop-button";
         }
-        if (this.appearanceSelection == 2)
+        if (this.appearanceSelection === 2)
         {
             if (! this.settings.get_boolean("display-workspace-button"))
                 return;
             this.appearanceName = "position-workspace-button";
         }
-        if (this.appearanceSelection == 3)
+        if (this.appearanceSelection === 3)
         {
             if (! this.settings.get_boolean("display-showapps-button"))
                 return;
             this.appearanceName = "position-appview-button";
         }
-        if (this.appearanceSelection == 4)
+        if (this.appearanceSelection === 4)
         {
             if (! this.settings.get_boolean("display-favorites"))
                 return;
             this.appearanceName = "position-favorites";
         }
         this.oldValueAppearance = this.settings.get_int(this.appearanceName);
-        if (this.oldValueAppearance == 4)
+        if (this.oldValueAppearance === 4)
             return;
         else
             this.newValueAppearance = this.oldValueAppearance + 1;
@@ -1893,7 +1852,7 @@ Prefs.prototype =
             function(appearance)
             {
                 this.intAppearance = this.settings.get_int(appearance);
-                if (this.intAppearance == this.newValueAppearance)
+                if (this.intAppearance === this.newValueAppearance)
                     this.resetAppearance = appearance;
             },
             this
@@ -1918,18 +1877,15 @@ Prefs.prototype =
         this.settings.set_int("bottom-panel-vertical", 0);
         this.valueBottomPanelVertical.set_value(0);
         this.settings.set_int("position-bottom-box", 0);
-        this.settings.set_int("icon-size", 24);
-        this.valueIconSize.set_value(24);
-        this.settings.set_int("icon-size-bottom", 24);
-        this.valueIconSizeBottom.set_value(24);
-        this.settings.set_int("font-size", 17);
-        this.valueFontSize.set_value(17);
-        this.settings.set_int("font-size-bottom", 17);
-        this.valueFontSizeBottom.set_value(17);
+        this.settings.set_int("icon-size", 22);
+        this.valueIconSize.set_value(22);
+        this.settings.set_int("icon-size-bottom", 22);
+        this.valueIconSizeBottom.set_value(22);
         this.valueAllWorkspaces.set_active(false);
         this.valueTasksContainerWidth.set_value(0);
         this.valueCloseButton.set_active(0);
         this.valueScrollTasks.set_active(false);
+        this.valueInvertScrollTasks.set_active(false);
         this.valueActiveTaskFrame.set_active(true);
         let color = RESETCOLOR;
         let rgba = new Gdk.RGBA();
