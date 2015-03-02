@@ -1261,14 +1261,17 @@ TaskBar.prototype =
         if (this.settings.get_boolean("scroll-workspaces"))
         {
             let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
+            let up   = (this.settings.get_boolean("invert-scroll") ? Clutter.ScrollDirection.UP : Clutter.ScrollDirection.DOWN);
+            let down = (this.settings.get_boolean("invert-scroll") ? Clutter.ScrollDirection.DOWN : Clutter.ScrollDirection.UP);
+
+            if (scrollDirection == up)
             {
             if (this.activeWorkspaceIndex == this.totalWorkspace)
                 this.activeWorkspaceIndex = -1;
             let newActiveWorkspace = global.screen.get_workspace_by_index(this.activeWorkspaceIndex + 1);
             newActiveWorkspace.activate(global.get_current_time());
             }
-            if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            if (scrollDirection == down)
             {
                 if (this.activeWorkspaceIndex == 0)
                     this.activeWorkspaceIndex = this.totalWorkspace + 1;
