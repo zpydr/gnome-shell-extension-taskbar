@@ -95,7 +95,7 @@ TaskBar.prototype =
 
         //Add TaskBar
         this.iconSize = this.settings.get_int('icon-size');
-        this.boxMain = new St.BoxLayout({ style_class: "tkb-box" });
+        this.boxMain = new St.BoxLayout({ style_class: "tkb-box", x_expand: true });
         this.boxMainFavorites = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainShowAppsButton = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainWorkspaceButton = new St.BoxLayout({ style_class: "tkb-box" });
@@ -169,7 +169,7 @@ TaskBar.prototype =
         //Order of Appearance
         this.appearanceOrder();
 
-        //Preferences Hover Event        
+        //Preferences Hover Event
         this.hoverEvent();
         this.hoverSeparatorEvent();
 
@@ -278,7 +278,7 @@ TaskBar.prototype =
         }
 
         //Disconnect Setting Signals
-        if (this.settingSignals != null) 
+        if (this.settingSignals != null)
         {
             this.settingSignals.forEach(
                 function(signal)
@@ -415,7 +415,6 @@ TaskBar.prototype =
         this.showTray = null;
         this.messageTrayShowingId = null;
         this.messageTrayHidingId = null;
-        this.bottomPanelEndIndicator = false;
         this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         if (this.settings.get_boolean("bottom-panel"))
             this.bottomPanel();
@@ -494,8 +493,30 @@ TaskBar.prototype =
             else if (i == 4)
                 this.boxMain.add_actor(this.boxMainSeparatorSix);
         }
-        if (this.bottomPanelEndIndicator)
-            this.boxMain.add_actor(this.boxBottomPanelTrayButton);
+
+        let emptyButton = new St.Button({ style_class: "tkb-task-button", x_expand: true });
+        //emptyButton.set_width(-1);
+        emptyButton.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
+        let positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
+        if (positionBoxBottomSettings == 0) {
+            // Tasks Left, empty right
+            this.boxMain.add_actor(emptyButton);
+        }
+        else if (positionBoxBottomSettings == 1) {
+            // Tasks Middle, empty left & right
+            this.boxMain.insert_child_at_index(emptyButton, 0);
+
+            let emptyButtonR = new St.Button({ style_class: "tkb-task-button", x_expand: true });
+            //emptyButtonR.set_width(-1);
+            emptyButtonR.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
+            this.boxMain.add_actor(emptyButtonR);
+        }
+        else if (positionBoxBottomSettings == 2) {
+            // Tasks Right, empty left
+            this.boxMain.insert_child_at_index(emptyButton, 0);
+        }
+
+        this.boxMain.add_actor(this.boxBottomPanelTrayButton);
     },
 
     //Add Favorites
@@ -703,7 +724,7 @@ TaskBar.prototype =
         if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") != 0))
         {
             this.buttonTray = new St.Button({ style_class: "tkb-task-button" });
-            this.signalTray = 
+            this.signalTray =
             [
                 this.buttonTray.connect("button-press-event", Lang.bind(this, this.onClickTrayButton)),
                 this.buttonTray.connect("enter-event", Lang.bind(this, this.onHoverTrayButton))
@@ -1019,22 +1040,28 @@ TaskBar.prototype =
         }
         else
         {
-            this.positionBoxBottomStart = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.START });
-            this.positionBoxBottomMiddle = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.MIDDLE });
-            this.positionBoxBottomEnd = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.END });
+            this.positionBoxBottomStart = new St.Bin({ x_fill: false, x_expand: false, x_align: St.Align.START });
+            this.positionBoxBottomMiddle = new St.Bin({ x_fill: false, x_expand: false, x_align: St.Align.MIDDLE });
+            this.positionBoxBottomEnd = new St.Bin({ x_fill: false, x_expand: false, x_align: St.Align.END });
         }
         this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
-        if (this.positionBoxBottomSettings === 0)
+        if (this.positionBoxBottomSettings === 0) {
             this.positionBoxBottomStart.add_actor(this.boxMain);
-        if (this.positionBoxBottomSettings === 1)
+            this.positionBoxBottomStart.set_fill(true, true);
+            this.positionBoxBottomStart.set_x_expand(true);
+        }
+        if (this.positionBoxBottomSettings === 1) {
             this.positionBoxBottomMiddle.add_actor(this.boxMain);
+            this.positionBoxBottomMiddle.set_fill(true, true);
+            this.positionBoxBottomMiddle.set_x_expand(true);
+        }
         if (this.positionBoxBottomSettings === 2)
         {
             this.positionBoxBottomEnd.add_actor(this.boxMain);
-            this.bottomPanelEndIndicator = true;
+            this.positionBoxBottomEnd.set_fill(true, true);
+            this.positionBoxBottomEnd.set_x_expand(true);
         }
-        else
-            this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
+
         if (ShellVersion[1] === 4)
             Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, visibleInFullscreen: false });
         else
@@ -1261,14 +1288,17 @@ TaskBar.prototype =
         if (this.settings.get_boolean("scroll-workspaces"))
         {
             let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
+            let up   = (this.settings.get_boolean("invert-scroll-workspace") ? Clutter.ScrollDirection.UP : Clutter.ScrollDirection.DOWN);
+            let down = (this.settings.get_boolean("invert-scroll-workspace") ? Clutter.ScrollDirection.DOWN : Clutter.ScrollDirection.UP);
+
+            if (scrollDirection == up)
             {
             if (this.activeWorkspaceIndex == this.totalWorkspace)
                 this.activeWorkspaceIndex = -1;
             let newActiveWorkspace = global.screen.get_workspace_by_index(this.activeWorkspaceIndex + 1);
             newActiveWorkspace.activate(global.get_current_time());
             }
-            if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            if (scrollDirection == down)
             {
                 if (this.activeWorkspaceIndex == 0)
                     this.activeWorkspaceIndex = this.totalWorkspace + 1;
@@ -1287,7 +1317,9 @@ TaskBar.prototype =
             let focusWindow = global.display.focus_window;
             let activeWorkspace = global.screen.get_active_workspace();
             let scrollDirection = event.get_scroll_direction();
-            if (scrollDirection == Clutter.ScrollDirection.UP)
+            let up   = (this.settings.get_boolean("invert-scroll-tasks") ? Clutter.ScrollDirection.UP : Clutter.ScrollDirection.DOWN);
+            let down = (this.settings.get_boolean("invert-scroll-tasks") ? Clutter.ScrollDirection.DOWN : Clutter.ScrollDirection.UP);
+            if (scrollDirection == up)
             {
                 this.tasksList.forEach(
                     function(task)
@@ -1309,7 +1341,7 @@ TaskBar.prototype =
                 if (Main.overview.visible)
                     Main.overview.hide();
             }
-            else if (scrollDirection == Clutter.ScrollDirection.DOWN)
+            else if (scrollDirection == down)
             {
                 this.tasksList.forEach(
                     function(task)
@@ -1611,7 +1643,7 @@ TaskBar.prototype =
             this.preview.add_actor(labelNamePreview);
             let title = window.get_title();
             if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
-	            title = title.substr(0, 47) + "...";
+                   title = title.substr(0, 47) + "...";
             let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
             this.preview.add_actor(labelTitlePreview);
         }
