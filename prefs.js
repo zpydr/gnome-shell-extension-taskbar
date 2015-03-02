@@ -436,67 +436,61 @@ Prefs.prototype =
         this.valueScrollWorkspaces.connect('notify::active', Lang.bind(this, this.changeScrollWorkspaces));
         this.gridButtons.attach(this.valueScrollWorkspaces, 4, 4, 1, 1);
 
-        let labelScrollInvert = new Gtk.Label({label: _("Scroll Direction Inverted"), xalign: 0});
-        this.gridButtons.attach(labelScrollInvert, 1, 5, 1, 1);
-        this.valueScrollInvert = new Gtk.Switch({active: this.settings.get_boolean("invert-scroll")});
-        this.valueScrollInvert.connect('notify::active', Lang.bind(this, this.changeScrollInvert));
-        this.gridButtons.attach(this.valueScrollInvert, 4, 5, 1, 1);
-
         let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft / Right Click Toggle"), xalign: 0});
-        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 6, 1, 1);
+        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 5, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
         this.valueShowAppsButtonToggle.append_text(_("L Overview\nR Appview"));
         this.valueShowAppsButtonToggle.set_active(this.settings.get_enum("showapps-button-toggle"));
         this.valueShowAppsButtonToggle.connect('changed', Lang.bind(this, this.changeShowAppsButtonToggle));
-        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 6, 2, 1);
+        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 5, 2, 1);
 
         let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelAppviewButtonIcon, 1, 7, 1, 1);
+        this.gridButtons.attach(labelAppviewButtonIcon, 1, 6, 1, 1);
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
         this.valueAppviewButtonIcon = new Gtk.Image();
         this.loadAppviewIcon();
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
-        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 7, 1, 1);
+        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
         let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
-        this.gridButtons.attach(labelTrayButton, 1, 8, 1, 1);
+        this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
         this.valueTrayButton = new Gtk.ComboBoxText();
         this.valueTrayButton.append_text(_("OFF"));
         this.valueTrayButton.append_text(_("Icon"));
         this.valueTrayButton.append_text(_("Index"));
         this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
         this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
-        this.gridButtons.attach(this.valueTrayButton, 3, 8, 2, 1);
+        this.gridButtons.attach(this.valueTrayButton, 3, 7, 2, 1);
 
         let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonEmpty, 1, 9, 1, 1);
+        this.gridButtons.attach(labelTrayButtonEmpty, 1, 8, 1, 1);
         this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
         this.valueTrayButtonEmpty.append_text(_("Show Icon"));
         this.valueTrayButtonEmpty.append_text(_("Show 0"));
         this.valueTrayButtonEmpty.append_text(_("Hide"));
         this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
         this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
-        this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 9, 2, 1);
+        this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 8, 2, 1);
 
         let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonIcon, 1, 10, 1, 1);
+        this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
         this.trayIconFilename = this.settings.get_string("tray-button-icon");
         this.valueTrayButtonIcon = new Gtk.Image();
         this.loadTrayIcon();
         this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
         this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
-        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 10, 1, 1);
+        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 9, 1, 1);
 
         let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
-        this.gridButtons.attach(labelHoverTrayButton, 1, 11, 1, 1);
+        this.gridButtons.attach(labelHoverTrayButton, 1, 10, 1, 1);
         this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
         this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
-        this.gridButtons.attach(this.valueHoverTrayButton, 4, 11, 1, 1);
+        this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons1, 0, 12, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons1, 0, 11, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
         let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
@@ -1323,11 +1317,6 @@ Prefs.prototype =
     changeScrollWorkspaces: function(object)
     {
         this.settings.set_boolean("scroll-workspaces", object.active);
-    },
-
-    changeScrollInvert: function(object)
-    {
-        this.settings.set_boolean("invert-scroll", object.active);
     },
 
     changeShowAppsButtonToggle: function(object)
