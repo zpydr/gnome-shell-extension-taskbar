@@ -1554,7 +1554,7 @@ TaskBar.prototype =
         {
             this.countTasks = null;
             this.cleanTasksList();
-            windowsList.forEach(
+            windowsList.sort(this.sortWindowsCompareFunction).forEach(
                 function(window)
                 {
                     this.addTaskInList(window);
@@ -1572,6 +1572,11 @@ TaskBar.prototype =
             this.removeTaskInList(window);
             this.hidePreview();
         }
+    },
+
+    sortWindowsCompareFunction: function(windowA, windowB)
+    {
+        return windowA.get_stable_sequence() > windowB.get_stable_sequence();
     },
 
     //Active Tasks
