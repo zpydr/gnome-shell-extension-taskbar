@@ -192,7 +192,7 @@ Prefs.prototype =
         this.gridComponents.attach(labelSpaceComponents1, 0, 9, 1, 1);
         let labelSpaceComponents2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridComponents.attach(labelSpaceComponents2, 2, 0, 1, 1);
-        let labelSpaceComponents3 = new Gtk.Label({label: "<b>Overview</b>", xalign: 2, hexpand: true});
+        let labelSpaceComponents3 = new Gtk.Label({label: "<b>"+_("Overview")+"</b>", xalign: 2, hexpand: true});
         labelSpaceComponents3.set_use_markup(true);
         this.gridComponents.attach(labelSpaceComponents3, 0, 0, 5, 1);
         let labelSpaceComponents4 = new Gtk.Label({label: "\t", xalign: 0});
@@ -284,7 +284,7 @@ Prefs.prototype =
         this.gridSettings.attach(labelSpaceSettings2, 2, 2, 1, 1);
         let labelSpaceSettings3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSettings.attach(labelSpaceSettings3, 5, 0, 1, 1);
-        let labelSpaceSettings4 = new Gtk.Label({label: "<b>Panels</b>", xalign: 2, hexpand: true});
+        let labelSpaceSettings4 = new Gtk.Label({label: "<b>"+_("Panels")+"</b>", xalign: 2, hexpand: true});
         labelSpaceSettings4.set_use_markup(true);
         this.gridSettings.attach(labelSpaceSettings4, 0, 0, 8, 1);
         let labelSpaceSettings5 = new Gtk.Label({label: "\t", xalign: 0});
@@ -306,7 +306,7 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
-        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " (0 Tasks)\n[Not Complete]", xalign: 0});
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " " + _("(0 Tasks)\n[Not Complete]"), xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
@@ -378,7 +378,7 @@ Prefs.prototype =
         this.gridTasks.attach(labelSpaceTasks2, 2, 0, 1, 1);
         let labelSpaceTasks3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
-        let labelSpaceTasks4 = new Gtk.Label({label: "<b>Tasks</b>", xalign: 2, hexpand: true});
+        let labelSpaceTasks4 = new Gtk.Label({label: "<b>"+_("Tasks")+"</b>", xalign: 2, hexpand: true});
         labelSpaceTasks4.set_use_markup(true);
         this.gridTasks.attach(labelSpaceTasks4, 0, 0, 5, 1);
         let labelSpaceTasks5 = new Gtk.Label({label: "\t", xalign: 0});
@@ -483,7 +483,7 @@ Prefs.prototype =
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
         let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons3, 3, 1, 1, 1);
-        let labelSpaceButtons4 = new Gtk.Label({label: "<b>Buttons</b>", xalign: 2, hexpand: true});
+        let labelSpaceButtons4 = new Gtk.Label({label: "<b>"+_("Buttons")+"</b>", xalign: 2, hexpand: true});
         labelSpaceButtons4.set_use_markup(true);
         this.gridButtons.attach(labelSpaceButtons4, 0, 0, 6, 1);
         let labelSpaceButtons5 = new Gtk.Label({label: "\t", xalign: 0});
@@ -791,7 +791,7 @@ Prefs.prototype =
         this.gridSeparator.attach(labelSpaceSeparator4, 5, 0, 1, 1);
         let labelSpaceSeparator5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator5, 6, 0, 1, 1);
-        let labelSpaceSeparator6 = new Gtk.Label({label: "<b>Separators</b>", xalign: 2, hexpand: true});
+        let labelSpaceSeparator6 = new Gtk.Label({label: "<b>"+_("Separators")+"</b>", xalign: 2, hexpand: true});
         labelSpaceSeparator6.set_use_markup(true);
         this.gridSeparator.attach(labelSpaceSeparator6, 0, 0, 8, 1);
         let labelSpaceSeparator7 = new Gtk.Label({label: "\t", xalign: 0});
@@ -847,7 +847,7 @@ Prefs.prototype =
         this.gridPreview.attach(labelSpacePreview2, 2, 1, 1, 1);
         let labelSpacePreview3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridPreview.attach(labelSpacePreview3, 3, 1, 1, 1);
-        let labelSpacePreview4 = new Gtk.Label({label: "<b>Preview</b>", xalign: 2, hexpand: true});
+        let labelSpacePreview4 = new Gtk.Label({label: "<b>"+_("Preview")+"</b>", xalign: 2, hexpand: true});
         labelSpacePreview4.set_use_markup(true);
         this.gridPreview.attach(labelSpacePreview4, 0, 0, 5, 1);
         let labelSpacePreview5 = new Gtk.Label({label: "\t", xalign: 0});
@@ -888,7 +888,7 @@ Prefs.prototype =
         this.gridMisc.attach(labelSpaceMisc1, 0, 5, 1, 1);
         let labelSpaceMisc2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
-        let labelSpaceMisc3 = new Gtk.Label({label: "<b>Misc</b>", xalign: 2, hexpand: true});
+        let labelSpaceMisc3 = new Gtk.Label({label: "<b>"+_("Misc")+"</b>", xalign: 2, hexpand: true});
         labelSpaceMisc3.set_use_markup(true);
         this.gridMisc.attach(labelSpaceMisc3, 0, 0, 4, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
@@ -901,7 +901,7 @@ Prefs.prototype =
         let scrollWindowTaskBar = this.gridTaskBar;
 
         scrollWindowTaskBar.show_all();
-        let labelTaskBar = new Gtk.Label({label: " About\nTaskBar"});
+        let labelTaskBar = new Gtk.Label({label: _("About TaskBar")});
         notebook.append_page(scrollWindowTaskBar, labelTaskBar);
 
         let linkImage1 = new Gtk.Image({file: HOMEICON});
@@ -957,7 +957,7 @@ Prefs.prototype =
         this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 7, 1, 1);
         let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
-        let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>About TaskBar</b>", xalign: 2, hexpand: true});
+        let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>"+_("About TaskBar")+"</b>", xalign: 2, hexpand: true});
         labelSpaceTaskBar3.set_use_markup(true);
         this.gridTaskBar.attach(labelSpaceTaskBar3, 0, 0, 4, 1);
         let labelSpaceTaskBar4 = new Gtk.Label({label: "\t", xalign: 0});

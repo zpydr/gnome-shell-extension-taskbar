@@ -32,11 +32,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: prefs.js:116
+#: prefs.js:116 prefs.js:195
 msgid "Overview"
 msgstr ""
 
-#: prefs.js:119 prefs.js:152 prefs.js:300
+#: prefs.js:119 prefs.js:152 prefs.js:300 prefs.js:381
 msgid "Tasks"
 msgstr ""
 
@@ -68,7 +68,7 @@ msgstr ""
 msgid "TaskBar in Overview"
 msgstr ""
 
-#: prefs.js:208
+#: prefs.js:208 prefs.js:287
 msgid "Panels"
 msgstr ""
 
@@ -104,6 +104,10 @@ msgstr ""
 
 #: prefs.js:309
 msgid "Tasks Container Width"
+msgstr ""
+
+#: prefs.js:309
+msgid "(0 Tasks)\n[Not Complete]"
 msgstr ""
 
 #: prefs.js:317
@@ -148,7 +152,7 @@ msgstr ""
 msgid "Hover Delay"
 msgstr ""
 
-#: prefs.js:394
+#: prefs.js:394 prefs.js:486
 msgid "Buttons"
 msgstr ""
 
@@ -232,7 +236,7 @@ msgstr ""
 msgid "Activate Tray on Hover"
 msgstr ""
 
-#: prefs.js:499
+#: prefs.js:499 prefs.js:794
 msgid "Separators"
 msgstr ""
 
@@ -254,7 +258,7 @@ msgstr ""
 msgid "Resize "
 msgstr ""
 
-#: prefs.js:807
+#: prefs.js:807 prefs.js:850
 msgid "Preview"
 msgstr ""
 
@@ -278,7 +282,7 @@ msgstr ""
 msgid "Preview Delay"
 msgstr ""
 
-#: prefs.js:863
+#: prefs.js:863 prefs.js:891
 msgid "Misc"
 msgstr ""
 
@@ -300,6 +304,10 @@ msgid ""
 "of those 3 options\n"
 "could cause a conflict\n"
 "with other extensions"
+msgstr ""
+
+#: prefs.js:904 prefs.js:960
+msgid "About TaskBar"
 msgstr ""
 
 #: prefs.js:919
