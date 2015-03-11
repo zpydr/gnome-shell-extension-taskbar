@@ -1655,33 +1655,36 @@ TaskBar.prototype =
     addTaskInList: function(window)
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
-        let signalsTask = [
-            buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
-            buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
-            buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
-        ];
-        //Display Tasks of All Workspaces
-        if (! this.settings.get_boolean("tasks-all-workspaces"))
+        if (app)
         {
-            let workspace = global.screen.get_active_workspace();
-            if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 6) && (! this.settings.get_boolean("tasks-all-workspaces")))
-                buttonTask.visible = window.located_on_workspace(workspace);
+            let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
+            let signalsTask = [
+                buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
+                buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
+                buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
+            ];
+            //Display Tasks of All Workspaces
+            if (! this.settings.get_boolean("tasks-all-workspaces"))
+            {
+                let workspace = global.screen.get_active_workspace();
+                if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 6) && (! this.settings.get_boolean("tasks-all-workspaces")))
+                    buttonTask.visible = window.located_on_workspace(workspace);
+            }
+            if (window.has_focus())
+            {
+                buttonTask.add_style_pseudo_class(this.activeTask);
+                buttonTask.set_style(this.backgroundStyleColor);
+            }
+            this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
+            this.countTasks ++;
+            if (this.countTasks > this.tasksContainerWidth)
+                this.boxMainTasks.set_width(-1);
+            else
+                this.boxMainTasks.set_width(this.newTasksContainerWidth);
+            if (this.settings.get_boolean("display-tasks"))
+                this.boxMainTasks.add_actor(buttonTask);
+            this.tasksList.push([ window, buttonTask, signalsTask ]);
         }
-        if (window.has_focus())
-        {
-            buttonTask.add_style_pseudo_class(this.activeTask);
-            buttonTask.set_style(this.backgroundStyleColor);
-        }
-        this.newTasksContainerWidth = (this.tasksContainerWidth * (this.iconSize + 8));
-        this.countTasks ++;
-        if (this.countTasks > this.tasksContainerWidth)
-            this.boxMainTasks.set_width(-1);
-        else
-            this.boxMainTasks.set_width(this.newTasksContainerWidth);
-        if (this.settings.get_boolean("display-tasks"))
-            this.boxMainTasks.add_actor(buttonTask);
-        this.tasksList.push([ window, buttonTask, signalsTask ]);
     },
 
     //Remove Tasks
