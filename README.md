@@ -1,5 +1,5 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 41 for GNOME 3.4 - 3.14**  
+**GNOME Shell Extension TaskBar Version 41 for GNOME 3.4 - 3.16**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
@@ -7,7 +7,8 @@ https://launchpad.net/gnome-shell-extension-taskbar/
                 
 Arch Linux User Repository              
 https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
-Ubuntu PPA Repository                   
+        
+Debian / Ubuntu PPA Repository                   
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                        
         
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
@@ -37,9 +38,12 @@ Disable hot corner
 Hide default application menu - simultaneously integrates the menu into             
 applications like empathy, nautilus, etc.               
         
-Chinese language support by tuhaihe         
-German language support by jonnius, to-ba       
-Credit to Xes, flubshi, rogst, Baltix, skoslowski, rgeary1, hkskoglund      
+Language support:       
+Chinese by tuhaihe      
+Czech by michal-ruzicka     
+German by jonnius, to-ba        
+
+Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl        
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_23.png)
         

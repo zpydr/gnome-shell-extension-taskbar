@@ -442,40 +442,43 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
-        let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
-        this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
-        this.valueTrayButton = new Gtk.ComboBoxText();
-        this.valueTrayButton.append_text(_("OFF"));
-        this.valueTrayButton.append_text(_("Icon"));
-        this.valueTrayButton.append_text(_("Index"));
-        this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
-        this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
-        this.gridButtons.attach(this.valueTrayButton, 3, 7, 2, 1);
+        if (ShellVersion[1] !== 16)
+        {
+            let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
+            this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
+            this.valueTrayButton = new Gtk.ComboBoxText();
+            this.valueTrayButton.append_text(_("OFF"));
+            this.valueTrayButton.append_text(_("Icon"));
+            this.valueTrayButton.append_text(_("Index"));
+            this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
+            this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
+            this.gridButtons.attach(this.valueTrayButton, 3, 7, 2, 1);
 
-        let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonEmpty, 1, 8, 1, 1);
-        this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
-        this.valueTrayButtonEmpty.append_text(_("Show Icon"));
-        this.valueTrayButtonEmpty.append_text(_("Show 0"));
-        this.valueTrayButtonEmpty.append_text(_("Hide"));
-        this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
-        this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
-        this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 8, 2, 1);
+            let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
+            this.gridButtons.attach(labelTrayButtonEmpty, 1, 8, 1, 1);
+            this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
+            this.valueTrayButtonEmpty.append_text(_("Show Icon"));
+            this.valueTrayButtonEmpty.append_text(_("Show 0"));
+            this.valueTrayButtonEmpty.append_text(_("Hide"));
+            this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
+            this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
+            this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 8, 2, 1);
 
-        let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
-        this.trayIconFilename = this.settings.get_string("tray-button-icon");
-        this.valueTrayButtonIcon = new Gtk.Image();
-        this.loadTrayIcon();
-        this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
-        this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
-        this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 9, 1, 1);
+            let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
+            this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
+            this.trayIconFilename = this.settings.get_string("tray-button-icon");
+            this.valueTrayButtonIcon = new Gtk.Image();
+            this.loadTrayIcon();
+            this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
+            this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
+            this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 9, 1, 1);
 
-        let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
-        this.gridButtons.attach(labelHoverTrayButton, 1, 10, 1, 1);
-        this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
-        this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
-        this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
+            let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
+            this.gridButtons.attach(labelHoverTrayButton, 1, 10, 1, 1);
+            this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
+            this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
+            this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
+        }
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons1, 0, 11, 1, 1);
@@ -901,7 +904,7 @@ Prefs.prototype =
         let scrollWindowTaskBar = this.gridTaskBar;
 
         scrollWindowTaskBar.show_all();
-        let labelTaskBar = new Gtk.Label({label: _("About TaskBar")});
+        let labelTaskBar = new Gtk.Label({label: _("About")});
         notebook.append_page(scrollWindowTaskBar, labelTaskBar);
 
         let linkImage1 = new Gtk.Image({file: HOMEICON});
@@ -916,19 +919,21 @@ Prefs.prototype =
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink1.set_always_show_image(true);
-        let labelVersion = new Gtk.Label({label: _("Version")+" 41"});
-        this.gridTaskBar.attach(labelVersion, 1, 1, 1, 1);
+        let labelVersion1 = new Gtk.Label({label: _("TaskBar Version")+" 41"});
+        this.gridTaskBar.attach(labelVersion1, 1, 1, 1, 1);
+        let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
+        this.gridTaskBar.attach(labelVersion2, 1, 2, 1, 1);
         this.gridTaskBar.attach(labelLink1, 3, 1, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 3, 2, 1, 1);
-        let bugReport = new Gtk.LinkButton ({label: _("Send Bug Report"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 41%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+        let bugReport = new Gtk.LinkButton ({label: _("Report a Bug"),
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 41%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A"});
         if (ShellVersion[1] !== 4)
             bugReport.set_always_show_image(true);
-        this.gridTaskBar.attach(bugReport, 1, 2, 1, 1);
+        this.gridTaskBar.attach(bugReport, 1, 3, 1, 1);
         let labelLink3 = new Gtk.LinkButton ({image: linkImage4, label: " zpydr@openmailbox.org",
             uri: "mailto:zpydr@openmailbox.org", xalign: 0 });
         if (ShellVersion[1] !== 4)
