@@ -1699,6 +1699,8 @@ TaskBar.prototype =
                 this.boxMainTasks.set_width(this.newTasksContainerWidth);
             if (this.settings.get_boolean("display-tasks"))
                 this.boxMainTasks.add_actor(buttonTask);
+            else
+                this.boxMainTasks.set_width(-1);
             this.tasksList.push([ window, buttonTask, signalsTask ]);
         }
     },
