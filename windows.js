@@ -110,7 +110,7 @@ Windows.prototype =
         for (let i = 0; i < totalWorkspaces; i++)
         {
             let activeWorkspace = global.screen.get_workspace_by_index(i);
-            activeWorkspace.list_windows().reverse().forEach(
+            activeWorkspace.list_windows().sort(this.sortWindowsCompareFunction).forEach(
                 function(window)
                 {
                     this.addWindowInList(window);
@@ -121,6 +121,11 @@ Windows.prototype =
 
         //Call User Callback
         this.callbackWindowsListChanged.call(this.callBackThis, this.windowsList, 0, null);
+    },
+
+    sortWindowsCompareFunction: function(windowA, windowB)
+    {
+        return windowA.get_stable_sequence() > windowB.get_stable_sequence();
     },
 
     onWindowChanged: function(window, object, type)

@@ -1402,7 +1402,7 @@ TaskBar.prototype =
     {
         let activeWorkspace = global.screen.get_active_workspace();
         let numButton = pspec.get_button();
-        if ((numButton === LEFTBUTTON) && (! this.settings.get_boolean("hover-switch-task"))) //Left Button (Hover deactivated)
+        if (numButton === LEFTBUTTON) //Left Button
         {
             this.tasksList.forEach(
                 function(task)
@@ -1570,7 +1570,7 @@ TaskBar.prototype =
         {
             this.countTasks = null;
             this.cleanTasksList();
-            windowsList.sort(this.sortWindowsCompareFunction).forEach(
+            windowsList.forEach(
                 function(window)
                 {
                     this.addTaskInList(window);
@@ -1588,11 +1588,6 @@ TaskBar.prototype =
             this.removeTaskInList(window);
             this.hidePreview();
         }
-    },
-
-    sortWindowsCompareFunction: function(windowA, windowB)
-    {
-        return windowA.get_stable_sequence() > windowB.get_stable_sequence();
     },
 
     //Active Tasks
