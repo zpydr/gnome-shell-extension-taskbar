@@ -79,7 +79,7 @@ Windows.prototype =
         this.workspace = global.screen.get_active_workspace();
 
         //Build windows list
-        this.workspace.list_windows().reverse().forEach(
+        activeWorkspace.list_windows().sort(this.sortWindowsCompareFunction).forEach(
             function(window)
             {
                 this.addWindowInList(window);
@@ -93,6 +93,11 @@ Windows.prototype =
         //Add workspace signals
         this.windowAddedSignal = this.workspace.connect_after('window-added', Lang.bind(this, this.onWindowAdded));
         this.windowRemovedSignal = this.workspace.connect_after('window-removed', Lang.bind(this, this.onWindowRemoved));
+    },
+
+    sortWindowsCompareFunction: function(windowA, windowB)
+    {
+        return windowA.get_stable_sequence() > windowB.get_stable_sequence();
     },
 
     onWindowChanged: function(window, object, type)
