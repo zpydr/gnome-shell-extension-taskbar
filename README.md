@@ -11,7 +11,7 @@ https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/
 Debian / Ubuntu PPA Repository                   
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                        
 
-TaskBar Installation Wiki
+TaskBar Installation Wiki                       
 https://github.com/zpydr/gnome-shell-extension-taskbar/wiki/TaskBar-Installation/                               
         
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
