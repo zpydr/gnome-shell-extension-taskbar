@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   GNOME Shell Extension TaskBar
-  Copyright (C) 2014 zpydr
+  Copyright (C) 2015 zpydr
 
-  Version 40
+  Version 43
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -105,6 +105,11 @@
             <summary>Max Right Position</summary>
             <description/>
         </key>
+        <key name="overview" type="b">
+            <default>true</default>
+            <summary>Show TaskBar in Overview</summary>
+            <description/>
+        </key>
         <key name="bottom-panel" type="b">
             <default>false</default>
             <summary>Bottom Panel</summary>
@@ -136,20 +141,19 @@
         </key>
         <key name="icon-size" type="i">
             <range min="1" max="96"/>
-            <default>24</default>
+            <default>22</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
         <key name="icon-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>24</default>
+            <default>22</default>
             <summary>Icon Size</summary>
             <description/>
         </key>
-        <key name="font-size" type="i">
-            <range min="1" max="96"/>
-            <default>17</default>
-            <summary>Icon Size</summary>
+       <key name="font-size" type="s">
+            <default>'rgba(0,0,0,0)'</default>
+            <summary>TEST Panel Font Color TEST</summary>
             <description/>
         </key>
         <key name="font-size-bottom" type="i">
@@ -177,6 +181,11 @@
         <key name="scroll-tasks" type="b">
             <default>false</default>
             <summary>Scroll Tasks</summary>
+            <description/>
+        </key>
+        <key name="invert-scroll-tasks" type="b">
+            <default>false</default>
+            <summary>Invert Scroll Tasks</summary>
             <description/>
         </key>
         <key name="active-task-frame" type="b">

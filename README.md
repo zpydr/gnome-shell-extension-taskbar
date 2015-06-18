@@ -1,11 +1,18 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 40 for GNOME 3.4 - 3.14**  
+**GNOME Shell Extension TaskBar Version 43 for GNOME 3.4 - 3.16**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
 https://launchpad.net/gnome-shell-extension-taskbar/            
-Ubuntu PPA Repository                   
+                
+Arch Linux User Repository              
+https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
+        
+Debian / Ubuntu PPA Repository                   
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                        
+
+TaskBar Installation Wiki                       
+https://github.com/zpydr/gnome-shell-extension-taskbar/wiki/TaskBar-Installation/                               
         
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/       
@@ -20,7 +27,7 @@ Workspace button - switch workspaces left/right-click: cycle forward/backwards
 Appview button - left/right-click: toggle appview/overview      
 Favorites - add from dash       
 Align position      
-Icon/font size      
+Resize panels + contents        
 Top/bottom panel background color + opacity     
 Bottom panel tray button - activate the message tray        
 Tasks on all workspaces         
@@ -34,14 +41,17 @@ Disable hot corner
 Hide default application menu - simultaneously integrates the menu into             
 applications like empathy, nautilus, etc.               
         
-Chinese language support by tuhaihe         
-German language support by jonnius, to-ba       
-Credit to Xes, flubshi, rogst, Baltix       
+Language support:       
+Chinese by tuhaihe      
+Czech by michal-ruzicka     
+German by jonnius, to-ba        
+
+Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl        
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_23.png)
         
 GNOME Shell Extension TaskBar           
-Copyright (C) 2014 zpydr             
+Copyright (C) 2015 zpydr             
                 
 This program is free software: you can redistribute it and/or modify            
 it under the terms of the GNU General Public License as published by            
