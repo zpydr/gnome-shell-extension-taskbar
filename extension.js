@@ -245,7 +245,7 @@ TaskBar.prototype =
         this.addSeparators();
 
         //Add Tray Button
-        if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
             this.addTrayButton();
 
         //Hide Activities
@@ -358,7 +358,7 @@ TaskBar.prototype =
         {
             if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
                 Main.messageTray._summary.disconnect(this.messageTrayCountAddedId);
-            else if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+            else if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayCountAddedId);
             this.messageTrayCountAddedId = null;
         }
@@ -368,7 +368,7 @@ TaskBar.prototype =
         {
             if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
                 Main.messageTray._summary.disconnect(this.messageTrayCountRemovedId);
-            else if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+            else if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayCountRemovedId);
             this.messageTrayCountRemovedId = null;
         }
@@ -376,7 +376,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Showing Signal
         if (this.messageTrayShowingId !== null)
         {
-            if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayShowingId);
             this.messageTrayShowingId = null;
         }
@@ -384,7 +384,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Hiding Signal
         if (this.messageTrayHidingId !== null)
         {
-            if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayHidingId);
             this.messageTrayHidingId = null;
         }
@@ -392,7 +392,7 @@ TaskBar.prototype =
         //Reset Message Tray
         if (this.showTray !== null)
         {
-            if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 MessageTray.MessageTray.prototype._showTray = this.showTray;
             if (ShellVersion[1] === 4)
             {
@@ -450,7 +450,7 @@ TaskBar.prototype =
             this.bottomPanelActor.destroy();
             this.bottomPanelActor = null;
         }
-        if ((ShellVersion[1] !== 16) || (ShellVersion[1] !== 18))
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             Main.messageTray.actor.set_anchor_point(0, 0);
             if (ShellVersion[1] !== 4)
