@@ -245,14 +245,14 @@ TaskBar.prototype =
         this.addSeparators();
 
         //Add Tray Button
-        if (ShellVersion[1] !== 16)
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
             this.addTrayButton();
 
         //Hide Activities
         this.initHideActivities();
 
         //Disable Hot Corner
-        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+        if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
         {
             //Extended Barriers Support
             this.barriers = global.display.supports_extended_barriers();
@@ -311,7 +311,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.show();
             else if (ShellVersion[1] === 6)
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -324,7 +324,7 @@ TaskBar.prototype =
         if (this.settings.get_boolean("hide-default-application-menu"))
         {
             this.appMenuActor.show();
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
@@ -358,7 +358,7 @@ TaskBar.prototype =
         {
             if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
                 Main.messageTray._summary.disconnect(this.messageTrayCountAddedId);
-            else if (ShellVersion[1] !== 16)
+            else if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayCountAddedId);
             this.messageTrayCountAddedId = null;
         }
@@ -368,7 +368,7 @@ TaskBar.prototype =
         {
             if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
                 Main.messageTray._summary.disconnect(this.messageTrayCountRemovedId);
-            else if (ShellVersion[1] !== 16)
+            else if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayCountRemovedId);
             this.messageTrayCountRemovedId = null;
         }
@@ -376,7 +376,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Showing Signal
         if (this.messageTrayShowingId !== null)
         {
-            if (ShellVersion[1] !== 16)
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayShowingId);
             this.messageTrayShowingId = null;
         }
@@ -384,7 +384,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Hiding Signal
         if (this.messageTrayHidingId !== null)
         {
-            if (ShellVersion[1] !== 16)
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayHidingId);
             this.messageTrayHidingId = null;
         }
@@ -392,7 +392,7 @@ TaskBar.prototype =
         //Reset Message Tray
         if (this.showTray !== null)
         {
-            if (ShellVersion[1] !== 16)
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 MessageTray.MessageTray.prototype._showTray = this.showTray;
             if (ShellVersion[1] === 4)
             {
@@ -450,7 +450,7 @@ TaskBar.prototype =
             this.bottomPanelActor.destroy();
             this.bottomPanelActor = null;
         }
-        if (ShellVersion[1] !== 16)
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             Main.messageTray.actor.set_anchor_point(0, 0);
             if (ShellVersion[1] !== 4)
@@ -880,7 +880,7 @@ TaskBar.prototype =
     {
         this.messageTrayCountAddedId = null;
         this.messageTrayCountRemovedId = null;
-        if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") !== 0) && (ShellVersion[1] !== 16))
+        if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") !== 0) && (ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             this.buttonTray = new St.Button({ style_class: "tkb-task-button" });
             this.signalTray =
@@ -977,7 +977,7 @@ TaskBar.prototype =
                     Main.panel._activitiesButton._hotCorner._corner.show();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = this.threshold;
@@ -995,7 +995,7 @@ TaskBar.prototype =
                 Main.panel._activitiesButton._hotCorner._corner.hide();
             else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
                 Main.panel.statusArea.activities.hotCorner._corner.hide();
-            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+            else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
             {
                 if (this.barriers)
                     Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold = NOHOTCORNER;
@@ -1015,7 +1015,7 @@ TaskBar.prototype =
             let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
             xsettings.set_value('overrides', variant);
             this.appMenuActor.show();
-            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+            if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
@@ -1041,7 +1041,7 @@ TaskBar.prototype =
                 }
             }
         }
-        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16))
+        else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
         {
             this.appMenuActor = Main.panel.statusArea.appMenu.actor;
             if (this.settings.get_boolean("hide-default-application-menu"))
@@ -1244,7 +1244,7 @@ TaskBar.prototype =
         this.height = (this.iconSize + this.bottomPanelVertical + 2);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
         this.bottomPanelActor.set_size(primary.width, -1);
-        if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 16))
+        if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
             Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
         if (ShellVersion[1] === 4)
         {
