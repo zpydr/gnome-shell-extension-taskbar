@@ -442,7 +442,7 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
-        if (ShellVersion[1] !== 16)
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
             this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
