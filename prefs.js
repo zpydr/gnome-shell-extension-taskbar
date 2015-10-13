@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2015 zpydr
 //
-//  Version 43
+//  Version 44
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -442,7 +442,7 @@ Prefs.prototype =
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
         this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
 
-        if (ShellVersion[1] !== 16)
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
             this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
@@ -919,7 +919,7 @@ Prefs.prototype =
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
         if (ShellVersion[1] !== 4)
             labelLink1.set_always_show_image(true);
-        let labelVersion1 = new Gtk.Label({label: _("TaskBar Version")+" 43"});
+        let labelVersion1 = new Gtk.Label({label: _("TaskBar Version")+" 44"});
         this.gridTaskBar.attach(labelVersion1, 1, 1, 1, 1);
         let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
         this.gridTaskBar.attach(labelVersion2, 1, 2, 1, 1);
@@ -930,7 +930,7 @@ Prefs.prototype =
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 3, 2, 1, 1);
         let bugReport = new Gtk.LinkButton ({label: _("Report a Bug"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 43%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A"});
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 44%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A"});
         if (ShellVersion[1] !== 4)
             bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 3, 1, 1);
