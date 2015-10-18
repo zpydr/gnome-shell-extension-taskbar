@@ -1864,6 +1864,7 @@ Prefs.prototype =
         );
         this.settings.set_int(this.appearanceName, this.newValueAppearance);
         this.settings.set_int(this.resetAppearance, this.oldValueAppearance);
+        this.settings.set_boolean("position-changed", true);
     },
 
     reset: function()

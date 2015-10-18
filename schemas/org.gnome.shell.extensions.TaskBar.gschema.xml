@@ -105,6 +105,11 @@
             <summary>Max Right Position</summary>
             <description/>
         </key>
+        <key name="position-changed" type="b">
+            <default>false</default>
+            <summary>Object on TaskBar changed Position</summary>
+            <description/>
+        </key>
         <key name="overview" type="b">
             <default>true</default>
             <summary>Show TaskBar in Overview</summary>

@@ -51,6 +51,9 @@ const LEFTBUTTON = 1;
 const MIDDLEBUTTON = 2;
 const RIGHTBUTTON = 3;
 const NOHOTCORNER = 54321;
+const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
+const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
+const BPTRAYICON = Extension.path + '/images/bottom-panel-tray-button.svg';
 
 function init(extensionMeta)
 {
@@ -498,7 +501,7 @@ TaskBar.prototype =
             this.settings.connect("changed::display-workspace-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::overview", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::overview", Lang.bind(this, this.setOverview)),
             this.settings.connect("changed::tray-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tray-button-empty", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::desktop-button-icon", Lang.bind(this, this.onParamChanged)),
@@ -514,11 +517,7 @@ TaskBar.prototype =
             this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
             this.settings.connect("changed::disable-hotcorner", Lang.bind(this, this.disableHotCorner)),
             this.settings.connect("changed::hide-default-application-menu", Lang.bind(this, this.hideDefaultAppMenu)),
-            this.settings.connect("changed::position-tasks", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-desktop-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-workspace-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-appview-button", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::position-favorites", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::position-changed", Lang.bind(this, this.onParamChanged)),            
             this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
@@ -553,7 +552,7 @@ TaskBar.prototype =
         ];
     },
 
-    //Monitor Change, Icon Theme Change, Hide TaskBar in Overview Mode
+    //Monitor Change, Icon and Global Theme Change
     setSystemSignals: function()
     {
         this.monitorChangedId = null;
@@ -565,11 +564,31 @@ TaskBar.prototype =
         this.monitorChangedId = Main.layoutManager.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
         this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         this.globalThemeChangedId = St.ThemeContext.get_for_stage(global.stage).connect('changed', Lang.bind(this, this.onParamChanged));
+	this.setOverview();
+    },
+
+    //TaskBar in Overview Mode
+    setOverview: function()
+    {
         if (! this.settings.get_boolean("overview"))
         {
             this.mainBox = this.boxMain;
             this.overviewHidingId = Main.overview.connect('hiding', Lang.bind(this, this.showMainBox));
             this.overviewShowingId = Main.overview.connect('showing', Lang.bind(this, this.hideMainBox));
+        }
+        else
+        {	
+            //Disconnect Overview Signals
+            if (this.overviewHidingId !== null)
+            {
+                Main.overview.disconnect(this.overviewHidingId);
+                this.overviewHidingId = null;
+            }
+            if (this.overviewShowingId !== null)
+            {
+                Main.overview.disconnect(this.overviewShowingId);
+                this.overviewShowingId = null;
+            }
         }
     },
 
@@ -580,6 +599,9 @@ TaskBar.prototype =
         {
             if (this.settings.get_boolean("first-start"))
             {
+                this.settings.set_string("desktop-button-icon", DESKTOPICON);
+                this.settings.set_string("appview-button-icon", APPVIEWICON);
+                this.settings.set_string("tray-button-icon", BPTRAYICON);
                 Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_boolean("first-start", false);
             }
@@ -588,6 +610,9 @@ TaskBar.prototype =
         {
             if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode === 'user'))
             {
+                this.settings.set_string("desktop-button-icon", DESKTOPICON);
+                this.settings.set_string("appview-button-icon", APPVIEWICON);
+                this.settings.set_string("tray-button-icon", BPTRAYICON);
                 Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_boolean("first-start", false);
             }
@@ -681,6 +706,17 @@ TaskBar.prototype =
         if (this.bottomPanelEndIndicator)
             this.boxMain.add_actor(this.boxBottomPanelTrayButton);
     },
+
+    //Appearance Position changed
+    appearancePositionChange: function()
+    {
+        if (this.settings.get_boolean("position-changed"))
+        {
+            this.settings.set_boolean("position-changed", false);
+            this.onParamChanged();
+        }
+    },
+
 
     //Hide TaskBar in Overview
     showMainBox: function()
