@@ -188,10 +188,16 @@ Prefs.prototype =
         this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
         this.gridComponents.attach(this.valueOverview, 3, 8, 2, 1);
 
+        let resetComponentsButton = new Gtk.Button({label: _("Reset Overview Tab")});
+        resetComponentsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetComponentsButton.connect('clicked', Lang.bind(this, this.resetComponents));
+        resetComponentsButton.set_tooltip_text(_("Reset the Overview Tab to the Original Overview Settings"));
+        this.gridComponents.attach(resetComponentsButton, 1, 10, 1, 1);
+
         let labelSpaceComponents1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridComponents.attach(labelSpaceComponents1, 0, 9, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents1, 0, 11, 1, 1);
         let labelSpaceComponents2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridComponents.attach(labelSpaceComponents2, 2, 0, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents2, 2, 9, 1, 1);
         let labelSpaceComponents3 = new Gtk.Label({label: "<b>"+_("Overview")+"</b>", xalign: 2, hexpand: true});
         labelSpaceComponents3.set_use_markup(true);
         this.gridComponents.attach(labelSpaceComponents3, 0, 0, 5, 1);
@@ -278,12 +284,18 @@ Prefs.prototype =
         this.resetBottomPanelBackgroundColorButton.connect('clicked', Lang.bind(this, this.resetBottomPanelBackgroundColor));
         this.gridSettings.attach(this.resetBottomPanelBackgroundColorButton, 6, 7, 2, 1);
 
+        let resetSettingsButton = new Gtk.Button({label: _("Reset Panels Tab")});
+        resetSettingsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetSettingsButton.connect('clicked', Lang.bind(this, this.resetSettings));
+        resetSettingsButton.set_tooltip_text(_("Reset the Panels Tab to the Original Panels Settings"));
+        this.gridSettings.attach(resetSettingsButton, 1, 9, 1, 1);
+
         let labelSpaceSettings1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSettings.attach(labelSpaceSettings1, 0, 8, 1, 1);
+        this.gridSettings.attach(labelSpaceSettings1, 0, 10, 1, 1);
         let labelSpaceSettings2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridSettings.attach(labelSpaceSettings2, 2, 2, 1, 1);
         let labelSpaceSettings3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSettings.attach(labelSpaceSettings3, 5, 0, 1, 1);
+        this.gridSettings.attach(labelSpaceSettings3, 5, 8, 1, 1);
         let labelSpaceSettings4 = new Gtk.Label({label: "<b>"+_("Panels")+"</b>", xalign: 2, hexpand: true});
         labelSpaceSettings4.set_use_markup(true);
         this.gridSettings.attach(labelSpaceSettings4, 0, 0, 8, 1);
@@ -306,7 +318,7 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
-        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width") + " " + _("(0 Tasks)\n[Not Complete]"), xalign: 0});
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width"), xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 2, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
@@ -326,15 +338,13 @@ Prefs.prototype =
 
         let labelScrollTasks = new Gtk.Label({label: _("Scroll Tasks"), xalign: 0});
         this.gridTasks.attach(labelScrollTasks, 1, 5, 1, 1);
-        this.valueScrollTasks = new Gtk.Switch({active: this.settings.get_boolean("scroll-tasks")});
-        this.valueScrollTasks.connect('notify::active', Lang.bind(this, this.changeScrollTasks));
-        this.gridTasks.attach(this.valueScrollTasks, 4, 5, 1, 1);
-
-        let labelInvertScrollTasks = new Gtk.Label({label: _("Invert Scroll Tasks"), xalign: 0});
-        this.gridTasks.attach(labelInvertScrollTasks, 1, 6, 1, 1);
-        this.valueInvertScrollTasks = new Gtk.Switch({active: this.settings.get_boolean("invert-scroll-tasks")});
-        this.valueInvertScrollTasks.connect('notify::active', Lang.bind(this, this.changeInvertScrollTasks));
-        this.gridTasks.attach(this.valueInvertScrollTasks, 4, 6, 1, 1);
+        this.valueScrollTasks = new Gtk.ComboBoxText();
+        this.valueScrollTasks.append_text(_("OFF"));
+        this.valueScrollTasks.append_text(_("Standard"));
+        this.valueScrollTasks.append_text(_("Invert"));
+        this.valueScrollTasks.set_active(this.settings.get_enum("scroll-tasks"));
+        this.valueScrollTasks.connect('changed', Lang.bind(this, this.changeScrollTasks));
+        this.gridTasks.attach(this.valueScrollTasks, 3, 5, 2, 1);
 
         let labelActiveTaskFrame = new Gtk.Label({label: _("Active Task Frame"), xalign: 0});
         this.gridTasks.attach(labelActiveTaskFrame, 1, 7, 1, 1);
@@ -372,10 +382,16 @@ Prefs.prototype =
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
         this.gridTasks.attach(value2HoverDelay, 3, 11, 2, 1);
 
+        let resetTasksButton = new Gtk.Button({label: _("Reset Tasks Tab")});
+        resetTasksButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetTasksButton.connect('clicked', Lang.bind(this, this.resetTasks));
+        resetTasksButton.set_tooltip_text(_("Reset the Tasks Tab to the Original Tasks Settings"));
+        this.gridTasks.attach(resetTasksButton, 1, 13, 1, 1);
+
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks1, 0, 12, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks1, 0, 14, 1, 1);
         let labelSpaceTasks2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridTasks.attach(labelSpaceTasks2, 2, 0, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks2, 2, 12, 1, 1);
         let labelSpaceTasks3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
         let labelSpaceTasks4 = new Gtk.Label({label: "<b>"+_("Tasks")+"</b>", xalign: 2, hexpand: true});
@@ -420,9 +436,13 @@ Prefs.prototype =
 
         let labelScrollWorkspaces = new Gtk.Label({label: _("Scroll Workspaces"), xalign: 0});
         this.gridButtons.attach(labelScrollWorkspaces, 1, 4, 1, 1);
-        this.valueScrollWorkspaces = new Gtk.Switch({active: this.settings.get_boolean("scroll-workspaces")});
-        this.valueScrollWorkspaces.connect('notify::active', Lang.bind(this, this.changeScrollWorkspaces));
-        this.gridButtons.attach(this.valueScrollWorkspaces, 4, 4, 1, 1);
+        this.valueScrollWorkspaces = new Gtk.ComboBoxText();
+        this.valueScrollWorkspaces.append_text(_("OFF"));
+        this.valueScrollWorkspaces.append_text(_("Standard"));
+        this.valueScrollWorkspaces.append_text(_("Invert"));
+        this.valueScrollWorkspaces.set_active(this.settings.get_enum("scroll-workspaces"));
+        this.valueScrollWorkspaces.connect('changed', Lang.bind(this, this.changeScrollWorkspaces));
+        this.gridButtons.attach(this.valueScrollWorkspaces, 3, 4, 2, 1);
 
         let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft & Right Click Toggle"), xalign: 0});
         this.gridButtons.attach(labelShowAppsButtonToggle, 1, 5, 1, 1);
@@ -480,12 +500,18 @@ Prefs.prototype =
             this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
         }
 
+        let resetButtonsButton = new Gtk.Button({label: _("Reset Buttons Tab")});
+        resetButtonsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetButtonsButton.connect('clicked', Lang.bind(this, this.resetButtons));
+        resetButtonsButton.set_tooltip_text(_("Reset the Buttons Tab to the Original Buttons Settings"));
+        this.gridButtons.attach(resetButtonsButton, 1, 12, 1, 1);
+
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons1, 0, 11, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons1, 0, 13, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
         let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons3, 3, 1, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons3, 3, 11, 1, 1);
         let labelSpaceButtons4 = new Gtk.Label({label: "<b>"+_("Buttons")+"</b>", xalign: 2, hexpand: true});
         labelSpaceButtons4.set_use_markup(true);
         this.gridButtons.attach(labelSpaceButtons4, 0, 0, 6, 1);
@@ -502,296 +528,103 @@ Prefs.prototype =
         let labelSeparator = new Gtk.Label({label: _("Separators")});
         notebook.append_page(scrollWindowSeparator, labelSeparator);
 
-        let labelPanel5 = new Gtk.Label({label: _("Top Panel"), xalign: 2});
+        let labelPanel5 = new Gtk.Label({label: _("Left"), xalign: 2});
         this.gridSeparator.attach(labelPanel5, 3, 1, 2, 1);
-        let labelPanel6 = new Gtk.Label({label: _("Bottom Panel"), xalign: 2});
+        let labelPanel6 = new Gtk.Label({label: _("Right"), xalign: 2});
         this.gridSeparator.attach(labelPanel6, 6, 1, 2, 1);
 
-        let labelSeparatorOne = new Gtk.Label({label: _("Separator") + " 1\t("+_("Left")+")", xalign: 0});
-        this.gridSeparator.attach(labelSeparatorOne, 1, 2, 1, 1);
-        this.valueSeparatorOne = new Gtk.Switch({active: this.settings.get_boolean("separator-one")});
-        this.valueSeparatorOne.connect('notify::active', Lang.bind(this, this.changeSeparatorOne));
-        this.valueSeparatorOne.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (! this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 1);
-                if (! this.settings.get_boolean("separator-one"))
-                    this.settings.set_boolean("separator-one", true);
-            }
-        }));
-        this.valueSeparatorOne.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-one")) && (! this.valueSeparatorOne.get_active()))
-                this.settings.set_boolean("separator-one", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorOne, 4, 2, 1, 1);
-        this.valueSeparatorOneBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-one-bottom")});
-        this.valueSeparatorOneBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorOneBottom));
-        this.valueSeparatorOneBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 1);
-                if (! this.settings.get_boolean("separator-one-bottom"))
-                    this.settings.set_boolean("separator-one-bottom", true);
-            }
-        }));
-        this.valueSeparatorOneBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-one-bottom")) && (! this.valueSeparatorOneBottom.get_active()))
-                this.settings.set_boolean("separator-one-bottom", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorOneBottom, 7, 2, 1, 1);
+        let labelSeparatorBoxMain = new Gtk.Label({label: _("TaskBar"), xalign: 0});
+        this.gridSeparator.attach(labelSeparatorBoxMain, 1, 2, 1, 1);
+        this.valueSeparatorLeftBoxMain = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorLeftBoxMain = new Gtk.SpinButton({adjustment: this.valueSeparatorLeftBoxMain, snap_to_ticks: true});
+        value2SeparatorLeftBoxMain.set_value(this.settings.get_int("separator-left-box-main"));
+        value2SeparatorLeftBoxMain.connect("value-changed", Lang.bind(this, this.changeSeparatorLeftBoxMain));
+        this.gridSeparator.attach(value2SeparatorLeftBoxMain, 3, 2, 2, 1);
+        this.valueSeparatorRightBoxMain = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorRightBoxMain = new Gtk.SpinButton({adjustment: this.valueSeparatorRightBoxMain, snap_to_ticks: true});
+        value2SeparatorRightBoxMain.set_value(this.settings.get_int("separator-right-box-main"));
+        value2SeparatorRightBoxMain.connect("value-changed", Lang.bind(this, this.changeSeparatorRightBoxMain));
+        this.gridSeparator.attach(value2SeparatorRightBoxMain, 6, 2, 2, 1);
 
-        let labelSeparatorTwo = new Gtk.Label({label: _("Separator")+" 2", xalign: 0});
-        this.gridSeparator.attach(labelSeparatorTwo, 1, 3, 1, 1);
-        this.valueSeparatorTwo = new Gtk.Switch({active: this.settings.get_boolean("separator-two")});
-        this.valueSeparatorTwo.connect('notify::active', Lang.bind(this, this.changeSeparatorTwo));
-        this.valueSeparatorTwo.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (! this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 2);
-                if (! this.settings.get_boolean("separator-two"))
-                    this.settings.set_boolean("separator-two", true);
-            }
-        }));
-        this.valueSeparatorTwo.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-two")) && (! this.valueSeparatorTwo.get_active()))
-                this.settings.set_boolean("separator-two", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorTwo, 4, 3, 1, 1);
-        this.valueSeparatorTwoBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-two-bottom")});
-        this.valueSeparatorTwoBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorTwoBottom));
-        this.valueSeparatorTwoBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 2);
-                if (! this.settings.get_boolean("separator-two-bottom"))
-                    this.settings.set_boolean("separator-two-bottom", true);
-            }
-        }));
-        this.valueSeparatorTwoBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-two-bottom")) && (! this.valueSeparatorTwoBottom.get_active()))
-                this.settings.set_boolean("separator-two-bottom", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorTwoBottom, 7, 3, 1, 1);
+        let labelSeparatorTasks = new Gtk.Label({label: _("Tasks Container"), xalign: 0});
+        this.gridSeparator.attach(labelSeparatorTasks, 1, 3, 1, 1);
+        this.valueSeparatorLeftTasks = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorLeftTasks = new Gtk.SpinButton({adjustment: this.valueSeparatorLeftTasks, snap_to_ticks: true});
+        value2SeparatorLeftTasks.set_value(this.settings.get_int("separator-left-tasks"));
+        value2SeparatorLeftTasks.connect("value-changed", Lang.bind(this, this.changeSeparatorLeftTasks));
+        this.gridSeparator.attach(value2SeparatorLeftTasks, 3, 3, 2, 1);
+        this.valueSeparatorRightTasks = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorRightTasks = new Gtk.SpinButton({adjustment: this.valueSeparatorRightTasks, snap_to_ticks: true});
+        value2SeparatorRightTasks.set_value(this.settings.get_int("separator-right-tasks"));
+        value2SeparatorRightTasks.connect("value-changed", Lang.bind(this, this.changeSeparatorRightTasks));
+        this.gridSeparator.attach(value2SeparatorRightTasks, 6, 3, 2, 1);
 
-        let labelSeparatorThree = new Gtk.Label({label: _("Separator")+" 3", xalign: 0});
-        this.gridSeparator.attach(labelSeparatorThree, 1, 4, 1, 1);
-        this.valueSeparatorThree = new Gtk.Switch({active: this.settings.get_boolean("separator-three")});
-        this.valueSeparatorThree.connect('notify::active', Lang.bind(this, this.changeSeparatorThree));
-        this.valueSeparatorThree.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (! this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 3);
-                if (! this.settings.get_boolean("separator-three"))
-                    this.settings.set_boolean("separator-three", true);
-            }
-        }));
-        this.valueSeparatorThree.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-three")) && (! this.valueSeparatorThree.get_active()))
-                this.settings.set_boolean("separator-three", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorThree, 4, 4, 1, 1);
-        this.valueSeparatorThreeBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-three-bottom")});
-        this.valueSeparatorThreeBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorThreeBottom));
-        this.valueSeparatorThreeBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 3);
-                if (! this.settings.get_boolean("separator-three-bottom"))
-                    this.settings.set_boolean("separator-three-bottom", true);
-            }
-        }));
-        this.valueSeparatorThreeBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-three-bottom")) && (! this.valueSeparatorThreeBottom.get_active()))
-                this.settings.set_boolean("separator-three-bottom", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorThreeBottom, 7, 4, 1, 1);
+        let labelSeparatorDesktop = new Gtk.Label({label: _("Desktop Button"), xalign: 0});
+        this.gridSeparator.attach(labelSeparatorDesktop, 1, 4, 1, 1);
+        this.valueSeparatorLeftDesktop = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorLeftDesktop = new Gtk.SpinButton({adjustment: this.valueSeparatorLeftDesktop, snap_to_ticks: true});
+        value2SeparatorLeftDesktop.set_value(this.settings.get_int("separator-left-desktop"));
+        value2SeparatorLeftDesktop.connect("value-changed", Lang.bind(this, this.changeSeparatorLeftDesktop));
+        this.gridSeparator.attach(value2SeparatorLeftDesktop, 3, 4, 2, 1);
+        this.valueSeparatorRightDesktop = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorRightDesktop = new Gtk.SpinButton({adjustment: this.valueSeparatorRightDesktop, snap_to_ticks: true});
+        value2SeparatorRightDesktop.set_value(this.settings.get_int("separator-right-desktop"));
+        value2SeparatorRightDesktop.connect("value-changed", Lang.bind(this, this.changeSeparatorRightDesktop));
+        this.gridSeparator.attach(value2SeparatorRightDesktop, 6, 4, 2, 1);
 
-        let labelSeparatorFour = new Gtk.Label({label: _("Separator")+" 4", xalign: 0});
-        this.gridSeparator.attach(labelSeparatorFour, 1, 5, 1, 1);
-        this.valueSeparatorFour = new Gtk.Switch({active: this.settings.get_boolean("separator-four")});
-        this.valueSeparatorFour.connect('notify::active', Lang.bind(this, this.changeSeparatorFour));
-        this.valueSeparatorFour.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (! this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 4);
-                if (! this.settings.get_boolean("separator-four"))
-                    this.settings.set_boolean("separator-four", true);
-            }
-        }));
-        this.valueSeparatorFour.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-four")) && (! this.valueSeparatorFour.get_active()))
-                this.settings.set_boolean("separator-four", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorFour, 4, 5, 1, 1);
-        this.valueSeparatorFourBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-four-bottom")});
-        this.valueSeparatorFourBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorFourBottom));
-        this.valueSeparatorFourBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 4);
-                if (! this.settings.get_boolean("separator-four-bottom"))
-                    this.settings.set_boolean("separator-four-bottom", true);
-            }
-        }));
-        this.valueSeparatorFourBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-four-bottom")) && (! this.valueSeparatorFourBottom.get_active()))
-                this.settings.set_boolean("separator-four-bottom", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorFourBottom, 7, 5, 1, 1);
+        let labelSeparatorWorkspaces = new Gtk.Label({label: _("Workspace Button"), xalign: 0});
+        this.gridSeparator.attach(labelSeparatorWorkspaces, 1, 5, 1, 1);
+        this.valueSeparatorLeftWorkspaces = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorLeftWorkspaces = new Gtk.SpinButton({adjustment: this.valueSeparatorLeftWorkspaces, snap_to_ticks: true});
+        value2SeparatorLeftWorkspaces.set_value(this.settings.get_int("separator-left-workspaces"));
+        value2SeparatorLeftWorkspaces.connect("value-changed", Lang.bind(this, this.changeSeparatorLeftWorkspaces));
+        this.gridSeparator.attach(value2SeparatorLeftWorkspaces, 3, 5, 2, 1);
+        this.valueSeparatorRightWorkspaces = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorRightWorkspaces = new Gtk.SpinButton({adjustment: this.valueSeparatorRightWorkspaces, snap_to_ticks: true});
+        value2SeparatorRightWorkspaces.set_value(this.settings.get_int("separator-right-workspaces"));
+        value2SeparatorRightWorkspaces.connect("value-changed", Lang.bind(this, this.changeSeparatorRightWorkspaces));
+        this.gridSeparator.attach(value2SeparatorRightWorkspaces, 6, 5, 2, 1);
 
-        let labelSeparatorFive = new Gtk.Label({label: _("Separator")+" 5", xalign: 0});
-        this.gridSeparator.attach(labelSeparatorFive, 1, 6, 1, 1);
-        this.valueSeparatorFive = new Gtk.Switch({active: this.settings.get_boolean("separator-five")});
-        this.valueSeparatorFive.connect('notify::active', Lang.bind(this, this.changeSeparatorFive));
-        this.valueSeparatorFive.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (! this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 5);
-                if (! this.settings.get_boolean("separator-five"))
-                    this.settings.set_boolean("separator-five", true);
-            }
-        }));
-        this.valueSeparatorFive.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-five")) && (! this.valueSeparatorFive.get_active()))
-                this.settings.set_boolean("separator-five", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorFive, 4, 6, 1, 1);
-        this.valueSeparatorFiveBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-five-bottom")});
-        this.valueSeparatorFiveBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorFiveBottom));
-        this.valueSeparatorFiveBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 5);
-                if (! this.settings.get_boolean("separator-five-bottom"))
-                    this.settings.set_boolean("separator-five-bottom", true);
-            }
-        }));
-        this.valueSeparatorFiveBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-five-bottom")) && (! this.valueSeparatorFiveBottom.get_active()))
-                this.settings.set_boolean("separator-five-bottom", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorFiveBottom, 7, 6, 1, 1);
+        let labelSeparatorAppview = new Gtk.Label({label: _("Appview Button"), xalign: 0});
+        this.gridSeparator.attach(labelSeparatorAppview, 1, 6, 1, 1);
+        this.valueSeparatorLeftAppview = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorLeftAppview = new Gtk.SpinButton({adjustment: this.valueSeparatorLeftAppview, snap_to_ticks: true});
+        value2SeparatorLeftAppview.set_value(this.settings.get_int("separator-left-appview"));
+        value2SeparatorLeftAppview.connect("value-changed", Lang.bind(this, this.changeSeparatorLeftAppview));
+        this.gridSeparator.attach(value2SeparatorLeftAppview, 3, 6, 2, 1);
+        this.valueSeparatorRightAppview = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorRightAppview = new Gtk.SpinButton({adjustment: this.valueSeparatorRightAppview, snap_to_ticks: true});
+        value2SeparatorRightAppview.set_value(this.settings.get_int("separator-right-appview"));
+        value2SeparatorRightAppview.connect("value-changed", Lang.bind(this, this.changeSeparatorRightAppview));
+        this.gridSeparator.attach(value2SeparatorRightAppview, 6, 6, 2, 1);
 
-        let labelSeparatorSix = new Gtk.Label({label: _("Separator")+" 6\t("+_("Right")+")", xalign: 0});
-        this.gridSeparator.attach(labelSeparatorSix, 1, 7, 1, 1);
-        this.valueSeparatorSix = new Gtk.Switch({active: this.settings.get_boolean("separator-six")});
-        this.valueSeparatorSix.connect('notify::active', Lang.bind(this, this.changeSeparatorSix));
-        this.valueSeparatorSix.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (! this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 6);
-                if (! this.settings.get_boolean("separator-six"))
-                    this.settings.set_boolean("separator-six", true);
-            }
-        }));
-        this.valueSeparatorSix.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-six")) && (! this.valueSeparatorSix.get_active()))
-                this.settings.set_boolean("separator-six", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorSix, 4, 7, 1, 1);
-        this.valueSeparatorSixBottom = new Gtk.Switch({active: this.settings.get_boolean("separator-six-bottom")});
-        this.valueSeparatorSixBottom.connect('notify::active', Lang.bind(this, this.changeSeparatorSixBottom));
-        this.valueSeparatorSixBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            if (this.settings.get_boolean("bottom-panel"))
-            {
-                this.settings.set_int("hover-separator-event", 6);
-                if (! this.settings.get_boolean("separator-six-bottom"))
-                    this.settings.set_boolean("separator-six-bottom", true);
-            }
-        }));
-        this.valueSeparatorSixBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-            if ((this.settings.get_boolean("separator-six-bottom")) && (! this.valueSeparatorSixBottom.get_active()))
-                this.settings.set_boolean("separator-six-bottom", false);
-        }));
-        this.gridSeparator.attach(this.valueSeparatorSixBottom, 7, 7, 1, 1);
+        let labelSeparatorFavorites = new Gtk.Label({label: _("Favorites"), xalign: 0});
+        this.gridSeparator.attach(labelSeparatorFavorites, 1, 7, 1, 1);
+        this.valueSeparatorLeftFavorites = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorLeftFavorites = new Gtk.SpinButton({adjustment: this.valueSeparatorLeftFavorites, snap_to_ticks: true});
+        value2SeparatorLeftFavorites.set_value(this.settings.get_int("separator-left-favorites"));
+        value2SeparatorLeftFavorites.connect("value-changed", Lang.bind(this, this.changeSeparatorLeftFavorites));
+        this.gridSeparator.attach(value2SeparatorLeftFavorites, 3, 7, 2, 1);
+        this.valueSeparatorRightFavorites = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
+        let value2SeparatorRightFavorites = new Gtk.SpinButton({adjustment: this.valueSeparatorRightFavorites, snap_to_ticks: true});
+        value2SeparatorRightFavorites.set_value(this.settings.get_int("separator-right-favorites"));
+        value2SeparatorRightFavorites.connect("value-changed", Lang.bind(this, this.changeSeparatorRightFavorites));
+        this.gridSeparator.attach(value2SeparatorRightFavorites, 6, 7, 2, 1);
 
-        let valueSeparatorBox = new Gtk.Box();
-        let labelSeparatorBox = new Gtk.Label({label: _("Resize "), xalign: 0});
-        this.valueSeparator = new Gtk.ComboBoxText();
-        this.valueSeparator.append_text(_("Separator")+" 1");
-        this.valueSeparator.append_text(_("Separator")+" 2");
-        this.valueSeparator.append_text(_("Separator")+" 3");
-        this.valueSeparator.append_text(_("Separator")+" 4");
-        this.valueSeparator.append_text(_("Separator")+" 5");
-        this.valueSeparator.append_text(_("Separator")+" 6");
-        this.separatorSelection = this.settings.get_enum("separator-selection");
-        this.valueSeparator.set_active(this.settings.get_enum("separator-selection"));
-        this.valueSeparator.connect('changed', Lang.bind(this, this.changeSeparatorSelection));
-        valueSeparatorBox.add(labelSeparatorBox);
-        valueSeparatorBox.add(this.valueSeparator);
-        this.gridSeparator.attach(valueSeparatorBox, 1, 8, 1, 1);
-        this.valueSeparatorSize = new Gtk.Adjustment({lower: 1, upper: 2000, step_increment: 1});
-        this.value2SeparatorSize = new Gtk.SpinButton({adjustment: this.valueSeparatorSize, snap_to_ticks: true});
-        this.value2SeparatorSize.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            this.hoverSeparator = this.settings.get_enum("separator-selection");
-            if (! this.settings.get_boolean("bottom-panel"))
-                this.settings.set_int("hover-separator-event", this.hoverSeparator + 1);
-        }));
-        this.value2SeparatorSize.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-        }));
-        this.gridSeparator.attach(this.value2SeparatorSize, 3, 8, 2, 1);
-        this.valueSeparatorSizeBottom = new Gtk.Adjustment({lower: 1, upper: 2000, step_increment: 1});
-        this.value2SeparatorSizeBottom = new Gtk.SpinButton({adjustment: this.valueSeparatorSizeBottom, snap_to_ticks: true});
-        this.value2SeparatorSizeBottom.connect('enter-notify-event', Lang.bind(this, function()
-        {
-            this.hoverSeparator = this.settings.get_enum("separator-selection");
-            if (this.settings.get_boolean("bottom-panel"))
-                this.settings.set_int("hover-separator-event", this.hoverSeparator + 1);
-        }));
-        this.value2SeparatorSizeBottom.connect('leave-notify-event', Lang.bind(this, function()
-        {
-            this.settings.set_int("hover-separator-event", 0);
-        }));
-        this.gridSeparator.attach(this.value2SeparatorSizeBottom, 6, 8, 2, 1);
-        this.changeSeparatorSize();
+        let resetSeparatorButton = new Gtk.Button({label: _("Reset Separators Tab")});
+        resetSeparatorButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetSeparatorButton.connect('clicked', Lang.bind(this, this.resetSeparators));
+        resetSeparatorButton.set_tooltip_text(_("Reset the Separators Tab to the Original Separators Settings"));
+        this.gridSeparator.attach(resetSeparatorButton, 1, 9, 1, 1);
 
         let labelSpaceSeparator1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSeparator.attach(labelSpaceSeparator1, 0, 9, 1, 1);
+        this.gridSeparator.attach(labelSpaceSeparator1, 0, 10, 1, 1);
         let labelSpaceSeparator2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridSeparator.attach(labelSpaceSeparator2, 2, 0, 1, 1);
         let labelSpaceSeparator3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator3, 3, 0, 1, 1);
         let labelSpaceSeparator4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSeparator.attach(labelSpaceSeparator4, 5, 0, 1, 1);
+        this.gridSeparator.attach(labelSpaceSeparator4, 5, 8, 1, 1);
         let labelSpaceSeparator5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator5, 6, 0, 1, 1);
         let labelSpaceSeparator6 = new Gtk.Label({label: "<b>"+_("Separators")+"</b>", xalign: 2, hexpand: true});
@@ -844,12 +677,18 @@ Prefs.prototype =
         value2PreviewDelay.connect("value-changed", Lang.bind(this, this.changePreviewDelay));
         this.gridPreview.attach(value2PreviewDelay, 3, 5, 2, 1);
 
+        let resetPreviewButton = new Gtk.Button({label: _("Reset Preview Tab")});
+        resetPreviewButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetPreviewButton.connect('clicked', Lang.bind(this, this.resetPreview));
+        resetPreviewButton.set_tooltip_text(_("Reset the Preview Tab to the Original Preview Settings"));
+        this.gridPreview.attach(resetPreviewButton, 1, 7, 1, 1);
+
         let labelSpacePreview1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridPreview.attach(labelSpacePreview1, 0, 6, 1, 1);
+        this.gridPreview.attach(labelSpacePreview1, 0, 8, 1, 1);
         let labelSpacePreview2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridPreview.attach(labelSpacePreview2, 2, 1, 1, 1);
         let labelSpacePreview3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridPreview.attach(labelSpacePreview3, 3, 1, 1, 1);
+        this.gridPreview.attach(labelSpacePreview3, 3, 6, 1, 1);
         let labelSpacePreview4 = new Gtk.Label({label: "<b>"+_("Preview")+"</b>", xalign: 2, hexpand: true});
         labelSpacePreview4.set_use_markup(true);
         this.gridPreview.attach(labelSpacePreview4, 0, 0, 5, 1);
@@ -887,15 +726,21 @@ Prefs.prototype =
         let labelWarning = new Gtk.Label({ label: "<b>! </b>"+_("Activating one\nof those 3 options\ncould cause a conflict\nwith other extensions"), use_markup: true, xalign: 0 });
         this.gridMisc.attach(labelWarning, 1, 4, 1, 1);
 
+        let resetMiscButton = new Gtk.Button({label: _("Reset Misc Tab")});
+        resetMiscButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetMiscButton.connect('clicked', Lang.bind(this, this.resetMisc));
+        resetMiscButton.set_tooltip_text(_("Reset the Misc Tab to the Original Misc Settings"));
+        this.gridMisc.attach(resetMiscButton, 1, 6, 1, 1);
+
         let labelSpaceMisc1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc1, 0, 5, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc1, 0, 7, 1, 1);
         let labelSpaceMisc2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
         let labelSpaceMisc3 = new Gtk.Label({label: "<b>"+_("Misc")+"</b>", xalign: 2, hexpand: true});
         labelSpaceMisc3.set_use_markup(true);
         this.gridMisc.attach(labelSpaceMisc3, 0, 0, 4, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc4, 4, 1, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc4, 4, 5, 1, 1);
 
         this.gridTaskBar = new Gtk.Grid();
         this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
@@ -949,9 +794,11 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink5.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink5, 3, 5, 1, 1);
-        let resetButton = new Gtk.Button({label: _("RESET ALL !")});
-        resetButton.connect('clicked', Lang.bind(this, this.reset));
-        this.gridTaskBar.attach(resetButton, 1, 6, 1, 1);
+        let resetAllButton = new Gtk.Button({label: _("RESET ALL !")});
+        resetAllButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetAllButton.connect('clicked', Lang.bind(this, this.resetAll));
+        resetAllButton.set_tooltip_text(_("Reset All TaskBar Settings to the Original TaskBar Settings"));
+        this.gridTaskBar.attach(resetAllButton, 1, 8, 1, 1);
         let labelLink6 = new Gtk.LinkButton ({image: linkImage7, label: " "+_("Free Software Foundation"),
             uri: "https://www.fsf.org/", xalign: 0 });
         if (ShellVersion[1] !== 4)
@@ -959,14 +806,14 @@ Prefs.prototype =
         this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
 
         let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 7, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 9, 1, 1);
         let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
         let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>"+_("About TaskBar")+"</b>", xalign: 2, hexpand: true});
         labelSpaceTaskBar3.set_use_markup(true);
         this.gridTaskBar.attach(labelSpaceTaskBar3, 0, 0, 4, 1);
         let labelSpaceTaskBar4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 1, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 7, 1, 1);
 
         notebook.show_all();
         return notebook;
@@ -1140,12 +987,7 @@ Prefs.prototype =
 
     changeScrollTasks: function(object)
     {
-        this.settings.set_boolean("scroll-tasks", object.active);
-    },
-
-    changeInvertScrollTasks: function(object)
-    {
-        this.settings.set_boolean("invert-scroll-tasks", object.active);
+        this.settings.set_enum("scroll-tasks", this.valueScrollTasks.get_active());
     },
 
     changeActiveTaskFrame: function(object)
@@ -1303,12 +1145,12 @@ Prefs.prototype =
 
     changeScrollWorkspaces: function(object)
     {
-        this.settings.set_boolean("scroll-workspaces", object.active);
+        this.settings.set_enum("scroll-workspaces", object.active);
     },
 
     changeShowAppsButtonToggle: function(object)
     {
-        this.settings.set_enum("showapps-button-toggle", this.valueShowAppsButtonToggle.get_active());
+        this.settings.set_enum("showapps-button-toggle", this.valueScrollWorkspaces.get_active());
     },
 
     changeAppviewButtonIcon: function()
@@ -1486,239 +1328,64 @@ Prefs.prototype =
         this.settings.set_boolean("hover-tray-button", object.active);
     },
 
-    changeSeparatorOne: function(object, pspec)
+    changeSeparatorLeftBoxMain: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorOne.set_active(this.settings.get_boolean("separator-one"));
-        else
-            this.settings.set_boolean("separator-one", object.active);
+        this.settings.set_int("separator-left-box-main", this.valueSeparatorLeftBoxMain.get_value());        
     },
 
-    changeSeparatorTwo: function(object, pspec)
+    changeSeparatorRightBoxMain: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorTwo.set_active(this.settings.get_boolean("separator-two"));
-        else
-            this.settings.set_boolean("separator-two", object.active);
+        this.settings.set_int("separator-right-box-main", this.valueSeparatorRightBoxMain.get_value());        
     },
 
-    changeSeparatorThree: function(object, pspec)
+    changeSeparatorLeftTasks: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorThree.set_active(this.settings.get_boolean("separator-three"));
-        else
-            this.settings.set_boolean("separator-three", object.active);
+        this.settings.set_int("separator-left-tasks", this.valueSeparatorLeftTasks.get_value());        
     },
 
-    changeSeparatorFour: function(object, pspec)
+    changeSeparatorRightTasks: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorFour.set_active(this.settings.get_boolean("separator-four"));
-        else
-            this.settings.set_boolean("separator-four", object.active);
+        this.settings.set_int("separator-right-tasks", this.valueSeparatorRightTasks.get_value());        
     },
 
-    changeSeparatorFive: function(object, pspec)
+    changeSeparatorLeftDesktop: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorFive.set_active(this.settings.get_boolean("separator-five"));
-        else
-            this.settings.set_boolean("separator-five", object.active);
+        this.settings.set_int("separator-left-desktop", this.valueSeparatorLeftDesktop.get_value());        
     },
 
-    changeSeparatorSix: function(object, pspec)
+    changeSeparatorRightDesktop: function(object)
     {
-        if (this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorSix.set_active(this.settings.get_boolean("separator-six"));
-        else
-            this.settings.set_boolean("separator-six", object.active);
+        this.settings.set_int("separator-right-desktop", this.valueSeparatorRightDesktop.get_value());        
     },
 
-    changeSeparatorOneBottom: function(object, pspec)
+    changeSeparatorLeftWorkspaces: function(object)
     {
-        if (! this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorOneBottom.set_active(this.settings.get_boolean("separator-one-bottom"));
-        else
-            this.settings.set_boolean("separator-one-bottom", object.active);
+        this.settings.set_int("separator-left-workspaces", this.valueSeparatorLeftWorkspaces.get_value());        
     },
 
-    changeSeparatorTwoBottom: function(object, pspec)
+    changeSeparatorRightWorkspaces: function(object)
     {
-        if (! this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorTwoBottom.set_active(this.settings.get_boolean("separator-two-bottom"));
-        else
-            this.settings.set_boolean("separator-two-bottom", object.active);
+        this.settings.set_int("separator-right-workspaces", this.valueSeparatorRightWorkspaces.get_value());        
     },
 
-    changeSeparatorThreeBottom: function(object, pspec)
+    changeSeparatorLeftAppview: function(object)
     {
-        if (! this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorThreeBottom.set_active(this.settings.get_boolean("separator-three-bottom"));
-        else
-            this.settings.set_boolean("separator-three-bottom", object.active);
+        this.settings.set_int("separator-left-appview", this.valueSeparatorLeftAppview.get_value());        
     },
 
-    changeSeparatorFourBottom: function(object, pspec)
+    changeSeparatorRightAppview: function(object)
     {
-        if (! this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorFourBottom.set_active(this.settings.get_boolean("separator-four-bottom"));
-        else
-            this.settings.set_boolean("separator-four-bottom", object.active);
+        this.settings.set_int("separator-right-appview", this.valueSeparatorRightAppview.get_value());        
     },
 
-    changeSeparatorFiveBottom: function(object, pspec)
+    changeSeparatorLeftFavorites: function(object)
     {
-        if (! this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorFiveBottom.set_active(this.settings.get_boolean("separator-five-bottom"));
-        else
-            this.settings.set_boolean("separator-five-bottom", object.active);
+        this.settings.set_int("separator-left-favorites", this.valueSeparatorLeftFavorites.get_value());        
     },
 
-    changeSeparatorSixBottom: function(object, pspec)
+    changeSeparatorRightFavorites: function(object)
     {
-        if (! this.settings.get_boolean("bottom-panel"))
-            this.valueSeparatorSixBottom.set_active(this.settings.get_boolean("separator-six-bottom"));
-        else
-            this.settings.set_boolean("separator-six-bottom", object.active);
-    },
-
-    changeSeparatorSelection: function(object)
-    {
-        this.separatorSelection = this.valueSeparator.get_active();
-        this.settings.set_enum("separator-selection", this.separatorSelection);
-        this.value2SeparatorSize.disconnect(this.valueSeparatorSizeId);
-        this.value2SeparatorSizeBottom.disconnect(this.valueSeparatorSizeBottomId);
-        this.changeSeparatorSize();
-    },
-
-    changeSeparatorSize: function(object)
-    {
-        if (this.separatorSelection === 0)
-        {
-            this.value2SeparatorSize.set_value(this.settings.get_int("separator-one-size"));
-            this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
-            this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-one")) && (! this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-one-size", this.value2SeparatorSize.get_value());
-                else
-                    this.value2SeparatorSize.set_value(this.settings.get_int("separator-one-size"));
-            }));
-            this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-one-bottom")) && (this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-one-bottom-size", this.value2SeparatorSizeBottom.get_value());
-                else
-                    this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-one-bottom-size"));
-            }));
-        }
-        else if (this.separatorSelection === 1)
-        {
-            this.value2SeparatorSize.set_value(this.settings.get_int("separator-two-size"));
-            this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
-            this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-two")) && (! this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-two-size", this.value2SeparatorSize.get_value());
-                else
-                    this.value2SeparatorSize.set_value(this.settings.get_int("separator-two-size"));
-            }));
-            this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-two-bottom")) && (this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-two-bottom-size", this.value2SeparatorSizeBottom.get_value());
-                else
-                    this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-two-bottom-size"));
-            }));
-        }
-        else if (this.separatorSelection === 2)
-        {
-            this.value2SeparatorSize.set_value(this.settings.get_int("separator-three-size"));
-            this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
-            this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-three")) && (! this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-three-size", this.value2SeparatorSize.get_value());
-                else
-                    this.value2SeparatorSize.set_value(this.settings.get_int("separator-three-size"));
-            }));
-            this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-three-bottom")) && (this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-three-bottom-size", this.value2SeparatorSizeBottom.get_value());
-                else
-                    this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-three-bottom-size"));
-            }));
-        }
-        else if (this.separatorSelection === 3)
-        {
-            this.value2SeparatorSize.set_value(this.settings.get_int("separator-four-size"));
-            this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
-            this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-four")) && (! this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-four-size", this.value2SeparatorSize.get_value());
-                else
-                    this.value2SeparatorSize.set_value(this.settings.get_int("separator-four-size"));
-            }));
-            this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-four-bottom")) && (this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-four-bottom-size", this.value2SeparatorSizeBottom.get_value());
-                else
-                    this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-four-bottom-size"));
-            }));
-        }
-        else if (this.separatorSelection === 4)
-        {
-            this.value2SeparatorSize.set_value(this.settings.get_int("separator-five-size"));
-            this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
-            this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-five")) && (! this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-five-size", this.value2SeparatorSize.get_value());
-                else
-                    this.value2SeparatorSize.set_value(this.settings.get_int("separator-five-size"));
-            }));
-            this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-five-bottom")) && (this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-five-bottom-size", this.value2SeparatorSizeBottom.get_value());
-                else
-                    this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-five-bottom-size"));
-            }));
-        }
-        else if (this.separatorSelection === 5)
-        {
-            this.value2SeparatorSize.set_value(this.settings.get_int("separator-six-size"));
-            this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-six-bottom-size"));
-            this.valueSeparatorSizeId = this.value2SeparatorSize.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-six")) && (! this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-six-size", this.value2SeparatorSize.get_value());
-                else
-                    this.value2SeparatorSize.set_value(this.settings.get_int("separator-six-size"));
-            }));
-            this.valueSeparatorSizeBottomId = this.value2SeparatorSizeBottom.connect("value-changed", 
-            Lang.bind(this, function()
-            {
-                if ((this.settings.get_boolean("separator-six-bottom")) && (this.settings.get_boolean("bottom-panel")))
-                    this.settings.set_int("separator-six-bottom-size", this.value2SeparatorSizeBottom.get_value());
-                else
-                    this.value2SeparatorSizeBottom.set_value(this.settings.get_int("separator-six-bottom-size"));
-            }));
-        }
+        this.settings.set_int("separator-right-favorites", this.valueSeparatorRightFavorites.get_value());        
     },
 
     changeHideActivities: function(object, pspec)
@@ -1867,7 +1534,7 @@ Prefs.prototype =
         this.settings.set_boolean("position-changed", true);
     },
 
-    reset: function()
+    resetComponents: function()
     {
         this.valueDisplayTasks.set_active(true);
         this.valueDisplayDesktopButton.set_active(true);
@@ -1875,11 +1542,22 @@ Prefs.prototype =
         this.valueDisplayShowAppsButton.set_active(true);
         this.valueDisplayFavorites.set_active(false);
         this.settings.set_int("hover-event", 0);
-        this.settings.set_int("hover-separator-event", 0);
+        this.valueAppearance.set_active(0);
+        this.settings.set_int("position-tasks", 4);
+        this.settings.set_int("position-desktop-button", 3);
+        this.settings.set_int("position-workspace-button", 2);
+        this.settings.set_int("position-appview-button", 1);
+        this.settings.set_int("position-favorites", 0);
+        this.valueOverview.set_active(true);
+        this.valueBottomPanel.set_active(false);
+        this.settings.set_boolean("position-changed", true);
+    },
+
+    resetSettings: function()
+    {
         this.settings.set_int("panel-position", 1);
         this.settings.set_int("panel-box", 1);
         this.settings.set_int("position-max-right", 9);
-        this.valueBottomPanel.set_active(false);
         this.settings.set_int("bottom-panel-vertical", 0);
         this.valueBottomPanelVertical.set_value(0);
         this.settings.set_int("position-bottom-box", 0);
@@ -1887,18 +1565,6 @@ Prefs.prototype =
         this.valueIconSize.set_value(22);
         this.settings.set_int("icon-size-bottom", 22);
         this.valueIconSizeBottom.set_value(22);
-        this.valueAllWorkspaces.set_active(false);
-        this.valueTasksContainerWidth.set_value(0);
-        this.valueCloseButton.set_active(0);
-        this.valueScrollTasks.set_active(false);
-        this.valueInvertScrollTasks.set_active(false);
-        this.valueActiveTaskFrame.set_active(true);
-        let color = RESETCOLOR;
-        let rgba = new Gdk.RGBA();
-        rgba.parse(color);
-        this.valueActiveTaskBackgroundColor.set_rgba(rgba);
-        this.settings.set_string("active-task-background-color", RESETCOLOR);
-        this.value2ActiveTaskBackgroundColor.set_active(false);
         this.settings.set_string("top-panel-background-color", "unset");
         this.settings.set_string("bottom-panel-background-color", "unset");
         let topPanelOriginalBackgroundColor = this.settings.get_string("top-panel-original-background-color");
@@ -1906,63 +1572,70 @@ Prefs.prototype =
         rgba2.parse(topPanelOriginalBackgroundColor);
         this.valueTopPanelBackgroundColor.set_rgba(rgba2);
         this.valueBottomPanelBackgroundColor.set_rgba(rgba2);
+    },
+
+    resetTasks: function()
+    {
+        this.valueAllWorkspaces.set_active(false);
+        this.valueTasksContainerWidth.set_value(0);
+        this.valueCloseButton.set_active(0);
+        this.valueScrollTasks.set_active(0);
+        this.valueActiveTaskFrame.set_active(true);
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueActiveTaskBackgroundColor.set_rgba(rgba);
+        this.settings.set_string("active-task-background-color", RESETCOLOR);
+        this.value2ActiveTaskBackgroundColor.set_active(false);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
+    },
+
+    resetButtons: function()
+    {
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
-        this.valueScrollWorkspaces.set_active(false);
+        this.valueScrollWorkspaces.set_active(0);
         this.valueShowAppsButtonToggle.set_active(0);
         this.valueTrayButton.set_active(0);
         this.valueTrayButtonEmpty.set_active(0);
-        this.valueHideActivities.set_active(false);
-        this.valueDisableHotCorner.set_active(false);
-        this.valueHideDefaultApplicationMenu.set_active(false);
+    },
+
+    resetSeparators: function()
+    {
+        this.valueSeparatorLeftBoxMain.set_value(0);
+        this.valueSeparatorRightBoxMain.set_value(0);
+        this.valueSeparatorLeftTasks.set_value(0);
+        this.valueSeparatorRightTasks.set_value(0);
+        this.valueSeparatorLeftDesktop.set_value(0);
+        this.valueSeparatorRightDesktop.set_value(0);
+        this.valueSeparatorLeftWorkspaces.set_value(0);
+        this.valueSeparatorRightWorkspaces.set_value(0);
+        this.valueSeparatorLeftAppview.set_value(0);
+        this.valueSeparatorRightAppview.set_value(0);
+        this.valueSeparatorLeftFavorites.set_value(0);
+        this.valueSeparatorRightFavorites.set_value(0);
+    },
+
+    resetPreview: function()
+    {
         this.valueDisplayLabel.set_active(true);
         this.valueDisplayThumbnail.set_active(true);
         this.valueDisplayFavoritesLabel.set_active(true);
         this.valuePreviewSize.set_value(350);
         this.valuePreviewDelay.set_value(500);
-        this.settings.set_boolean("separator-one", false);
-        this.valueSeparatorOne.set_active(false);
-        this.settings.set_boolean("separator-two", false);
-        this.valueSeparatorTwo.set_active(false);
-        this.settings.set_boolean("separator-three", false);
-        this.valueSeparatorThree.set_active(false);
-        this.settings.set_boolean("separator-four", false);
-        this.valueSeparatorFour.set_active(false);
-        this.settings.set_boolean("separator-five", false);
-        this.valueSeparatorFive.set_active(false);
-        this.settings.set_boolean("separator-six", false);
-        this.valueSeparatorSix.set_active(false);
-        this.settings.set_boolean("separator-one-bottom", false);
-        this.valueSeparatorOneBottom.set_active(false);
-        this.settings.set_boolean("separator-two-bottom", false);
-        this.valueSeparatorTwoBottom.set_active(false);
-        this.settings.set_boolean("separator-three-bottom", false);
-        this.valueSeparatorThreeBottom.set_active(false);
-        this.settings.set_boolean("separator-four-bottom", false);
-        this.valueSeparatorFourBottom.set_active(false);
-        this.settings.set_boolean("separator-five-bottom", false);
-        this.valueSeparatorFiveBottom.set_active(false);
-        this.settings.set_boolean("separator-six-bottom", false);
-        this.valueSeparatorSixBottom.set_active(false);
-        this.settings.set_int("separator-one-size", 20);
-        this.settings.set_int("separator-two-size", 20);
-        this.settings.set_int("separator-three-size", 20);
-        this.settings.set_int("separator-four-size", 20);
-        this.settings.set_int("separator-five-size", 20);
-        this.settings.set_int("separator-six-size", 20);
-        this.settings.set_int("separator-one-bottom-size", 20);
-        this.settings.set_int("separator-two-bottom-size", 20);
-        this.settings.set_int("separator-three-bottom-size", 20);
-        this.settings.set_int("separator-four-bottom-size", 20);
-        this.settings.set_int("separator-five-bottom-size", 20);
-        this.settings.set_int("separator-six-bottom-size", 20);
-        this.settings.set_int("position-tasks", 4);
-        this.settings.set_int("position-desktop-button", 3);
-        this.settings.set_int("position-workspace-button", 2);
-        this.settings.set_int("position-appview-button", 1);
-        this.settings.set_int("position-favorites", 0);
-        this.changeSeparatorSelection();
+    },
+
+    resetMisc: function()
+    {
+        this.valueHideActivities.set_active(false);
+        this.valueDisableHotCorner.set_active(false);
+        this.valueHideDefaultApplicationMenu.set_active(false);
+    },
+
+    resetAll: function()
+    {
+        this.resetMisc();
+        this.settings.set_boolean("reset-all", true);
     }
 }

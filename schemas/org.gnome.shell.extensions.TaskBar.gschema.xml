@@ -26,9 +26,19 @@
         <value value="1" nick="middle"/>
         <value value="2" nick="right"/>
     </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.scroll-tasks-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="standard"/>
+        <value value="2" nick="invert"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
         <value value="0" nick="index"/>
         <value value="1" nick="total"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.scroll-workspaces-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="standard"/>
+        <value value="2" nick="invert"/>
     </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">
         <value value="0" nick="leftclickappview"/>
@@ -40,14 +50,6 @@
         <value value="2" nick="workspacebutton"/>
         <value value="3" nick="showappsbutton"/>
         <value value="4" nick="favorites"/>
-    </enum>
-    <enum id="org.gnome.shell.extensions.TaskBar.separator-style">
-        <value value="0" nick="separatorone"/>
-        <value value="1" nick="separatortwo"/>
-        <value value="2" nick="separatorthree"/>
-        <value value="3" nick="separatorfour"/>
-        <value value="4" nick="separatorfive"/>
-        <value value="5" nick="separatorsix"/>
     </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.tray-button-style">
         <value value="0" nick="off"/>
@@ -138,12 +140,6 @@
             <summary>Hover Event</summary>
             <description/>
         </key>
-        <key name="hover-separator-event" type="i">
-            <range min="0" max="6"/>
-            <default>0</default>
-            <summary>Hover Separator Event</summary>
-            <description/>
-        </key>
         <key name="icon-size" type="i">
             <range min="1" max="96"/>
             <default>22</default>
@@ -183,14 +179,9 @@
             <summary>Middle/Right Click to Close Task</summary>
             <description/>
         </key>
-        <key name="scroll-tasks" type="b">
-            <default>false</default>
+        <key name="scroll-tasks" enum="org.gnome.shell.extensions.TaskBar.scroll-tasks-style">
+            <default>'off'</default>
             <summary>Scroll Tasks</summary>
-            <description/>
-        </key>
-        <key name="invert-scroll-tasks" type="b">
-            <default>false</default>
-            <summary>Invert Scroll Tasks</summary>
             <description/>
         </key>
         <key name="active-task-frame" type="b">
@@ -259,8 +250,8 @@
             <summary>Workspace Button Index</summary>
             <description/>
         </key>
-        <key name="scroll-workspaces" type="b">
-            <default>false</default>
+        <key name="scroll-workspaces" enum="org.gnome.shell.extensions.TaskBar.scroll-workspaces-style">
+            <default>'off'</default>
             <summary>Scroll Workspaces</summary>
             <description/>
         </key>
@@ -294,6 +285,78 @@
             <summary>Activate Tray on Hover</summary>
             <description/>
         </key>
+        <key name="separator-left-box-main" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Box Main Left Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-right-box-main" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Box Main Right Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-left-favorites" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Favorites Left Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-right-favorites" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Favorites Right Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-left-appview" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Appview Button Left Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-right-appview" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Appview Button Right Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-left-workspaces" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Workspace Indicator Left Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-right-workspaces" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Workspace Indicator Right Separator</summary>
+            <description/>
+        </key>         
+        <key name="separator-left-desktop" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Desktop Button Left Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-right-desktop" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Desktop Button Right Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-left-tasks" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Tasks Left Separator</summary>
+            <description/>
+        </key>
+        <key name="separator-right-tasks" type="i">
+            <range min="0" max="1000"/>
+            <default>0</default>
+            <summary>Tasks Right Separator</summary>
+            <description/>
+        </key>
         <key name="hide-activities" type="b">
             <default>false</default>
             <summary>Hide Activities</summary>
@@ -307,143 +370,6 @@
         <key name="hide-default-application-menu" type="b">
             <default>false</default>
             <summary>Hide Default Application Menu</summary>
-            <description/>
-        </key>
-        <key name="separator-one" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-two" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-three" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-four" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-five" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-six" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-one-bottom" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-two-bottom" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-three-bottom" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-four-bottom" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-five-bottom" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-six-bottom" type="b">
-            <default>false</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-one-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-two-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-three-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-four-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-five-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-six-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-one-bottom-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-two-bottom-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-three-bottom-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-four-bottom-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-five-bottom-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-six-bottom-size" type="i">
-            <range min="1" max="2000"/>
-            <default>20</default>
-            <summary>Separator</summary>
-            <description/>
-        </key>
-        <key name="separator-selection" enum="org.gnome.shell.extensions.TaskBar.separator-style">
-            <default>'separatorone'</default>
-            <summary>Separator Selection</summary>
             <description/>
         </key>
         <key name="display-label" type="b">
@@ -506,6 +432,11 @@
             <range min="0" max="4"/>
             <default>0</default>
             <summary>Position Favorites</summary>
+            <description/>
+        </key>
+        <key name="reset-all" type="b">
+            <default>false</default>
+            <summary>RESET ALL !</summary>
             <description/>
         </key>
     </schema>
