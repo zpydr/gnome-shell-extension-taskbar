@@ -190,8 +190,11 @@ TaskBar.prototype =
 
     onParamChanged: function()
     {
-        this.disable();
-        this.enable();
+        if (! this.settings.get_boolean("reset-flag"))
+        {
+            this.disable();
+            this.enable();
+        }
     },
 
     enable: function()
@@ -527,7 +530,8 @@ TaskBar.prototype =
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-container-width", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
-            this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll))
+            this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
+            this.settings.connect("changed::reset-flag", Lang.bind(this, this.onParamChanged))
         ];
     },
 

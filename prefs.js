@@ -503,7 +503,7 @@ Prefs.prototype =
         let resetButtonsButton = new Gtk.Button({label: _("Reset Buttons Tab")});
         resetButtonsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetButtonsButton.connect('clicked', Lang.bind(this, this.resetButtons));
-        resetButtonsButton.set_tooltip_text(_("Reset the Buttons Tab to the Original Buttons Settings"));
+        resetButtonsButton.set_tooltip_text(_("Reset the Buttons Tab except the Icons to the Original Buttons Settings.\nThe Icons can be Reset within their own Settings."));
         this.gridButtons.attach(resetButtonsButton, 1, 12, 1, 1);
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
@@ -1010,12 +1010,12 @@ Prefs.prototype =
     changeTopPanelBackgroundColor: function()
     {
         this.topPanelBackgroundColor = this.valueTopPanelBackgroundColor.get_rgba().to_string();
-        this.settings.set_string("top-panel-background-color", this.topPanelBackgroundColor);
         this.alpha = this.valueTopPanelBackgroundColor.get_alpha();
         if (this.alpha < 65535)
             this.settings.set_boolean("top-panel-background-alpha", true);
         else
             this.settings.set_boolean("top-panel-background-alpha", false);
+        this.settings.set_string("top-panel-background-color", this.topPanelBackgroundColor);
     },
 
     changeBottomPanelBackgroundColor: function()
@@ -1536,6 +1536,7 @@ Prefs.prototype =
 
     resetComponents: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.valueDisplayTasks.set_active(true);
         this.valueDisplayDesktopButton.set_active(true);
         this.valueDisplayWorkspaceButton.set_active(true);
@@ -1551,10 +1552,12 @@ Prefs.prototype =
         this.valueOverview.set_active(true);
         this.valueBottomPanel.set_active(false);
         this.settings.set_boolean("position-changed", true);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetSettings: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.settings.set_int("panel-position", 1);
         this.settings.set_int("panel-box", 1);
         this.settings.set_int("position-max-right", 9);
@@ -1572,10 +1575,12 @@ Prefs.prototype =
         rgba2.parse(topPanelOriginalBackgroundColor);
         this.valueTopPanelBackgroundColor.set_rgba(rgba2);
         this.valueBottomPanelBackgroundColor.set_rgba(rgba2);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetTasks: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.valueAllWorkspaces.set_active(false);
         this.valueTasksContainerWidth.set_value(0);
         this.valueCloseButton.set_active(0);
@@ -1589,6 +1594,7 @@ Prefs.prototype =
         this.value2ActiveTaskBackgroundColor.set_active(false);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetButtons: function()
@@ -1603,6 +1609,7 @@ Prefs.prototype =
 
     resetSeparators: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.valueSeparatorLeftBoxMain.set_value(0);
         this.valueSeparatorRightBoxMain.set_value(0);
         this.valueSeparatorLeftTasks.set_value(0);
@@ -1615,6 +1622,7 @@ Prefs.prototype =
         this.valueSeparatorRightAppview.set_value(0);
         this.valueSeparatorLeftFavorites.set_value(0);
         this.valueSeparatorRightFavorites.set_value(0);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetPreview: function()
@@ -1635,6 +1643,7 @@ Prefs.prototype =
 
     resetAll: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.resetMisc();
         this.settings.set_boolean("reset-all", true);
     }

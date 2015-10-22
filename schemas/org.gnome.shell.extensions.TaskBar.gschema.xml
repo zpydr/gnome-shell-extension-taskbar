@@ -439,5 +439,10 @@
             <summary>RESET ALL !</summary>
             <description/>
         </key>
+        <key name="reset-flag" type="b">
+            <default>false</default>
+            <summary>Reset Flag</summary>
+            <description/>
+        </key>
     </schema>
 </schemalist>
