@@ -69,7 +69,7 @@ TaskBar.prototype =
 {
     activeTask: null,
     activeWorkspaceIndex: null,
-    activitiesActor: null,
+    activitiesContainer: null,
     appearances: null,
     backgroundColor: null,
     backgroundStyleColor: null,
@@ -248,10 +248,10 @@ TaskBar.prototype =
         if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
             this.addTrayButton();
 
-        //Hide Activities
-        this.initHideActivities();
+        //Activities Button
+        this.initDisplayActivitiesButton();
 
-        //Disable Hot Corner
+        //Hot Corner
         if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
         {
             //Extended Barriers Support
@@ -260,10 +260,16 @@ TaskBar.prototype =
             this.threshold = Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._threshold;
             this.toggleOverview = Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._toggleOverview;
         }
-        this.initDisableHotCorner();
+        this.initEnableHotCorner();
 
-        //Hide Default Application Menu
-        this.initHideDefaultAppMenu();
+        //Application Menu
+        this.initDisplayApplicationMenu();
+
+        //Date Menu
+        this.initDisplayDateMenu();
+
+        //System Menu
+        this.initDisplaySystemMenu();
 
         //Active Task Frame / Background Color
         this.activeTaskFrame();
@@ -300,11 +306,11 @@ TaskBar.prototype =
         }
 
         //Show Activities if hidden
-        if (this.settings.get_boolean("hide-activities"))
-            this.activitiesActor.show();
+        if (! this.settings.get_boolean("activities-button"))
+            this.activitiesContainer.show();
 
         //Enable Hot Corner if disabled
-        if (this.settings.get_boolean("disable-hotcorner"))
+        if (! this.settings.get_boolean("hot-corner"))
         {
             if (ShellVersion[1] === 4)
                 Main.panel._activitiesButton._hotCorner._corner.show();
@@ -319,14 +325,22 @@ TaskBar.prototype =
             }
         }
 
-        //Show and disconnect Default Application Menu if hidden
-        if (this.settings.get_boolean("hide-default-application-menu"))
+        //Show and disconnect Application Menu if hidden
+        if (! this.settings.get_boolean("application-menu"))
         {
-            this.appMenuActor.show();
+            this.appMenuContainer.show();
             if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
+
+        //Show Date Menu if hidden
+        if (! this.settings.get_boolean("date-menu"))
+            this.dateMenuContainer.show();
+
+        //Show System Menu if hidden
+        if (! this.settings.get_boolean("system-menu"))
+            this.systemMenuContainer.show();
 
         //Disconnect Workspace Signals
         if (this.workspaceSwitchedId !== null)
@@ -520,9 +534,11 @@ TaskBar.prototype =
             this.settings.connect("changed::separator-right-appview", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-left-favorites", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::separator-right-favorites", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::hide-activities", Lang.bind(this, this.hideActivities)),
-            this.settings.connect("changed::disable-hotcorner", Lang.bind(this, this.disableHotCorner)),
-            this.settings.connect("changed::hide-default-application-menu", Lang.bind(this, this.hideDefaultAppMenu)),
+            this.settings.connect("changed::activities-button", Lang.bind(this, this.displayActivities)),
+            this.settings.connect("changed::hot-corner", Lang.bind(this, this.enableHotCorner)),
+            this.settings.connect("changed::application-menu", Lang.bind(this, this.displayApplicationMenu)),
+            this.settings.connect("changed::date-menu", Lang.bind(this, this.displayDateMenu)),
+            this.settings.connect("changed::system-menu", Lang.bind(this, this.displaySystemMenu)),
             this.settings.connect("changed::position-changed", Lang.bind(this, this.appearancePositionChange)),
             this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
@@ -934,35 +950,35 @@ TaskBar.prototype =
         this.boxBottomPanelTrayButton.add_actor(this.boxTray);
     },
 
-    //Hide Activities
-    hideActivities: function()
+    //Activities Button
+    displayActivities: function()
     {
-        this.initHideActivities();
-        if (! this.settings.get_boolean("hide-activities"))
-            this.activitiesActor.show();
+        this.initDisplayActivitiesButton();
+        if (this.settings.get_boolean("activities-button"))
+            this.activitiesContainer.show();
     },
 
-    initHideActivities: function()
+    initDisplayActivitiesButton: function()
     {
-        if (this.settings.get_boolean("hide-activities"))
+        if (! this.settings.get_boolean("activities-button"))
         {
             if (ShellVersion[1] === 4)
-                this.activitiesActor = Main.panel._activitiesButton.actor;
+                this.activitiesContainer = Main.panel._activitiesButton.container;
             else
-                this.activitiesActor = Main.panel.statusArea.activities.actor;
-            this.activitiesActor.hide();
+                this.activitiesContainer = Main.panel.statusArea.activities.container;
+            this.activitiesContainer.hide();
         }
     },
 
-    //Disable Hot Corner
-    disableHotCorner: function()
+    //Hot Corner
+    enableHotCorner: function()
     {
-        this.initDisableHotCorner();
-        if (! this.settings.get_boolean("disable-hotcorner"))
+        this.initEnableHotCorner();
+        if (this.settings.get_boolean("hot-corner"))
         {
-            if ((ShellVersion[1] === 4) && (! this.settings.get_boolean("hide-activities")))
+            if ((ShellVersion[1] === 4) && (this.settings.get_boolean("activities-button")))
                     Main.panel._activitiesButton._hotCorner._corner.show();
-            else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
+            else if ((ShellVersion[1] === 6) && (this.settings.get_boolean("activities-button")))
                 Main.panel.statusArea.activities.hotCorner._corner.show();
             else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
             {
@@ -974,13 +990,13 @@ TaskBar.prototype =
         }
     },
 
-    initDisableHotCorner: function()
+    initEnableHotCorner: function()
     {
-        if (this.settings.get_boolean("disable-hotcorner"))
+        if (! this.settings.get_boolean("hot-corner"))
         {
-            if ((ShellVersion[1] === 4) && (! this.settings.get_boolean("hide-activities")))
+            if ((ShellVersion[1] === 4) && (this.settings.get_boolean("activities-button")))
                 Main.panel._activitiesButton._hotCorner._corner.hide();
-            else if ((ShellVersion[1] === 6) && (! this.settings.get_boolean("hide-activities")))
+            else if ((ShellVersion[1] === 6) && (this.settings.get_boolean("activities-button")))
                 Main.panel.statusArea.activities.hotCorner._corner.hide();
             else if ((ShellVersion[1] === 8) || (ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
             {
@@ -992,72 +1008,112 @@ TaskBar.prototype =
         }
     },
 
-    //Hide Default Application Menu
-    hideDefaultAppMenu: function()
+    //Application Menu
+    displayApplicationMenu: function()
     {
-        this.initHideDefaultAppMenu();
-        if (! this.settings.get_boolean("hide-default-application-menu"))
+        this.initDisplayApplicationMenu();
+        if (this.settings.get_boolean("application-menu"))
         {
             let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 1) });
             let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
             xsettings.set_value('overrides', variant);
-            this.appMenuActor.show();
+            this.appMenuContainer.show();
             if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
                 Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
     },
 
-    initHideDefaultAppMenu: function()
+    initDisplayApplicationMenu: function()
     {
         if (ShellVersion[1] === 4)
         {
             if (Main.panel._appMenu !== null)
             {
-                this.appMenuActor = Main.panel._appMenu.actor;
-                if (this.settings.get_boolean("hide-default-application-menu"))
+                this.appMenuContainer = Main.panel._appMenu.container;
+                if (! this.settings.get_boolean("application-menu"))
                 {
                     let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
                     let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
                     xsettings.set_value('overrides', variant);
-                    this.appMenuActor.hide();
+                    this.appMenuContainer.hide();
                     this.hidingId = Main.overview.connect('hiding', function ()
                     {
-                        Main.panel._appMenu.actor.hide();
+                        Main.panel._appMenu.container.hide();
                     });
                 }
             }
         }
         else if ((ShellVersion[1] === 10) || (ShellVersion[1] === 12) || (ShellVersion[1] === 14) || (ShellVersion[1] === 16) || (ShellVersion[1] === 18))
         {
-            this.appMenuActor = Main.panel.statusArea.appMenu.actor;
-            if (this.settings.get_boolean("hide-default-application-menu"))
+            this.appMenuContainer = Main.panel.statusArea.appMenu.container;
+            if (! this.settings.get_boolean("application-menu"))
             {
-                this.appMenuActor.hide();
+                this.appMenuContainer.hide();
                 this.hidingId = Main.overview.connect('hiding', function ()
                 {
-                    Main.panel.statusArea.appMenu.actor.hide();
+                    Main.panel.statusArea.appMenu.container.hide();
                 });
                 this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
                 {
-                    Main.panel.statusArea.appMenu.actor.hide();
+                    Main.panel.statusArea.appMenu.container.hide();
                 });
             }
         }
         else if ((ShellVersion[1] === 6) || (ShellVersion[1] === 8))
         {
-            this.appMenuActor = Main.panel.statusArea.appMenu.actor;
-            if (this.settings.get_boolean("hide-default-application-menu"))
+            this.appMenuContainer = Main.panel.statusArea.appMenu.container;
+            if (! this.settings.get_boolean("application-menu"))
             {
                 let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
                 let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
                 xsettings.set_value('overrides', variant);
-                this.appMenuActor.hide();
+                this.appMenuContainer.hide();
                 this.hidingId = Main.overview.connect('hiding', function ()
                 {
-                    Main.panel.statusArea.appMenu.actor.hide();
+                    Main.panel.statusArea.appMenu.container.hide();
                 });
             }
+        }
+    },
+
+    //Date Menu
+    displayDateMenu: function()
+    {
+        this.initDisplayDateMenu();
+        if (this.settings.get_boolean("date-menu"))
+            this.dateMenuContainer.show();
+    },
+
+    initDisplayDateMenu: function()
+    {
+        if (! this.settings.get_boolean("date-menu"))
+        {
+            if (ShellVersion[1] === 4)
+                this.dateMenuContainer = Main.panel._dateMenuButton.container;
+            else
+                this.dateMenuContainer = Main.panel.statusArea.dateMenu.container;
+            this.dateMenuContainer.hide();
+        }
+    },
+
+    //System Menu
+    displaySystemMenu: function()
+    {
+        this.initDisplaySystemMenu();
+        if (this.settings.get_boolean("system-menu"))
+            this.systemMenuContainer.show();
+    },
+
+    initDisplaySystemMenu: function()
+    {
+        if (! this.settings.get_boolean("system-menu"))
+        {
+            if (ShellVersion[1] === 4)
+                this.systemMenuContainer = Main.panel._aggregateMenuButton.container;
+            else
+                this.systemMenuContainer = Main.panel.statusArea.aggregateMenu.container;
+            this.systemMenuContainer.hide();
         }
     },
 

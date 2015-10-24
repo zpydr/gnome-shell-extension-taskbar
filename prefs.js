@@ -705,42 +705,51 @@ Prefs.prototype =
         let labelMisc = new Gtk.Label({label: _("Misc")});
         notebook.append_page(scrollWindowMisc, labelMisc);
 
-        let labelHideActivities = new Gtk.Label({label: _("Hide Activities"), xalign: 0});
-        this.gridMisc.attach(labelHideActivities, 1, 1, 1, 1);
-        this.valueHideActivities = new Gtk.Switch({active: this.settings.get_boolean("hide-activities")});
-        this.valueHideActivities.connect('notify::active', Lang.bind(this, this.changeHideActivities));
-        this.gridMisc.attach(this.valueHideActivities, 3, 1, 1, 1);
+        let labelDisplayActivitiesButton = new Gtk.Label({label: _("Activities Button"), xalign: 0});
+        this.gridMisc.attach(labelDisplayActivitiesButton, 1, 1, 1, 1);
+        this.valueDisplayActivitiesButton = new Gtk.Switch({active: this.settings.get_boolean("activities-button")});
+        this.valueDisplayActivitiesButton.connect('notify::active', Lang.bind(this, this.changeDisplayActivitiesButton));
+        this.gridMisc.attach(this.valueDisplayActivitiesButton, 3, 1, 1, 1);
 
-        let labelDisableHotCorner = new Gtk.Label({label: _("Disable Hot Corner"), xalign: 0});
-        this.gridMisc.attach(labelDisableHotCorner, 1, 2, 1, 1);
-        this.valueDisableHotCorner = new Gtk.Switch({active: this.settings.get_boolean("disable-hotcorner")});
-        this.valueDisableHotCorner.connect('notify::active', Lang.bind(this, this.changeDisableHotCorner));
-        this.gridMisc.attach(this.valueDisableHotCorner, 3, 2, 1, 1);
+        let labelEnableHotCorner = new Gtk.Label({label: _("Hot Corner"), xalign: 0});
+        this.gridMisc.attach(labelEnableHotCorner, 1, 2, 1, 1);
+        this.valueEnableHotCorner = new Gtk.Switch({active: this.settings.get_boolean("hot-corner")});
+        this.valueEnableHotCorner.connect('notify::active', Lang.bind(this, this.changeEnableHotCorner));
+        this.gridMisc.attach(this.valueEnableHotCorner, 3, 2, 1, 1);
 
-        let labelHideDefaultApplicationMenu = new Gtk.Label({label: _("Hide Default App Menu"), xalign: 0});
-        this.gridMisc.attach(labelHideDefaultApplicationMenu, 1, 3, 1, 1);
-        this.valueHideDefaultApplicationMenu = new Gtk.Switch({active: this.settings.get_boolean("hide-default-application-menu")});
-        this.valueHideDefaultApplicationMenu.connect('notify::active', Lang.bind(this, this.changeHideDefaultApplicationMenu));
-        this.gridMisc.attach(this.valueHideDefaultApplicationMenu, 3, 3, 1, 1);
+        let labelDisplayApplicationMenu = new Gtk.Label({label: _("Application Menu"), xalign: 0});
+        this.gridMisc.attach(labelDisplayApplicationMenu, 1, 3, 1, 1);
+        this.valueDisplayApplicationMenu = new Gtk.Switch({active: this.settings.get_boolean("application-menu")});
+        this.valueDisplayApplicationMenu.connect('notify::active', Lang.bind(this, this.changeDisplayApplicationMenu));
+        this.gridMisc.attach(this.valueDisplayApplicationMenu, 3, 3, 1, 1);
 
-        let labelWarning = new Gtk.Label({ label: "<b>! </b>"+_("Activating one\nof those 3 options\ncould cause a conflict\nwith other extensions"), use_markup: true, xalign: 0 });
-        this.gridMisc.attach(labelWarning, 1, 4, 1, 1);
+        let labelDisplayDateMenu = new Gtk.Label({label: _("Date Menu"), xalign: 0});
+        this.gridMisc.attach(labelDisplayDateMenu, 1, 4, 1, 1);
+        this.valueDisplayDateMenu = new Gtk.Switch({active: this.settings.get_boolean("date-menu")});
+        this.valueDisplayDateMenu.connect('notify::active', Lang.bind(this, this.changeDisplayDateMenu));
+        this.gridMisc.attach(this.valueDisplayDateMenu, 3, 4, 1, 1);
+
+        let labelDisplaySystemMenu = new Gtk.Label({label: _("System Menu"), xalign: 0});
+        this.gridMisc.attach(labelDisplaySystemMenu, 1, 5, 1, 1);
+        this.valueDisplaySystemMenu = new Gtk.Switch({active: this.settings.get_boolean("system-menu")});
+        this.valueDisplaySystemMenu.connect('notify::active', Lang.bind(this, this.changeDisplaySystemMenu));
+        this.gridMisc.attach(this.valueDisplaySystemMenu, 3, 5, 1, 1);
 
         let resetMiscButton = new Gtk.Button({label: _("Reset Misc Tab")});
         resetMiscButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetMiscButton.connect('clicked', Lang.bind(this, this.resetMisc));
         resetMiscButton.set_tooltip_text(_("Reset the Misc Tab to the Original Misc Settings"));
-        this.gridMisc.attach(resetMiscButton, 1, 6, 1, 1);
+        this.gridMisc.attach(resetMiscButton, 1, 7, 1, 1);
 
         let labelSpaceMisc1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc1, 0, 7, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc1, 0, 8, 1, 1);
         let labelSpaceMisc2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
         let labelSpaceMisc3 = new Gtk.Label({label: "<b>"+_("Misc")+"</b>", xalign: 2, hexpand: true});
         labelSpaceMisc3.set_use_markup(true);
         this.gridMisc.attach(labelSpaceMisc3, 0, 0, 4, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc4, 4, 5, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc4, 4, 6, 1, 1);
 
         this.gridTaskBar = new Gtk.Grid();
         this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
@@ -1388,19 +1397,29 @@ Prefs.prototype =
         this.settings.set_int("separator-right-favorites", this.valueSeparatorRightFavorites.get_value());        
     },
 
-    changeHideActivities: function(object, pspec)
+    changeDisplayActivitiesButton: function(object, pspec)
     {
-        this.settings.set_boolean("hide-activities", object.active);
+        this.settings.set_boolean("activities-button", object.active);
     },
 
-    changeDisableHotCorner: function(object, pspec)
+    changeEnableHotCorner: function(object, pspec)
     {
-        this.settings.set_boolean("disable-hotcorner", object.active);
+        this.settings.set_boolean("hot-corner", object.active);
     },
 
-    changeHideDefaultApplicationMenu: function(object, pspec)
+    changeDisplayApplicationMenu: function(object, pspec)
     {
-        this.settings.set_boolean("hide-default-application-menu", object.active);
+        this.settings.set_boolean("application-menu", object.active);
+    },
+
+    changeDisplayDateMenu: function(object, pspec)
+    {
+        this.settings.set_boolean("date-menu", object.active);
+    },
+
+    changeDisplaySystemMenu: function(object, pspec)
+    {
+        this.settings.set_boolean("system-menu", object.active);
     },
 
     changeDisplayLabel: function(object, pspec)
@@ -1636,9 +1655,11 @@ Prefs.prototype =
 
     resetMisc: function()
     {
-        this.valueHideActivities.set_active(false);
-        this.valueDisableHotCorner.set_active(false);
-        this.valueHideDefaultApplicationMenu.set_active(false);
+        this.valueDisplayActivitiesButton.set_active(true);
+        this.valueEnableHotCorner.set_active(true);
+        this.valueDisplayApplicationMenu.set_active(true);
+        this.valueDisplayDateMenu.set_active(true);
+        this.valueDisplaySystemMenu.set_active(true);
     },
 
     resetAll: function()

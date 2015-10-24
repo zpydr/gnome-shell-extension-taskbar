@@ -357,19 +357,29 @@
             <summary>Tasks Right Separator</summary>
             <description/>
         </key>
-        <key name="hide-activities" type="b">
-            <default>false</default>
-            <summary>Hide Activities</summary>
+        <key name="activities-button" type="b">
+            <default>true</default>
+            <summary>Activities Button</summary>
             <description/>
         </key>
-        <key name="disable-hotcorner" type="b">
-            <default>false</default>
-            <summary>Disable Hot Corner</summary>
+        <key name="hot-corner" type="b">
+            <default>true</default>
+            <summary>Hot Corner</summary>
             <description/>
         </key>
-        <key name="hide-default-application-menu" type="b">
-            <default>false</default>
-            <summary>Hide Default Application Menu</summary>
+        <key name="application-menu" type="b">
+            <default>true</default>
+            <summary>Application Menu</summary>
+            <description/>
+        </key>
+        <key name="date-menu" type="b">
+            <default>true</default>
+            <summary>Date Menu</summary>
+            <description/>
+        </key>
+        <key name="system-menu" type="b">
+            <default>true</default>
+            <summary>System Menu</summary>
             <description/>
         </key>
         <key name="display-label" type="b">
