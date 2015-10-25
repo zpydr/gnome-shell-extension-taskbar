@@ -1908,7 +1908,7 @@ TaskBar.prototype =
         let favoriteappName = favoriteapp.get_name();
         if (favoriteapp.get_description())
         {
-            favoriteappName + '\n' + favoriteapp.get_description();
+            favoriteappName += '\n' + favoriteapp.get_description();
         }
         let labelNamePreview = new St.Label({ text: favoriteappName, style_class: "tkb-preview-name" });
         this.favoritesPreview.add_actor(labelNamePreview);
