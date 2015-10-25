@@ -202,11 +202,14 @@ TaskBar.prototype =
         let settings = new Lib.Settings(this.schema);
         this.settings = settings.getSettings();
 
+        //Top Panel Background Color
+        this.iconSize = this.settings.get_int('icon-size');
+        this.changeTopPanelBackgroundColor();
+
         //First Start
         this.firstStart();
 
         //Add TaskBar
-        this.iconSize = this.settings.get_int('icon-size');
         this.boxMain = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainFavorites = new St.BoxLayout({ style_class: "tkb-box" });
         this.boxMainShowAppsButton = new St.BoxLayout({ style_class: "tkb-box" });
@@ -225,9 +228,6 @@ TaskBar.prototype =
 
         //Add Separators
         this.addSeparators();
-
-        //Top Panel Background Color
-        this.changeTopPanelBackgroundColor();
 
         //Set TaskBar Position
         this.onPositionChanged();
@@ -594,24 +594,25 @@ TaskBar.prototype =
     //First Start
     firstStart: function()
     {
+        if ((this.settings.get_string("extension-path") === 'unset') || (this.settings.get_string("extension-path") !== Extension.path))
+        {
+            this.settings.set_string("extension-path", Extension.path);
+            this.settings.set_string("desktop-button-icon", DESKTOPICON);
+            this.settings.set_string("appview-button-icon", APPVIEWICON);
+            this.settings.set_string("tray-button-icon", BPTRAYICON);
+        }
         if (ShellVersion[1] === 4)
         {
             if (this.settings.get_boolean("first-start"))
             {
-                this.settings.set_string("desktop-button-icon", DESKTOPICON);
-                this.settings.set_string("appview-button-icon", APPVIEWICON);
-                this.settings.set_string("tray-button-icon", BPTRAYICON);
                 Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_boolean("first-start", false);
             }
         }
-        else
+        if (ShellVersion[1] !== 4)
         {
             if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode === 'user'))
             {
-                this.settings.set_string("desktop-button-icon", DESKTOPICON);
-                this.settings.set_string("appview-button-icon", APPVIEWICON);
-                this.settings.set_string("tray-button-icon", BPTRAYICON);
                 Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
                 this.settings.set_boolean("first-start", false);
             }
@@ -805,6 +806,8 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-showapps-button"))
         {
             let iconPath = this.settings.get_string("appview-button-icon");
+            if (iconPath === 'unset')
+                iconPath = APPVIEWICON;
             this.showAppsIcon = Gio.icon_new_for_string(iconPath);
             this.iconShowApps = new St.Icon(
             {
@@ -862,6 +865,8 @@ TaskBar.prototype =
         if (this.settings.get_boolean("display-desktop-button"))
         {
             let iconPath = this.settings.get_string("desktop-button-icon");
+            if (iconPath === 'unset')
+                iconPath = DESKTOPICON;
             this.desktopButtonIcon = Gio.icon_new_for_string(iconPath);
             let iconDesktop = new St.Icon(
             {
@@ -937,6 +942,8 @@ TaskBar.prototype =
     messageTrayIcon: function()
     {
         let iconPath = this.settings.get_string("tray-button-icon");
+        if (iconPath === 'unset')
+            iconPath = BPTRAYICON;
         this.trayIcon = Gio.icon_new_for_string(iconPath);
         this.iconTray = new St.Icon(
         {
@@ -1165,7 +1172,7 @@ TaskBar.prototype =
         this.panelIconSize = Math.round(this.iconSize * 2 / 3);
         this.panelSize = 'font-size: ' + this.panelIconSize + 'px;';
         this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
-        if (this.topPanelBackgroundColor === "unset")
+        if (this.topPanelBackgroundColor === 'unset')
         {
             Main.panel.actor.set_style(this.panelSize);
             //Get Native Panel Background Color
@@ -1173,7 +1180,7 @@ TaskBar.prototype =
             let topPanelOriginalBackgroundColor = 'rgba(%d, %d, %d, %d)'.format(tpobc.red, tpobc.green, tpobc.blue, tpobc.alpha);
             this.settings.set_string("top-panel-original-background-color", topPanelOriginalBackgroundColor);
             this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
-            if (this.bottomPanelBackgroundColor === "unset")
+            if (this.bottomPanelBackgroundColor === 'unset')
             {
                 this.settings.set_string("bottom-panel-original-background-color", topPanelOriginalBackgroundColor);
             }

@@ -67,6 +67,11 @@
             <summary>Display Preferences on the first start of TaskBar</summary>
             <description/>
         </key>
+       <key name="extension-path" type="s">
+            <default>'unset'</default>
+            <summary>Extension Path</summary>
+            <description/>
+        </key>
         <key name="display-tasks" type="b">
             <default>true</default>
             <summary>Display Tasks</summary>
@@ -236,7 +241,7 @@
             <description/>
         </key>
         <key name="desktop-button-icon" type="s">
-            <default>'desktopbuttonicon'</default>
+            <default>'unset'</default>
             <summary>Desktop Button Icon</summary>
             <description/>
         </key>
@@ -261,7 +266,7 @@
             <description/>
         </key>
         <key name="appview-button-icon" type="s">
-            <default>'appviewbuttonicon'</default>
+            <default>'unset'</default>
             <summary>Appview Button Icon</summary>
             <description/>
         </key>
@@ -276,7 +281,7 @@
             <description/>
         </key>
         <key name="tray-button-icon" type="s">
-            <default>'traybuttonicon'</default>
+            <default>'unset'</default>
             <summary>Tray Button Icon</summary>
             <description/>
         </key>

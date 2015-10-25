@@ -258,8 +258,9 @@ Prefs.prototype =
         let labelPanelBackgroundColor = new Gtk.Label({label: _("Panel Background\nColor & Opacity"), xalign: 0});
         this.gridSettings.attach(labelPanelBackgroundColor, 1, 6, 1, 1);
         let colorTop = this.settings.get_string("top-panel-background-color");
+        let colorTopOriginal = this.settings.get_string("top-panel-original-background-color");
         if (colorTop === 'unset')
-            colorTop = this.settings.get_string("top-panel-original-background-color");
+            colorTop = colorTopOriginal;
         let rgbaTop = new Gdk.RGBA();
         rgbaTop.parse(colorTop);
         this.valueTopPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Top Panel Background Color"});
@@ -268,8 +269,13 @@ Prefs.prototype =
         this.valueTopPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeTopPanelBackgroundColor));
         this.gridSettings.attach(this.valueTopPanelBackgroundColor, 3, 6, 2, 1);
         let colorBottom = this.settings.get_string("bottom-panel-background-color");
+        let colorBottomOriginal = this.settings.get_string("bottom-panel-original-background-color");
         if (colorBottom === 'unset')
-            colorBottom = this.settings.get_string("bottom-panel-original-background-color");
+        {
+            colorBottom = colorTopOriginal;
+            if (colorBottomOriginal === 'unset')
+                this.settings.set_string("bottom-panel-original-background-color", colorTopOriginal);
+        }
         let rgbaBottom = new Gdk.RGBA();
         rgbaBottom.parse(colorBottom);
         this.valueBottomPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Bottom Panel Background Color"});
@@ -419,6 +425,8 @@ Prefs.prototype =
         let labelDesktopButtonIcon = new Gtk.Label({label: _("Desktop Button Icon"), xalign: 0});
         this.gridButtons.attach(labelDesktopButtonIcon, 1, 2, 1, 1);
         this.desktopIconFilename = this.settings.get_string("desktop-button-icon");
+        if (this.desktopIconFilename === 'unset')
+            this.desktopIconFilename = DESKTOPICON;
         this.valueDesktopButtonIcon = new Gtk.Image();
         this.loadDesktopIcon();
         this.valueDesktopButtonIcon2 = new Gtk.Button({image: this.valueDesktopButtonIcon});
@@ -456,6 +464,8 @@ Prefs.prototype =
         let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
         this.gridButtons.attach(labelAppviewButtonIcon, 1, 6, 1, 1);
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
+        if (this.appviewIconFilename === 'unset')
+            this.appviewIconFilename = APPVIEWICON;
         this.valueAppviewButtonIcon = new Gtk.Image();
         this.loadAppviewIcon();
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
@@ -487,6 +497,8 @@ Prefs.prototype =
             let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
             this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
             this.trayIconFilename = this.settings.get_string("tray-button-icon");
+            if (this.trayIconFilename === 'unset')
+                this.trayIconFilename = TRAYICON;
             this.valueTrayButtonIcon = new Gtk.Image();
             this.loadTrayIcon();
             this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
