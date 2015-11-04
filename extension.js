@@ -142,8 +142,11 @@ TaskBar.prototype =
     labelWidth: null,
     labelWorkspaceIndex: null,
     labelWorkspace: null,
+    lastFocusedWindow: null,
+    lastFocusedWindowUserTime: null,
     leftbutton: null,
     mainBox: null,
+    maxWindows: null,
     messageTrayCountAddedId: null,
     messageTrayCountRemovedId: null,
     messageTrayHidingId: null,
@@ -227,6 +230,7 @@ TaskBar.prototype =
     tpobc: null,
     trayIcon: null,
     type: null,
+    userTime: null,
     variant: null,
     width: null,
     windows: null,
@@ -1454,6 +1458,9 @@ TaskBar.prototype =
 
     onClickDesktopButton: function(button, pspec)
     {
+        let maxWindows = false;
+        let userTime = null;
+        let activeWorkspace = global.screen.get_active_workspace();
         this.activeTasks();
         let numButton = pspec.get_button();
         if (numButton === LEFTBUTTON) //Left Button
@@ -1462,13 +1469,29 @@ TaskBar.prototype =
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    if (this.desktopView && (! Main.overview.visible))
-                        windowTask.unminimize(global.get_current_time());
-                    else
-                        windowTask.minimize(global.get_current_time());
+                    let windowWorkspace = windowTask.get_workspace();
+                    if (this.desktopView && (! Main.overview.visible) && (windowWorkspace === activeWorkspace))
+                    {
+                        userTime = windowTask.user_time;
+                        if (userTime > this.lastFocusedWindowUserTime)
+                        {
+                            this.lastFocusedWindowUserTime = userTime;
+                            this.lastFocusedWindow = windowTask;
+                        }
+                        windowTask.unminimize();
+                        maxWindows = true;
+                    }
+                    else if (windowWorkspace === activeWorkspace)
+                    {
+                        windowTask.minimize();
+                    }
                 },
                 this
             );
+            if (maxWindows)
+            {
+                this.lastFocusedWindow.activate(global.get_current_time());
+            }
             this.desktopView = ! this.desktopView;
             if (Main.overview.visible)
                 Main.overview.hide();
@@ -1498,7 +1521,7 @@ TaskBar.prototype =
                         else if (! windowTask.has_focus())
                             windowTask.activate(global.get_current_time());
                         else if (! Main.overview.visible)
-                            windowTask.minimize(global.get_current_time());
+                            windowTask.minimize();
                     }
                 },
                 this
