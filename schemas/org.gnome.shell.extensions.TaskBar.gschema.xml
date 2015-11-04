@@ -21,6 +21,11 @@
   zpydr@openmailbox.org
 -->
 <schemalist gettext-domain="gnome-shell-extensions-TaskBar">
+    <enum id="org.gnome.shell.extensions.TaskBar.menu-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="middle"/>
+        <value value="2" nick="right"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.close-button-style">
         <value value="0" nick="off"/>
         <value value="1" nick="middle"/>
@@ -177,6 +182,11 @@
             <range min="0" max="100"/>
             <default>0</default>
             <summary>Tasks Container Width</summary>
+            <description/>
+        </key>
+        <key name="menu" enum="org.gnome.shell.extensions.TaskBar.menu-style">
+            <default>'right'</default>
+            <summary>Middle/Right Click to Show Tasks Menu</summary>
             <description/>
         </key>
         <key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-style">

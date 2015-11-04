@@ -30,15 +30,18 @@ Resize panels + contents
 Top/bottom panel background color + opacity
 Bottom panel tray button - activate the message tray
 Tasks on all workspaces
+Tasks application menu
 Close tasks with a right/middle click
 Activate tasks on hover
 Scroll tasks/workspaces
 Separators
 Thumbnail/label-preview
-Hide activities
+Hide activities button
 Disable hot corner
-Hide default application menu - simultaneously integrates the menu into 
+Hide application menu - simultaneously integrates the menu into 
 applications like empathy, nautilus, etc.
+Hide date menu
+Hide system menu
 
 Language support:
 Chinese by tuhaihe
