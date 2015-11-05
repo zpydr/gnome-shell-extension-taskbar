@@ -28,14 +28,14 @@ function Windows(callBackThis, callbackWindowsListChanged, callbackWindowChanged
 Windows.prototype =
 {
     workspace: null,
-    windowsList: new Array(),
+    windowsList: [],
     callBackThis: null,
     callbackWindowsListChanged: null,
     callbackWindowChanged: null,
     workspaceSwitchSignal: null,
     windowAddedSignal: null,
     windowRemovedSignal: null,
-    windowsSignals: new Array(),
+    windowsSignals: [],
 
     init: function(callBackThis, callbackWindowsListChanged, callbackWindowChanged)
     {
@@ -45,8 +45,9 @@ Windows.prototype =
         this.callbackWindowChanged = callbackWindowChanged;
 
         //Init WindowsList
-        this.onWorkspaceChanged();
+        this.workspaceSignals = new Map();
         this.buildWindowsList();
+        this.onWorkspaceChanged();
 
 
 
@@ -58,19 +59,15 @@ Windows.prototype =
     destruct: function()
     {
         //Remove window manager signals
-        global.screen.disconnect(this.workspaceSwitchSignal);
-        global.screen.disconnect(this.nWorkspacesSignal);
-
-        //Remove workspace signals
-        let totalWorkspaces = global.screen.n_workspaces;
-        for (let i = 0; i < totalWorkspaces; i++)
+        let numWorkspaces = global.screen.n_workspaces;
+        for (let i = 0; i < numWorkspaces; i++)
         {
-            let activeWorkspace = global.screen.get_workspace_by_index(i);
-            activeWorkspace.disconnect(this.windowAddedSignal);
-            activeWorkspace.disconnect(this.windowRemovedSignal);
+            let workspace = global.screen.get_workspace_by_index(i);
+            let signals = this.workspaceSignals.get(workspace);
+            this.workspaceSignals.delete(workspace);
+            workspace.disconnect(signals.windowAddedId);
+            workspace.disconnect(signals.windowRemovedId);
         }
-        this.windowAddedSignal = null;
-        this.windowRemovedSignal = null;
 
         //Clean windows list
         this.cleanWindowsList();
@@ -78,25 +75,16 @@ Windows.prototype =
 
     onWorkspaceChanged: function()
     {
-        //Remove workspace signals if necessary
-        let totalWorkspaces = global.screen.n_workspaces;
-        for (let i = 0; i < totalWorkspaces; i++)
+        let numWorkspaces = global.screen.n_workspaces;
+        for (let i = 0; i < numWorkspaces; i++)
         {
-            let activeWorkspace = global.screen.get_workspace_by_index(i);
-            if (this.windowAddedSignal !== null)
-                activeWorkspace.disconnect(this.windowAddedSignal);
-            if (this.windowRemovedSignal !== null)
-                activeWorkspace.disconnect(this.windowRemovedSignal);
-        }
-        this.windowAddedSignal = null;
-        this.windowRemovedSignal = null;
-
-        //Add workspace signals
-        for (let i = 0; i < totalWorkspaces; i++)
-        {
-            let activeWorkspace = global.screen.get_workspace_by_index(i);
-            this.windowAddedSignal = activeWorkspace.connect_after('window-added', Lang.bind(this, this.buildWindowsList));
-            this.windowRemovedSignal = activeWorkspace.connect_after('window-removed', Lang.bind(this, this.buildWindowsList));
+            let workspace = global.screen.get_workspace_by_index(i);
+            if (this.workspaceSignals.has(workspace))
+                continue;
+            let signals = { windowAddedId: 0, windowRemovedId: 0 };
+            signals.windowAddedId = workspace.connect_after('window-added', Lang.bind(this, this.buildWindowsList));
+            signals.windowRemovedId = workspace.connect('window-removed', Lang.bind(this, this.buildWindowsList));
+            this.workspaceSignals.set(workspace, signals);
         }
     },
 
