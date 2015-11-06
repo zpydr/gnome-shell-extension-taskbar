@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2015 zpydr
 //
-//  Version 44
+//  Version 45
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -28,14 +28,14 @@ function Windows(callBackThis, callbackWindowsListChanged, callbackWindowChanged
 Windows.prototype =
 {
     workspace: null,
-    windowsList: new Array(),
+    windowsList: [],
     callBackThis: null,
     callbackWindowsListChanged: null,
     callbackWindowChanged: null,
     workspaceSwitchSignal: null,
     windowAddedSignal: null,
     windowRemovedSignal: null,
-    windowsSignals: new Array(),
+    windowsSignals: [],
 
     init: function(callBackThis, callbackWindowsListChanged, callbackWindowChanged)
     {

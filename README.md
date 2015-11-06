@@ -1,5 +1,5 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 44 for GNOME 3.4 - 3.18**  
+**GNOME Shell Extension TaskBar Version 45 for GNOME 3.4 - 3.18**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
@@ -39,8 +39,7 @@ Separators
 Thumbnail/label-preview         
 Hide activities button         
 Disable hot corner          
-Hide application menu - simultaneously integrates the menu into             
-applications like empathy, nautilus, etc.               
+Hide application menu		
 Hide date menu		
 Hide system menu		
         
