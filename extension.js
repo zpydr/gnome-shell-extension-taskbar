@@ -1811,13 +1811,14 @@ TaskBar.prototype =
             let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
             //Menu
             let menu = null;
+            let menuQuit = null;
             let menuManager = new PopupMenu.PopupMenuManager({actor: buttonTask});
             if (app.action_group && app.menu)
                 menu = new RemoteMenu.RemoteMenu(buttonTask, app.menu, app.action_group);
             else
             {
                 menu = new PopupMenu.PopupMenu(buttonTask, 0.0, St.Side.TOP, 2);
-                let menuQuit = new PopupMenu.PopupMenuItem("Quit");
+                menuQuit = new PopupMenu.PopupMenuItem("Quit");
                 menuQuit.connect('activate', Lang.bind(this, function()
                 {
                     app.request_quit();
@@ -1854,7 +1855,7 @@ TaskBar.prototype =
                 this.boxMainTasks.add_actor(buttonTask);
             else
                 this.boxMainTasks.set_width(-1);
-            this.tasksList.push([ window, buttonTask, signalsTask ]);
+            this.tasksList.push([ window, buttonTask, signalsTask, menu ]);
         }
     },
 
@@ -1864,7 +1865,7 @@ TaskBar.prototype =
         let index = this.searchTaskInList(window);
         if (index !== null)
         {
-            let [windowTask, buttonTask, signalsTask] = this.tasksList[index];
+            let [windowTask, buttonTask, signalsTask, menu] = this.tasksList[index];
             signalsTask.forEach(
                 function(signal)
                 {
@@ -1872,6 +1873,7 @@ TaskBar.prototype =
                 },
                 this
             );
+            menu.destroy();
             buttonTask.destroy();
             this.tasksList.splice(index, 1);
             this.countTasks --;
@@ -1892,7 +1894,7 @@ TaskBar.prototype =
     {
         for (let i = this.tasksList.length - 1; i >= 0; i--)
         {
-            let [windowTask, buttonTask, signalsTask] = this.tasksList[i];
+            let [windowTask, buttonTask, signalsTask, menu] = this.tasksList[i];
             signalsTask.forEach(
                 function(signal)
                 {
@@ -1900,6 +1902,7 @@ TaskBar.prototype =
                 },
                 this
             );
+            menu.destroy();
             buttonTask.destroy();
             this.tasksList.splice(i, 1);
             if (this.countTasks !== null)
