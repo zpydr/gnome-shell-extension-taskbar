@@ -33,9 +33,6 @@ const Layout = imports.ui.layout;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-const RemoteMenu = imports.ui.remoteMenu;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -148,10 +145,6 @@ TaskBar.prototype =
     leftbutton: null,
     mainBox: null,
     maxWindows: null,
-    menu: null,
-    menuManager: null,
-    menuQuit: null,
-    menuWasOpen: null,
     messageTrayCountAddedId: null,
     messageTrayCountRemovedId: null,
     messageTrayHidingId: null,
@@ -1505,60 +1498,34 @@ TaskBar.prototype =
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
     },
 
-    onClickTaskButton: function(button, pspec, window, menu)
+    onClickTaskButton: function(button, pspec, window)
     {
         let activeWorkspace = global.screen.get_active_workspace();
-        let menuWasOpen = menu.isOpen;
         let numButton = pspec.get_button();
         if (numButton === LEFTBUTTON) //Left Button
         {
-            if (menuWasOpen)
-                menu.close();
-            else
-            {
-                this.tasksList.forEach(
-                    function(task)
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    let windowWorkspace = windowTask.get_workspace();
+                    if (windowTask === window)
                     {
-                        let [windowTask, buttonTask, signalsTask] = task;
-                        let windowWorkspace = windowTask.get_workspace();
-                        if (windowTask === window)
+                        if (windowWorkspace !== activeWorkspace)
                         {
-                            if (windowWorkspace !== activeWorkspace)
-                            {
-                                windowWorkspace.activate(global.get_current_time());
-                                windowTask.activate(global.get_current_time());
-                            }
-                            else if (! windowTask.has_focus())
-                                windowTask.activate(global.get_current_time());
-                            else if (! Main.overview.visible)
-                                windowTask.minimize();
+                            windowWorkspace.activate(global.get_current_time());
+                            windowTask.activate(global.get_current_time());
                         }
-                    },
-                    this
-                );
+                        else if (! windowTask.has_focus())
+                            windowTask.activate(global.get_current_time());
+                        else if (! Main.overview.visible)
+                            windowTask.minimize();
+                    }
+                },
+                this
+            );
             if (Main.overview.visible)
                 Main.overview.hide();
-            }
-        }
-        else if (numButton === MIDDLEBUTTON && this.settings.get_enum("menu") === 1) //Middle Button
-        {
-            this.hidePreview();
-            if (menuWasOpen)
-                menu.close();
-            else
-            {
-                menu.open();
-            }
-        }
-        else if (numButton === RIGHTBUTTON && this.settings.get_enum("menu") === 2) //Right Button
-        {
-            this.hidePreview();
-            if (menuWasOpen)
-                menu.close();
-            else
-            {
-                menu.open();
-            }
         }
         else if (numButton === MIDDLEBUTTON && this.settings.get_enum("close-button") === 1) //Middle Button
             window.delete(global.get_current_time());
@@ -1809,27 +1776,8 @@ TaskBar.prototype =
         if (app)
         {
             let buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
-            //Menu
-            let menu = null;
-            let menuQuit = null;
-            let menuManager = new PopupMenu.PopupMenuManager({actor: buttonTask});
-            if (app.action_group && app.menu)
-                menu = new RemoteMenu.RemoteMenu(buttonTask, app.menu, app.action_group);
-            else
-            {
-                menu = new PopupMenu.PopupMenu(buttonTask, 0.0, St.Side.TOP, 2);
-                menuQuit = new PopupMenu.PopupMenuItem("Quit");
-                menuQuit.connect('activate', Lang.bind(this, function()
-                {
-                    app.request_quit();
-                }));
-                menu.addMenuItem(menuQuit);
-            }
-            menu.actor.hide();
-            menuManager.addMenu(menu);
-            Main.uiGroup.add_actor(menu.actor);
             let signalsTask = [
-                buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window, menu)),
+                buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
                 buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
                 buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
             ];
@@ -1855,7 +1803,7 @@ TaskBar.prototype =
                 this.boxMainTasks.add_actor(buttonTask);
             else
                 this.boxMainTasks.set_width(-1);
-            this.tasksList.push([ window, buttonTask, signalsTask, menu ]);
+            this.tasksList.push([ window, buttonTask, signalsTask ]);
         }
     },
 
@@ -1865,7 +1813,7 @@ TaskBar.prototype =
         let index = this.searchTaskInList(window);
         if (index !== null)
         {
-            let [windowTask, buttonTask, signalsTask, menu] = this.tasksList[index];
+            let [windowTask, buttonTask, signalsTask] = this.tasksList[index];
             signalsTask.forEach(
                 function(signal)
                 {
@@ -1873,7 +1821,6 @@ TaskBar.prototype =
                 },
                 this
             );
-            menu.destroy();
             buttonTask.destroy();
             this.tasksList.splice(index, 1);
             this.countTasks --;
@@ -1894,7 +1841,7 @@ TaskBar.prototype =
     {
         for (let i = this.tasksList.length - 1; i >= 0; i--)
         {
-            let [windowTask, buttonTask, signalsTask, menu] = this.tasksList[i];
+            let [windowTask, buttonTask, signalsTask] = this.tasksList[i];
             signalsTask.forEach(
                 function(signal)
                 {
@@ -1902,7 +1849,6 @@ TaskBar.prototype =
                 },
                 this
             );
-            menu.destroy();
             buttonTask.destroy();
             this.tasksList.splice(i, 1);
             if (this.countTasks !== null)
