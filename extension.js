@@ -1476,12 +1476,12 @@ TaskBar.prototype =
                             this.lastFocusedWindowUserTime = userTime;
                             this.lastFocusedWindow = windowTask;
                         }
-                        windowTask.unminimize();
+                        windowTask.unminimize(global.get_current_time());
                         maxWindows = true;
                     }
                     else if (windowWorkspace === activeWorkspace)
                     {
-                        windowTask.minimize();
+                        windowTask.minimize(global.get_current_time());
                     }
                 },
                 this
@@ -1519,7 +1519,7 @@ TaskBar.prototype =
                         else if (! windowTask.has_focus())
                             windowTask.activate(global.get_current_time());
                         else if (! Main.overview.visible)
-                            windowTask.minimize();
+                            windowTask.minimize(global.get_current_time());
                     }
                 },
                 this
