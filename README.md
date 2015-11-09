@@ -30,7 +30,7 @@ Align position
 Resize panels + contents        
 Top/bottom panel background color + opacity     
 Bottom panel tray button - activate the message tray        
-Tasks on all workspaces
+Tasks on all workspaces		
 Tasks application menu         
 Close tasks with a right/middle click           
 Activate tasks on hover         
