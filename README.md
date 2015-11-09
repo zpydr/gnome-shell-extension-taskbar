@@ -1,5 +1,5 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 46 for GNOME 3.4 - 3.18**  
+**GNOME Shell Extension TaskBar Version 47 for GNOME 3.4 - 3.18**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
@@ -30,7 +30,8 @@ Align position
 Resize panels + contents        
 Top/bottom panel background color + opacity     
 Bottom panel tray button - activate the message tray        
-Tasks on all workspaces         
+Tasks on all workspaces
+Tasks application menu         
 Close tasks with a right/middle click           
 Activate tasks on hover         
 Scroll tasks/workspaces         
