@@ -324,6 +324,16 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
+        let labelTaskMenu = new Gtk.Label({label: _("Tasks Application Menu"), xalign: 0});
+        this.gridTasks.attach(labelTaskMenu, 1, 2, 1, 1);
+        this.valueTaskMenu = new Gtk.ComboBoxText();
+        this.valueTaskMenu.append_text(_("OFF"));
+        this.valueTaskMenu.append_text(_("Middle Click"));
+        this.valueTaskMenu.append_text(_("Right Click"));
+        this.valueTaskMenu.set_active(this.settings.get_enum("task-menu"));
+        this.valueTaskMenu.connect('changed', Lang.bind(this, this.changeTaskMenu));
+        this.gridTasks.attach(this.valueTaskMenu, 3, 2, 2, 1);
+
         let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width"), xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 3, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
@@ -996,6 +1006,11 @@ Prefs.prototype =
         this.settings.set_boolean("tasks-all-workspaces", object.active);
     },
 
+    changeTaskMenu: function(object)
+    {
+        this.settings.set_enum("task-menu", this.valueTaskMenu.get_active());
+    },
+
     changeTasksContainerWidth: function(object)
     {
         this.settings.set_int("tasks-container-width", this.valueTasksContainerWidth.get_value());
@@ -1613,6 +1628,7 @@ Prefs.prototype =
     {
         this.settings.set_boolean("reset-flag", true);
         this.valueAllWorkspaces.set_active(false);
+        this.valueTaskMenu.set_active(2);
         this.valueTasksContainerWidth.set_value(0);
         this.valueCloseButton.set_active(0);
         this.valueScrollTasks.set_active(0);

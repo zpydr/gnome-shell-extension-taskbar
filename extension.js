@@ -33,6 +33,9 @@ const Layout = imports.ui.layout;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
+const PanelMenu = imports.ui.panelMenu;
+const PopupMenu = imports.ui.popupMenu;
+const RemoteMenu = imports.ui.remoteMenu;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -145,6 +148,7 @@ TaskBar.prototype =
     leftbutton: null,
     mainBox: null,
     maxWindows: null,
+    menuQuit: null,
     messageTrayCountAddedId: null,
     messageTrayCountRemovedId: null,
     messageTrayHidingId: null,
@@ -215,6 +219,10 @@ TaskBar.prototype =
     stageX: null,
     stageY: null,
     systemMenuContainer: null,
+    taskMenu: null,
+    taskMenuIsOpen: null,
+    taskMenuManager: null,
+    taskMenuUp: null,
     tasksContainerWidth: null,
     tasksList: [],
     threshold: null,
@@ -335,6 +343,10 @@ TaskBar.prototype =
 
         //Active Task Frame / Background Color
         this.activeTaskFrame();
+
+        //Task Menu
+        this.taskMenu = null;
+        this.taskMenuUp = false;        
 
         //Init Windows Manage Callbacks
         if (((ShellVersion[1] === 4) || (ShellVersion[1] === 6)) && (! this.settings.get_boolean("tasks-all-workspaces")))
@@ -1500,6 +1512,15 @@ TaskBar.prototype =
 
     onClickTaskButton: function(button, pspec, window)
     {
+        if (this.taskMenuUp)
+        {
+            let taskMenuIsOpen = this.taskMenu.isOpen;
+            if (taskMenuIsOpen)
+            {
+                this.taskMenu.close();
+                return;
+            }
+        }
         let activeWorkspace = global.screen.get_active_workspace();
         let numButton = pspec.get_button();
         if (numButton === LEFTBUTTON) //Left Button
@@ -1527,9 +1548,33 @@ TaskBar.prototype =
             if (Main.overview.visible)
                 Main.overview.hide();
         }
-        else if (numButton === MIDDLEBUTTON && this.settings.get_enum("close-button") === 1) //Middle Button
-            window.delete(global.get_current_time());
-        else if (numButton === RIGHTBUTTON && this.settings.get_enum("close-button") === 2) //Right Button
+        else if (((numButton === MIDDLEBUTTON) && (this.settings.get_enum("task-menu") === 1))
+            || ((numButton === RIGHTBUTTON) && (this.settings.get_enum("task-menu") === 2))) //Middle or Right Button
+        {
+            this.taskMenu = null;
+            let app = Shell.WindowTracker.get_default().get_window_app(window);
+            let taskMenuManager = new PopupMenu.PopupMenuManager({actor: button});
+            if (app.action_group && app.menu)
+                this.taskMenu = new RemoteMenu.RemoteMenu(button, app.menu, app.action_group);
+            else
+            {
+                this.taskMenu = new PopupMenu.PopupMenu(button, 0.0, St.Side.TOP);
+                let menuQuit = new PopupMenu.PopupMenuItem("Quit");
+                menuQuit.connect('activate', Lang.bind(this, function()
+                {
+                    window.delete(global.get_current_time());
+                }));
+                this.taskMenu.addMenuItem(menuQuit);
+            }
+            this.taskMenu.actor.hide();
+            taskMenuManager.addMenu(this.taskMenu);
+            Main.uiGroup.add_actor(this.taskMenu.actor);
+            this.taskMenuUp = true;
+            this.hidePreview();
+            this.taskMenu.open();
+        }
+        else if (((numButton === MIDDLEBUTTON) && (this.settings.get_enum("close-button") === 1))
+            || ((numButton === RIGHTBUTTON) && (this.settings.get_enum("close-button") === 2))) //Middle or Right Button
             window.delete(global.get_current_time());
     },
 

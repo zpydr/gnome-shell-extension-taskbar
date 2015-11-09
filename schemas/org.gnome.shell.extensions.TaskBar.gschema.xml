@@ -21,6 +21,11 @@
   zpydr@openmailbox.org
 -->
 <schemalist gettext-domain="gnome-shell-extensions-TaskBar">
+    <enum id="org.gnome.shell.extensions.TaskBar.task-menu-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="middle"/>
+        <value value="2" nick="right"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.close-button-style">
         <value value="0" nick="off"/>
         <value value="1" nick="middle"/>
@@ -171,6 +176,11 @@
         <key name="tasks-all-workspaces" type="b">
             <default>false</default>
             <summary>Display Tasks from all Workspaces</summary>
+            <description/>
+        </key>
+        <key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
+            <default>'right'</default>
+           <summary>Middle/Right Click to Show Tasks Menu</summary>
             <description/>
         </key>
         <key name="tasks-container-width" type="i">
