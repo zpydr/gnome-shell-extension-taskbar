@@ -47,6 +47,9 @@ const HOMEICON = Extension.path + '/images/settings-home.png';
 const MAILICON = Extension.path + '/images/settings-mail.png';
 const GNOMEICON = Extension.path + '/images/settings-gnome.png';
 const FSFICON = Extension.path + '/images/settings-fsf.png';
+const GPLICON = Extension.path + '/images/settings-gpl.png';
+const SPACERICON = Extension.path + '/images/settings-1px.png';
+
 
 function init()
 {
@@ -105,6 +108,80 @@ Prefs.prototype =
         notebook.set_tab_pos(0);
         this.newValueAppearance = null;
         this.oldValueAppearance = null;
+
+        this.gridTaskBar = new Gtk.Grid();
+        this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
+        this.gridTaskBar.column_spacing = 2;
+
+        let scrollWindowTaskBar = this.gridTaskBar;
+
+        scrollWindowTaskBar.show_all();
+        let labelTaskBar = new Gtk.Label({label: _("About")});
+        notebook.append_page(scrollWindowTaskBar, labelTaskBar);
+
+        let linkImage1 = new Gtk.Image({file: HOMEICON});
+        let linkImage2 = new Gtk.Image({file: HOMEICON});
+        let linkImage3 = new Gtk.Image({file: MAILICON});
+        let linkImage4 = new Gtk.Image({file: MAILICON});
+        let linkImage5 = new Gtk.Image({file: DESKTOPICON});
+        let linkImage6 = new Gtk.Image({file: GNOMEICON});
+        let linkImage7 = new Gtk.Image({file: FSFICON});
+        let linkImage8 = new Gtk.Image({file: SPACERICON});
+
+        let labelVersion1 = new Gtk.Label({label: _("Version")+" 47"});
+        this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
+        let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
+        this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
+        let labelLink3 = new Gtk.LinkButton ({image: linkImage8, label: "zpydr@openmailbox.org",
+            uri: "mailto:zpydr@openmailbox.org"});
+        if (ShellVersion[1] !== 4)
+            labelLink3.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink3, 0, 3, 5, 1);
+        let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
+            uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0});
+        if (ShellVersion[1] !== 4)
+            labelLink1.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink1, 1, 4, 1, 1);
+        let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
+            uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            labelLink2.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
+        let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _(" Report a Bug"),
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 47%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            bugReport.set_always_show_image(true);
+        this.gridTaskBar.attach(bugReport, 1, 6, 1, 1);
+        let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
+            uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            labelLink4.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink4, 3, 4, 1, 1);
+        let labelLink5 = new Gtk.LinkButton ({image: linkImage6, label: " "+_("Become a Friend of GNOME"),
+            uri: "https://www.gnome.org/friends/", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            labelLink5.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink5, 3, 5, 1, 1);
+        let labelLink6 = new Gtk.LinkButton ({image: linkImage7, label: " "+_("Free Software Foundation"),
+            uri: "https://www.fsf.org/", xalign: 0 });
+        if (ShellVersion[1] !== 4)
+            labelLink6.set_always_show_image(true);
+        this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
+        let resetAllButton = new Gtk.Button({label: _("RESET ALL !")});
+        resetAllButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetAllButton.connect('clicked', Lang.bind(this, this.resetAll));
+        resetAllButton.set_tooltip_text(_("Reset All TaskBar Settings to the Original TaskBar Settings"));
+        this.gridTaskBar.attach(resetAllButton, 1, 8, 1, 1);
+
+        let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 9, 1, 1);
+        let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
+        this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
+        let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>"+_("TaskBar")+"</b>", hexpand: true});
+        labelSpaceTaskBar3.set_use_markup(true);
+        this.gridTaskBar.attach(labelSpaceTaskBar3, 0, 0, 5, 1);
+        let labelSpaceTaskBar4 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 7, 1, 1);
 
         this.gridComponents = new Gtk.Grid();
         this.gridComponents.margin = this.gridComponents.row_spacing = 10;
@@ -200,7 +277,7 @@ Prefs.prototype =
         this.gridComponents.attach(labelSpaceComponents2, 2, 9, 1, 1);
         let labelSpaceComponents3 = new Gtk.Label({label: "<b>"+_("Overview")+"</b>", hexpand: true});
         labelSpaceComponents3.set_use_markup(true);
-        this.gridComponents.attach(labelSpaceComponents3, 0, 0, 5, 1);
+        this.gridComponents.attach(labelSpaceComponents3, 0, 0, 6, 1);
         let labelSpaceComponents4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridComponents.attach(labelSpaceComponents4, 5, 1, 1, 1);
 
@@ -304,7 +381,7 @@ Prefs.prototype =
         this.gridSettings.attach(labelSpaceSettings3, 5, 8, 1, 1);
         let labelSpaceSettings4 = new Gtk.Label({label: "<b>"+_("Panels")+"</b>", hexpand: true});
         labelSpaceSettings4.set_use_markup(true);
-        this.gridSettings.attach(labelSpaceSettings4, 0, 0, 8, 1);
+        this.gridSettings.attach(labelSpaceSettings4, 0, 0, 9, 1);
         let labelSpaceSettings5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSettings.attach(labelSpaceSettings5, 8, 1, 1, 1);
 
@@ -412,7 +489,7 @@ Prefs.prototype =
         this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
         let labelSpaceTasks4 = new Gtk.Label({label: "<b>"+_("Tasks")+"</b>", hexpand: true});
         labelSpaceTasks4.set_use_markup(true);
-        this.gridTasks.attach(labelSpaceTasks4, 0, 0, 5, 1);
+        this.gridTasks.attach(labelSpaceTasks4, 0, 0, 6, 1);
         let labelSpaceTasks5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks.attach(labelSpaceTasks5, 5, 1, 1, 1);
 
@@ -536,7 +613,7 @@ Prefs.prototype =
         this.gridButtons.attach(labelSpaceButtons3, 3, 11, 1, 1);
         let labelSpaceButtons4 = new Gtk.Label({label: "<b>"+_("Buttons")+"</b>", hexpand: true});
         labelSpaceButtons4.set_use_markup(true);
-        this.gridButtons.attach(labelSpaceButtons4, 0, 0, 6, 1);
+        this.gridButtons.attach(labelSpaceButtons4, 0, 0, 7, 1);
         let labelSpaceButtons5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons5, 6, 1, 1, 1);
 
@@ -651,7 +728,7 @@ Prefs.prototype =
         this.gridSeparator.attach(labelSpaceSeparator5, 6, 0, 1, 1);
         let labelSpaceSeparator6 = new Gtk.Label({label: "<b>"+_("Separators")+"</b>", hexpand: true});
         labelSpaceSeparator6.set_use_markup(true);
-        this.gridSeparator.attach(labelSpaceSeparator6, 0, 0, 8, 1);
+        this.gridSeparator.attach(labelSpaceSeparator6, 0, 0, 9, 1);
         let labelSpaceSeparator7 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridSeparator.attach(labelSpaceSeparator7, 8, 1, 1, 1);
 
@@ -713,7 +790,7 @@ Prefs.prototype =
         this.gridPreview.attach(labelSpacePreview3, 3, 6, 1, 1);
         let labelSpacePreview4 = new Gtk.Label({label: "<b>"+_("Preview")+"</b>", hexpand: true});
         labelSpacePreview4.set_use_markup(true);
-        this.gridPreview.attach(labelSpacePreview4, 0, 0, 5, 1);
+        this.gridPreview.attach(labelSpacePreview4, 0, 0, 6, 1);
         let labelSpacePreview5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridPreview.attach(labelSpacePreview5, 5, 1, 1, 1);
 
@@ -769,83 +846,44 @@ Prefs.prototype =
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
         let labelSpaceMisc3 = new Gtk.Label({label: "<b>"+_("Misc")+"</b>", hexpand: true});
         labelSpaceMisc3.set_use_markup(true);
-        this.gridMisc.attach(labelSpaceMisc3, 0, 0, 4, 1);
+        this.gridMisc.attach(labelSpaceMisc3, 0, 0, 5, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridMisc.attach(labelSpaceMisc4, 4, 6, 1, 1);
 
-        this.gridTaskBar = new Gtk.Grid();
-        this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
-        this.gridTaskBar.column_spacing = 2;
+        this.gridGPL = new Gtk.Grid();
+        this.gridGPL.margin = this.gridGPL.row_spacing = 10;
+        this.gridGPL.column_spacing = 2;
 
-        let scrollWindowTaskBar = this.gridTaskBar;
+        let scrollWindowGPL = this.gridGPL;
 
-        scrollWindowTaskBar.show_all();
-        let labelTaskBar = new Gtk.Label({label: _("About")});
-        notebook.append_page(scrollWindowTaskBar, labelTaskBar);
+        scrollWindowGPL.show_all();
+        let labelGPL = new Gtk.Label({label: _("GNU GPL")});
+        notebook.append_page(scrollWindowGPL, labelGPL);
 
-        let linkImage1 = new Gtk.Image({file: HOMEICON});
-        let linkImage2 = new Gtk.Image({file: HOMEICON});
-        let linkImage3 = new Gtk.Image({file: MAILICON});
-        let linkImage4 = new Gtk.Image({file: MAILICON});
-        let linkImage5 = new Gtk.Image({file: DESKTOPICON});
-        let linkImage6 = new Gtk.Image({file: GNOMEICON});
-        let linkImage7 = new Gtk.Image({file: FSFICON});
+        let gplImage = new Gtk.Image({file: GPLICON, xalign: 1});
+        let gplSpacer = new Gtk.Image({file: SPACERICON});
 
-        let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
-            uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink1.set_always_show_image(true);
-        let labelVersion1 = new Gtk.Label({label: _("TaskBar Version")+" 47"});
-        this.gridTaskBar.attach(labelVersion1, 1, 1, 1, 1);
-        let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
-        this.gridTaskBar.attach(labelVersion2, 1, 2, 1, 1);
-        this.gridTaskBar.attach(labelLink1, 3, 1, 1, 1);
-        let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
-            uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink2.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink2, 3, 2, 1, 1);
-        let bugReport = new Gtk.LinkButton ({label: _("Report a Bug"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 47%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A"});
-        if (ShellVersion[1] !== 4)
-            bugReport.set_always_show_image(true);
-        this.gridTaskBar.attach(bugReport, 1, 3, 1, 1);
-        let labelLink3 = new Gtk.LinkButton ({image: linkImage4, label: " zpydr@openmailbox.org",
-            uri: "mailto:zpydr@openmailbox.org", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink3.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink3, 3, 3, 1, 1);
-        let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
-            uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink4.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink4, 3, 4, 1, 1);
-        let labelLink5 = new Gtk.LinkButton ({image: linkImage6, label: " "+_("Become a Friend of GNOME"),
-            uri: "https://www.gnome.org/friends/", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink5.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink5, 3, 5, 1, 1);
-        let resetAllButton = new Gtk.Button({label: _("RESET ALL !")});
-        resetAllButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
-        resetAllButton.connect('clicked', Lang.bind(this, this.resetAll));
-        resetAllButton.set_tooltip_text(_("Reset All TaskBar Settings to the Original TaskBar Settings"));
-        this.gridTaskBar.attach(resetAllButton, 1, 8, 1, 1);
-        let labelLink6 = new Gtk.LinkButton ({image: linkImage7, label: " "+_("Free Software Foundation"),
-            uri: "https://www.fsf.org/", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink6.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
+        let labelGPL = new Gtk.Label({label: "GNOME Shell Extension TaskBar\nCopyright (C) 2015 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see", xalign: 0});
+        let labelLinkGPL = new Gtk.LinkButton ({image: gplSpacer, label: "https://www.gnu.org/licenses/",
+            uri: "https://www.gnu.org/licenses/", xalign: 0});
+        let labelEmailLinkGPL = new Gtk.LinkButton ({image: gplSpacer, label: "zpydr@openmailbox.org",
+            uri: "mailto:zpydr@openmailbox.org", xalign: 0});
+        this.gridGPL.attach(labelGPL, 1, 1, 2, 1);
+        this.gridGPL.attach(labelLinkGPL, 1, 2, 1, 1);
+        this.gridGPL.attach(labelEmailLinkGPL, 1, 3, 1, 1);
+        this.gridGPL.attach(gplImage, 2, 3, 1, 1);
 
-        let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 9, 1, 1);
-        let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
-        this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
-        let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>"+_("About TaskBar")+"</b>", hexpand: true});
-        labelSpaceTaskBar3.set_use_markup(true);
-        this.gridTaskBar.attach(labelSpaceTaskBar3, 0, 0, 4, 1);
-        let labelSpaceTaskBar4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 7, 1, 1);
+        let labelSpaceGPL1 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridGPL.attach(labelSpaceGPL1, 0, 1, 1, 1);
+        let labelSpaceGPL2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
+        this.gridGPL.attach(labelSpaceGPL2, 2, 1, 1, 1);
+        let labelSpaceGPL3 = new Gtk.Label({label: "<b>"+_("GNU General Public License")+"</b>", hexpand: true});
+        labelSpaceGPL3.set_use_markup(true);
+        this.gridGPL.attach(labelSpaceGPL3, 0, 0, 4, 1);
+        let labelSpaceGPL4 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridGPL.attach(labelSpaceGPL4, 3, 4, 1, 1);
 
+        notebook.set_current_page(1);        
         notebook.show_all();
         return notebook;
     },
