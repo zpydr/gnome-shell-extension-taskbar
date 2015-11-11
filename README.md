@@ -50,7 +50,7 @@ German by jonnius, to-ba
 
 Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl        
         
-![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_xF3Rvut.png)
+![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_PSh3ecJ.png)
         
 GNOME Shell Extension TaskBar           
 Copyright (C) 2015 zpydr             
