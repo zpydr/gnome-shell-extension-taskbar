@@ -147,7 +147,7 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
-        let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _(" Report a Bug"),
+        let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _("Report a Bug"),
             uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 47%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
         if (ShellVersion[1] !== 4)
             bugReport.set_always_show_image(true);
@@ -224,7 +224,7 @@ Prefs.prototype =
         this.gridComponents.attach(this.valueDisplayFavorites, 3, 5, 2, 1);
 
         let valueAppearanceBox = new Gtk.Box();
-        let labelAppearanceBox = new Gtk.Label({label: _("Align "), xalign: 0});
+        let labelAppearanceBox = new Gtk.Label({label: _("Align")+' ', xalign: 0});
         this.valueAppearance = new Gtk.ComboBoxText();
         this.valueAppearance.append_text(_("Tasks"));
         this.valueAppearance.append_text(_("Desktop Button"));

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-11 02:20+0000\n"
+"POT-Creation-Date: 2015-11-23 14:24-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgid "GNOME Shell Version"
 msgstr ""
 
 #: prefs.js:150
-msgid " Report a Bug"
+msgid "Report a Bug"
 msgstr ""
 
 #: prefs.js:155
@@ -97,7 +97,7 @@ msgid "Favorites"
 msgstr ""
 
 #: prefs.js:227
-msgid "Align "
+msgid "Align"
 msgstr ""
 
 #: prefs.js:256 prefs.js:296
