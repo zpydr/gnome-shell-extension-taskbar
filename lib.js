@@ -1,5 +1,5 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2015 zpydr
+//  Copyright (C) 2016 zpydr
 //
 //  Version 47
 //
