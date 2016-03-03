@@ -54,7 +54,7 @@ Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglun
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_PSh3ecJ.png)
         
 GNOME Shell Extension TaskBar           
-Copyright (C) 2015 zpydr             
+Copyright (C) 2016 zpydr             
                 
 This program is free software: you can redistribute it and/or modify            
 it under the terms of the GNU General Public License as published by            
