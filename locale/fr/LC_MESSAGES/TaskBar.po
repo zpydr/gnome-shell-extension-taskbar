@@ -1,0 +1,406 @@
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2015 zpydr
+#  Copyright (C) 2015 jonnius (German translation)
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@openmailbox.org
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TaskBar\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-10-16 23:44+0200\n"
+"PO-Revision-Date: 2014-10-16 23:47+0100\n"
+"Last-Translator: DAEM Q. quentin.daem@gmail.com\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: prefs.js:119
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+#: prefs.js:122 prefs.js:155 prefs.js:316 prefs.js:325
+msgid "Tasks"
+msgstr "Tâches en cours"
+
+#: prefs.js:128 prefs.js:156
+msgid "Desktop Button"
+msgstr "Bouton Bureau"
+
+#: prefs.js:134 prefs.js:157 prefs.js:229
+msgid "Workspace Button"
+msgstr "Bouton Espaces de travail"
+
+#: prefs.js:140 prefs.js:158
+msgid "Appview Button"
+msgstr "Bouton Vue Applications"
+
+#: prefs.js:146 prefs.js:159
+msgid "Favorites"
+msgstr "Favoris"
+
+#: prefs.js:153
+msgid "Align "
+msgstr "Aligner "
+
+#: prefs.js:182 prefs.js:213 prefs.js:519
+msgid "Bottom Panel"
+msgstr "Panneau du bas"
+
+#: prefs.js:208
+msgid "Panels"
+msgstr "Panneaux"
+
+#: prefs.js:211 prefs.js:517
+msgid "Top Panel"
+msgstr "Panneau du haut"
+
+#: prefs.js:216
+msgid "Icon Size"
+msgstr "Taille de l'icone"
+
+#: prefs.js:229
+msgid "Font Size"
+msgstr "Taille de police"
+
+#: prefs.js:242
+msgid "Align TaskBar"
+msgstr "Aligner Barre des tâches"
+
+#: prefs.js:257
+msgid "Anchor Point"
+msgstr "Point d'ancrage"
+
+#: prefs.js:265
+msgid ""
+"Panel Background\n"
+"Color / Opacity"
+msgstr ""
+"Arrière-plan panneau\n"
+"Couleur / Opacité"
+
+#: prefs.js:287 prefs.js:290
+msgid "Reset Color"
+msgstr "Couleur par défaut"
+
+#: prefs.js:319
+msgid "Tasks on All Workspaces"
+msgstr "Tâches sur Tous les Espaces de travail"
+
+#: prefs.js:325
+msgid "Tasks Container Width"
+msgstr "Taille conteneur de tâches"
+
+#: prefs.js:333
+msgid "Close Tasks"
+msgstr "Fermer Tâche"
+
+#: prefs.js:336 prefs.js:460
+msgid "OFF"
+msgstr "OFF"
+
+#: prefs.js:337
+msgid "Middle Click"
+msgstr "Clique du milieu"
+
+#: prefs.js:338
+msgid "Right Click"
+msgstr "Clique droit"
+
+#: prefs.js:343
+msgid "Scroll Tasks"
+msgstr "Défilement Tâches"
+
+#: prefs.js:349
+msgid "Active Task Frame"
+msgstr "Cadre de Tâche active"
+
+#: prefs.js:355
+msgid ""
+"Active Task Background\n"
+"Color / Opacity"
+msgstr ""
+"Tâche active en Arrière-plan\n"
+"Couleur / Opacité"
+
+#: prefs.js:370
+msgid "Activate Tasks on Hover"
+msgstr "Activer Tâches au survol"
+
+#: prefs.js:376
+msgid "Hover Delay"
+msgstr "Délai après survol"
+
+#: prefs.js:376 prefs.js:854
+msgid "(ms)"
+msgstr "(ms)"
+
+#: prefs.js:406
+msgid "Buttons"
+msgstr "Boutons"
+
+#: prefs.js:409
+msgid ""
+"Desktop Button Right Click\n"
+"opens Preferences (this)"
+msgstr ""
+"Bureau Bouton clique droit\n"
+"ouvre ses préférences"
+
+#: prefs.js:415
+msgid "Desktop Button Icon"
+msgstr "Icone du bouton bureau"
+
+#: prefs.js:424
+msgid "Workspace Button Index"
+msgstr "Index du bouton Espace de travail"
+
+#: prefs.js:427 prefs.js:462
+msgid "Index"
+msgstr "Index"
+
+#: prefs.js:428
+msgid "Index/Total"
+msgstr "Index/Total"
+
+#: prefs.js:433
+msgid "Scroll Workspaces"
+msgstr "Défilement Espace de travail"
+
+#: prefs.js:439
+msgid ""
+"Appview Button\n"
+"Left / Right Click Toggle"
+msgstr ""
+"Vue Application Bouton\n"
+"Basculer clique Gauche / Droit"
+
+#: prefs.js:442
+msgid ""
+"L Appview\n"
+"R Overview"
+msgstr ""
+"L Vue Applications\n"
+"R Vue d'ensemble"
+
+#: prefs.js:443
+msgid ""
+"L Overview\n"
+"R Appview"
+msgstr ""
+"L Vue d'ensemble\n"
+"R Vue Applications"
+
+#: prefs.js:448
+msgid "Appview Button Icon"
+msgstr "Icone du bouton Vue Application"
+
+#: prefs.js:457
+msgid "Bottom Panel Tray Button"
+msgstr "Bouton plateau panneau du bas"
+
+#: prefs.js:461
+msgid "Icon"
+msgstr "Icone"
+
+#: prefs.js:467
+msgid "When Tray is Empty"
+msgstr "Quand le plateau est vide"
+
+#: prefs.js:470
+msgid "Show Icon"
+msgstr "Afficher Icone"
+
+#: prefs.js:471
+msgid "Show 0"
+msgstr "Afficher 0"
+
+#: prefs.js:472
+msgid "Hide"
+msgstr "Masquer"
+
+#: prefs.js:477
+msgid "Tray Button Icon"
+msgstr "Icone bouton plateau"
+
+#: prefs.js:486
+msgid "Activate Tray on Hover"
+msgstr "Activer plateau au survol"
+
+#: prefs.js:514
+msgid "Separators"
+msgstr "Séparateurs"
+
+#: prefs.js:522 prefs.js:561 prefs.js:600 prefs.js:639 prefs.js:678
+#: prefs.js:717 prefs.js:759 prefs.js:760 prefs.js:761 prefs.js:762
+#: prefs.js:763 prefs.js:764
+msgid "Separator"
+msgstr "Séparateurs"
+
+#: prefs.js:522
+msgid "Left"
+msgstr "Gauche"
+
+#: prefs.js:717
+msgid "Right"
+msgstr "Droite"
+
+#: prefs.js:757
+msgid "Resize "
+msgstr "redimensionner"
+
+#: prefs.js:825
+msgid "Preview"
+msgstr "Aperçu"
+
+#: prefs.js:828
+msgid "Tasks Label"
+msgstr "Tâches nom "
+
+#: prefs.js:834
+msgid "Tasks Thumbnail"
+msgstr "Tâches Mignature"
+
+#: prefs.js:840
+msgid "Favorites Label"
+msgstr "Nom Favoris"
+
+#: prefs.js:846
+msgid "Thumbnail Size"
+msgstr "Taille Mignature"
+
+#: prefs.js:854
+msgid "Preview Delay"
+msgstr "Délai avant Aperçu"
+
+#: prefs.js:884
+msgid "Misc"
+msgstr "Divers"
+
+#: prefs.js:887
+msgid "Hide Activities"
+msgstr "Masquer Activités"
+
+#: prefs.js:893
+msgid "Disable Hot Corner"
+msgstr "Désactiver «Hot Corner»"
+
+#: prefs.js:899
+msgid "Hide Default App Menu"
+msgstr "Masquer par défaut Application Menu"
+
+#: prefs.js:905
+msgid ""
+"Possible conflict\n"
+"with other extensions"
+msgstr ""
+"Conflits possibles\n"
+"avec d'autres extensions"
+
+#: prefs.js:943
+msgid "Version"
+msgstr "Version"
+
+#: prefs.js:951
+msgid "Send Bug Report"
+msgstr "Envoyer un rapport de bug"
+
+#: prefs.js:961
+msgid "Donate for TaskBar"
+msgstr "Donner pour le développement de TaskBar"
+
+#: prefs.js:966
+msgid "Become a Friend of GNOME"
+msgstr "Devenir un Ami de GNOME"
+
+#: prefs.js:971
+msgid "RESET ALL !"
+msgstr "PARAMÈTRES PAR DÉFAUT"
+
+#: prefs.js:974
+msgid "Free Software Foundation"
+msgstr "Free Software Foundation"
+
+#: prefs.js:1229
+msgid "TaskBar Preferences - Desktop Button Icon"
+msgstr "TaskBar Préférences - Icone du Bouton Bureau"
+
+#: prefs.js:1242 prefs.js:1343 prefs.js:1433
+msgid "Images"
+msgstr "Images"
+
+#: prefs.js:1330
+msgid "TaskBar Preferences - Appview Button Icon"
+msgstr "TaskBar Préférences - Icone du Bouton Vue Applications"
+
+#: prefs.js:1420
+msgid "TaskBar Preferences - Tray Button Icon"
+msgstr "TaskBar Préférences - Icone du Bouton Plateau"
+
+#~ msgid "Components"
+#~ msgstr "Komponenten"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid "Vertical Adjustment"
+#~ msgstr "Vertikale Ausrichtung"
+
+#~ msgid "Donate"
+#~ msgstr "Spenden"
+
+#~ msgid "Separator 1\t(Left)"
+#~ msgstr "Trennung 1\t(Links)"
+
+#~ msgid "Separator 2"
+#~ msgstr "Trennlinie 2"
+
+#~ msgid "Separator 3"
+#~ msgstr "Trennlinie 3"
+
+#~ msgid "Separator 4"
+#~ msgstr "Trennlinie 4"
+
+#~ msgid "Separator 5"
+#~ msgstr "Trennlinie 5"
+
+#~ msgid "Separator 6\t(Right)"
+#~ msgstr "Trennlinie 6\t(Rechts)"
+
+#~ msgid "Separator 1"
+#~ msgstr "Trennlinie 1"
+
+#~ msgid "Separator 6"
+#~ msgstr "Trennlinie 6"
+
+#~ msgid "Default"
+#~ msgstr "Vorgabe"
+
+#~ msgid "GNOME"
+#~ msgstr "GNOME"
+
+#~ msgid "Dark"
+#~ msgstr "Dunkel"
+
+#~ msgid "Appearance"
+#~ msgstr "Anordnung"
+
+#~ msgid "From Left to Right"
+#~ msgstr "Von Links nach Rechts"
