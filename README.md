@@ -46,7 +46,7 @@ Hide system menu
 Language support:       
 Chinese by tuhaihe      
 Czech by michal-ruzicka     
-French by narzb
+French by narzb       
 German by jonnius, to-ba        
 
 Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl        
