@@ -1,5 +1,5 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2015 zpydr
+//  Copyright (C) 2016 zpydr
 //
 //  Version 47
 //
@@ -863,7 +863,7 @@ Prefs.prototype =
         let gplImage = new Gtk.Image({file: GPLICON, xalign: 1});
         let gplSpacer = new Gtk.Image({file: SPACERICON});
 
-        let labelGPL = new Gtk.Label({label: "GNOME Shell Extension TaskBar\nCopyright (C) 2015 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see", xalign: 0});
+        let labelGPL = new Gtk.Label({label: "GNOME Shell Extension TaskBar\nCopyright (C) 2016 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see", xalign: 0});
         let labelLinkGPL = new Gtk.LinkButton ({image: gplSpacer, label: "https://www.gnu.org/licenses/",
             uri: "https://www.gnu.org/licenses/", xalign: 0});
         let labelEmailLinkGPL = new Gtk.LinkButton ({image: gplSpacer, label: "zpydr@openmailbox.org",
