@@ -127,6 +127,11 @@
             <summary>Show TaskBar in Overview</summary>
             <description/>
         </key>
+        <key name="top-panel" type="b">
+            <default>true</default>
+            <summary>Top Panel</summary>
+            <description/>
+        </key>
         <key name="bottom-panel" type="b">
             <default>false</default>
             <summary>Bottom Panel</summary>

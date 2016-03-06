@@ -136,7 +136,7 @@ Prefs.prototype =
             uri: "mailto:zpydr@openmailbox.org"});
         if (ShellVersion[1] !== 4)
             labelLink3.set_always_show_image(true);
-        this.gridTaskBar.attach(labelLink3, 0, 3, 5, 1);
+        this.gridTaskBar.attach(labelLink3, 1, 3, 3, 1);
         let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0});
         if (ShellVersion[1] !== 4)
@@ -167,6 +167,7 @@ Prefs.prototype =
         if (ShellVersion[1] !== 4)
             labelLink6.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
+
         let resetAllButton = new Gtk.Button({label: _("RESET ALL !")});
         resetAllButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetAllButton.connect('clicked', Lang.bind(this, this.resetAll));
@@ -253,28 +254,35 @@ Prefs.prototype =
         this.gridComponents.attach(valueAppearanceName, 3, 6, 1, 1);
         this.gridComponents.attach(value2AppearanceName, 4, 6, 1, 1);
 
+        let labelTopPanel = new Gtk.Label({label: _("Top Panel"), xalign: 0});
+        this.gridComponents.attach(labelTopPanel, 1, 7, 1, 1);
+        this.valueTopPanel = new Gtk.Switch({active: this.settings.get_boolean("top-panel")});
+        this.valueTopPanel.connect('notify::active', Lang.bind(this, this.changeTopPanel));
+        this.gridComponents.attach(this.valueTopPanel, 3, 7, 2, 1);
+
         let labelBottomPanel = new Gtk.Label({label: _("Bottom Panel"), xalign: 0});
-        this.gridComponents.attach(labelBottomPanel, 1, 7, 1, 1);
+        this.gridComponents.attach(labelBottomPanel, 1, 8, 1, 1);
         this.valueBottomPanel = new Gtk.Switch({active: this.settings.get_boolean("bottom-panel")});
         this.valueBottomPanel.connect('notify::active', Lang.bind(this, this.changeBottomPanel));
-        this.gridComponents.attach(this.valueBottomPanel, 3, 7, 2, 1);
+        this.gridComponents.attach(this.valueBottomPanel, 3, 8, 2, 1);
 
         let labelOverview = new Gtk.Label({label: _("TaskBar in Overview"), xalign: 0});
-        this.gridComponents.attach(labelOverview, 1, 8, 1, 1);
+        this.gridComponents.attach(labelOverview, 1, 9, 1, 1);
         this.valueOverview = new Gtk.Switch({active: this.settings.get_boolean("overview")});
         this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
-        this.gridComponents.attach(this.valueOverview, 3, 8, 2, 1);
+        this.gridComponents.attach(this.valueOverview, 3, 9, 2, 1);
 
         let resetComponentsButton = new Gtk.Button({label: _("Reset Overview Tab")});
         resetComponentsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetComponentsButton.connect('clicked', Lang.bind(this, this.resetComponents));
         resetComponentsButton.set_tooltip_text(_("Reset the Overview Tab to the Original Overview Settings"));
-        this.gridComponents.attach(resetComponentsButton, 1, 10, 1, 1);
+        this.gridComponents.attach(resetComponentsButton, 1, 11, 1, 1);
+
 
         let labelSpaceComponents1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridComponents.attach(labelSpaceComponents1, 0, 11, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents1, 0, 12, 1, 1);
         let labelSpaceComponents2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridComponents.attach(labelSpaceComponents2, 2, 9, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents2, 2, 10, 1, 1);
         let labelSpaceComponents3 = new Gtk.Label({label: "<b>"+_("Overview")+"</b>", hexpand: true});
         labelSpaceComponents3.set_use_markup(true);
         this.gridComponents.attach(labelSpaceComponents3, 0, 0, 6, 1);
@@ -995,6 +1003,11 @@ Prefs.prototype =
         }
     },
 
+    changeTopPanel: function(object, pspec)
+    {
+        this.settings.set_boolean("top-panel", object.active);
+    },
+
     changeBottomPanel: function(object, pspec)
     {
         this.settings.set_boolean("bottom-panel", object.active);
@@ -1224,7 +1237,7 @@ Prefs.prototype =
 
     changeShowAppsButtonToggle: function(object)
     {
-        this.settings.set_enum("showapps-button-toggle", this.valueScrollWorkspaces.get_active());
+        this.settings.set_enum("showapps-button-toggle", this.valueShowAppsButtonToggle.get_active());
     },
 
     changeAppviewButtonIcon: function()
@@ -1634,6 +1647,7 @@ Prefs.prototype =
         this.settings.set_int("position-appview-button", 1);
         this.settings.set_int("position-favorites", 0);
         this.valueOverview.set_active(true);
+        this.valueTopPanel.set_active(true);
         this.valueBottomPanel.set_active(false);
         this.settings.set_boolean("position-changed", true);
         this.settings.set_boolean("reset-flag", false);
