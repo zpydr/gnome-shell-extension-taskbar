@@ -43,7 +43,6 @@ const Lib = Extension.imports.lib;
 const Prefs = Extension.imports.prefs;
 const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function (x) { return + x; });
 const Windows = Extension.imports.windows;
-const Windows34 = Extension.imports.windows34;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
@@ -372,14 +371,7 @@ TaskBar.prototype =
 
         //Enable Hot Corner if disabled
         if (! this.settings.get_boolean("hot-corner"))
-        {
-            if (ShellVersion[1] === 4)
-                Main.panel._activitiesButton._hotCorner._corner.show();
-            else if (ShellVersion[1] === 6)
-                Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if (ShellVersion[1] >= 8)
-                Main.layoutManager._updateHotCorners();
-        }
+            Main.layoutManager._updateHotCorners();
 
         //Show and disconnect Application Menu if hidden
         if (! this.settings.get_boolean("application-menu"))
@@ -439,9 +431,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Sources Added Signal
         if (this.messageTrayCountAddedId !== null)
         {
-            if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
-                Main.messageTray._summary.disconnect(this.messageTrayCountAddedId);
-            else if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayCountAddedId);
             this.messageTrayCountAddedId = null;
         }
@@ -449,9 +439,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Sources Removed Signal
         if (this.messageTrayCountRemovedId !== null)
         {
-            if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
-                Main.messageTray._summary.disconnect(this.messageTrayCountRemovedId);
-            else if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 Main.messageTray.disconnect(this.messageTrayCountRemovedId);
             this.messageTrayCountRemovedId = null;
         }
@@ -477,11 +465,6 @@ TaskBar.prototype =
         {
             if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
                 MessageTray.MessageTray.prototype._showTray = this.showTray;
-            if (ShellVersion[1] === 4)
-            {
-                Main.layoutManager.removeChrome(Main.layoutManager.trayBox);
-                Main.layoutManager.addChrome(Main.layoutManager.trayBox, { visibleInFullscreen: true });
-            }
             this.showTray = null;
         }
 
@@ -550,8 +533,7 @@ TaskBar.prototype =
         if ((this.setAnchorPoint) && (ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             Main.messageTray.actor.set_anchor_point(0, 0);
-            if (ShellVersion[1] !== 4)
-                Main.messageTray._notificationWidget.set_anchor_point(0, 0);
+            Main.messageTray._notificationWidget.set_anchor_point(0, 0);
             this.setAnchorPoint = false;
         }
         if (this.newBox !== null)
@@ -700,21 +682,10 @@ TaskBar.prototype =
             this.settings.set_string("appview-button-icon", APPVIEWICON);
             this.settings.set_string("tray-button-icon", BPTRAYICON);
         }
-        if (ShellVersion[1] === 4)
+        if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode === 'user'))
         {
-            if (this.settings.get_boolean("first-start"))
-            {
-                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-                this.settings.set_boolean("first-start", false);
-            }
-        }
-        else if (ShellVersion[1] !== 4)
-        {
-            if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode === 'user'))
-            {
-                Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-                this.settings.set_boolean("first-start", false);
-            }
+            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+            this.settings.set_boolean("first-start", false);
         }
     },
 
@@ -1060,16 +1031,8 @@ TaskBar.prototype =
                 this.messageTrayIcon();
             else
             {
-                if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
-                {
-                    this.messageTrayCountAddedId = Main.messageTray._summary.connect('actor-added', Lang.bind(this, this.messageTrayCount));
-                    this.messageTrayCountRemovedId = Main.messageTray._summary.connect('actor-removed', Lang.bind(this, this.messageTrayCount));
-                }
-                else
-                {
-                    this.messageTrayCountAddedId = Main.messageTray.connect('source-added', Lang.bind(this, this.messageTrayCount));
-                    this.messageTrayCountRemovedId = Main.messageTray.connect('source-removed', Lang.bind(this, this.messageTrayCount));
-                }
+                this.messageTrayCountAddedId = Main.messageTray.connect('source-added', Lang.bind(this, this.messageTrayCount));
+                this.messageTrayCountRemovedId = Main.messageTray.connect('source-removed', Lang.bind(this, this.messageTrayCount));
                 this.messageTrayCount();
             }
         }
@@ -1077,11 +1040,7 @@ TaskBar.prototype =
 
     messageTrayCount: function()
     {
-        let indicatorCount = 0;
-        if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
-            indicatorCount = Main.messageTray._summary.get_children().length;
-        else
-            indicatorCount = Main.messageTray.getSources().length;
+        let indicatorCount = Main.messageTray.getSources().length;
         if (((indicatorCount === 0) && (this.settings.get_enum("tray-button-empty") === 0)) ||
             ((indicatorCount !== 0) && (this.settings.get_enum("tray-button-empty") === 1) && (this.settings.get_enum("tray-button") !== 2)) ||
             ((indicatorCount !== 0) && (this.settings.get_enum("tray-button") === 1)))
@@ -1129,10 +1088,7 @@ TaskBar.prototype =
     {
         if (! this.settings.get_boolean("activities-button"))
         {
-            if (ShellVersion[1] === 4)
-                this.activitiesContainer = Main.panel._activitiesButton.container;
-            else
-                this.activitiesContainer = Main.panel.statusArea.activities.container;
+            this.activitiesContainer = Main.panel.statusArea.activities.container;
             this.activitiesContainer.hide();
         }
     },
@@ -1170,12 +1126,7 @@ TaskBar.prototype =
         this.initEnableHotCorner();
         if (this.settings.get_boolean("hot-corner"))
         {
-            if ((ShellVersion[1] === 4) && (this.settings.get_boolean("activities-button")))
-                    Main.panel._activitiesButton._hotCorner._corner.show();
-            else if ((ShellVersion[1] === 6) && (this.settings.get_boolean("activities-button")))
-                Main.panel.statusArea.activities.hotCorner._corner.show();
-            else if (ShellVersion[1] >= 8)
-                Main.layoutManager._updateHotCorners();
+            Main.layoutManager._updateHotCorners();
         }
     },
 
@@ -1183,15 +1134,8 @@ TaskBar.prototype =
     {
         if (! this.settings.get_boolean("hot-corner"))
         {
-            if ((ShellVersion[1] === 4) && (this.settings.get_boolean("activities-button")))
-                Main.panel._activitiesButton._hotCorner._corner.hide();
-            else if ((ShellVersion[1] === 6) && (this.settings.get_boolean("activities-button")))
-                Main.panel.statusArea.activities.hotCorner._corner.hide();
-            else if (ShellVersion[1] >= 8)
-            {
-                Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._toggleOverview = function() {};
-                Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._trigger = function() {};
-            }
+            Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._toggleOverview = function() {};
+            Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._trigger = function() {};
         }
     },
 
@@ -1213,25 +1157,22 @@ TaskBar.prototype =
 
     initDisplayApplicationMenu: function()
     {
-        if (ShellVersion[1] === 4)
+        if (ShellVersion[1] === 8)
         {
-            if (Main.panel._appMenu !== null)
+            this.appMenuContainer = Main.panel.statusArea.appMenu.container;
+            if (! this.settings.get_boolean("application-menu"))
             {
-                this.appMenuContainer = Main.panel._appMenu.container;
-                if (! this.settings.get_boolean("application-menu"))
+                let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
+                let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
+                xsettings.set_value('overrides', variant);
+                this.appMenuContainer.hide();
+                this.hidingId = Main.overview.connect('hiding', function ()
                 {
-                    let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
-                    let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
-                    xsettings.set_value('overrides', variant);
-                    this.appMenuContainer.hide();
-                    this.hidingId = Main.overview.connect('hiding', function ()
-                    {
-                        Main.panel._appMenu.container.hide();
-                    });
-                }
+                    Main.panel.statusArea.appMenu.container.hide();
+                });
             }
         }
-        else if (ShellVersion[1] >= 10)
+        else
         {
             this.appMenuContainer = Main.panel.statusArea.appMenu.container;
             if (! this.settings.get_boolean("application-menu"))
@@ -1242,21 +1183,6 @@ TaskBar.prototype =
                     Main.panel.statusArea.appMenu.container.hide();
                 });
                 this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
-                {
-                    Main.panel.statusArea.appMenu.container.hide();
-                });
-            }
-        }
-        else if ((ShellVersion[1] === 6) || (ShellVersion[1] === 8))
-        {
-            this.appMenuContainer = Main.panel.statusArea.appMenu.container;
-            if (! this.settings.get_boolean("application-menu"))
-            {
-                let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
-                let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
-                xsettings.set_value('overrides', variant);
-                this.appMenuContainer.hide();
-                this.hidingId = Main.overview.connect('hiding', function ()
                 {
                     Main.panel.statusArea.appMenu.container.hide();
                 });
@@ -1276,10 +1202,7 @@ TaskBar.prototype =
     {
         if (! this.settings.get_boolean("date-menu"))
         {
-            if (ShellVersion[1] === 4)
-                this.dateMenuContainer = Main.panel._dateMenuButton.container;
-            else
-                this.dateMenuContainer = Main.panel.statusArea.dateMenu.container;
+            this.dateMenuContainer = Main.panel.statusArea.dateMenu.container;
             this.dateMenuContainer.hide();
         }
     },
@@ -1296,10 +1219,7 @@ TaskBar.prototype =
     {
         if (! this.settings.get_boolean("system-menu"))
         {
-            if (ShellVersion[1] === 4)
-                this.systemMenuContainer = Main.panel._aggregateMenuButton.container;
-            else
-                this.systemMenuContainer = Main.panel.statusArea.aggregateMenu.container;
+            this.systemMenuContainer = Main.panel.statusArea.aggregateMenu.container;
             this.systemMenuContainer.hide();
         }
     },
@@ -1460,7 +1380,7 @@ TaskBar.prototype =
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
         this.bottomPanelActor.set_style(this.panelSize + ' ' + this.bottomPanelBackgroundStyle);
         this.bottomPanelActor.set_reactive(false);
-        if ((ShellVersion[1] >= 4) && (ShellVersion[1] <= 8))
+        if (ShellVersion[1] === 8)
         {
             this.positionBoxBottomStart = new St.BoxLayout();
             this.positionBoxBottomMiddle = new St.BoxLayout();
@@ -1484,11 +1404,8 @@ TaskBar.prototype =
         }
         else if (this.settings.get_enum("tray-button") !== 0)
             this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
-        if (ShellVersion[1] === 4)
-            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, visibleInFullscreen: false });
-        else
-            Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
-        if ((ShellVersion[1] >= 4) && (ShellVersion[1] <= 8))
+        Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
+        if (ShellVersion[1] === 8)
         {
             this.bottomPanelActor.add(this.positionBoxBottomStart, { x_align: St.Align.START, expand: true, x_fill: false });
             this.bottomPanelActor.add(this.positionBoxBottomMiddle, { x_align: St.Align.MIDDLE, expand: true, x_fill: false });
@@ -1504,18 +1421,10 @@ TaskBar.prototype =
         this.height = (this.iconSize + this.bottomPanelVertical + 2);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
         this.bottomPanelActor.set_size(primary.width, -1);
-        if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
             this.setAnchorPoint = true;
-        }
-        if (ShellVersion[1] === 4)
-        {
-            Main.layoutManager.removeChrome(Main.layoutManager.trayBox);
-            Main.layoutManager.addChrome(Main.layoutManager.trayBox, { visibleInFullscreen: false });
-        }
-        if ((ShellVersion[1] >= 8) && (ShellVersion[1] <= 14))
-        {
             this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function()
             {
                 Main.messageTray.actor.set_anchor_point(0, this.height);
@@ -1526,20 +1435,6 @@ TaskBar.prototype =
                 Main.messageTray.actor.set_anchor_point(0, 0);
                 this.setAnchorPoint = true;
             }));
-        }
-        else if ((ShellVersion[1] === 4) || (ShellVersion[1] === 6))
-        {
-            bottomPanelHeight = this.height;
-            this.showTray = MessageTray.MessageTray.prototype._showTray;
-            newShowTray = function()
-            {
-                this._tween(this.actor, '_trayState', MessageTray.State.SHOWN,
-                { y: - this.actor.height - bottomPanelHeight,
-                  time: MessageTray.ANIMATION_TIME,
-                  transition: 'easeOutQuad'
-                });
-            };
-            MessageTray.MessageTray.prototype._showTray = newShowTray;
         }
     },
 
@@ -1554,49 +1449,7 @@ TaskBar.prototype =
             this.leftbutton = RIGHTBUTTON;
             this.rightbutton = LEFTBUTTON;
         }
-        if (ShellVersion[1] === 4)
-        {
-            if (numButton === this.leftbutton) //Left Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                if (Main.overview._viewSelector._activeTab.id !== 'applications')
-                    Main.overview._viewSelector.switchTab('applications');
-                else
-                    Main.overview.hide();
-            }
-            else if (numButton === this.rightbutton) //Right Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                else if (Main.overview._viewSelector._activeTab.id === 'applications')
-                    Main.overview._viewSelector.switchTab('windows');
-                else
-                    Main.overview.hide();
-            }
-        }
-        else if (ShellVersion[1] >= 10)
-        {
-            if (numButton === this.leftbutton) //Left Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                if (! Main.overview.viewSelector._showAppsButton.checked)
-                    Main.overview.viewSelector._showAppsButton.checked = true;
-                else
-                    Main.overview.hide();
-            }
-            else if (numButton === this.rightbutton) //Right Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                else if (Main.overview.viewSelector._showAppsButton.checked)
-                    Main.overview.viewSelector._showAppsButton.checked = false;
-                else
-                    Main.overview.hide();
-            }
-        }
-        else
+        if (ShellVersion[1] === 8)
         {
             if (numButton === this.leftbutton) //Left Button
             {
@@ -1613,6 +1466,27 @@ TaskBar.prototype =
                     Main.overview.show();
                 else if (Main.overview._viewSelector._showAppsButton.checked)
                     Main.overview._viewSelector._showAppsButton.checked = false;
+                else
+                    Main.overview.hide();
+            }
+        }
+        else
+        {
+            if (numButton === this.leftbutton) //Left Button
+            {
+                if (! Main.overview.visible)
+                    Main.overview.show();
+                if (! Main.overview.viewSelector._showAppsButton.checked)
+                    Main.overview.viewSelector._showAppsButton.checked = true;
+                else
+                    Main.overview.hide();
+            }
+            else if (numButton === this.rightbutton) //Right Button
+            {
+                if (! Main.overview.visible)
+                    Main.overview.show();
+                else if (Main.overview.viewSelector._showAppsButton.checked)
+                    Main.overview.viewSelector._showAppsButton.checked = false;
                 else
                     Main.overview.hide();
             }
@@ -1890,10 +1764,7 @@ TaskBar.prototype =
             //Task Menu
             this.taskMenu = null;
             this.taskMenuUp = false;        
-            if (((ShellVersion[1] === 4) || (ShellVersion[1] === 6)) && (! this.settings.get_boolean("tasks-all-workspaces")))
-                this.windows = new Windows34.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
-            else
-                this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
+            this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
         }
     },
 
@@ -2017,7 +1888,7 @@ TaskBar.prototype =
             if (! this.settings.get_boolean("tasks-all-workspaces"))
             {
                 let workspace = global.screen.get_active_workspace();
-                if ((ShellVersion[1] !== 4) && (ShellVersion[1] !== 6) && (! this.settings.get_boolean("tasks-all-workspaces")))
+                if (! this.settings.get_boolean("tasks-all-workspaces"))
                     buttonTask.visible = window.located_on_workspace(workspace);
             }
             if (window.has_focus())

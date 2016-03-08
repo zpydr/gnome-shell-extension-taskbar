@@ -134,38 +134,31 @@ Prefs.prototype =
         this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
         let labelLink3 = new Gtk.LinkButton ({image: linkImage8, label: "zpydr@openmailbox.org",
             uri: "mailto:zpydr@openmailbox.org"});
-        if (ShellVersion[1] !== 4)
-            labelLink3.set_always_show_image(true);
+        labelLink3.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink3, 1, 3, 3, 1);
         let labelLink1 = new Gtk.LinkButton ({image: linkImage1, label: " extensions.gnome.org",
             uri: "https://extensions.gnome.org/extension/584/taskbar", xalign: 0});
-        if (ShellVersion[1] !== 4)
-            labelLink1.set_always_show_image(true);
+        labelLink1.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink1, 1, 4, 1, 1);
         let labelLink2 = new Gtk.LinkButton ({image: linkImage2, label: " github.com",
             uri: "https://github.com/zpydr/gnome-shell-extension-taskbar", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink2.set_always_show_image(true);
+        labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
         let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _("Report a Bug"),
             uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 47%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            bugReport.set_always_show_image(true);
+        bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 6, 1, 1);
         let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
             uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink4.set_always_show_image(true);
+        labelLink4.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink4, 3, 4, 1, 1);
         let labelLink5 = new Gtk.LinkButton ({image: linkImage6, label: " "+_("Become a Friend of GNOME"),
             uri: "https://www.gnome.org/friends/", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink5.set_always_show_image(true);
+        labelLink5.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink5, 3, 5, 1, 1);
         let labelLink6 = new Gtk.LinkButton ({image: linkImage7, label: " "+_("Free Software Foundation"),
             uri: "https://www.fsf.org/", xalign: 0 });
-        if (ShellVersion[1] !== 4)
-            labelLink6.set_always_show_image(true);
+        labelLink6.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
 
         let resetAllButton = new Gtk.Button({label: _("RESET ALL !")});
