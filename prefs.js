@@ -266,23 +266,17 @@ Prefs.prototype =
         this.valueBottomPanel.connect('notify::active', Lang.bind(this, this.changeBottomPanel));
         this.gridComponents.attach(this.valueBottomPanel, 3, 8, 2, 1);
 
-        let labelOverview = new Gtk.Label({label: _("TaskBar in Overview"), xalign: 0});
-        this.gridComponents.attach(labelOverview, 1, 9, 1, 1);
-        this.valueOverview = new Gtk.Switch({active: this.settings.get_boolean("overview")});
-        this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
-        this.gridComponents.attach(this.valueOverview, 3, 9, 2, 1);
-
         let resetComponentsButton = new Gtk.Button({label: _("Reset Overview Tab")});
         resetComponentsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetComponentsButton.connect('clicked', Lang.bind(this, this.resetComponents));
         resetComponentsButton.set_tooltip_text(_("Reset the Overview Tab to the Original Overview Settings"));
-        this.gridComponents.attach(resetComponentsButton, 1, 11, 1, 1);
+        this.gridComponents.attach(resetComponentsButton, 1, 10, 1, 1);
 
 
         let labelSpaceComponents1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridComponents.attach(labelSpaceComponents1, 0, 12, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents1, 0, 11, 1, 1);
         let labelSpaceComponents2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridComponents.attach(labelSpaceComponents2, 2, 10, 1, 1);
+        this.gridComponents.attach(labelSpaceComponents2, 2, 9, 1, 1);
         let labelSpaceComponents3 = new Gtk.Label({label: "<b>"+_("Overview")+"</b>", hexpand: true});
         labelSpaceComponents3.set_use_markup(true);
         this.gridComponents.attach(labelSpaceComponents3, 0, 0, 6, 1);
@@ -842,21 +836,39 @@ Prefs.prototype =
         this.valueDisplaySystemMenu.connect('notify::active', Lang.bind(this, this.changeDisplaySystemMenu));
         this.gridMisc.attach(this.valueDisplaySystemMenu, 3, 5, 1, 1);
 
+        let labelDisplayDash = new Gtk.Label({label: _("Dash (Overview)"), xalign: 0});
+        this.gridMisc.attach(labelDisplayDash, 1, 6, 1, 1);
+        this.valueDisplayDash = new Gtk.Switch({active: this.settings.get_boolean("dash")});
+        this.valueDisplayDash.connect('notify::active', Lang.bind(this, this.changeDisplayDash));
+        this.gridMisc.attach(this.valueDisplayDash, 3, 6, 1, 1);
+
+        let labelDisplayWorkspaceSelector = new Gtk.Label({label: _("Workspace Selector (Overview)"), xalign: 0});
+        this.gridMisc.attach(labelDisplayWorkspaceSelector, 1, 7, 1, 1);
+        this.valueDisplayWorkspaceSelector = new Gtk.Switch({active: this.settings.get_boolean("workspace-selector")});
+        this.valueDisplayWorkspaceSelector.connect('notify::active', Lang.bind(this, this.changeDisplayWorkspaceSelector));
+        this.gridMisc.attach(this.valueDisplayWorkspaceSelector, 3, 7, 1, 1);
+
+        let labelOverview = new Gtk.Label({label: _("TaskBar (Overview)"), xalign: 0});
+        this.gridMisc.attach(labelOverview, 1, 8, 1, 1);
+        this.valueOverview = new Gtk.Switch({active: this.settings.get_boolean("overview")});
+        this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
+        this.gridMisc.attach(this.valueOverview, 3, 8, 1, 1);
+
         let resetMiscButton = new Gtk.Button({label: _("Reset Misc Tab")});
         resetMiscButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetMiscButton.connect('clicked', Lang.bind(this, this.resetMisc));
         resetMiscButton.set_tooltip_text(_("Reset the Misc Tab to the Original Misc Settings"));
-        this.gridMisc.attach(resetMiscButton, 1, 7, 1, 1);
+        this.gridMisc.attach(resetMiscButton, 1, 10, 1, 1);
 
         let labelSpaceMisc1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc1, 0, 8, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc1, 0, 11, 1, 1);
         let labelSpaceMisc2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
         let labelSpaceMisc3 = new Gtk.Label({label: "<b>"+_("Misc")+"</b>", hexpand: true});
         labelSpaceMisc3.set_use_markup(true);
         this.gridMisc.attach(labelSpaceMisc3, 0, 0, 5, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc4, 4, 6, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc4, 4, 9, 1, 1);
 
         this.gridGPL = new Gtk.Grid();
         this.gridGPL.margin = this.gridGPL.row_spacing = 10;
@@ -1500,6 +1512,16 @@ Prefs.prototype =
         this.settings.set_boolean("system-menu", object.active);
     },
 
+    changeDisplayDash: function(object, pspec)
+    {
+        this.settings.set_boolean("dash", object.active);
+    },
+
+    changeDisplayWorkspaceSelector: function(object, pspec)
+    {
+        this.settings.set_boolean("workspace-selector", object.active);
+    },
+
     changeDisplayLabel: function(object, pspec)
     {
         this.settings.set_boolean("display-label", object.active);
@@ -1646,7 +1668,6 @@ Prefs.prototype =
         this.settings.set_int("position-workspace-button", 2);
         this.settings.set_int("position-appview-button", 1);
         this.settings.set_int("position-favorites", 0);
-        this.valueOverview.set_active(true);
         this.valueTopPanel.set_active(true);
         this.valueBottomPanel.set_active(false);
         this.settings.set_boolean("position-changed", true);
@@ -1740,6 +1761,9 @@ Prefs.prototype =
         this.valueDisplayApplicationMenu.set_active(true);
         this.valueDisplayDateMenu.set_active(true);
         this.valueDisplaySystemMenu.set_active(true);
+        this.valueDisplayDash.set_active(true);
+        this.valueDisplayWorkspaceSelector.set_active(true);
+        this.valueOverview.set_active(true);
     },
 
     resetAll: function()

@@ -36,6 +36,7 @@ const Panel = imports.ui.main.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 const RemoteMenu = imports.ui.remoteMenu;
+const ThumbnailsSlider = imports.ui.overviewControls.ThumbnailsSlider.prototype;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -73,6 +74,7 @@ TaskBar.prototype =
     activeWorkspaceIndex: null,
     activeWorkspace: null,
     activitiesContainer: null,
+    alwaysZoomOut: null,
     appearance: null,
     appearances: [],
     appMenuContainer: null,
@@ -107,6 +109,9 @@ TaskBar.prototype =
     buttonWorkspace: null,
     changedId: null,
     countTasks: null,
+    dash: null,
+    dashHeight: null,
+    dashWidth: null,
     dateMenuContainer: null,
     desktopButtonIcon: null,
     desktopView: null,
@@ -159,6 +164,7 @@ TaskBar.prototype =
     newTasksContainerWidth: null,
     nextTask: null,
     node: null,
+    nonExpandedWidth: null,
     numButton: null,
     nWorkspacesId: null,
     originalLeftPanelCornerStyle: null,
@@ -320,6 +326,12 @@ TaskBar.prototype =
         //System Menu
         this.initDisplaySystemMenu();
 
+        //Dash
+        this.initDisplayDash();
+
+        //Workspace Selector
+        this.initDisplayWorkspaceSelector();
+
         //Active Task Frame / Background Color
         this.activeTaskFrame();
 
@@ -385,6 +397,20 @@ TaskBar.prototype =
         //Show System Menu if hidden
         if (! this.settings.get_boolean("system-menu"))
             this.systemMenuContainer.show();
+
+        //Show Dash if hidden
+        if (! this.settings.get_boolean("dash"))
+        {
+            this.dash.set_height(this.dashHeight);
+            this.dash.set_width(this.dashWidth);
+        }
+
+        //Show Workspace Selector if hidden
+        if (! this.settings.get_boolean("workspace-selector"))
+        {
+            ThumbnailsSlider._getAlwaysZoomOut = this.alwaysZoomOut;
+            ThumbnailsSlider.getNonExpandedWidth = this.nonExpandedWidth;            
+        }
 
         //Disconnect Workspace Signals
         if (this.workspaceSwitchedId !== null)
@@ -607,6 +633,8 @@ TaskBar.prototype =
             this.settings.connect("changed::application-menu", Lang.bind(this, this.displayApplicationMenu)),
             this.settings.connect("changed::date-menu", Lang.bind(this, this.displayDateMenu)),
             this.settings.connect("changed::system-menu", Lang.bind(this, this.displaySystemMenu)),
+            this.settings.connect("changed::dash", Lang.bind(this, this.displayDash)),
+            this.settings.connect("changed::workspace-selector", Lang.bind(this, this.displayWorkspaceSelector)),
             this.settings.connect("changed::position-changed", Lang.bind(this, this.appearancePositionChange)),
             this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
@@ -1275,6 +1303,52 @@ TaskBar.prototype =
             this.systemMenuContainer.hide();
         }
     },
+
+    //Dash
+    displayDash: function()
+    {
+        this.initDisplayDash();
+        if (this.settings.get_boolean("dash"))
+        {
+            this.dash.set_height(this.dashHeight);
+            this.dash.set_width(this.dashWidth);
+        }
+    },
+
+    initDisplayDash: function()
+    {
+        if (! this.settings.get_boolean("dash"))
+        {
+            this.dash = Main.overview._dash.actor;
+            this.dashHeight = this.dash.get_height();
+            this.dashWidth = this.dash.get_width();
+            this.dash.set_height(0);
+            this.dash.set_width(0);
+        }
+    },
+
+    //Workspace Selector
+    displayWorkspaceSelector: function()
+    {
+        this.initDisplayWorkspaceSelector();
+        if (this.settings.get_boolean("workspace-selector"))
+        {
+            ThumbnailsSlider._getAlwaysZoomOut = this.alwaysZoomOut;
+            ThumbnailsSlider.getNonExpandedWidth = this.nonExpandedWidth;
+        }
+    },
+
+    initDisplayWorkspaceSelector: function()
+    {
+        if (! this.settings.get_boolean("workspace-selector"))
+        {
+            this.alwaysZoomOut = ThumbnailsSlider._getAlwaysZoomOut;
+            this.nonExpandedWidth = ThumbnailsSlider.getNonExpandedWidth;
+            ThumbnailsSlider._getAlwaysZoomOut = function () { return false; }
+            ThumbnailsSlider.getNonExpandedWidth = function () { return 0; }
+        }
+    },
+
 
     //Preferences Hover Component Event
     hoverEvent: function()

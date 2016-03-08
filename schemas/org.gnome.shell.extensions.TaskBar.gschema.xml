@@ -402,6 +402,16 @@
             <summary>System Menu</summary>
             <description/>
         </key>
+        <key name="dash" type="b">
+            <default>true</default>
+            <summary>Dash</summary>
+            <description/>
+        </key>
+        <key name="workspace-selector" type="b">
+            <default>true</default>
+            <summary>Workspace Selector</summary>
+            <description/>
+        </key>
         <key name="display-label" type="b">
             <default>true</default>
             <summary>Display Label</summary>
