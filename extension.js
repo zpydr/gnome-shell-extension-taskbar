@@ -1713,6 +1713,10 @@ TaskBar.prototype =
                 this.taskMenu.addMenuItem(menuQuit);
             }
             this.taskMenu.actor.hide();
+            let [stageX, stageY] = this.taskMenu.actor.get_transformed_position();
+            let y = stageY + 4;
+            let x = stageX
+            this.taskMenu.actor.set_position(x, y);
             taskMenuManager.addMenu(this.taskMenu);
             Main.uiGroup.add_actor(this.taskMenu.actor);
             this.taskMenuUp = true;
