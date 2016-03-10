@@ -72,12 +72,15 @@ TaskBar.prototype =
     activeTask: null,
     activeWorkspaceIndex: null,
     activeWorkspace: null,
+    activitiesStyle: null,
     activitiesContainer: null,
     alwaysZoomOut: null,
+    app: null,
     appearance: null,
     appearances: [],
+    appMenuColor: null,
     appMenuContainer: null,
-    app: null,
+    appMenuStyle: null,
     backgroundColor: null,
     backgroundStyleColor: null,
     barriers: null,
@@ -111,7 +114,9 @@ TaskBar.prototype =
     dash: null,
     dashHeight: null,
     dashWidth: null,
+    dateMenuColor: null,
     dateMenuContainer: null,
+    dateMenuStyle: null,
     desktopButtonIcon: null,
     desktopView: null,
     favoriteappName: null,
@@ -226,7 +231,9 @@ TaskBar.prototype =
     signalTray: null,
     stageX: null,
     stageY: null,
+    systemMenuColor: null,
     systemMenuContainer: null,
+    systemMenuStyle: null,
     taskMenu: null,
     taskMenuIsOpen: null,
     taskMenuManager: null,
@@ -253,6 +260,8 @@ TaskBar.prototype =
     windowTexture: null,
     windowWorkspace: null,
     workspace: null,
+    workspaceButtonColor: null,
+    workspaceButtonStyle: null,
     workspaceSwitchedId: null,
     workspaceTask: null,
     x: null,
@@ -369,6 +378,10 @@ TaskBar.prototype =
         if (! this.settings.get_boolean("activities-button"))
             this.activitiesContainer.show();
 
+        //Reset Activities Button Color if changed
+        if (this.settings.get_string("activities-button-color") !== "unset")
+            Main.panel.statusArea.activities.actor.set_style("None");
+
         //Enable Hot Corner if disabled
         if (! this.settings.get_boolean("hot-corner"))
             Main.layoutManager._updateHotCorners();
@@ -382,13 +395,25 @@ TaskBar.prototype =
             Main.overview.disconnect(this.hidingId);
         }
 
+        //Reset Application Menu Color if changed
+        if (this.settings.get_string("application-menu-color") !== "unset")
+            Main.panel.statusArea.appMenu.actor.set_style("None");
+
         //Show Date Menu if hidden
         if (! this.settings.get_boolean("date-menu"))
             this.dateMenuContainer.show();
 
+        //Reset Date Menu Color if changed
+        if (this.settings.get_string("date-menu-color") !== "unset")
+            Main.panel.statusArea.dateMenu.actor.set_style("None");
+
         //Show System Menu if hidden
         if (! this.settings.get_boolean("system-menu"))
             this.systemMenuContainer.show();
+
+        //Reset System Menu Color if changed
+        if (this.settings.get_string("system-menu-color") !== "unset")
+            Main.panel.statusArea.aggregateMenu.actor.set_style("None");
 
         //Show Dash if hidden
         if (! this.settings.get_boolean("dash"))
@@ -583,6 +608,8 @@ TaskBar.prototype =
             this.settings.connect("changed::display-showapps-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-workspace-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::workspace-button-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-workspace-button-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::overview", Lang.bind(this, this.setOverview)),
             this.settings.connect("changed::tray-button", Lang.bind(this, this.onParamChanged)),
@@ -611,10 +638,14 @@ TaskBar.prototype =
             this.settings.connect("changed::separator-right-favorites", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::top-panel", Lang.bind(this, this.displayTopPanel)),
             this.settings.connect("changed::activities-button", Lang.bind(this, this.displayActivities)),
+            this.settings.connect("changed::activities-button-color", Lang.bind(this, this.colorActivities)),
             this.settings.connect("changed::hot-corner", Lang.bind(this, this.enableHotCorner)),
             this.settings.connect("changed::application-menu", Lang.bind(this, this.displayApplicationMenu)),
+            this.settings.connect("changed::application-menu-color", Lang.bind(this, this.colorApplicationMenu)),
             this.settings.connect("changed::date-menu", Lang.bind(this, this.displayDateMenu)),
+            this.settings.connect("changed::date-menu-color", Lang.bind(this, this.colorDateMenu)),
             this.settings.connect("changed::system-menu", Lang.bind(this, this.displaySystemMenu)),
+            this.settings.connect("changed::system-menu-color", Lang.bind(this, this.colorSystemMenu)),
             this.settings.connect("changed::dash", Lang.bind(this, this.displayDash)),
             this.settings.connect("changed::workspace-selector", Lang.bind(this, this.displayWorkspaceSelector)),
             this.settings.connect("changed::position-changed", Lang.bind(this, this.appearancePositionChange)),
@@ -965,10 +996,16 @@ TaskBar.prototype =
             //Connect Workspace Changes
             this.workspaceSwitchedId = global.screen.connect('workspace-switched', Lang.bind(this, this.updateWorkspaces));
             this.nWorkspacesId = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.updateWorkspaces));
-
             this.buttonWorkspace = new St.Button({ style_class: "tkb-task-button" });
             this.buttonWorkspace.connect("button-press-event", Lang.bind(this, this.onClickWorkspaceButton));
             this.buttonWorkspace.connect("scroll-event", Lang.bind(this, this.onScrollWorkspaceButton));
+            this.workspaceButtonColor = this.settings.get_string("workspace-button-color");
+            this.displayWorkspaceButtonColor = this.settings.get_boolean("display-workspace-button-color");
+            if ((this.workspaceButtonColor !== "unset") && (this.displayWorkspaceButtonColor))
+            {
+                this.workspaceButtonStyle = "color: " + this.workspaceButtonColor + ";";
+                this.buttonWorkspace.set_style(this.workspaceButtonStyle);
+            }
             this.updateWorkspaces();
             this.boxWorkspace = new St.BoxLayout({ style_class: "tkb-desktop-box" });
             this.boxWorkspace.add_actor(this.buttonWorkspace);
@@ -1040,8 +1077,7 @@ TaskBar.prototype =
 
     messageTrayCount: function()
     {
-        let indicatorCount = 0;
-        indicatorCount = Main.messageTray.getSources().length;
+        let indicatorCount = Main.messageTray.getSources().length;
         if (((indicatorCount === 0) && (this.settings.get_enum("tray-button-empty") === 0)) ||
             ((indicatorCount !== 0) && (this.settings.get_enum("tray-button-empty") === 1) && (this.settings.get_enum("tray-button") !== 2)) ||
             ((indicatorCount !== 0) && (this.settings.get_enum("tray-button") === 1)))
@@ -1092,6 +1128,21 @@ TaskBar.prototype =
             this.activitiesContainer = Main.panel.statusArea.activities.container;
             this.activitiesContainer.hide();
         }
+        this.activitiesColor = this.settings.get_string("activities-button-color");
+        if (this.activitiesColor !== "unset")
+            this.colorActivities();
+    },
+
+    colorActivities: function()
+    {
+        this.activitiesColor = this.settings.get_string("activities-button-color");
+        if (this.activitiesColor !== "unset")
+        {
+            this.activitiesStyle = "color: " + this.activitiesColor + ";";
+            Main.panel.statusArea.activities.actor.set_style(this.activitiesStyle);
+        }
+        else
+            Main.panel.statusArea.activities.actor.set_style("None");
     },
 
     //Top Panel
@@ -1189,7 +1240,23 @@ TaskBar.prototype =
                 });
             }
         }
+        this.appMenuColor = this.settings.get_string("application-menu-color");
+        if (this.appMenuColor !== "unset")
+            this.colorApplicationMenu();
     },
+
+    colorApplicationMenu: function()
+    {
+        this.appMenuColor = this.settings.get_string("application-menu-color");
+        if (this.appMenuColor !== "unset")
+        {
+            this.appMenuStyle = "color: " + this.appMenuColor + ";";
+            Main.panel.statusArea.appMenu.actor.set_style(this.appMenuStyle);
+        }
+        else
+            Main.panel.statusArea.appMenu.actor.set_style("None");
+    },
+
 
     //Date Menu
     displayDateMenu: function()
@@ -1206,6 +1273,21 @@ TaskBar.prototype =
             this.dateMenuContainer = Main.panel.statusArea.dateMenu.container;
             this.dateMenuContainer.hide();
         }
+        this.dateMenuColor = this.settings.get_string("date-menu-color");
+        if (this.dateMenuColor !== "unset")
+            this.colorDateMenu();
+    },
+
+    colorDateMenu: function()
+    {
+        this.dateMenuColor = this.settings.get_string("date-menu-color");
+        if (this.dateMenuColor !== "unset")
+        {
+            this.dateMenuStyle = "color: " + this.dateMenuColor + ";";
+            Main.panel.statusArea.dateMenu.actor.set_style(this.dateMenuStyle);
+        }
+        else
+            Main.panel.statusArea.dateMenu.actor.set_style("None");
     },
 
     //System Menu
@@ -1223,6 +1305,21 @@ TaskBar.prototype =
             this.systemMenuContainer = Main.panel.statusArea.aggregateMenu.container;
             this.systemMenuContainer.hide();
         }
+        this.systemMenuColor = this.settings.get_string("system-menu-color");
+        if (this.systemMenuColor !== "unset")
+            this.colorSystemMenu();
+    },
+
+    colorSystemMenu: function()
+    {
+        this.systemMenuColor = this.settings.get_string("system-menu-color");
+        if (this.systemMenuColor !== "unset")
+        {
+            this.systemMenuStyle = "color: " + this.systemMenuColor + ";";
+            Main.panel.statusArea.aggregateMenu.actor.set_style(this.systemMenuStyle);
+        }
+        else
+            Main.panel.statusArea.aggregateMenu.actor.set_style("None");
     },
 
     //Dash
@@ -1334,6 +1431,7 @@ TaskBar.prototype =
         }
         if (this.iconSize !== 22)
         {
+            //Set Font Size
             this.panelIconSize = Math.round(this.iconSize * 2 / 3);
             this.panelSize = 'font-size: ' + this.panelIconSize + 'px;';
             Main.panel.actor.set_style(this.panelSize);

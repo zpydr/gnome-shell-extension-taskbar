@@ -275,6 +275,16 @@
             <summary>Scroll Workspaces</summary>
             <description/>
         </key>
+        <key name="workspace-button-color" type="s">
+            <default>'unset'</default>
+            <summary>Workspace Button Color</summary>
+            <description/>
+        </key>
+        <key name="display-workspace-button-color" type="b">
+            <default>false</default>
+            <summary>Display Workspace Button Color</summary>
+            <description/>
+        </key>
         <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">
             <default>'leftclickappview'</default>
             <summary>ShowApps Button Toggle</summary>
@@ -382,6 +392,11 @@
             <summary>Activities Button</summary>
             <description/>
         </key>
+        <key name="activities-button-color" type="s">
+            <default>'unset'</default>
+            <summary>Activities Button Color</summary>
+            <description/>
+        </key>
         <key name="hot-corner" type="b">
             <default>true</default>
             <summary>Hot Corner</summary>
@@ -392,14 +407,29 @@
             <summary>Application Menu</summary>
             <description/>
         </key>
+        <key name="application-menu-color" type="s">
+            <default>'unset'</default>
+            <summary>Application Menu Color</summary>
+            <description/>
+        </key>
         <key name="date-menu" type="b">
             <default>true</default>
             <summary>Date Menu</summary>
             <description/>
         </key>
+        <key name="date-menu-color" type="s">
+            <default>'unset'</default>
+            <summary>Date Menu Color</summary>
+            <description/>
+        </key>
         <key name="system-menu" type="b">
             <default>true</default>
             <summary>System Menu</summary>
+            <description/>
+        </key>
+        <key name="system-menu-color" type="s">
+            <default>'unset'</default>
+            <summary>System Menu Color</summary>
             <description/>
         </key>
         <key name="dash" type="b">

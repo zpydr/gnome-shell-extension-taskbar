@@ -39,6 +39,7 @@ const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function
 const schema = "org.gnome.shell.extensions.TaskBar";
 
 const RESETCOLOR = 'rgba(0,0,0,0)';
+const RESETCOLORWHITE = 'rgba(255,255,255,1.0)';
 
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
@@ -534,17 +535,33 @@ Prefs.prototype =
         this.valueScrollWorkspaces.connect('changed', Lang.bind(this, this.changeScrollWorkspaces));
         this.gridButtons.attach(this.valueScrollWorkspaces, 3, 4, 2, 1);
 
+        let labelDisplayWorkspaceButtonColor = new Gtk.Label({label: _("Workspace Button Color"), xalign: 0});
+        this.gridButtons.attach(labelDisplayWorkspaceButtonColor, 1, 5, 1, 1);
+        let colorWorkspaceButton = this.settings.get_string("workspace-button-color");
+        this.valueWorkspaceButtonColor = new Gtk.ColorButton({title: "TaskBar Preferences - Workspace Button Color"});
+        this.valueWorkspaceButtonColor.set_use_alpha(true);
+        let rgbaWorkspaceButton = new Gdk.RGBA();
+        if (colorWorkspaceButton === 'unset')
+            colorWorkspaceButton = RESETCOLORWHITE;
+        rgbaWorkspaceButton.parse(colorWorkspaceButton);
+        this.valueWorkspaceButtonColor.set_rgba(rgbaWorkspaceButton);
+        this.valueWorkspaceButtonColor.connect('color-set', Lang.bind(this, this.changeWorkspaceButtonColor));
+        this.gridButtons.attach(this.valueWorkspaceButtonColor, 3, 5, 1, 1);
+        this.valueDisplayWorkspaceButtonColor = new Gtk.Switch({active: this.settings.get_boolean("display-workspace-button-color")});
+        this.valueDisplayWorkspaceButtonColor.connect('notify::active', Lang.bind(this, this.displayWorkspaceButtonColor));
+        this.gridButtons.attach(this.valueDisplayWorkspaceButtonColor, 4, 5, 1, 1);
+
         let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft & Right Click Toggle"), xalign: 0});
-        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 5, 1, 1);
+        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 6, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
         this.valueShowAppsButtonToggle.append_text(_("L Overview\nR Appview"));
         this.valueShowAppsButtonToggle.set_active(this.settings.get_enum("showapps-button-toggle"));
         this.valueShowAppsButtonToggle.connect('changed', Lang.bind(this, this.changeShowAppsButtonToggle));
-        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 5, 2, 1);
+        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 6, 2, 1);
 
         let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelAppviewButtonIcon, 1, 6, 1, 1);
+        this.gridButtons.attach(labelAppviewButtonIcon, 1, 7, 1, 1);
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
         if (this.appviewIconFilename === 'unset')
             this.appviewIconFilename = APPVIEWICON;
@@ -552,32 +569,32 @@ Prefs.prototype =
         this.loadAppviewIcon();
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
-        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 6, 1, 1);
+        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 7, 1, 1);
 
         if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
         {
             let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
-            this.gridButtons.attach(labelTrayButton, 1, 7, 1, 1);
+            this.gridButtons.attach(labelTrayButton, 1, 8, 1, 1);
             this.valueTrayButton = new Gtk.ComboBoxText();
             this.valueTrayButton.append_text(_("OFF"));
             this.valueTrayButton.append_text(_("Icon"));
             this.valueTrayButton.append_text(_("Index"));
             this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
             this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
-            this.gridButtons.attach(this.valueTrayButton, 3, 7, 2, 1);
+            this.gridButtons.attach(this.valueTrayButton, 3, 8, 2, 1);
 
             let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
-            this.gridButtons.attach(labelTrayButtonEmpty, 1, 8, 1, 1);
+            this.gridButtons.attach(labelTrayButtonEmpty, 1, 9, 1, 1);
             this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
             this.valueTrayButtonEmpty.append_text(_("Show Icon"));
             this.valueTrayButtonEmpty.append_text(_("Show 0"));
             this.valueTrayButtonEmpty.append_text(_("Hide"));
             this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
             this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
-            this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 8, 2, 1);
+            this.gridButtons.attach(this.valueTrayButtonEmpty, 3, 9, 2, 1);
 
             let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
-            this.gridButtons.attach(labelTrayButtonIcon, 1, 9, 1, 1);
+            this.gridButtons.attach(labelTrayButtonIcon, 1, 10, 1, 1);
             this.trayIconFilename = this.settings.get_string("tray-button-icon");
             if (this.trayIconFilename === 'unset')
                 this.trayIconFilename = TRAYICON;
@@ -585,33 +602,101 @@ Prefs.prototype =
             this.loadTrayIcon();
             this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
             this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
-            this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 9, 1, 1);
+            this.gridButtons.attach(this.valueTrayButtonIcon2, 4, 10, 1, 1);
 
             let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
-            this.gridButtons.attach(labelHoverTrayButton, 1, 10, 1, 1);
+            this.gridButtons.attach(labelHoverTrayButton, 1, 11, 1, 1);
             this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
             this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
-            this.gridButtons.attach(this.valueHoverTrayButton, 4, 10, 1, 1);
+            this.gridButtons.attach(this.valueHoverTrayButton, 4, 11, 1, 1);
         }
 
         let resetButtonsButton = new Gtk.Button({label: _("Reset Buttons Tab")});
         resetButtonsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetButtonsButton.connect('clicked', Lang.bind(this, this.resetButtons));
         resetButtonsButton.set_tooltip_text(_("Reset the Buttons Tab except the Icons to the Original Buttons Settings.\nThe Icons can be Reset within their own Settings."));
-        this.gridButtons.attach(resetButtonsButton, 1, 12, 1, 1);
+        this.gridButtons.attach(resetButtonsButton, 1, 13, 1, 1);
 
         let labelSpaceButtons1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons1, 0, 13, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons1, 0, 14, 1, 1);
         let labelSpaceButtons2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridButtons.attach(labelSpaceButtons2, 2, 1, 1, 1);
         let labelSpaceButtons3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridButtons.attach(labelSpaceButtons3, 3, 11, 1, 1);
+        this.gridButtons.attach(labelSpaceButtons3, 3, 12, 1, 1);
         let labelSpaceButtons4 = new Gtk.Label({label: "<b>"+_("Buttons")+"</b>", hexpand: true});
         labelSpaceButtons4.set_use_markup(true);
         this.gridButtons.attach(labelSpaceButtons4, 0, 0, 7, 1);
         let labelSpaceButtons5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridButtons.attach(labelSpaceButtons5, 6, 1, 1, 1);
 
+        this.gridTrayButton = new Gtk.Grid();
+        this.gridTrayButton.margin = this.gridTrayButton.row_spacing = 10;
+        this.gridTrayButton.column_spacing = 2;
+
+        let scrollWindowTrayButton = this.gridTrayButton;
+
+        scrollWindowTrayButton.show_all();
+        let labelTrayButton = new Gtk.Label({label: _("Tray Button")});
+        if (ShellVersion[1] <= 14)
+        {
+            notebook.append_page(scrollWindowTrayButton, labelTrayButton);
+
+            let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
+            this.gridTrayButton.attach(labelTrayButton, 1, 1, 1, 1);
+            this.valueTrayButton = new Gtk.ComboBoxText();
+            this.valueTrayButton.append_text(_("OFF"));
+            this.valueTrayButton.append_text(_("Icon"));
+            this.valueTrayButton.append_text(_("Index"));
+            this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
+            this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
+            this.gridTrayButton.attach(this.valueTrayButton, 3, 1, 2, 1);
+
+            let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
+            this.gridTrayButton.attach(labelTrayButtonEmpty, 1, 2, 1, 1);
+            this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
+            this.valueTrayButtonEmpty.append_text(_("Show Icon"));
+            this.valueTrayButtonEmpty.append_text(_("Show 0"));
+            this.valueTrayButtonEmpty.append_text(_("Hide"));
+            this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
+            this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
+            this.gridTrayButton.attach(this.valueTrayButtonEmpty, 3, 2, 2, 1);
+
+            let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
+            this.gridTrayButton.attach(labelTrayButtonIcon, 1, 3, 1, 1);
+            this.trayIconFilename = this.settings.get_string("tray-button-icon");
+            if (this.trayIconFilename === 'unset')
+                this.trayIconFilename = TRAYICON;
+            this.valueTrayButtonIcon = new Gtk.Image();
+            this.loadTrayIcon();
+            this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
+            this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
+            this.gridTrayButton.attach(this.valueTrayButtonIcon2, 4, 3, 1, 1);
+
+            let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
+            this.gridTrayButton.attach(labelHoverTrayButton, 1, 4, 1, 1);
+            this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
+            this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
+            this.gridTrayButton.attach(this.valueHoverTrayButton, 4, 4, 1, 1);
+
+            let resetTrayButtonButton = new Gtk.Button({label: _("Reset Tray Button Tab")});
+            resetTrayButtonButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+            resetTrayButtonButton.connect('clicked', Lang.bind(this, this.resetTrayButton));
+            resetTrayButtonButton.set_tooltip_text(_("Reset the Tray Button Tab except the Icon to the Original Tray Button Settings.\nThe Icon can be Reset within its own Settings."));
+            this.gridTrayButton.attach(resetTrayButtonButton, 1, 6, 1, 1);
+
+            let labelSpaceTrayButton1 = new Gtk.Label({label: "\t", xalign: 0});
+            this.gridTrayButton.attach(labelSpaceTrayButton1, 0, 7, 1, 1);
+            let labelSpaceTrayButton2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
+            this.gridTrayButton.attach(labelSpaceTrayButton2, 2, 1, 1, 1);
+            let labelSpaceTrayButton3 = new Gtk.Label({label: "\t", xalign: 0});
+            this.gridTrayButton.attach(labelSpaceTrayButton3, 3, 5, 1, 1);
+            let labelSpaceTrayButton4 = new Gtk.Label({label: "<b>"+_("TrayButton")+"</b>", hexpand: true});
+            labelSpaceTrayButton4.set_use_markup(true);
+            this.gridTrayButton.attach(labelSpaceTrayButton4, 0, 0, 7, 1);
+            let labelSpaceTrayButton5 = new Gtk.Label({label: "\t", xalign: 0});
+            this.gridTrayButton.attach(labelSpaceTrayButton5, 6, 1, 1, 1);
+        }
+ 
         this.gridSeparator = new Gtk.Grid();
         this.gridSeparator.margin = this.gridSeparator.row_spacing = 10;
         this.gridSeparator.column_spacing = 2;
@@ -757,7 +842,7 @@ Prefs.prototype =
 
         let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" (350 px)", xalign: 0});
         this.gridPreview.attach(labelPreviewSize, 1, 4, 1, 1);
-        this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 50});
+        this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 10});
         let value2PreviewSize = new Gtk.SpinButton({adjustment: this.valuePreviewSize, snap_to_ticks: true});
         value2PreviewSize.set_value(this.settings.get_int("preview-size"));
         value2PreviewSize.connect("value-changed", Lang.bind(this, this.changePreviewSize));
@@ -765,7 +850,7 @@ Prefs.prototype =
 
         let labelPreviewDelay = new Gtk.Label({label: _("Preview Delay")+" (500 ms)", xalign: 0});
         this.gridPreview.attach(labelPreviewDelay, 1, 5, 2, 1);
-        this.valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 3000, step_increment: 250});
+        this.valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 3000, step_increment: 50});
         let value2PreviewDelay = new Gtk.SpinButton({adjustment: this.valuePreviewDelay, snap_to_ticks: true});
         value2PreviewDelay.set_value(this.settings.get_int("preview-delay"));
         value2PreviewDelay.connect("value-changed", Lang.bind(this, this.changePreviewDelay));
@@ -799,69 +884,126 @@ Prefs.prototype =
         let labelMisc = new Gtk.Label({label: _("Misc")});
         notebook.append_page(scrollWindowMisc, labelMisc);
 
+        let labelColor = new Gtk.Label({label: _("Color & Opacity")});
+        this.gridMisc.attach(labelColor, 5, 1, 2, 1);
+
         let labelDisplayActivitiesButton = new Gtk.Label({label: _("Activities Button"), xalign: 0});
-        this.gridMisc.attach(labelDisplayActivitiesButton, 1, 1, 1, 1);
+        this.gridMisc.attach(labelDisplayActivitiesButton, 1, 2, 1, 1);
         this.valueDisplayActivitiesButton = new Gtk.Switch({active: this.settings.get_boolean("activities-button")});
         this.valueDisplayActivitiesButton.connect('notify::active', Lang.bind(this, this.changeDisplayActivitiesButton));
-        this.gridMisc.attach(this.valueDisplayActivitiesButton, 3, 1, 1, 1);
-
-        let labelEnableHotCorner = new Gtk.Label({label: _("Hot Corner"), xalign: 0});
-        this.gridMisc.attach(labelEnableHotCorner, 1, 2, 1, 1);
-        this.valueEnableHotCorner = new Gtk.Switch({active: this.settings.get_boolean("hot-corner")});
-        this.valueEnableHotCorner.connect('notify::active', Lang.bind(this, this.changeEnableHotCorner));
-        this.gridMisc.attach(this.valueEnableHotCorner, 3, 2, 1, 1);
+        this.gridMisc.attach(this.valueDisplayActivitiesButton, 3, 2, 1, 1);
+        let colorActivities = this.settings.get_string("activities-button-color");
+        this.valueActivitiesColor = new Gtk.ColorButton({title: "TaskBar Preferences - Activities Button Color"});
+        this.valueActivitiesColor.set_use_alpha(true);
+        let rgbaActivities = new Gdk.RGBA();
+        if (colorActivities === 'unset')
+            colorActivities = RESETCOLOR;
+        rgbaActivities.parse(colorActivities);
+        this.valueActivitiesColor.set_rgba(rgbaActivities);
+        this.valueActivitiesColor.connect('color-set', Lang.bind(this, this.changeActivitiesColor));
+        this.gridMisc.attach(this.valueActivitiesColor, 5, 2, 1, 1);
+        this.resetActivitiesColorButton = new Gtk.Button({label: _("Reset")});
+        this.resetActivitiesColorButton.connect('clicked', Lang.bind(this, this.resetActivitiesColor));
+        this.gridMisc.attach(this.resetActivitiesColorButton, 6, 2, 1, 1);
 
         let labelDisplayApplicationMenu = new Gtk.Label({label: _("Application Menu"), xalign: 0});
         this.gridMisc.attach(labelDisplayApplicationMenu, 1, 3, 1, 1);
         this.valueDisplayApplicationMenu = new Gtk.Switch({active: this.settings.get_boolean("application-menu")});
         this.valueDisplayApplicationMenu.connect('notify::active', Lang.bind(this, this.changeDisplayApplicationMenu));
         this.gridMisc.attach(this.valueDisplayApplicationMenu, 3, 3, 1, 1);
+        let colorApplicationMenu = this.settings.get_string("application-menu-color");
+        this.valueApplicationMenuColor = new Gtk.ColorButton({title: "TaskBar Preferences - Application Menu Color"});
+        this.valueApplicationMenuColor.set_use_alpha(true);
+        let rgbaApplicationMenu = new Gdk.RGBA();
+        if (colorApplicationMenu === 'unset')
+            colorApplicationMenu = RESETCOLOR;
+        rgbaApplicationMenu.parse(colorApplicationMenu);
+        this.valueApplicationMenuColor.set_rgba(rgbaApplicationMenu);
+        this.valueApplicationMenuColor.connect('color-set', Lang.bind(this, this.changeApplicationMenuColor));
+        this.gridMisc.attach(this.valueApplicationMenuColor, 5, 3, 1, 1);
+        this.resetApplicationMenuColorButton = new Gtk.Button({label: _("Reset")});
+        this.resetApplicationMenuColorButton.connect('clicked', Lang.bind(this, this.resetApplicationMenuColor));
+        this.gridMisc.attach(this.resetApplicationMenuColorButton, 6, 3, 1, 1);
 
         let labelDisplayDateMenu = new Gtk.Label({label: _("Date Menu"), xalign: 0});
         this.gridMisc.attach(labelDisplayDateMenu, 1, 4, 1, 1);
         this.valueDisplayDateMenu = new Gtk.Switch({active: this.settings.get_boolean("date-menu")});
         this.valueDisplayDateMenu.connect('notify::active', Lang.bind(this, this.changeDisplayDateMenu));
         this.gridMisc.attach(this.valueDisplayDateMenu, 3, 4, 1, 1);
+        let colorDateMenu = this.settings.get_string("date-menu-color");
+        this.valueDateMenuColor = new Gtk.ColorButton({title: "TaskBar Preferences - Date Menu Color"});
+        this.valueDateMenuColor.set_use_alpha(true);
+        let rgbaDateMenu = new Gdk.RGBA();
+        if (colorDateMenu === 'unset')
+            colorDateMenu = RESETCOLOR;
+        rgbaDateMenu.parse(colorDateMenu);
+        this.valueDateMenuColor.set_rgba(rgbaDateMenu);
+        this.valueDateMenuColor.connect('color-set', Lang.bind(this, this.changeDateMenuColor));
+        this.gridMisc.attach(this.valueDateMenuColor, 5, 4, 1, 1);
+        this.resetDateMenuColorButton = new Gtk.Button({label: _("Reset")});
+        this.resetDateMenuColorButton.connect('clicked', Lang.bind(this, this.resetDateMenuColor));
+        this.gridMisc.attach(this.resetDateMenuColorButton, 6, 4, 1, 1);
 
         let labelDisplaySystemMenu = new Gtk.Label({label: _("System Menu"), xalign: 0});
         this.gridMisc.attach(labelDisplaySystemMenu, 1, 5, 1, 1);
         this.valueDisplaySystemMenu = new Gtk.Switch({active: this.settings.get_boolean("system-menu")});
         this.valueDisplaySystemMenu.connect('notify::active', Lang.bind(this, this.changeDisplaySystemMenu));
         this.gridMisc.attach(this.valueDisplaySystemMenu, 3, 5, 1, 1);
+        let colorSystemMenu = this.settings.get_string("system-menu-color");
+        this.valueSystemMenuColor = new Gtk.ColorButton({title: "TaskBar Preferences - System Menu Color"});
+        this.valueSystemMenuColor.set_use_alpha(true);
+        let rgbaSystemMenu = new Gdk.RGBA();
+        if (colorSystemMenu === 'unset')
+            colorSystemMenu = RESETCOLOR;
+        rgbaSystemMenu.parse(colorSystemMenu);
+        this.valueSystemMenuColor.set_rgba(rgbaSystemMenu);
+        this.valueSystemMenuColor.connect('color-set', Lang.bind(this, this.changeSystemMenuColor));
+        this.gridMisc.attach(this.valueSystemMenuColor, 5, 5, 1, 1);
+        this.resetSystemMenuColorButton = new Gtk.Button({label: _("Reset")});
+        this.resetSystemMenuColorButton.connect('clicked', Lang.bind(this, this.resetSystemMenuColor));
+        this.gridMisc.attach(this.resetSystemMenuColorButton, 6, 5, 1, 1);
+
+        let labelEnableHotCorner = new Gtk.Label({label: _("Hot Corner"), xalign: 0});
+        this.gridMisc.attach(labelEnableHotCorner, 1, 6, 1, 1);
+        this.valueEnableHotCorner = new Gtk.Switch({active: this.settings.get_boolean("hot-corner")});
+        this.valueEnableHotCorner.connect('notify::active', Lang.bind(this, this.changeEnableHotCorner));
+        this.gridMisc.attach(this.valueEnableHotCorner, 3, 6, 1, 1);
 
         let labelDisplayDash = new Gtk.Label({label: _("Dash (Overview)"), xalign: 0});
-        this.gridMisc.attach(labelDisplayDash, 1, 6, 1, 1);
+        this.gridMisc.attach(labelDisplayDash, 1, 7, 1, 1);
         this.valueDisplayDash = new Gtk.Switch({active: this.settings.get_boolean("dash")});
         this.valueDisplayDash.connect('notify::active', Lang.bind(this, this.changeDisplayDash));
-        this.gridMisc.attach(this.valueDisplayDash, 3, 6, 1, 1);
+        this.gridMisc.attach(this.valueDisplayDash, 3, 7, 1, 1);
 
         let labelDisplayWorkspaceSelector = new Gtk.Label({label: _("Workspace Selector (Overview)"), xalign: 0});
-        this.gridMisc.attach(labelDisplayWorkspaceSelector, 1, 7, 1, 1);
+        this.gridMisc.attach(labelDisplayWorkspaceSelector, 1, 8, 1, 1);
         this.valueDisplayWorkspaceSelector = new Gtk.Switch({active: this.settings.get_boolean("workspace-selector")});
         this.valueDisplayWorkspaceSelector.connect('notify::active', Lang.bind(this, this.changeDisplayWorkspaceSelector));
-        this.gridMisc.attach(this.valueDisplayWorkspaceSelector, 3, 7, 1, 1);
+        this.gridMisc.attach(this.valueDisplayWorkspaceSelector, 3, 8, 1, 1);
 
         let labelOverview = new Gtk.Label({label: _("TaskBar (Overview)"), xalign: 0});
-        this.gridMisc.attach(labelOverview, 1, 8, 1, 1);
+        this.gridMisc.attach(labelOverview, 1, 9, 1, 1);
         this.valueOverview = new Gtk.Switch({active: this.settings.get_boolean("overview")});
         this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
-        this.gridMisc.attach(this.valueOverview, 3, 8, 1, 1);
+        this.gridMisc.attach(this.valueOverview, 3, 9, 1, 1);
 
         let resetMiscButton = new Gtk.Button({label: _("Reset Misc Tab")});
         resetMiscButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetMiscButton.connect('clicked', Lang.bind(this, this.resetMisc));
         resetMiscButton.set_tooltip_text(_("Reset the Misc Tab to the Original Misc Settings"));
-        this.gridMisc.attach(resetMiscButton, 1, 10, 1, 1);
+        this.gridMisc.attach(resetMiscButton, 1, 11, 1, 1);
 
         let labelSpaceMisc1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc1, 0, 11, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc1, 0, 12, 1, 1);
         let labelSpaceMisc2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridMisc.attach(labelSpaceMisc2, 2, 1, 1, 1);
         let labelSpaceMisc3 = new Gtk.Label({label: "<b>"+_("Misc")+"</b>", hexpand: true});
         labelSpaceMisc3.set_use_markup(true);
-        this.gridMisc.attach(labelSpaceMisc3, 0, 0, 5, 1);
+        this.gridMisc.attach(labelSpaceMisc3, 0, 0, 8, 1);
         let labelSpaceMisc4 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridMisc.attach(labelSpaceMisc4, 4, 9, 1, 1);
+        this.gridMisc.attach(labelSpaceMisc4, 4, 10, 1, 1);
+        let labelSpaceMisc5 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridMisc.attach(labelSpaceMisc5, 7, 10, 1, 1);
 
         this.gridGPL = new Gtk.Grid();
         this.gridGPL.margin = this.gridGPL.row_spacing = 10;
@@ -1240,6 +1382,17 @@ Prefs.prototype =
         this.settings.set_enum("scroll-workspaces", object.active);
     },
 
+    changeWorkspaceButtonColor: function()
+    {
+        this.workspaceButtonColor = this.valueWorkspaceButtonColor.get_rgba().to_string();
+        this.settings.set_string("workspace-button-color", this.workspaceButtonColor);
+    },
+
+    displayWorkspaceButtonColor: function(object, pspec)
+    {
+        this.settings.set_boolean("display-workspace-button-color", object.active);
+    },
+
     changeShowAppsButtonToggle: function(object)
     {
         this.settings.set_enum("showapps-button-toggle", this.valueShowAppsButtonToggle.get_active());
@@ -1485,6 +1638,21 @@ Prefs.prototype =
         this.settings.set_boolean("activities-button", object.active);
     },
 
+    changeActivitiesColor: function()
+    {
+        this.activitiesColor = this.valueActivitiesColor.get_rgba().to_string();
+        this.settings.set_string("activities-button-color", this.activitiesColor);
+    },
+
+    resetActivitiesColor: function()
+    {
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueActivitiesColor.set_rgba(rgba);
+        this.settings.set_string("activities-button-color", "unset");
+    },
+
     changeEnableHotCorner: function(object, pspec)
     {
         this.settings.set_boolean("hot-corner", object.active);
@@ -1495,14 +1663,59 @@ Prefs.prototype =
         this.settings.set_boolean("application-menu", object.active);
     },
 
+    changeApplicationMenuColor: function()
+    {
+        this.appMenuColor = this.valueApplicationMenuColor.get_rgba().to_string();
+        this.settings.set_string("application-menu-color", this.appMenuColor);
+    },
+
+    resetApplicationMenuColor: function()
+    {
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueApplicationMenuColor.set_rgba(rgba);
+        this.settings.set_string("application-menu-color", "unset");
+    },
+
     changeDisplayDateMenu: function(object, pspec)
     {
         this.settings.set_boolean("date-menu", object.active);
     },
 
+    changeDateMenuColor: function()
+    {
+        this.dateMenuColor = this.valueDateMenuColor.get_rgba().to_string();
+        this.settings.set_string("date-menu-color", this.dateMenuColor);
+    },
+
+    resetDateMenuColor: function()
+    {
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueDateMenuColor.set_rgba(rgba);
+        this.settings.set_string("date-menu-color", "unset");
+    },
+
     changeDisplaySystemMenu: function(object, pspec)
     {
         this.settings.set_boolean("system-menu", object.active);
+    },
+
+    changeSystemMenuColor: function()
+    {
+        this.systemMenuColor = this.valueSystemMenuColor.get_rgba().to_string();
+        this.settings.set_string("system-menu-color", this.systemMenuColor);
+    },
+
+    resetSystemMenuColor: function()
+    {
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueSystemMenuColor.set_rgba(rgba);
+        this.settings.set_string("system-menu-color", "unset");
     },
 
     changeDisplayDash: function(object, pspec)
@@ -1703,7 +1916,7 @@ Prefs.prototype =
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
-        this.settings.set_string("active-task-background-color", RESETCOLOR);
+        this.settings.set_string("active-task-background-color", "unset");
         this.value2ActiveTaskBackgroundColor.set_active(false);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
@@ -1715,9 +1928,22 @@ Prefs.prototype =
         this.valueDesktopButtonRightClick.set_active(true);
         this.valueWorkspaceButtonIndex.set_active(0);
         this.valueScrollWorkspaces.set_active(0);
+        let color7 = RESETCOLORWHITE;
+        let rgba7 = new Gdk.RGBA();
+        rgba7.parse(color7);
+        this.valueWorkspaceButtonColor.set_rgba(rgba7);
+        this.settings.set_string("workspace-button-color", "unset");
+        this.valueDisplayWorkspaceButtonColor.set_active(false);
         this.valueShowAppsButtonToggle.set_active(0);
+    },
+
+    resetTrayButton: function()
+    {
+        this.settings.set_boolean("reset-flag", true);
         this.valueTrayButton.set_active(0);
         this.valueTrayButtonEmpty.set_active(0);
+        this.valueHoverTrayButton.set_active(false);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetSeparators: function()
@@ -1740,29 +1966,44 @@ Prefs.prototype =
 
     resetPreview: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.valueDisplayLabel.set_active(true);
         this.valueDisplayThumbnail.set_active(true);
         this.valueDisplayFavoritesLabel.set_active(true);
         this.valuePreviewSize.set_value(350);
         this.valuePreviewDelay.set_value(500);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetMisc: function()
     {
+        this.settings.set_boolean("reset-flag", true);
         this.valueDisplayActivitiesButton.set_active(true);
+        let color = RESETCOLOR;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueActivitiesColor.set_rgba(rgba);
+        this.settings.set_string("activities-button-color", "unset");
         this.valueEnableHotCorner.set_active(true);
         this.valueDisplayApplicationMenu.set_active(true);
+        this.valueApplicationMenuColor.set_rgba(rgba);
+        this.settings.set_string("application-menu-color", "unset");
         this.valueDisplayDateMenu.set_active(true);
+        this.valueDateMenuColor.set_rgba(rgba);
+        this.settings.set_string("date-menu-color", "unset");
         this.valueDisplaySystemMenu.set_active(true);
+        this.valueSystemMenuColor.set_rgba(rgba);
+        this.settings.set_string("system-menu-color", "unset");
         this.valueDisplayDash.set_active(true);
         this.valueDisplayWorkspaceSelector.set_active(true);
         this.valueOverview.set_active(true);
+        this.settings.set_boolean("reset-flag", false);
     },
 
     resetAll: function()
     {
-        this.settings.set_boolean("reset-flag", true);
         this.resetMisc();
+        this.settings.set_boolean("reset-flag", true);
         this.settings.set_boolean("reset-all", true);
     }
 }
