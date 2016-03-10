@@ -1077,7 +1077,8 @@ TaskBar.prototype =
 
     messageTrayCount: function()
     {
-        let indicatorCount = Main.messageTray.getSources().length;
+        let indicatorCount = 0;
+        indicatorCount = Main.messageTray.getSources().length;
         if (((indicatorCount === 0) && (this.settings.get_enum("tray-button-empty") === 0)) ||
             ((indicatorCount !== 0) && (this.settings.get_enum("tray-button-empty") === 1) && (this.settings.get_enum("tray-button") !== 2)) ||
             ((indicatorCount !== 0) && (this.settings.get_enum("tray-button") === 1)))
