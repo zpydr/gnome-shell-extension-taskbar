@@ -2096,7 +2096,7 @@ TaskBar.prototype =
             else
                 buttonTaskWidth = (this.iconSize + 8);
             this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
-            if (buttonTask.visible)
+            if ((buttonTask.visible) || (this.settings.get_boolean("tasks-all-workspaces")))
                 this.countTasks ++;
             this.boxMainTasks.set_width(this.newTasksContainerWidth);
             this.boxMainTasks.add_actor(buttonTask);
