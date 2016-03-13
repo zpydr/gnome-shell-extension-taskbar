@@ -58,6 +58,18 @@
     border-radius: 5px;
 }
 
+.tkb-task-button:inactive-task-frame
+{
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-image: url("images/active-task-background.svg");
+}
+
+.tkb-task-button:inactive-task-no-frame
+{
+    border-radius: 5px;
+}
+
 .tkb-preview
 {
     background-color: rgba(0,0,0,0.9);

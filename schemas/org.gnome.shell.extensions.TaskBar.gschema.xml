@@ -167,11 +167,6 @@
             <summary>Icon Size</summary>
             <description/>
         </key>
-       <key name="font-size" type="s">
-            <default>'rgba(0,0,0,0)'</default>
-            <summary>TEST Panel Font Color TEST</summary>
-            <description/>
-        </key>
         <key name="font-size-bottom" type="i">
             <range min="1" max="96"/>
             <default>17</default>
@@ -189,8 +184,8 @@
             <description/>
         </key>
         <key name="tasks-container-width" type="i">
-            <range min="0" max="100"/>
-            <default>0</default>
+            <range min="1" max="100"/>
+            <default>6</default>
             <summary>Tasks Container Width</summary>
             <description/>
         </key>
@@ -209,6 +204,11 @@
             <summary>Active Task Frame</summary>
             <description/>
         </key>
+        <key name="inactive-task-frame" type="b">
+            <default>false</default>
+            <summary>Inactive Task Frame</summary>
+            <description/>
+        </key>
         <key name="active-task-background-color" type="s">
             <default>'rgba(0,0,0,0)'</default>
             <summary>Active Task Background Color</summary>
@@ -217,6 +217,43 @@
         <key name="active-task-background-color-set" type="b">
             <default>false</default>
             <summary>Active Task Background Color</summary>
+            <description/>
+        </key>
+        <key name="inactive-task-background-color" type="s">
+            <default>'rgba(0,0,0,0)'</default>
+            <summary>Inactive Task Background Color</summary>
+            <description/>
+        </key>
+        <key name="inactive-task-background-color-set" type="b">
+            <default>false</default>
+            <summary>Inactive Task Background Color</summary>
+            <description/>
+        </key>
+        <key name="tasks-label" type="b">
+            <default>false</default>
+            <summary>Tasks Label</summary>
+            <description/>
+        </key>
+        <key name="tasks-label-color" type="s">
+            <default>'unset'</default>
+            <summary>Tasks Label Color</summary>
+            <description/>
+        </key>
+        <key name="display-tasks-label-color" type="b">
+            <default>false</default>
+            <summary>Display Tasks Label Color</summary>
+            <description/>
+        </key>
+        <key name="tasks-width" type="i">
+            <range min="1" max="1000"/>
+            <default>150</default>
+            <summary>Tasks Label Width</summary>
+            <description/>
+        </key>
+        <key name="tasks-spaces" type="i">
+            <range min="0" max="1000"/>
+            <default>4</default>
+            <summary>Tasks Spaces Width</summary>
             <description/>
         </key>
         <key name="top-panel-background-color" type="s">
