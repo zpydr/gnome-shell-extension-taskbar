@@ -1915,6 +1915,7 @@ TaskBar.prototype =
             if (type === 0) //Add all windows (On init or workspace change)
             {
                 this.countTasks = null;
+                this.countVisibleTasks = null;
                 this.cleanTasksList();
                 windowsList.forEach(
                     function(window)
@@ -1944,7 +1945,7 @@ TaskBar.prototype =
         {
             let totalWidth = this.boxMainTasks.get_width();
             let spaces = this.settings.get_int("tasks-spaces");
-            let newWidth = ((totalWidth - (spaces * this.countTasks)) / this.countTasks);
+            let newWidth = ((totalWidth - (spaces * this.countVisibleTasks)) / this.countVisibleTasks);
             this.tasksList.forEach(
                 function(task)
                 {
@@ -2097,6 +2098,8 @@ TaskBar.prototype =
                 buttonTaskWidth = (this.iconSize + 8);
             this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
             this.countTasks ++;
+            if (taskButton.visible)
+                this.countVisibleTasks++;
             this.boxMainTasks.set_width(this.newTasksContainerWidth);
             this.boxMainTasks.add_actor(buttonTask);
             this.tasksList.push([ window, buttonTask, signalsTask ]);
