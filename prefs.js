@@ -681,64 +681,62 @@ Prefs.prototype =
         let labelTrayButton = new Gtk.Label({label: _("Tray Button")});
 
         if (ShellVersion[1] <= 14)
-        {
             notebook.append_page(scrollWindowTrayButton, labelTrayButton);
 
-            let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
-            this.gridTrayButton.attach(labelTrayButton, 1, 1, 1, 1);
-            this.valueTrayButton = new Gtk.ComboBoxText();
-            this.valueTrayButton.append_text(_("OFF"));
-            this.valueTrayButton.append_text(_("Icon"));
-            this.valueTrayButton.append_text(_("Index"));
-            this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
-            this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
-            this.gridTrayButton.attach(this.valueTrayButton, 3, 1, 2, 1);
+        let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
+        this.gridTrayButton.attach(labelTrayButton, 1, 1, 1, 1);
+        this.valueTrayButton = new Gtk.ComboBoxText();
+        this.valueTrayButton.append_text(_("OFF"));
+        this.valueTrayButton.append_text(_("Icon"));
+        this.valueTrayButton.append_text(_("Index"));
+        this.valueTrayButton.set_active(this.settings.get_enum("tray-button"));
+        this.valueTrayButton.connect('changed', Lang.bind(this, this.changeDisplayTrayButton));
+        this.gridTrayButton.attach(this.valueTrayButton, 3, 1, 2, 1);
 
-            let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
-            this.gridTrayButton.attach(labelTrayButtonEmpty, 1, 2, 1, 1);
-            this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
-            this.valueTrayButtonEmpty.append_text(_("Show Icon"));
-            this.valueTrayButtonEmpty.append_text(_("Show 0"));
-            this.valueTrayButtonEmpty.append_text(_("Hide"));
-            this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
-            this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
-            this.gridTrayButton.attach(this.valueTrayButtonEmpty, 3, 2, 2, 1);
+        let labelTrayButtonEmpty = new Gtk.Label({label: _("When Tray is Empty"), xalign: 0});
+        this.gridTrayButton.attach(labelTrayButtonEmpty, 1, 2, 1, 1);
+        this.valueTrayButtonEmpty = new Gtk.ComboBoxText();
+        this.valueTrayButtonEmpty.append_text(_("Show Icon"));
+        this.valueTrayButtonEmpty.append_text(_("Show 0"));
+        this.valueTrayButtonEmpty.append_text(_("Hide"));
+        this.valueTrayButtonEmpty.set_active(this.settings.get_enum("tray-button-empty"));
+        this.valueTrayButtonEmpty.connect('changed', Lang.bind(this, this.changeDisplayTrayButtonEmpty));
+        this.gridTrayButton.attach(this.valueTrayButtonEmpty, 3, 2, 2, 1);
 
-            let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
-            this.gridTrayButton.attach(labelTrayButtonIcon, 1, 3, 1, 1);
-            this.trayIconFilename = this.settings.get_string("tray-button-icon");
-            if (this.trayIconFilename === 'unset')
-                this.trayIconFilename = TRAYICON;
-            this.valueTrayButtonIcon = new Gtk.Image();
-            this.loadTrayIcon();
-            this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
-            this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
-            this.gridTrayButton.attach(this.valueTrayButtonIcon2, 4, 3, 1, 1);
+        let labelTrayButtonIcon = new Gtk.Label({label: _("Tray Button Icon"), xalign: 0});
+        this.gridTrayButton.attach(labelTrayButtonIcon, 1, 3, 1, 1);
+        this.trayIconFilename = this.settings.get_string("tray-button-icon");
+        if (this.trayIconFilename === 'unset')
+            this.trayIconFilename = TRAYICON;
+        this.valueTrayButtonIcon = new Gtk.Image();
+        this.loadTrayIcon();
+        this.valueTrayButtonIcon2 = new Gtk.Button({image: this.valueTrayButtonIcon});
+        this.valueTrayButtonIcon2.connect('clicked', Lang.bind(this, this.changeTrayButtonIcon));
+        this.gridTrayButton.attach(this.valueTrayButtonIcon2, 4, 3, 1, 1);
 
-            let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
-            this.gridTrayButton.attach(labelHoverTrayButton, 1, 4, 1, 1);
-            this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
-            this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
-            this.gridTrayButton.attach(this.valueHoverTrayButton, 4, 4, 1, 1);
+        let labelHoverTrayButton = new Gtk.Label({label: _("Activate Tray on Hover"), xalign: 0});
+        this.gridTrayButton.attach(labelHoverTrayButton, 1, 4, 1, 1);
+        this.valueHoverTrayButton = new Gtk.Switch({active: this.settings.get_boolean("hover-tray-button")});
+        this.valueHoverTrayButton.connect('notify::active', Lang.bind(this, this.changeHoverTrayButton));
+        this.gridTrayButton.attach(this.valueHoverTrayButton, 4, 4, 1, 1);
 
-            let resetTrayButtonButton = new Gtk.Button({label: _("Reset Tray Button Tab")});
-            resetTrayButtonButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
-            resetTrayButtonButton.connect('clicked', Lang.bind(this, this.resetTrayButton));
-            resetTrayButtonButton.set_tooltip_text(_("Reset the Tray Button Tab except the Icon to the Original Tray Button Settings.\nThe Icon can be Reset within its own Settings."));
-            this.gridTrayButton.attach(resetTrayButtonButton, 1, 6, 1, 1);
+        let resetTrayButtonButton = new Gtk.Button({label: _("Reset Tray Button Tab")});
+        resetTrayButtonButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetTrayButtonButton.connect('clicked', Lang.bind(this, this.resetTrayButton));
+        resetTrayButtonButton.set_tooltip_text(_("Reset the Tray Button Tab except the Icon to the Original Tray Button Settings.\nThe Icon can be Reset within its own Settings."));
+        this.gridTrayButton.attach(resetTrayButtonButton, 1, 6, 1, 1);
 
-            let labelSpaceTrayButton1 = new Gtk.Label({label: "\t", xalign: 0});
-            this.gridTrayButton.attach(labelSpaceTrayButton1, 0, 7, 1, 1);
-            let labelSpaceTrayButton2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-            this.gridTrayButton.attach(labelSpaceTrayButton2, 2, 1, 1, 1);
-            let labelSpaceTrayButton3 = new Gtk.Label({label: "\t", xalign: 0});
-            this.gridTrayButton.attach(labelSpaceTrayButton3, 3, 5, 1, 1);
-            let labelSpaceTrayButton4 = new Gtk.Label({label: "<b>"+_("TrayButton")+"</b>", hexpand: true});
-            labelSpaceTrayButton4.set_use_markup(true);
-            this.gridTrayButton.attach(labelSpaceTrayButton4, 0, 0, 7, 1);
-            let labelSpaceTrayButton5 = new Gtk.Label({label: "\t", xalign: 0});
-            this.gridTrayButton.attach(labelSpaceTrayButton5, 6, 1, 1, 1);
-        }
+        let labelSpaceTrayButton1 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTrayButton.attach(labelSpaceTrayButton1, 0, 7, 1, 1);
+        let labelSpaceTrayButton2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
+        this.gridTrayButton.attach(labelSpaceTrayButton2, 2, 1, 1, 1);
+        let labelSpaceTrayButton3 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTrayButton.attach(labelSpaceTrayButton3, 3, 5, 1, 1);
+        let labelSpaceTrayButton4 = new Gtk.Label({label: "<b>"+_("TrayButton")+"</b>", hexpand: true});
+        labelSpaceTrayButton4.set_use_markup(true);
+        this.gridTrayButton.attach(labelSpaceTrayButton4, 0, 0, 7, 1);
+        let labelSpaceTrayButton5 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTrayButton.attach(labelSpaceTrayButton5, 6, 1, 1, 1);
  
         this.gridSeparator = new Gtk.Grid();
         this.gridSeparator.margin = this.gridSeparator.row_spacing = 10;
