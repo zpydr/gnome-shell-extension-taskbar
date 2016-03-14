@@ -902,7 +902,7 @@ TaskBar.prototype =
                     this
                 );
             }
-            if ((this.bottomPanelEndIndicator) && (this.settings.get_enum("tray-button") !== 0))
+            if (this.bottomPanelEndIndicator)
                 this.boxMain.add_actor(this.boxBottomPanelTrayButton);
         }
     },
@@ -1535,7 +1535,7 @@ TaskBar.prototype =
             this.positionBoxBottomEnd.add_actor(this.boxMain);
             this.bottomPanelEndIndicator = true;
         }
-        else if (this.settings.get_enum("tray-button") !== 0)
+        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator))
             this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
         if (ShellVersion[1] === 8)
