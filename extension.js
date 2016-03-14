@@ -399,8 +399,7 @@ TaskBar.prototype =
         if (! this.settings.get_boolean("application-menu"))
         {
             this.appMenuContainer.show();
-            if (ShellVersion[1] >= 10)
-                Shell.WindowTracker.get_default().disconnect(this.hidingId2);
+            Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
 
@@ -465,7 +464,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Sources Added Signal
         if (this.messageTrayCountAddedId !== null)
         {
-            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if (ShellVersion[1] <= 14)
                 Main.messageTray.disconnect(this.messageTrayCountAddedId);
             this.messageTrayCountAddedId = null;
         }
@@ -473,7 +472,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Sources Removed Signal
         if (this.messageTrayCountRemovedId !== null)
         {
-            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if (ShellVersion[1] <= 14)
                 Main.messageTray.disconnect(this.messageTrayCountRemovedId);
             this.messageTrayCountRemovedId = null;
         }
@@ -481,7 +480,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Showing Signal
         if (this.messageTrayShowingId !== null)
         {
-            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if (ShellVersion[1] <= 14)
                 Main.messageTray.disconnect(this.messageTrayShowingId);
             this.messageTrayShowingId = null;
         }
@@ -489,7 +488,7 @@ TaskBar.prototype =
         //Disconnect Message Tray Hiding Signal
         if (this.messageTrayHidingId !== null)
         {
-            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if (ShellVersion[1] <= 14)
                 Main.messageTray.disconnect(this.messageTrayHidingId);
             this.messageTrayHidingId = null;
         }
@@ -497,7 +496,7 @@ TaskBar.prototype =
         //Reset Message Tray
         if (this.showTray !== null)
         {
-            if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+            if (ShellVersion[1] <= 14)
                 MessageTray.MessageTray.prototype._showTray = this.showTray;
             this.showTray = null;
         }
@@ -564,7 +563,7 @@ TaskBar.prototype =
             this.bottomPanelActor.destroy();
             this.bottomPanelActor = null;
         }
-        if ((this.setAnchorPoint) && (ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+        if ((this.setAnchorPoint) && (ShellVersion[1] <= 14))
         {
             Main.messageTray.actor.set_anchor_point(0, 0);
             Main.messageTray._notificationWidget.set_anchor_point(0, 0);
@@ -582,7 +581,7 @@ TaskBar.prototype =
         this.cleanTasksList();
         if (this.topPanelBackgroundColor !== 'unset')
         {
-            if (ShellVersion[1] !== 18)
+            if (ShellVersion[1] <= 16)
             {
                 Main.panel._leftCorner.actor.show();
                 Main.panel._rightCorner.actor.show();
@@ -902,7 +901,7 @@ TaskBar.prototype =
                     this
                 );
             }
-            if (this.bottomPanelEndIndicator)
+            if ((this.settings.get_enum("tray-button") !== 0) && (this.bottomPanelEndIndicator) && (ShellVersion[1] <= 14))
                 this.boxMain.add_actor(this.boxBottomPanelTrayButton);
         }
     },
@@ -1069,7 +1068,7 @@ TaskBar.prototype =
     {
         this.messageTrayCountAddedId = null;
         this.messageTrayCountRemovedId = null;
-        if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") !== 0) && (ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+        if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") !== 0) && (ShellVersion[1] <= 14))
         {
             this.buttonTray = new St.Button({ style_class: "tkb-task-button" });
             this.signalTray =
@@ -1215,44 +1214,25 @@ TaskBar.prototype =
             let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
             xsettings.set_value('overrides', variant);
             this.appMenuContainer.show();
-            if (ShellVersion[1] >= 10)
-                Shell.WindowTracker.get_default().disconnect(this.hidingId2);
+            Shell.WindowTracker.get_default().disconnect(this.hidingId2);
             Main.overview.disconnect(this.hidingId);
         }
     },
 
     initDisplayApplicationMenu: function()
     {
-        if (ShellVersion[1] === 8)
+        this.appMenuContainer = Main.panel.statusArea.appMenu.container;
+        if (! this.settings.get_boolean("application-menu"))
         {
-            this.appMenuContainer = Main.panel.statusArea.appMenu.container;
-            if (! this.settings.get_boolean("application-menu"))
+            this.appMenuContainer.hide();
+            this.hidingId = Main.overview.connect('hiding', function ()
             {
-                let variant = GLib.Variant.new('a{sv}', { 'Gtk/ShellShowsAppMenu': GLib.Variant.new('i', 0) });
-                let xsettings = new Gio.Settings({ schema: 'org.gnome.settings-daemon.plugins.xsettings' });
-                xsettings.set_value('overrides', variant);
-                this.appMenuContainer.hide();
-                this.hidingId = Main.overview.connect('hiding', function ()
-                {
-                    Main.panel.statusArea.appMenu.container.hide();
-                });
-            }
-        }
-        else
-        {
-            this.appMenuContainer = Main.panel.statusArea.appMenu.container;
-            if (! this.settings.get_boolean("application-menu"))
+                Main.panel.statusArea.appMenu.container.hide();
+            });
+            this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
             {
-                this.appMenuContainer.hide();
-                this.hidingId = Main.overview.connect('hiding', function ()
-                {
-                    Main.panel.statusArea.appMenu.container.hide();
-                });
-                this.hidingId2 = Shell.WindowTracker.get_default().connect('notify::focus-app', function ()
-                {
-                    Main.panel.statusArea.appMenu.container.hide();
-                });
-            }
+                Main.panel.statusArea.appMenu.container.hide();
+            });
         }
         this.appMenuColor = this.settings.get_string("application-menu-color");
         if (this.appMenuColor !== "unset")
@@ -1483,14 +1463,14 @@ TaskBar.prototype =
                 Main.panel.actor.set_style(this.panelSize + ' ' + this.topPanelBackgroundStyle);
             else
                 Main.panel.actor.set_style(this.topPanelBackgroundStyle);
-            if ((this.settings.get_boolean("top-panel-background-alpha")) && (ShellVersion[1] !== 18))
+            if ((this.settings.get_boolean("top-panel-background-alpha")) && (ShellVersion[1] <= 16))
             {
                 Main.panel._leftCorner.actor.hide();
                 Main.panel._rightCorner.actor.hide();
             }
             else
             {
-                if (ShellVersion[1] !== 18)
+                if (ShellVersion[1] <= 16)
                 {
                     Main.panel._leftCorner.actor.show();
                     Main.panel._rightCorner.actor.show();
@@ -1517,18 +1497,9 @@ TaskBar.prototype =
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
         this.bottomPanelActor.set_style(this.panelSize + ' ' + this.bottomPanelBackgroundStyle);
         this.bottomPanelActor.set_reactive(false);
-        if (ShellVersion[1] === 8)
-        {
-            this.positionBoxBottomStart = new St.BoxLayout();
-            this.positionBoxBottomMiddle = new St.BoxLayout();
-            this.positionBoxBottomEnd = new St.BoxLayout();
-        }
-        else
-        {
-            this.positionBoxBottomStart = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.START });
-            this.positionBoxBottomMiddle = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.MIDDLE });
-            this.positionBoxBottomEnd = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.END });
-        }
+        this.positionBoxBottomStart = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.START });
+        this.positionBoxBottomMiddle = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.MIDDLE });
+        this.positionBoxBottomEnd = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.END });
         this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
         if (this.positionBoxBottomSettings === 0)
             this.positionBoxBottomStart.add_actor(this.boxMain);
@@ -1539,26 +1510,17 @@ TaskBar.prototype =
             this.positionBoxBottomEnd.add_actor(this.boxMain);
             this.bottomPanelEndIndicator = true;
         }
-        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator))
+        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (ShellVersion[1] <= 14))
             this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
         Main.layoutManager.addChrome(this.bottomPanelActor, { affectsStruts: true, trackFullscreen: true });
-        if (ShellVersion[1] === 8)
-        {
-            this.bottomPanelActor.add(this.positionBoxBottomStart, { x_align: St.Align.START, expand: true, x_fill: false });
-            this.bottomPanelActor.add(this.positionBoxBottomMiddle, { x_align: St.Align.MIDDLE, expand: true, x_fill: false });
-            this.bottomPanelActor.add(this.positionBoxBottomEnd, { x_align: St.Align.END, expand: true, x_fill: false });
-        }
-        else
-        {
-            this.bottomPanelActor.add_actor(this.positionBoxBottomStart);
-            this.bottomPanelActor.add_actor(this.positionBoxBottomMiddle);
-            this.bottomPanelActor.add_actor(this.positionBoxBottomEnd);
-        }
+        this.bottomPanelActor.add_actor(this.positionBoxBottomStart);
+        this.bottomPanelActor.add_actor(this.positionBoxBottomMiddle);
+        this.bottomPanelActor.add_actor(this.positionBoxBottomEnd);
         let primary = Main.layoutManager.primaryMonitor;
         this.height = (this.iconSize + this.bottomPanelVertical + 2);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
         this.bottomPanelActor.set_size(primary.width, -1);
-        if ((ShellVersion[1] !== 16) && (ShellVersion[1] !== 18))
+        if (ShellVersion[1] <= 14)
         {
             Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
             this.setAnchorPoint = true;
@@ -1586,47 +1548,23 @@ TaskBar.prototype =
             this.leftbutton = RIGHTBUTTON;
             this.rightbutton = LEFTBUTTON;
         }
-        if (ShellVersion[1] === 8)
+        if (numButton === this.leftbutton) //Left Button
         {
-            if (numButton === this.leftbutton) //Left Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                if (! Main.overview._viewSelector._showAppsButton.checked)
-                    Main.overview._viewSelector._showAppsButton.checked = true;
-                else
-                    Main.overview.hide();
-            }
-            else if (numButton === this.rightbutton) //Right Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                else if (Main.overview._viewSelector._showAppsButton.checked)
-                    Main.overview._viewSelector._showAppsButton.checked = false;
-                else
-                    Main.overview.hide();
-            }
+            if (! Main.overview.visible)
+                Main.overview.show();
+            if (! Main.overview.viewSelector._showAppsButton.checked)
+                Main.overview.viewSelector._showAppsButton.checked = true;
+            else
+                Main.overview.hide();
         }
-        else
+        else if (numButton === this.rightbutton) //Right Button
         {
-            if (numButton === this.leftbutton) //Left Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                if (! Main.overview.viewSelector._showAppsButton.checked)
-                    Main.overview.viewSelector._showAppsButton.checked = true;
-                else
-                    Main.overview.hide();
-            }
-            else if (numButton === this.rightbutton) //Right Button
-            {
-                if (! Main.overview.visible)
-                    Main.overview.show();
-                else if (Main.overview.viewSelector._showAppsButton.checked)
-                    Main.overview.viewSelector._showAppsButton.checked = false;
-                else
-                    Main.overview.hide();
-            }
+            if (! Main.overview.visible)
+                Main.overview.show();
+            else if (Main.overview.viewSelector._showAppsButton.checked)
+                Main.overview.viewSelector._showAppsButton.checked = false;
+            else
+                Main.overview.hide();
         }
     },
 
