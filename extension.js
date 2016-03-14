@@ -921,11 +921,15 @@ TaskBar.prototype =
     showMainBox: function()
     {
         this.mainBox.show();
+        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")))
+            this.boxBottomPanelTrayButton.show();
     },
 
     hideMainBox: function()
     {
         this.mainBox.hide();
+        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")))
+            this.boxBottomPanelTrayButton.hide();
     },
 
     //Add Favorites
