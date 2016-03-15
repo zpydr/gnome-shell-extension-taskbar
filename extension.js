@@ -733,6 +733,12 @@ TaskBar.prototype =
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
             this.settings.set_boolean("first-start", false);
         }
+	// Find out if the bottom panel extension is enabled
+	this.tdp = false;
+	let schemaSettings = new Gio.Settings({ schema: 'org.gnome.shell' });
+	let enabled_extensions = schemaSettings.get_strv('enabled-extensions');
+	if (enabled_extensions.indexOf("bottompanel@tmoer93") != -1)
+	    this.tbp = true;
     },
 
     //Add TaskBar
@@ -1690,7 +1696,7 @@ TaskBar.prototype =
             this.taskMenu.actor.hide();
             let [stageX, stageY] = this.taskMenu.actor.get_transformed_position();
             let y = 0;
-            if (this.settings.get_boolean("bottom-panel"))
+            if ((this.settings.get_boolean("bottom-panel")) || (this.tbp))
                 y = stageY - 4;
             else
                 y = stageY + 4;
@@ -2188,7 +2194,7 @@ TaskBar.prototype =
         let node = this.preview.get_theme_node();
         let yOffset = node.get_length('-y-offset');
         let y = null;
-        if (this.settings.get_boolean("bottom-panel"))
+        if ((this.settings.get_boolean("bottom-panel")) || (this.tbp))
             y = stageY - labelHeight - yOffset;
         else
             y = stageY + itemHeight + yOffset;
