@@ -251,6 +251,7 @@ TaskBar.prototype =
     tasksLabelStyle: null,
     tasksList: [],
     tasksWidth: null,
+    tbp: null,
     threshold: null,
     thumbnail: null,
     title: null,
@@ -734,7 +735,7 @@ TaskBar.prototype =
             this.settings.set_boolean("first-start", false);
         }
 	// Find out if the bottom panel extension is enabled
-	this.tdp = false;
+	this.tbp = false;
 	let schemaSettings = new Gio.Settings({ schema: 'org.gnome.shell' });
 	let enabled_extensions = schemaSettings.get_strv('enabled-extensions');
 	if (enabled_extensions.indexOf("bottompanel@tmoer93") != -1)
