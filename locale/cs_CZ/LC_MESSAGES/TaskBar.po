@@ -21,76 +21,120 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-13 17:18+0200\n"
-"PO-Revision-Date: 2015-04-13 18:27+0100\n"
+"POT-Creation-Date: 2016-03-15 10:12+0100\n"
+"PO-Revision-Date: 2016-03-15 11:11+0100\n"
 "Last-Translator: Michal Růžička <ruzicka.mich@gmail.com>\n"
 "Language-Team: Michal Růžička <ruzicka.mich@gmail.com>\n"
 "Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.5\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 
-#: prefs.js:116 prefs.js:195
+#: prefs.js:120
+msgid "About"
+msgstr "O TaskBaru"
+
+#: prefs.js:132
+msgid "Version"
+msgstr "Verze"
+
+#: prefs.js:134
+msgid "GNOME Shell Version"
+msgstr "GNOME Shell verze"
+
+#: prefs.js:148
+msgid "Report a Bug"
+msgstr "Nahlásit chybu"
+
+#: prefs.js:152
+msgid "Donate for TaskBar"
+msgstr "Dotace pro TaskBar"
+
+#: prefs.js:156
+msgid "Become a Friend of GNOME"
+msgstr "Staňte se Přítelem GNOME"
+
+#: prefs.js:160
+msgid "Free Software Foundation"
+msgstr "Free Software Foundation"
+
+#: prefs.js:165
+msgid "RESET ALL !"
+msgstr "VŠECHNO RESETOVAT!"
+
+#: prefs.js:168
+msgid "Reset All TaskBar Settings to the Original TaskBar Settings"
+msgstr "Resetovat veškerá nastavení TaskBaru na původní hodnoty"
+
+#: prefs.js:175 prefs.js:758 prefs.js:756
+msgid "TaskBar"
+msgstr "TaskBar"
+
+#: prefs.js:188 prefs.js:274
 msgid "Overview"
 msgstr "Přehled činností"
 
-#: prefs.js:119 prefs.js:152 prefs.js:300 prefs.js:381
+#: prefs.js:191 prefs.js:224
 msgid "Tasks"
 msgstr "Úlohy"
 
-#: prefs.js:125 prefs.js:153
+#: prefs.js:197 prefs.js:225 prefs.js:784 prefs.js:782
 msgid "Desktop Button"
 msgstr "Tlačítko Plocha"
 
-#: prefs.js:131 prefs.js:154
+#: prefs.js:203 prefs.js:226 prefs.js:797 prefs.js:795
 msgid "Workspace Button"
 msgstr "Přepínač ploch"
 
-#: prefs.js:137 prefs.js:155
+#: prefs.js:209 prefs.js:227 prefs.js:810 prefs.js:808
 msgid "Appview Button"
-msgstr "Tlačítko Aplikace"
+msgstr "Tlačítko Činnosti"
 
-#: prefs.js:143 prefs.js:156
+#: prefs.js:215 prefs.js:228 prefs.js:823 prefs.js:821
 msgid "Favorites"
 msgstr "Oblíbené"
 
-#: prefs.js:150
-msgid "Align "
-msgstr "Zarovnat "
+#: prefs.js:222
+msgid "Align"
+msgstr "Zarovnat"
 
-#: prefs.js:179 prefs.js:213 prefs.js:504 prefs.js:507
-msgid "Bottom Panel"
-msgstr "Spodní panel"
-
-#: prefs.js:185
-msgid "TaskBar in Overview"
-msgstr "Zobrazit TaskBar v přehledu činností"
-
-#: prefs.js:208 prefs.js:287
-msgid "Panels"
-msgstr "Panely"
-
-#: prefs.js:211 prefs.js:502 prefs.js:505
+#: prefs.js:251 prefs.js:290
 msgid "Top Panel"
 msgstr "Horní panel"
 
-#: prefs.js:216
+#: prefs.js:257 prefs.js:292
+msgid "Bottom Panel"
+msgstr "Spodní panel"
+
+#: prefs.js:263
+msgid "Reset Overview Tab"
+msgstr "Resetovat záložku Přehled činností"
+
+#: prefs.js:266
+msgid "Reset the Overview Tab to the Original Overview Settings"
+msgstr "Resetovat záložku Přehled činností na původní hodnoty"
+
+#: prefs.js:287 prefs.js:378
+msgid "Panels"
+msgstr "Panely"
+
+#: prefs.js:295
 msgid "Panel Height"
 msgstr "Výška panelu"
 
-#: prefs.js:229
+#: prefs.js:308
 msgid "Align TaskBar"
 msgstr "Zarovnání TaskBaru"
 
-#: prefs.js:244
+#: prefs.js:323
 msgid "Anchor Point"
 msgstr "Kotvící bod"
 
-#: prefs.js:252
+#: prefs.js:331
 msgid ""
 "Panel Background\n"
 "Color & Opacity"
@@ -98,55 +142,100 @@ msgstr ""
 "Pozadí panelu\n"
 "barva & průhlednost"
 
-#: prefs.js:274 prefs.js:277
+#: prefs.js:359 prefs.js:362
 msgid "Reset Color"
-msgstr "Reset barvy"
+msgstr "Resetovat barvu"
 
-#: prefs.js:303
+#: prefs.js:366
+msgid "Reset Panels Tab"
+msgstr "Resetovat záložku Panely"
+
+#: prefs.js:369
+msgid "Reset the Panels Tab to the Original Panels Settings"
+msgstr "Resetovat záložku Panely na původní hodnoty"
+
+#: prefs.js:391 prefs.js:476
+msgid "Tasks (I)"
+msgstr "Úlohy (I)"
+
+#: prefs.js:394
 msgid "Tasks on All Workspaces"
 msgstr "Úlohy na všech plochách"
 
-#: prefs.js:309
-msgid "Tasks Container Width"
-msgstr "Šířka sekce úloh"
+#: prefs.js:400 prefs.js:868 prefs.js:866
+msgid "Tasks Label"
+msgstr "Popiska úlohy"
 
-#: prefs.js:309
-msgid ""
-"(0 Tasks)\n"
-"[Not Complete]"
-msgstr ""
-"(0 úloh)\n"
-"[Nedokončené]"
+#: prefs.js:406
+msgid "Tasks Label Color"
+msgstr "Barva popisky úlohy"
 
-#: prefs.js:317
-msgid "Close Tasks"
-msgstr "Zavřít úlohy"
+#: prefs.js:420
+msgid "Tasks Label Width (150 px)"
+msgstr "Šířka popisky úloh (150 px)"
 
-#: prefs.js:320 prefs.js:448 prefs.js:450
+#: prefs.js:428
+msgid "Tasks Container Width (6 Tasks)"
+msgstr "Šířka sekce úloh (6 úloh)"
+
+#: prefs.js:436
+msgid "Tasks Application Menu"
+msgstr "Aplikační menu úloh"
+
+#: prefs.js:439 prefs.js:449 prefs.js:495 prefs.js:613 prefs.js:690
+#: prefs.js:689
 msgid "OFF"
 msgstr "Vypnout"
 
-#: prefs.js:321
+#: prefs.js:440 prefs.js:450
 msgid "Middle Click"
 msgstr "Kliknutí prostředím myšítkem"
 
-#: prefs.js:322
+#: prefs.js:441 prefs.js:451
 msgid "Right Click"
 msgstr "Kliknutí pravým myšítkem"
 
-#: prefs.js:327
+#: prefs.js:446
+msgid "Close Tasks"
+msgstr "Zavřít úlohy"
+
+#: prefs.js:456
+msgid "Space between Tasks (4 px)"
+msgstr "Mezera mezi úlohami (4 px)"
+
+#: prefs.js:464
+msgid "Reset Tasks (I) Tab"
+msgstr "Resetovat záložku Úlohy (I)"
+
+#: prefs.js:467
+msgid "Reset the Tasks Tab to the Original Tasks Settings"
+msgstr "Resetovat záložku Úlohy (I) na původní hodnoty"
+
+#: prefs.js:489 prefs.js:568
+msgid "Tasks (II)"
+msgstr "Úlohy (II)"
+
+#: prefs.js:492
 msgid "Scroll Tasks"
 msgstr "Přepínat mezi úlohami kolečkem"
 
-#: prefs.js:333
-msgid "Invert Scroll Tasks"
-msgstr "Přepínat mezi úlohami kolečkem v opačném pořadí"
+#: prefs.js:496 prefs.js:614
+msgid "Standard"
+msgstr "Standardní"
 
-#: prefs.js:339
+#: prefs.js:497 prefs.js:615
+msgid "Invert"
+msgstr "Otočit"
+
+#: prefs.js:502
 msgid "Active Task Frame"
 msgstr "Rámeček kolem aktivní úlohy"
 
-#: prefs.js:345
+#: prefs.js:508
+msgid "Inactive Task Frame"
+msgstr "Rámeček kolem neaktivní úlohy"
+
+#: prefs.js:514
 msgid ""
 "Active Task Background\n"
 "Color & Opacity"
@@ -154,19 +243,35 @@ msgstr ""
 "Pozadí aktivní úlohy\n"
 "barva & průhlednost"
 
-#: prefs.js:361
+#: prefs.js:528
+msgid ""
+"Inactive Task Background\n"
+"Color & Opacity"
+msgstr ""
+"Pozadí neaktivní úlohy\n"
+"barva & průhlednost"
+
+#: prefs.js:542
 msgid "Activate Tasks on Hover"
 msgstr "Aktivovat úlohy najetím kurzoru"
 
-#: prefs.js:367
+#: prefs.js:548
 msgid "Hover Delay"
 msgstr "Prodleva aktivace úlohy najetím kurzoru"
 
-#: prefs.js:394 prefs.js:486 prefs.js:489
+#: prefs.js:556
+msgid "Reset Tasks (II) Tab"
+msgstr "Resetovat záložku Úlohy (II)"
+
+#: prefs.js:559
+msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
+msgstr "Resetovat záložku Úlohy (II) na původní hodnoty"
+
+#: prefs.js:581 prefs.js:668
 msgid "Buttons"
 msgstr "Tlačítka"
 
-#: prefs.js:397
+#: prefs.js:584
 msgid ""
 "Desktop Button Right Click\n"
 "opens Preferences (this)"
@@ -174,27 +279,31 @@ msgstr ""
 "Kliknutí pravým myšítkem na\n"
 "tlačítko Plocha otevře nastavení (toto)"
 
-#: prefs.js:403
+#: prefs.js:590
 msgid "Desktop Button Icon"
 msgstr "Ikona tlačítka Plocha"
 
-#: prefs.js:412
+#: prefs.js:601
 msgid "Workspace Button Index"
 msgstr "Tlačítko přepínače ploch"
 
-#: prefs.js:415 prefs.js:450 prefs.js:452
+#: prefs.js:604 prefs.js:692 prefs.js:691
 msgid "Index"
 msgstr "Pořadové číslo"
 
-#: prefs.js:416
+#: prefs.js:605
 msgid "Index/Total"
 msgstr "Pořadové číslo / celkem"
 
-#: prefs.js:421
+#: prefs.js:610
 msgid "Scroll Workspaces"
 msgstr "Přepínat kolečkem plochy"
 
-#: prefs.js:427
+#: prefs.js:620
+msgid "Workspace Button Color"
+msgstr "Barva přepínače ploch"
+
+#: prefs.js:636
 msgid ""
 "Appview Button\n"
 "Left & Right Click Toggle"
@@ -202,7 +311,7 @@ msgstr ""
 "Tlačítko Aplikace\n"
 "kliknutí levým & pravým myšítkem"
 
-#: prefs.js:430
+#: prefs.js:639
 msgid ""
 "L Appview\n"
 "R Overview"
@@ -210,7 +319,7 @@ msgstr ""
 "L Aplikace\n"
 "P Přehled činností"
 
-#: prefs.js:431
+#: prefs.js:640
 msgid ""
 "L Overview\n"
 "R Appview"
@@ -218,175 +327,246 @@ msgstr ""
 "L Přehled činností\n"
 "P Aplikace"
 
-#: prefs.js:436
+#: prefs.js:645
 msgid "Appview Button Icon"
 msgstr "Ikona tlačítka Aplikace"
 
-#: prefs.js:445 prefs.js:447
+#: prefs.js:656
+msgid "Reset Buttons Tab"
+msgstr "Resetovat záložku Tlačítka"
+
+#: prefs.js:659
+msgid ""
+"Reset the Buttons Tab except the Icons to the Original Buttons "
+"Settings.\n"
+"The Icons can be Reset within their own Settings."
+msgstr ""
+"Resetovat záložku Tlačítko Plocha s výjimkou nastavení ikony na "
+"původní hodnoty\n"
+"Ikona může být resetována ve svém vlastním nastavení"
+
+#: prefs.js:681
+msgid "Tray Button"
+msgstr "Tlačítko lišty zpráv"
+
+#: prefs.js:687 prefs.js:686
 msgid "Bottom Panel Tray Button"
 msgstr "Tlačítko lišty zpráv na spodním panelu"
 
-#: prefs.js:449 prefs.js:451
+#: prefs.js:691 prefs.js:690
 msgid "Icon"
 msgstr "Ikona"
 
-#: prefs.js:455 prefs.js:457
+#: prefs.js:697 prefs.js:696
 msgid "When Tray is Empty"
 msgstr "Pokud je lišta zpráv prázdná"
 
-#: prefs.js:458 prefs.js:460
+#: prefs.js:700 prefs.js:699
 msgid "Show Icon"
 msgstr "Zobraz ikonu"
 
-#: prefs.js:459 prefs.js:461
+#: prefs.js:701 prefs.js:700
 msgid "Show 0"
 msgstr "Zobraz 0"
 
-#: prefs.js:460 prefs.js:462
+#: prefs.js:702 prefs.js:701
 msgid "Hide"
 msgstr "Skrýt"
 
-#: prefs.js:465 prefs.js:467
+#: prefs.js:707 prefs.js:706
 msgid "Tray Button Icon"
 msgstr "Ikona tlačítky lišty zpráv"
 
-#: prefs.js:474 prefs.js:476
+#: prefs.js:718 prefs.js:717
 msgid "Activate Tray on Hover"
 msgstr "Aktivovat lištu zpráv najetím kurzoru"
 
-#: prefs.js:499 prefs.js:794 prefs.js:502 prefs.js:797
+#: prefs.js:724 prefs.js:723
+msgid "Reset Tray Button Tab"
+msgstr "Resetovat záložku Tlačítko lišty zpráv"
+
+#: prefs.js:727 prefs.js:726
+msgid ""
+"Reset the Tray Button Tab except the Icon to the Original Tray Button "
+"Settings.\n"
+"The Icon can be Reset within its own Settings."
+msgstr ""
+"Resetovat záložku Tlačítko lišty zpráv s výjimkou nastavení ikony na "
+"původní hodnoty\n"
+"Ikona může být resetována ve svém vlastním nastavení"
+
+#: prefs.js:736 prefs.js:735
+msgid "TrayButton"
+msgstr "Tlačítko lišty zpráv"
+
+#: prefs.js:750 prefs.js:852 prefs.js:748 prefs.js:850
 msgid "Separators"
 msgstr "Oddělovače"
 
-#: prefs.js:507 prefs.js:546 prefs.js:585 prefs.js:624 prefs.js:663
-#: prefs.js:702 prefs.js:744 prefs.js:745 prefs.js:746 prefs.js:747
-#: prefs.js:748 prefs.js:749 prefs.js:510 prefs.js:549 prefs.js:588
-#: prefs.js:627 prefs.js:666 prefs.js:705 prefs.js:750 prefs.js:751
-#: prefs.js:752
-msgid "Separator"
-msgstr "Oddělovač"
+#: prefs.js:753 prefs.js:751
+msgid "Left (px)"
+msgstr "Vlevo (px)"
 
-#: prefs.js:507 prefs.js:510
-msgid "Left"
-msgstr "Vlevo"
+#: prefs.js:755 prefs.js:753
+msgid "Right (px)"
+msgstr "Vpravo (px)"
 
-#: prefs.js:702 prefs.js:705
-msgid "Right"
-msgstr "Vpravo"
+#: prefs.js:771 prefs.js:769
+msgid "Tasks Container"
+msgstr "Sekce úloh"
 
-#: prefs.js:742 prefs.js:745
-msgid "Resize "
-msgstr "Změnit velikost "
+#: prefs.js:836 prefs.js:834
+msgid "Reset Separators Tab"
+msgstr "Resetovat záložku Oddělovače"
 
-#: prefs.js:807 prefs.js:850 prefs.js:810 prefs.js:853
+#: prefs.js:839 prefs.js:837
+msgid "Reset the Separators Tab to the Original Separators Settings"
+msgstr "Resetovat záložku Oddělovače na původní hodnoty"
+
+#: prefs.js:865 prefs.js:914 prefs.js:863 prefs.js:912
 msgid "Preview"
 msgstr "Náhled"
 
-#: prefs.js:810 prefs.js:813
-msgid "Tasks Label"
-msgstr "Popiska úlohy"
-
-#: prefs.js:816 prefs.js:819
+#: prefs.js:874 prefs.js:872
 msgid "Tasks Thumbnail"
 msgstr "Náhled úlohy"
 
-#: prefs.js:822 prefs.js:825
+#: prefs.js:880 prefs.js:878
 msgid "Favorites Label"
 msgstr "Popisky oblíbených"
 
-#: prefs.js:828 prefs.js:831
+#: prefs.js:886 prefs.js:884
 msgid "Thumbnail Size"
 msgstr "Velikost náhledu"
 
-#: prefs.js:836 prefs.js:839
+#: prefs.js:894 prefs.js:892
 msgid "Preview Delay"
 msgstr "Prodleva náhledu"
 
-#: prefs.js:863 prefs.js:891 prefs.js:866 prefs.js:894
+#: prefs.js:902 prefs.js:900
+msgid "Reset Preview Tab"
+msgstr "Resetovat záložku Náhled"
+
+#: prefs.js:905 prefs.js:903
+msgid "Reset the Preview Tab to the Original Preview Settings"
+msgstr "Resetovat záložku Náhled na původní hodnoty"
+
+#: prefs.js:927 prefs.js:1043 prefs.js:925 prefs.js:1041
 msgid "Misc"
 msgstr "Různé"
 
-#: prefs.js:866 prefs.js:869
-msgid "Hide Activities"
-msgstr "Skrýt Aktivity"
+#: prefs.js:930 prefs.js:928
+msgid "Color & Opacity"
+msgstr "Barva & průhlednost"
 
-#: prefs.js:872 prefs.js:875
-msgid "Disable Hot Corner"
-msgstr "Vypnout aktivní roh"
+#: prefs.js:933 prefs.js:931
+msgid "Activities Button"
+msgstr "Tlačítko Aplikace"
 
-#: prefs.js:878 prefs.js:881
-msgid "Hide Default App Menu"
-msgstr "Skrýt standardní menu aplikací"
+#: prefs.js:948 prefs.js:967 prefs.js:986 prefs.js:1005 prefs.js:946
+#: prefs.js:965 prefs.js:984 prefs.js:1003
+msgid "Reset"
+msgstr "Resetovat"
 
-#: prefs.js:884 prefs.js:887
-msgid ""
-"Activating one\n"
-"of those 3 options\n"
-"could cause a conflict\n"
-"with other extensions"
-msgstr ""
-"Zapnutí některé\n"
-"z těchto tří voleb\n"
-"může způsobit konflikt\n"
-"s jinými rozšířeními"
+#: prefs.js:952 prefs.js:950
+msgid "Application Menu"
+msgstr "Menu aplikace"
 
-#: prefs.js:904 prefs.js:960 prefs.js:965
-msgid "About TaskBar"
-msgstr "O TaskBaru"
+#: prefs.js:971 prefs.js:969
+msgid "Date Menu"
+msgstr "Datum a čas"
 
-#: prefs.js:919
-msgid "Version"
-msgstr "Verze"
+#: prefs.js:990 prefs.js:988
+msgid "System Menu"
+msgstr "Systémové menu"
 
-#: prefs.js:927
-msgid "Send Bug Report"
-msgstr "Poslat hlášení o chybě"
+#: prefs.js:1009 prefs.js:1007
+msgid "Hot Corner"
+msgstr "Aktivní roh"
 
-#: prefs.js:937 prefs.js:942
-msgid "Donate for TaskBar"
-msgstr "Dotace pro TaskBar"
+#: prefs.js:1015 prefs.js:1013
+msgid "Dash (Overview)"
+msgstr "Dash (v přehledu činností)"
 
-#: prefs.js:942 prefs.js:947
-msgid "Become a Friend of GNOME"
-msgstr "Staňte se Přítelem GNOME"
+#: prefs.js:1021 prefs.js:1019
+msgid "Workspace Selector (Overview)"
+msgstr "Výběr pracovní plochy (v přehledu činností)"
 
-#: prefs.js:947 prefs.js:952
-msgid "RESET ALL !"
-msgstr "VŠECHNO RESETOVAT!"
+#: prefs.js:1027 prefs.js:1025
+msgid "TaskBar (Overview)"
+msgstr "TaskBar (v přehledu činností)"
 
-#: prefs.js:950 prefs.js:955
-msgid "Free Software Foundation"
-msgstr "Free Software Foundation"
+#: prefs.js:1033 prefs.js:1031
+msgid "Reset Misc Tab"
+msgstr "Resetovat záložku Různé"
 
-#: prefs.js:1211 prefs.js:1216
+#: prefs.js:1036 prefs.js:1034
+msgid "Reset the Misc Tab to the Original Misc Settings"
+msgstr "Resetovat záložku Různé na původní hodnoty"
+
+#: prefs.js:1058 prefs.js:1056
+msgid "GNU GPL"
+msgstr "GNU GPL"
+
+#: prefs.js:1078 prefs.js:1076
+msgid "GNU General Public License"
+msgstr "GNU General Public License"
+
+#: prefs.js:1376 prefs.js:1374
 msgid "TaskBar Preferences - Desktop Button Icon"
 msgstr "Nastavení TaskBar – ikona tlačítka Plocha"
 
-#: prefs.js:1224 prefs.js:1325 prefs.js:1415 prefs.js:1229 prefs.js:1330
-#: prefs.js:1420
+#: prefs.js:1389 prefs.js:1501 prefs.js:1591 prefs.js:1387 prefs.js:1499
+#: prefs.js:1589
 msgid "Images"
 msgstr "Obrázky"
 
-#: prefs.js:1312 prefs.js:1317
+#: prefs.js:1488 prefs.js:1486
 msgid "TaskBar Preferences - Appview Button Icon"
 msgstr "Nastavení TaskBar – ikona tlačítka Aplikace"
 
-#: prefs.js:1402 prefs.js:1407
+#: prefs.js:1578 prefs.js:1576
 msgid "TaskBar Preferences - Tray Button Icon"
 msgstr "Nastavení TaskBar – ikona tlačítka lišty zpráv"
 
-#: prefs.js:907
-msgid "About"
-msgstr "O TaskBaru"
+#~ msgid ""
+#~ "(0 Tasks)\n"
+#~ "[Not Complete]"
+#~ msgstr ""
+#~ "(0 úloh)\n"
+#~ "[Nedokončené]"
 
-#: prefs.js:922
-msgid "TaskBar Version"
-msgstr "TaskBar verze"
+#~ msgid "Invert Scroll Tasks"
+#~ msgstr "Přepínat mezi úlohami kolečkem v opačném pořadí"
 
-#: prefs.js:924
-msgid "GNOME Shell Version"
-msgstr "GNOME Shell verze"
+#~ msgid "Separator"
+#~ msgstr "Oddělovač"
 
-#: prefs.js:932
-msgid "Report a Bug"
-msgstr "Nahlásit chybu"
+#~ msgid "Resize "
+#~ msgstr "Změnit velikost "
+
+#~ msgid "Hide Activities"
+#~ msgstr "Skrýt Aktivity"
+
+#~ msgid "Hide Default App Menu"
+#~ msgstr "Skrýt standardní menu aplikací"
+
+#~ msgid ""
+#~ "Activating one\n"
+#~ "of those 3 options\n"
+#~ "could cause a conflict\n"
+#~ "with other extensions"
+#~ msgstr ""
+#~ "Zapnutí některé\n"
+#~ "z těchto tří voleb\n"
+#~ "může způsobit konflikt\n"
+#~ "s jinými rozšířeními"
+
+#~ msgid "About TaskBar"
+#~ msgstr "O TaskBaru"
+
+#~ msgid "Send Bug Report"
+#~ msgstr "Poslat hlášení o chybě"
+
+#~ msgid "TaskBar Version"
+#~ msgstr "TaskBar verze"
