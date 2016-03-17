@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: GNOME Shell Extension TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-17 19:14+0100\n"
-"PO-Revision-Date: 2016-03-17 19:27+0100\n"
+"PO-Revision-Date: 2016-03-17 19:31+0100\n"
 "Last-Translator: Jonatan Zeidler <jonatan_zeidler@gmx.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -208,7 +208,7 @@ msgstr "Reiter Anwendungen (I) zurücksetzen"
 
 #: prefs.js:467
 msgid "Reset the Tasks Tab to the Original Tasks Settings"
-msgstr "Reiter Anwendungen (II) auf die Vorgabewerte zurücksetzen"
+msgstr "Reiter Anwendungen (I) auf die Vorgabewerte zurücksetzen"
 
 #: prefs.js:489 prefs.js:568
 msgid "Tasks (II)"
