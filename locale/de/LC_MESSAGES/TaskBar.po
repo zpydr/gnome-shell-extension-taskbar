@@ -21,122 +21,119 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNOME Shell Extension TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 14:24-0200\n"
-"PO-Revision-Date: 2015-11-23 14:31-0200\n"
+"POT-Creation-Date: 2016-03-17 19:14+0100\n"
+"PO-Revision-Date: 2016-03-17 19:27+0100\n"
+"Last-Translator: Jonatan Zeidler <jonatan_zeidler@gmx.de>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: Jonatan Zeidler <jonatan_zeidler@gmx.de>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: prefs.js:119
+#: prefs.js:120
 msgid "About"
 msgstr "Info"
 
-#: prefs.js:131
+#: prefs.js:132
 msgid "Version"
 msgstr "Version"
 
-#: prefs.js:133
+#: prefs.js:134
 msgid "GNOME Shell Version"
 msgstr "GNOME Shell-Version"
 
-#: prefs.js:150
+#: prefs.js:148
 msgid "Report a Bug"
 msgstr "Einen Fehler melden"
 
-#: prefs.js:155
+#: prefs.js:152
 msgid "Donate for TaskBar"
 msgstr "Für TaskBar spenden"
 
-#: prefs.js:160
+#: prefs.js:156
 msgid "Become a Friend of GNOME"
 msgstr "GNOME-Freund werden"
 
-#: prefs.js:165
+#: prefs.js:160
 msgid "Free Software Foundation"
 msgstr "Stiftung für freie Software (FSF)"
 
-#: prefs.js:170
+#: prefs.js:165
 msgid "RESET ALL !"
 msgstr "Alles zurücksetzen"
 
-#: prefs.js:173
+#: prefs.js:168
 msgid "Reset All TaskBar Settings to the Original TaskBar Settings"
-msgstr "Alle Einstellungen der Anwendungen-Leiste auf die Vorgabewerte zurücksetzen"
+msgstr ""
+"Alle Einstellungen der Anwendungen-Leiste auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:180 prefs.js:635
+#: prefs.js:175 prefs.js:758 prefs.js:756
 msgid "TaskBar"
 msgstr "Anwendungen-Leiste"
 
-#: prefs.js:193 prefs.js:278
+#: prefs.js:188 prefs.js:274
 msgid "Overview"
 msgstr "Übersicht"
 
-#: prefs.js:196 prefs.js:229 prefs.js:395 prefs.js:490
+#: prefs.js:191 prefs.js:224
 msgid "Tasks"
 msgstr "Laufende Anwendungen"
 
-#: prefs.js:202 prefs.js:230 prefs.js:661
+#: prefs.js:197 prefs.js:225 prefs.js:784 prefs.js:782
 msgid "Desktop Button"
 msgstr "Schreibtischschaltfläche"
 
-#: prefs.js:208 prefs.js:231 prefs.js:674
+#: prefs.js:203 prefs.js:226 prefs.js:797 prefs.js:795
 msgid "Workspace Button"
 msgstr "Arbeitsflächenumschalter"
 
-#: prefs.js:214 prefs.js:232 prefs.js:687
+#: prefs.js:209 prefs.js:227 prefs.js:810 prefs.js:808
 msgid "Appview Button"
 msgstr "Schaltfläche Anwendungen"
 
-#: prefs.js:220 prefs.js:233 prefs.js:700
+#: prefs.js:215 prefs.js:228 prefs.js:823 prefs.js:821
 msgid "Favorites"
 msgstr "Favoriten"
 
-#: prefs.js:227
+#: prefs.js:222
 msgid "Align"
 msgstr "Anordnen"
 
-#: prefs.js:256 prefs.js:296
-msgid "Bottom Panel"
-msgstr "Fußleiste"
-
-#: prefs.js:262
-msgid "TaskBar in Overview"
-msgstr "Anwendungen-Leiste in der Übersicht"
-
-#: prefs.js:268
-msgid "Reset Overview Tab"
-msgstr "Reiter Übersicht zurücksetzen"
-
-#: prefs.js:271
-msgid "Reset the Overview Tab to the Original Overview Settings"
-msgstr "Reiter Übersicht auf die Vorgabewerte zurücksetzen"
-
-#: prefs.js:291 prefs.js:382
-msgid "Panels"
-msgstr "Leisten"
-
-#: prefs.js:294
+#: prefs.js:251 prefs.js:290
 msgid "Top Panel"
 msgstr "Obere Leiste"
 
-#: prefs.js:299
+#: prefs.js:257 prefs.js:292
+msgid "Bottom Panel"
+msgstr "Fußleiste"
+
+#: prefs.js:263
+msgid "Reset Overview Tab"
+msgstr "Reiter Übersicht zurücksetzen"
+
+#: prefs.js:266
+msgid "Reset the Overview Tab to the Original Overview Settings"
+msgstr "Reiter Übersicht auf die Vorgabewerte zurücksetzen"
+
+#: prefs.js:287 prefs.js:378
+msgid "Panels"
+msgstr "Leisten"
+
+#: prefs.js:295
 msgid "Panel Height"
 msgstr "Leistenhöhe"
 
-#: prefs.js:312
+#: prefs.js:308
 msgid "Align TaskBar"
 msgstr "Anwendungen-Leiste positionieren"
 
-#: prefs.js:327
+#: prefs.js:323
 msgid "Anchor Point"
 msgstr "Ankerpunkt"
 
-#: prefs.js:335
+#: prefs.js:331
 msgid ""
 "Panel Background\n"
 "Color & Opacity"
@@ -144,63 +141,100 @@ msgstr ""
 "Leistenhintergrund\n"
 "Farbe & Deckkraft"
 
-#: prefs.js:363 prefs.js:366
+#: prefs.js:359 prefs.js:362
 msgid "Reset Color"
 msgstr "Farbe zurücksetzen"
 
-#: prefs.js:370
+#: prefs.js:366
 msgid "Reset Panels Tab"
 msgstr "Reiter Leisten zurücksetzen"
 
-#: prefs.js:373
+#: prefs.js:369
 msgid "Reset the Panels Tab to the Original Panels Settings"
 msgstr "Reiter Leisten auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:398
+#: prefs.js:391 prefs.js:476
+msgid "Tasks (I)"
+msgstr "Laufende Anwendungen (I)"
+
+#: prefs.js:394
 msgid "Tasks on All Workspaces"
 msgstr "Anwendungen aller Arbeitsflächen"
 
-#: prefs.js:404
+#: prefs.js:400 prefs.js:868 prefs.js:866
+msgid "Tasks Label"
+msgstr "Programmname anzeigen"
+
+#: prefs.js:406
+msgid "Tasks Label Color"
+msgstr "Schriftfarbe Anwendungen"
+
+#: prefs.js:420
+msgid "Tasks Label Width (150 px)"
+msgstr "Breite der Anwendungsbezeichnungen (150 px)"
+
+#: prefs.js:428
+msgid "Tasks Container Width (6 Tasks)"
+msgstr "Breite des Bereichs der laufenden Anwendungen (6 Anwendungen)"
+
+#: prefs.js:436
 msgid "Tasks Application Menu"
 msgstr "Anwendungsmenü"
 
-#: prefs.js:407 prefs.js:425 prefs.js:435 prefs.js:535 prefs.js:567
+#: prefs.js:439 prefs.js:449 prefs.js:495 prefs.js:613 prefs.js:690
+#: prefs.js:689
 msgid "OFF"
 msgstr "AUS"
 
-#: prefs.js:408 prefs.js:426
+#: prefs.js:440 prefs.js:450
 msgid "Middle Click"
 msgstr "Mittelklick"
 
-#: prefs.js:409 prefs.js:427
+#: prefs.js:441 prefs.js:451
 msgid "Right Click"
 msgstr "Rechtsklick"
 
-#: prefs.js:414
-msgid "Tasks Container Width"
-msgstr "Breite des Bereichs der laufenden Anwendungen"
-
-#: prefs.js:422
+#: prefs.js:446
 msgid "Close Tasks"
 msgstr "Anwendungen schließen"
 
-#: prefs.js:432
+#: prefs.js:456
+msgid "Space between Tasks (4 px)"
+msgstr "Raum zwischen Anwendungen (4 px) "
+
+#: prefs.js:464
+msgid "Reset Tasks (I) Tab"
+msgstr "Reiter Anwendungen (I) zurücksetzen"
+
+#: prefs.js:467
+msgid "Reset the Tasks Tab to the Original Tasks Settings"
+msgstr "Reiter Anwendungen (II) auf die Vorgabewerte zurücksetzen"
+
+#: prefs.js:489 prefs.js:568
+msgid "Tasks (II)"
+msgstr "Laufende Anwendungen (II)"
+
+#: prefs.js:492
 msgid "Scroll Tasks"
 msgstr "Durch Anwendungen scrollen"
 
-#: prefs.js:436 prefs.js:536
+#: prefs.js:496 prefs.js:614
 msgid "Standard"
 msgstr "Vorgabe"
 
-#: prefs.js:437 prefs.js:537
+#: prefs.js:497 prefs.js:615
 msgid "Invert"
 msgstr "Invertieren"
 
-#: prefs.js:442
+#: prefs.js:502
 msgid "Active Task Frame"
 msgstr "Rahmen der aktiven Anwendung"
 
-#: prefs.js:448
+#: prefs.js:508
+msgid "Inactive Task Frame"
+msgstr "Rahmen bei inaktiven Anwendungen"
+
+#: prefs.js:514
 msgid ""
 "Active Task Background\n"
 "Color & Opacity"
@@ -208,27 +242,35 @@ msgstr ""
 "Hintergrund aktiver Anwendungen\n"
 "Farbe & Deckkraft"
 
-#: prefs.js:464
+#: prefs.js:528
+msgid ""
+"Inactive Task Background\n"
+"Color & Opacity"
+msgstr ""
+"Hintergrund inaktiver Anwendungen\n"
+"Farbe & Deckkraft"
+
+#: prefs.js:542
 msgid "Activate Tasks on Hover"
 msgstr "Anwendungen beim Überfahren aktivieren"
 
-#: prefs.js:470
+#: prefs.js:548
 msgid "Hover Delay"
 msgstr "Überfahr-Verzögerung"
 
-#: prefs.js:478
-msgid "Reset Tasks Tab"
-msgstr "Reiter Anwendungen zurücksetzen"
+#: prefs.js:556
+msgid "Reset Tasks (II) Tab"
+msgstr "Reiter Anwendungen (II) zurücksetzen"
 
-#: prefs.js:481
-msgid "Reset the Tasks Tab to the Original Tasks Settings"
-msgstr "Reiter Anwendungen auf die Vorgabewerte zurücksetzen"
+#: prefs.js:559
+msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
+msgstr "Reiter Anwendungen (II) auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:503 prefs.js:614
+#: prefs.js:581 prefs.js:668
 msgid "Buttons"
 msgstr "Schaltflächen"
 
-#: prefs.js:506
+#: prefs.js:584
 msgid ""
 "Desktop Button Right Click\n"
 "opens Preferences (this)"
@@ -236,27 +278,31 @@ msgstr ""
 "Rechtsklick auf Schreibtischschaltfläche\n"
 "öffnet diese Einstellungen"
 
-#: prefs.js:512
+#: prefs.js:590
 msgid "Desktop Button Icon"
 msgstr "Symbol der Schreibtischschaltfläche"
 
-#: prefs.js:523
+#: prefs.js:601
 msgid "Workspace Button Index"
 msgstr "Arbeitsflächenumschalter zeigt"
 
-#: prefs.js:526 prefs.js:569
+#: prefs.js:604 prefs.js:692 prefs.js:691
 msgid "Index"
 msgstr "Index"
 
-#: prefs.js:527
+#: prefs.js:605
 msgid "Index/Total"
 msgstr "Index/Gesamt"
 
-#: prefs.js:532
+#: prefs.js:610
 msgid "Scroll Workspaces"
 msgstr "Durch Arbeitsflächen scrollen"
 
-#: prefs.js:542
+#: prefs.js:620
+msgid "Workspace Button Color"
+msgstr "Farbe des Arbeitsflächenumschalters"
+
+#: prefs.js:636
 msgid ""
 "Appview Button\n"
 "Left & Right Click Toggle"
@@ -264,7 +310,7 @@ msgstr ""
 "Schaltfläche Anwendungen\n"
 "Links- & Rechtsklick-Zuordnung"
 
-#: prefs.js:545
+#: prefs.js:639
 msgid ""
 "L Appview\n"
 "R Overview"
@@ -272,7 +318,7 @@ msgstr ""
 "L Anwendungen\n"
 "R Übersicht"
 
-#: prefs.js:546
+#: prefs.js:640
 msgid ""
 "L Overview\n"
 "R Appview"
@@ -280,160 +326,202 @@ msgstr ""
 "L Übersicht\n"
 "R Anwendungen"
 
-#: prefs.js:551
+#: prefs.js:645
 msgid "Appview Button Icon"
 msgstr "Symbol der Schaltfläche Anwendungen"
 
-#: prefs.js:564
-msgid "Bottom Panel Tray Button"
-msgstr "Benachrichtigungssymbol in der Fußleiste"
-
-#: prefs.js:568
-msgid "Icon"
-msgstr "Symbol"
-
-#: prefs.js:574
-msgid "When Tray is Empty"
-msgstr "Wenn keine Benachrichtigungen"
-
-#: prefs.js:577
-msgid "Show Icon"
-msgstr "Symbol anzeigen"
-
-#: prefs.js:578
-msgid "Show 0"
-msgstr "0 anzeigen"
-
-#: prefs.js:579
-msgid "Hide"
-msgstr "Verbergen"
-
-#: prefs.js:584
-msgid "Tray Button Icon"
-msgstr "Benachrichtigungssymbol"
-
-#: prefs.js:595
-msgid "Activate Tray on Hover"
-msgstr "Benachrichtigungsbereich beim Überfahren aktivieren"
-
-#: prefs.js:602
+#: prefs.js:656
 msgid "Reset Buttons Tab"
 msgstr "Reiter Schaltflächen zurücksetzen"
 
-#: prefs.js:605
+#: prefs.js:659
 msgid ""
 "Reset the Buttons Tab except the Icons to the Original Buttons Settings.\n"
 "The Icons can be Reset within their own Settings."
 msgstr "Reiter Schaltflächen auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:627 prefs.js:729
+#: prefs.js:681
+msgid "Tray Button"
+msgstr "Benachrichtigungssymbol"
+
+#: prefs.js:687 prefs.js:686
+msgid "Bottom Panel Tray Button"
+msgstr "Benachrichtigungssymbol in der Fußleiste"
+
+#: prefs.js:691 prefs.js:690
+msgid "Icon"
+msgstr "Symbol"
+
+#: prefs.js:697 prefs.js:696
+msgid "When Tray is Empty"
+msgstr "Wenn keine Benachrichtigungen"
+
+#: prefs.js:700 prefs.js:699
+msgid "Show Icon"
+msgstr "Symbol anzeigen"
+
+#: prefs.js:701 prefs.js:700
+msgid "Show 0"
+msgstr "0 anzeigen"
+
+#: prefs.js:702 prefs.js:701
+msgid "Hide"
+msgstr "Verbergen"
+
+#: prefs.js:707 prefs.js:706
+msgid "Tray Button Icon"
+msgstr "Benachrichtigungssymbol"
+
+#: prefs.js:718 prefs.js:717
+msgid "Activate Tray on Hover"
+msgstr "Benachrichtigungsbereich beim Überfahren aktivieren"
+
+#: prefs.js:724 prefs.js:723
+msgid "Reset Tray Button Tab"
+msgstr "Reiter Benachrichtigungssymbol zurücksetzen"
+
+#: prefs.js:727 prefs.js:726
+msgid ""
+"Reset the Tray Button Tab except the Icon to the Original Tray Button "
+"Settings.\n"
+"The Icon can be Reset within its own Settings."
+msgstr ""
+"Reiter Benachrichtigungssymbol zurücksetzen, außer das Symbol zu den "
+"originalen Benachrichtigungssymboleinstellungen.\n"
+"Das Symbol kann in seinen eigenen Einstellungen zurückgesetzt werden."
+
+#: prefs.js:736 prefs.js:735
+msgid "TrayButton"
+msgstr "Benachrichtigungssymbol"
+
+#: prefs.js:750 prefs.js:852 prefs.js:748 prefs.js:850
 msgid "Separators"
 msgstr "Platzhalter"
 
-#: prefs.js:630
-msgid "Left"
-msgstr "Links"
+#: prefs.js:753 prefs.js:751
+msgid "Left (px)"
+msgstr "Links (px)"
 
-#: prefs.js:632
-msgid "Right"
-msgstr "Rechts"
+#: prefs.js:755 prefs.js:753
+msgid "Right (px)"
+msgstr "Rechts (px)"
 
-#: prefs.js:648
+#: prefs.js:771 prefs.js:769
 msgid "Tasks Container"
 msgstr "Laufende Anwendungen"
 
-#: prefs.js:713
+#: prefs.js:836 prefs.js:834
 msgid "Reset Separators Tab"
 msgstr "Reiter Platzhalter zurücksetzen"
 
-#: prefs.js:716
+#: prefs.js:839 prefs.js:837
 msgid "Reset the Separators Tab to the Original Separators Settings"
 msgstr "Reiter Platzhalter auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:742 prefs.js:791
+#: prefs.js:865 prefs.js:914 prefs.js:863 prefs.js:912
 msgid "Preview"
 msgstr "Vorschau"
 
-#: prefs.js:745
-msgid "Tasks Label"
-msgstr "Programmname anzeigen"
-
-#: prefs.js:751
+#: prefs.js:874 prefs.js:872
 msgid "Tasks Thumbnail"
 msgstr "Vorschaubild anzeigen"
 
-#: prefs.js:757
+#: prefs.js:880 prefs.js:878
 msgid "Favorites Label"
 msgstr "Bei Favoriten Name anzeigen"
 
-#: prefs.js:763
+#: prefs.js:886 prefs.js:884
 msgid "Thumbnail Size"
 msgstr "Vorschaubildgröße"
 
-#: prefs.js:771
+#: prefs.js:894 prefs.js:892
 msgid "Preview Delay"
 msgstr "Vorschauverzögerung"
 
-#: prefs.js:779
+#: prefs.js:902 prefs.js:900
 msgid "Reset Preview Tab"
 msgstr "Reiter Vorschau zurücksetzen"
 
-#: prefs.js:782
+#: prefs.js:905 prefs.js:903
 msgid "Reset the Preview Tab to the Original Preview Settings"
 msgstr "Reiter Vorschau auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:804 prefs.js:847
+#: prefs.js:927 prefs.js:1043 prefs.js:925 prefs.js:1041
 msgid "Misc"
 msgstr "Verschiedenes"
 
-#: prefs.js:807
+#: prefs.js:930 prefs.js:928
+msgid "Color & Opacity"
+msgstr "Farbe & Deckkraft"
+
+#: prefs.js:933 prefs.js:931
 msgid "Activities Button"
 msgstr "Aktivitäten-Schaltfläche"
 
-#: prefs.js:813
-msgid "Hot Corner"
-msgstr "„Hot Corner“"
+#: prefs.js:948 prefs.js:967 prefs.js:986 prefs.js:1005 prefs.js:946
+#: prefs.js:965 prefs.js:984 prefs.js:1003
+msgid "Reset"
+msgstr "Zurücksetzen"
 
-#: prefs.js:819
+#: prefs.js:952 prefs.js:950
 msgid "Application Menu"
 msgstr "Anwendungsmenü"
 
-#: prefs.js:825
+#: prefs.js:971 prefs.js:969
 msgid "Date Menu"
 msgstr "Kalendermenü"
 
-#: prefs.js:831
+#: prefs.js:990 prefs.js:988
 msgid "System Menu"
 msgstr "Systemmenü"
 
-#: prefs.js:837
+#: prefs.js:1009 prefs.js:1007
+msgid "Hot Corner"
+msgstr "„Hot Corner“"
+
+#: prefs.js:1015 prefs.js:1013
+msgid "Dash (Overview)"
+msgstr "Dash (Übersicht)"
+
+#: prefs.js:1021 prefs.js:1019
+msgid "Workspace Selector (Overview)"
+msgstr "Arbeitsflächenauswahl (Übersicht)"
+
+#: prefs.js:1027 prefs.js:1025
+msgid "TaskBar (Overview)"
+msgstr "Anwendungen-Leiste (Übersicht)"
+
+#: prefs.js:1033 prefs.js:1031
 msgid "Reset Misc Tab"
 msgstr "Reiter Verschiedenes zurücksetzen"
 
-#: prefs.js:840
+#: prefs.js:1036 prefs.js:1034
 msgid "Reset the Misc Tab to the Original Misc Settings"
 msgstr "Reiter Verschiedenes auf die Vorgabewerte zurücksetzen"
 
-#: prefs.js:860
+#: prefs.js:1058 prefs.js:1056
 msgid "GNU GPL"
 msgstr "Lizenz (GNU GPL)"
 
-#: prefs.js:880
+#: prefs.js:1078 prefs.js:1076
 msgid "GNU General Public License"
 msgstr "GNU General Public License"
 
-#: prefs.js:1132
+#: prefs.js:1376 prefs.js:1374
 msgid "TaskBar Preferences - Desktop Button Icon"
-msgstr "Einstellungen der Anwendungen-Leiste - Symbol der Schreibtischschaltfläche"
+msgstr ""
+"Einstellungen der Anwendungen-Leiste - Symbol der Schreibtischschaltfläche"
 
-#: prefs.js:1145 prefs.js:1246 prefs.js:1336
+#: prefs.js:1389 prefs.js:1501 prefs.js:1591 prefs.js:1387 prefs.js:1499
+#: prefs.js:1589
 msgid "Images"
 msgstr "Bilder"
 
-#: prefs.js:1233
+#: prefs.js:1488 prefs.js:1486
 msgid "TaskBar Preferences - Appview Button Icon"
-msgstr "Einstellungen der Anwendungen-Leiste - Symbol der Schaltfläche Anwendungen"
+msgstr ""
+"Einstellungen der Anwendungen-Leiste - Symbol der Schaltfläche Anwendungen"
 
-#: prefs.js:1323
+#: prefs.js:1578 prefs.js:1576
 msgid "TaskBar Preferences - Tray Button Icon"
 msgstr "Einstellungen der Anwendungen-Leiste - Benachrichtigungssymbol"
