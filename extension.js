@@ -690,7 +690,8 @@ TaskBar.prototype =
         this.monitorChangedId = Main.layoutManager.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
         this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         this.globalThemeChangedId = St.ThemeContext.get_for_stage(global.stage).connect('changed', Lang.bind(this, this.onParamChanged));
-        this.screenShieldLockId = Main.screenShield.connect('lock-status-changed', Lang.bind(this, this.onParamChanged));
+        if (Main.screenShield !== null)
+            this.screenShieldLockId = Main.screenShield.connect('lock-status-changed', Lang.bind(this, this.onParamChanged));
 	this.setOverview();
     },
 
@@ -1955,6 +1956,20 @@ TaskBar.prototype =
                 this
             );
         }
+        if (type === 1) //Title Change
+        {
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask, labelTask] = task;
+                    if (windowTask === window)
+                    {
+                         labelTask.text = " " + window.get_title() + " ";
+                    }
+                },
+                this
+            );
+        }
         if (type === 2) //Minimized
         {
             this.tasksList.forEach(
@@ -1994,6 +2009,7 @@ TaskBar.prototype =
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
         let buttonTask = null;
+        let labelTask = null;
         if (app)
         {
             if (this.settings.get_boolean("tasks-label"))
@@ -2001,7 +2017,7 @@ TaskBar.prototype =
                 let buttonTaskLayout = new St.BoxLayout({ style_class: "tkb-task-button" });
                 let iconTask = app.create_icon_texture(this.iconSize - 2);
                 buttonTaskLayout.add_actor(iconTask);
-                let labelTask = new St.Label({ text: (" " + window.get_title() + " ") });
+                labelTask = new St.Label({ text: (" " + window.get_title() + " ") });
                 buttonTaskLayout.add_actor(labelTask);
                 if (this.settings.get_boolean("display-tasks-label-color"))
                 {
@@ -2018,7 +2034,7 @@ TaskBar.prototype =
             }
             else
             {
-                buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });            
+                buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
             }
             let signalsTask = [
                 buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
@@ -2053,7 +2069,7 @@ TaskBar.prototype =
                 this.countTasks ++;
             this.boxMainTasks.set_width(this.newTasksContainerWidth);
             this.boxMainTasks.add_actor(buttonTask);
-            this.tasksList.push([ window, buttonTask, signalsTask ]);
+            this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
         }
     },
 
