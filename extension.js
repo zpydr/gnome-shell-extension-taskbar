@@ -769,7 +769,7 @@ TaskBar.prototype =
                 this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
                 this.boxMainTasksId = this.boxMainTasks.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
             }
-            if ((this.settings.get_enum("tray-button") !== 0) && (this.bottomPanelEndIndicator) && (ShellVersion[1] <= 14))
+            if ((this.settings.get_enum("tray-button") !== 0) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
                 this.boxBottomPanelTrayButton = new St.BoxLayout({ style_class: "tkb-box" });
         }
     },
