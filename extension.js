@@ -769,7 +769,7 @@ TaskBar.prototype =
                 this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
                 this.boxMainTasksId = this.boxMainTasks.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
             }
-            if (this.settings.get_enum("tray-button") !== 0)
+            if ((this.settings.get_enum("tray-button") !== 0) && (this.bottomPanelEndIndicator) && (ShellVersion[1] <= 14))
                 this.boxBottomPanelTrayButton = new St.BoxLayout({ style_class: "tkb-box" });
         }
     },
@@ -928,14 +928,14 @@ TaskBar.prototype =
     showMainBox: function()
     {
         this.mainBox.show();
-        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")))
+        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
             this.boxBottomPanelTrayButton.show();
     },
 
     hideMainBox: function()
     {
         this.mainBox.hide();
-        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")))
+        if ((this.settings.get_enum("tray-button") !== 0) && (! this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
             this.boxBottomPanelTrayButton.hide();
     },
 
@@ -1956,7 +1956,7 @@ TaskBar.prototype =
                 this
             );
         }
-        if (type === 1) //Title Change
+        else if ((type === 1) && (this.settings.get_boolean("tasks-label"))) //Title Change
         {
             this.tasksList.forEach(
                 function(task)
@@ -1970,7 +1970,7 @@ TaskBar.prototype =
                 this
             );
         }
-        if (type === 2) //Minimized
+        else if (type === 2) //Minimized
         {
             this.tasksList.forEach(
                 function(task)
