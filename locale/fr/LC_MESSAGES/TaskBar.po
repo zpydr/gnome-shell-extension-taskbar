@@ -21,142 +21,255 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-16 23:44+0200\n"
-"PO-Revision-Date: 2014-10-16 23:47+0100\n"
-"Last-Translator: DAEM Q. quentin.daem@gmail.com\n"
+"POT-Creation-Date: 2016-03-18 13:13+0100\n"
+"PO-Revision-Date: 2016-03-18 14:01+0100\n"
+"Last-Translator: DAEM Q\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: prefs.js:119
+#: prefs.js:120
+msgid "About"
+msgstr "À propos"
+
+#: prefs.js:132
+msgid "Version"
+msgstr "Version"
+
+#: prefs.js:134
+msgid "GNOME Shell Version"
+msgstr "GNOME Shell Version"
+
+#: prefs.js:148
+msgid "Report a Bug"
+msgstr "Signaler un Bug"
+
+#: prefs.js:152
+msgid "Donate for TaskBar"
+msgstr "Donner pour le développement de TaskBar"
+
+#: prefs.js:156
+msgid "Become a Friend of GNOME"
+msgstr "Devenir un Ami de GNOME"
+
+#: prefs.js:160
+msgid "Free Software Foundation"
+msgstr "Free Software Foundation"
+
+#: prefs.js:165
+msgid "RESET ALL !"
+msgstr "PARAMÈTRES PAR DÉFAUT"
+
+#: prefs.js:168
+msgid "Reset All TaskBar Settings to the Original TaskBar Settings"
+msgstr "Réinitialiser les paramètres originaux de TaskBar"
+
+#: prefs.js:175 prefs.js:758 prefs.js:756
+msgid "TaskBar"
+msgstr "TaskBar"
+
+#: prefs.js:188 prefs.js:274
 msgid "Overview"
 msgstr "Vue d'ensemble"
 
-#: prefs.js:122 prefs.js:155 prefs.js:316 prefs.js:325
+#: prefs.js:191 prefs.js:224
 msgid "Tasks"
 msgstr "Tâches en cours"
 
-#: prefs.js:128 prefs.js:156
+#: prefs.js:197 prefs.js:225 prefs.js:784 prefs.js:782
 msgid "Desktop Button"
 msgstr "Bouton Bureau"
 
-#: prefs.js:134 prefs.js:157 prefs.js:229
+#: prefs.js:203 prefs.js:226 prefs.js:797 prefs.js:795
 msgid "Workspace Button"
 msgstr "Bouton Espaces de travail"
 
-#: prefs.js:140 prefs.js:158
+#: prefs.js:209 prefs.js:227 prefs.js:810 prefs.js:808
 msgid "Appview Button"
 msgstr "Bouton Vue Applications"
 
-#: prefs.js:146 prefs.js:159
+#: prefs.js:215 prefs.js:228 prefs.js:823 prefs.js:821
 msgid "Favorites"
 msgstr "Favoris"
 
-#: prefs.js:153
-msgid "Align "
-msgstr "Aligner "
+#: prefs.js:222
+msgid "Align"
+msgstr "Alignement"
 
-#: prefs.js:182 prefs.js:213 prefs.js:519
-msgid "Bottom Panel"
-msgstr "Panneau du bas"
-
-#: prefs.js:208
-msgid "Panels"
-msgstr "Panneaux"
-
-#: prefs.js:211 prefs.js:517
+#: prefs.js:251 prefs.js:290
 msgid "Top Panel"
 msgstr "Panneau du haut"
 
-#: prefs.js:216
-msgid "Icon Size"
-msgstr "Taille de l'icone"
+#: prefs.js:257 prefs.js:292
+msgid "Bottom Panel"
+msgstr "Panneau du bas"
 
-#: prefs.js:229
-msgid "Font Size"
-msgstr "Taille de police"
+#: prefs.js:263
+msgid "Reset Overview Tab"
+msgstr "Réinitialiser l'onglet d'Aperçu"
 
-#: prefs.js:242
+#: prefs.js:266
+msgid "Reset the Overview Tab to the Original Overview Settings"
+msgstr "Réinitialiser l'onglet d'Aperçu avec les paramètres originaux"
+
+#: prefs.js:287 prefs.js:378
+msgid "Panels"
+msgstr "Panneaux"
+
+#: prefs.js:295
+msgid "Panel Height"
+msgstr "Hauteur de la barre"
+
+#: prefs.js:308
 msgid "Align TaskBar"
 msgstr "Aligner Barre des tâches"
 
-#: prefs.js:257
+#: prefs.js:323
 msgid "Anchor Point"
 msgstr "Point d'ancrage"
 
-#: prefs.js:265
+#: prefs.js:331
 msgid ""
 "Panel Background\n"
-"Color / Opacity"
+"Color & Opacity"
 msgstr ""
-"Arrière-plan panneau\n"
-"Couleur / Opacité"
+"Barre\n"
+" Couleur & Opacité"
 
-#: prefs.js:287 prefs.js:290
+#: prefs.js:359 prefs.js:362
 msgid "Reset Color"
 msgstr "Couleur par défaut"
 
-#: prefs.js:319
+#: prefs.js:366
+msgid "Reset Panels Tab"
+msgstr "Réinitialiser l'onglet Panneau"
+
+#: prefs.js:369
+msgid "Reset the Panels Tab to the Original Panels Settings"
+msgstr "Réinitialiser l'onglet Panneau avec les paramètres originaux"
+
+#: prefs.js:391 prefs.js:476
+msgid "Tasks (I)"
+msgstr "Tâches (I)"
+
+#: prefs.js:394
 msgid "Tasks on All Workspaces"
 msgstr "Tâches sur Tous les Espaces de travail"
 
-#: prefs.js:325
-msgid "Tasks Container Width"
-msgstr "Taille conteneur de tâches"
+#: prefs.js:400 prefs.js:868 prefs.js:866
+msgid "Tasks Label"
+msgstr "Tâches nom "
 
-#: prefs.js:333
-msgid "Close Tasks"
-msgstr "Fermer Tâche"
+#: prefs.js:406
+msgid "Tasks Label Color"
+msgstr "Couleur Label Tâche"
 
-#: prefs.js:336 prefs.js:460
+#: prefs.js:420
+msgid "Tasks Label Width (150 px)"
+msgstr "Largeur Label Tâche (150 px)"
+
+#: prefs.js:428
+msgid "Tasks Container Width (6 Tasks)"
+msgstr "Largeur Conteneur de Tâches (6 Tâches)"
+
+#: prefs.js:436
+msgid "Tasks Application Menu"
+msgstr "Menu Application Tâches"
+
+#: prefs.js:439 prefs.js:449 prefs.js:495 prefs.js:613 prefs.js:690
+#: prefs.js:689
 msgid "OFF"
 msgstr "OFF"
 
-#: prefs.js:337
+#: prefs.js:440 prefs.js:450
 msgid "Middle Click"
 msgstr "Clique du milieu"
 
-#: prefs.js:338
+#: prefs.js:441 prefs.js:451
 msgid "Right Click"
 msgstr "Clique droit"
 
-#: prefs.js:343
+#: prefs.js:446
+msgid "Close Tasks"
+msgstr "Fermer Tâche"
+
+#: prefs.js:456
+msgid "Space between Tasks (4 px)"
+msgstr "Espace entre les Tâches (4 px)"
+
+#: prefs.js:464
+msgid "Reset Tasks (I) Tab"
+msgstr "Réinitialiser Onglet Tâches (I)"
+
+#: prefs.js:467
+msgid "Reset the Tasks Tab to the Original Tasks Settings"
+msgstr "Réinitialiser Onglet Tâches (I) avec les paramètres originaux"
+
+#: prefs.js:489 prefs.js:568
+msgid "Tasks (II)"
+msgstr "Tâches (II)"
+
+#: prefs.js:492
 msgid "Scroll Tasks"
 msgstr "Défilement Tâches"
 
-#: prefs.js:349
+#: prefs.js:496 prefs.js:614
+msgid "Standard"
+msgstr "Standard"
+
+#: prefs.js:497 prefs.js:615
+msgid "Invert"
+msgstr "Inversé"
+
+#: prefs.js:502
 msgid "Active Task Frame"
 msgstr "Cadre de Tâche active"
 
-#: prefs.js:355
+#: prefs.js:508
+msgid "Inactive Task Frame"
+msgstr "Fenêtre de Tâche Inactive"
+
+#: prefs.js:514
 msgid ""
 "Active Task Background\n"
-"Color / Opacity"
+"Color & Opacity"
 msgstr ""
-"Tâche active en Arrière-plan\n"
-"Couleur / Opacité"
+"Tâche Active Fond\n"
+"Couleur et Opacité"
 
-#: prefs.js:370
+#: prefs.js:528
+msgid ""
+"Inactive Task Background\n"
+"Color & Opacity"
+msgstr ""
+"Tâche Inactive Fond\n"
+"Couleur et Opacité"
+
+#: prefs.js:542
 msgid "Activate Tasks on Hover"
 msgstr "Activer Tâches au survol"
 
-#: prefs.js:376
+#: prefs.js:548
 msgid "Hover Delay"
 msgstr "Délai après survol"
 
-#: prefs.js:376 prefs.js:854
-msgid "(ms)"
-msgstr "(ms)"
+#: prefs.js:556
+msgid "Reset Tasks (II) Tab"
+msgstr "Réinitialiser Onglet Tâches (II)"
 
-#: prefs.js:406
+#: prefs.js:559
+msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
+msgstr "Réinitialiser Onglet Tâches (II) avec les paramètres originaux"
+
+#: prefs.js:581 prefs.js:668
 msgid "Buttons"
 msgstr "Boutons"
 
-#: prefs.js:409
+#: prefs.js:584
 msgid ""
 "Desktop Button Right Click\n"
 "opens Preferences (this)"
@@ -164,35 +277,39 @@ msgstr ""
 "Bureau Bouton clique droit\n"
 "ouvre ses préférences"
 
-#: prefs.js:415
+#: prefs.js:590
 msgid "Desktop Button Icon"
 msgstr "Icone du bouton bureau"
 
-#: prefs.js:424
+#: prefs.js:601
 msgid "Workspace Button Index"
 msgstr "Index du bouton Espace de travail"
 
-#: prefs.js:427 prefs.js:462
+#: prefs.js:604 prefs.js:692 prefs.js:691
 msgid "Index"
 msgstr "Index"
 
-#: prefs.js:428
+#: prefs.js:605
 msgid "Index/Total"
 msgstr "Index/Total"
 
-#: prefs.js:433
+#: prefs.js:610
 msgid "Scroll Workspaces"
 msgstr "Défilement Espace de travail"
 
-#: prefs.js:439
+#: prefs.js:620
+msgid "Workspace Button Color"
+msgstr "Couleur bouton Espace de travail"
+
+#: prefs.js:636
 msgid ""
 "Appview Button\n"
-"Left / Right Click Toggle"
+"Left & Right Click Toggle"
 msgstr ""
-"Vue Application Bouton\n"
-"Basculer clique Gauche / Droit"
+"Bouton vue App\n"
+"Basculer Clic Gauche/Droit"
 
-#: prefs.js:442
+#: prefs.js:639
 msgid ""
 "L Appview\n"
 "R Overview"
@@ -200,7 +317,7 @@ msgstr ""
 "L Vue Applications\n"
 "R Vue d'ensemble"
 
-#: prefs.js:443
+#: prefs.js:640
 msgid ""
 "L Overview\n"
 "R Appview"
@@ -208,151 +325,273 @@ msgstr ""
 "L Vue d'ensemble\n"
 "R Vue Applications"
 
-#: prefs.js:448
+#: prefs.js:645
 msgid "Appview Button Icon"
 msgstr "Icone du bouton Vue Application"
 
-#: prefs.js:457
+#: prefs.js:656
+msgid "Reset Buttons Tab"
+msgstr "Réinitialiser Onglet Bouton"
+
+#: prefs.js:659
+msgid ""
+"Reset the Buttons Tab except the Icons to the Original Buttons "
+"Settings.\n"
+"The Icons can be Reset within their own Settings."
+msgstr ""
+"Réinitialiser Onglet Boutons avec les paramètres par défaut.\n"
+"Les icones peuvent être réinitialisés dans leur propre menu "
+"paramètres."
+
+#: prefs.js:681
+msgid "Tray Button"
+msgstr "Bouton Plateau"
+
+#: prefs.js:687 prefs.js:686
 msgid "Bottom Panel Tray Button"
 msgstr "Bouton plateau panneau du bas"
 
-#: prefs.js:461
+#: prefs.js:691 prefs.js:690
 msgid "Icon"
 msgstr "Icone"
 
-#: prefs.js:467
+#: prefs.js:697 prefs.js:696
 msgid "When Tray is Empty"
 msgstr "Quand le plateau est vide"
 
-#: prefs.js:470
+#: prefs.js:700 prefs.js:699
 msgid "Show Icon"
 msgstr "Afficher Icone"
 
-#: prefs.js:471
+#: prefs.js:701 prefs.js:700
 msgid "Show 0"
 msgstr "Afficher 0"
 
-#: prefs.js:472
+#: prefs.js:702 prefs.js:701
 msgid "Hide"
 msgstr "Masquer"
 
-#: prefs.js:477
+#: prefs.js:707 prefs.js:706
 msgid "Tray Button Icon"
 msgstr "Icone bouton plateau"
 
-#: prefs.js:486
+#: prefs.js:718 prefs.js:717
 msgid "Activate Tray on Hover"
 msgstr "Activer plateau au survol"
 
-#: prefs.js:514
+#: prefs.js:724 prefs.js:723
+msgid "Reset Tray Button Tab"
+msgstr "Réinitialiser Bouton Plateau"
+
+#: prefs.js:727 prefs.js:726
+msgid ""
+"Reset the Tray Button Tab except the Icon to the Original Tray Button "
+"Settings.\n"
+"The Icon can be Reset within its own Settings."
+msgstr ""
+"Réinitialiser Bouton Plateau avec les paramètres originaux.\n"
+"L'icone peuvent être réinitialisés dans leur propre menu paramètres."
+
+#: prefs.js:736 prefs.js:735
+msgid "TrayButton"
+msgstr "Bouton Plateau"
+
+#: prefs.js:750 prefs.js:852 prefs.js:748 prefs.js:850
 msgid "Separators"
 msgstr "Séparateurs"
 
-#: prefs.js:522 prefs.js:561 prefs.js:600 prefs.js:639 prefs.js:678
-#: prefs.js:717 prefs.js:759 prefs.js:760 prefs.js:761 prefs.js:762
-#: prefs.js:763 prefs.js:764
-msgid "Separator"
-msgstr "Séparateurs"
+#: prefs.js:753 prefs.js:751
+msgid "Left (px)"
+msgstr "Gauche (px)"
 
-#: prefs.js:522
-msgid "Left"
-msgstr "Gauche"
+#: prefs.js:755 prefs.js:753
+msgid "Right (px)"
+msgstr "Droite (px)"
 
-#: prefs.js:717
-msgid "Right"
-msgstr "Droite"
+#: prefs.js:771 prefs.js:769
+msgid "Tasks Container"
+msgstr "Conteneur de Tâches"
 
-#: prefs.js:757
-msgid "Resize "
-msgstr "redimensionner"
+#: prefs.js:836 prefs.js:834
+msgid "Reset Separators Tab"
+msgstr "Réinitialiser Onglets Séparateurs"
 
-#: prefs.js:825
+#: prefs.js:839 prefs.js:837
+msgid "Reset the Separators Tab to the Original Separators Settings"
+msgstr "Réinitialiser Onglet Séparateurs avec les paramètres par défaut"
+
+#: prefs.js:865 prefs.js:914 prefs.js:863 prefs.js:912
 msgid "Preview"
 msgstr "Aperçu"
 
-#: prefs.js:828
-msgid "Tasks Label"
-msgstr "Tâches nom "
-
-#: prefs.js:834
+#: prefs.js:874 prefs.js:872
 msgid "Tasks Thumbnail"
 msgstr "Tâches Mignature"
 
-#: prefs.js:840
+#: prefs.js:880 prefs.js:878
 msgid "Favorites Label"
 msgstr "Nom Favoris"
 
-#: prefs.js:846
+#: prefs.js:886 prefs.js:884
 msgid "Thumbnail Size"
 msgstr "Taille Mignature"
 
-#: prefs.js:854
+#: prefs.js:894 prefs.js:892
 msgid "Preview Delay"
 msgstr "Délai avant Aperçu"
 
-#: prefs.js:884
+#: prefs.js:902 prefs.js:900
+msgid "Reset Preview Tab"
+msgstr "Réinitialiser Onglet Aperçu"
+
+#: prefs.js:905 prefs.js:903
+msgid "Reset the Preview Tab to the Original Preview Settings"
+msgstr "Réinitialiser Onglet Aperçu avec les paramètres par défaut"
+
+#: prefs.js:927 prefs.js:1043 prefs.js:925 prefs.js:1041
 msgid "Misc"
 msgstr "Divers"
 
-#: prefs.js:887
-msgid "Hide Activities"
-msgstr "Masquer Activités"
+#: prefs.js:930 prefs.js:928
+msgid "Color & Opacity"
+msgstr "Couleur & Opacité"
 
-#: prefs.js:893
-msgid "Disable Hot Corner"
-msgstr "Désactiver «Hot Corner»"
+#: prefs.js:933 prefs.js:931
+msgid "Activities Button"
+msgstr "Bouton Activités"
 
-#: prefs.js:899
-msgid "Hide Default App Menu"
-msgstr "Masquer par défaut Application Menu"
+#: prefs.js:948 prefs.js:967 prefs.js:986 prefs.js:1005 prefs.js:946
+#: prefs.js:965 prefs.js:984 prefs.js:1003
+msgid "Reset"
+msgstr "Réinitialiser"
 
-#: prefs.js:905
-msgid ""
-"Possible conflict\n"
-"with other extensions"
-msgstr ""
-"Conflits possibles\n"
-"avec d'autres extensions"
+#: prefs.js:952 prefs.js:950
+msgid "Application Menu"
+msgstr "Menu Application"
 
-#: prefs.js:943
-msgid "Version"
-msgstr "Version"
+#: prefs.js:971 prefs.js:969
+msgid "Date Menu"
+msgstr "Menu Date"
 
-#: prefs.js:951
-msgid "Send Bug Report"
-msgstr "Envoyer un rapport de bug"
+#: prefs.js:990 prefs.js:988
+msgid "System Menu"
+msgstr "Menu Système"
 
-#: prefs.js:961
-msgid "Donate for TaskBar"
-msgstr "Donner pour le développement de TaskBar"
+#: prefs.js:1009 prefs.js:1007
+msgid "Hot Corner"
+msgstr "Coin Actif"
 
-#: prefs.js:966
-msgid "Become a Friend of GNOME"
-msgstr "Devenir un Ami de GNOME"
+#: prefs.js:1015 prefs.js:1013
+msgid "Dash (Overview)"
+msgstr "Lanceur (Aperçu)"
 
-#: prefs.js:971
-msgid "RESET ALL !"
-msgstr "PARAMÈTRES PAR DÉFAUT"
+#: prefs.js:1021 prefs.js:1019
+msgid "Workspace Selector (Overview)"
+msgstr "Selectionneur d'Espace de travail (Aperçu)"
 
-#: prefs.js:974
-msgid "Free Software Foundation"
-msgstr "Free Software Foundation"
+#: prefs.js:1027 prefs.js:1025
+msgid "TaskBar (Overview)"
+msgstr "TaskBar (Aperçu)"
 
-#: prefs.js:1229
+#: prefs.js:1033 prefs.js:1031
+msgid "Reset Misc Tab"
+msgstr "Réinitialiser paramètres divers"
+
+#: prefs.js:1036 prefs.js:1034
+msgid "Reset the Misc Tab to the Original Misc Settings"
+msgstr "Réinitialiser les paramètres divers originaux"
+
+#: prefs.js:1058 prefs.js:1056
+msgid "GNU GPL"
+msgstr "GNU GPL"
+
+#: prefs.js:1078 prefs.js:1076
+msgid "GNU General Public License"
+msgstr "Licence Publique Générale GNU"
+
+#: prefs.js:1376 prefs.js:1374
 msgid "TaskBar Preferences - Desktop Button Icon"
 msgstr "TaskBar Préférences - Icone du Bouton Bureau"
 
-#: prefs.js:1242 prefs.js:1343 prefs.js:1433
+#: prefs.js:1389 prefs.js:1501 prefs.js:1591 prefs.js:1387 prefs.js:1499
+#: prefs.js:1589
 msgid "Images"
 msgstr "Images"
 
-#: prefs.js:1330
+#: prefs.js:1488 prefs.js:1486
 msgid "TaskBar Preferences - Appview Button Icon"
 msgstr "TaskBar Préférences - Icone du Bouton Vue Applications"
 
-#: prefs.js:1420
+#: prefs.js:1578 prefs.js:1576
 msgid "TaskBar Preferences - Tray Button Icon"
 msgstr "TaskBar Préférences - Icone du Bouton Plateau"
+
+#~ msgid "Align "
+#~ msgstr "Aligner "
+
+#~ msgid "Icon Size"
+#~ msgstr "Taille de l'icone"
+
+#~ msgid "Font Size"
+#~ msgstr "Taille de police"
+
+#~ msgid ""
+#~ "Panel Background\n"
+#~ "Color / Opacity"
+#~ msgstr ""
+#~ "Arrière-plan panneau\n"
+#~ "Couleur / Opacité"
+
+#~ msgid "Tasks Container Width"
+#~ msgstr "Taille conteneur de tâches"
+
+#~ msgid ""
+#~ "Active Task Background\n"
+#~ "Color / Opacity"
+#~ msgstr ""
+#~ "Tâche active en Arrière-plan\n"
+#~ "Couleur / Opacité"
+
+#~ msgid "(ms)"
+#~ msgstr "(ms)"
+
+#~ msgid ""
+#~ "Appview Button\n"
+#~ "Left / Right Click Toggle"
+#~ msgstr ""
+#~ "Vue Application Bouton\n"
+#~ "Basculer clique Gauche / Droit"
+
+#~ msgid "Separator"
+#~ msgstr "Séparateurs"
+
+#~ msgid "Left"
+#~ msgstr "Gauche"
+
+#~ msgid "Right"
+#~ msgstr "Droite"
+
+#~ msgid "Resize "
+#~ msgstr "redimensionner"
+
+#~ msgid "Hide Activities"
+#~ msgstr "Masquer Activités"
+
+#~ msgid "Disable Hot Corner"
+#~ msgstr "Désactiver «Hot Corner»"
+
+#~ msgid "Hide Default App Menu"
+#~ msgstr "Masquer par défaut Application Menu"
+
+#~ msgid ""
+#~ "Possible conflict\n"
+#~ "with other extensions"
+#~ msgstr ""
+#~ "Conflits possibles\n"
+#~ "avec d'autres extensions"
+
+#~ msgid "Send Bug Report"
+#~ msgstr "Envoyer un rapport de bug"
 
 #~ msgid "Components"
 #~ msgstr "Komponenten"
