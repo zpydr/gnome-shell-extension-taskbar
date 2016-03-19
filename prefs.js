@@ -464,7 +464,7 @@ Prefs.prototype =
         let resetTasksButton = new Gtk.Button({label: _("Reset Tasks (I) Tab")});
         resetTasksButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetTasksButton.connect('clicked', Lang.bind(this, this.resetTasks));
-        resetTasksButton.set_tooltip_text(_("Reset the Tasks Tab to the Original Tasks Settings"));
+        resetTasksButton.set_tooltip_text(_("Reset the Tasks (I) Tab to the Original Tasks Settings"));
         this.gridTasks.attach(resetTasksButton, 1, 10, 1, 1);
 
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
@@ -732,7 +732,7 @@ Prefs.prototype =
         this.gridTrayButton.attach(labelSpaceTrayButton2, 2, 1, 1, 1);
         let labelSpaceTrayButton3 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTrayButton.attach(labelSpaceTrayButton3, 3, 5, 1, 1);
-        let labelSpaceTrayButton4 = new Gtk.Label({label: "<b>"+_("TrayButton")+"</b>", hexpand: true});
+        let labelSpaceTrayButton4 = new Gtk.Label({label: "<b>"+_("Tray Button")+"</b>", hexpand: true});
         labelSpaceTrayButton4.set_use_markup(true);
         this.gridTrayButton.attach(labelSpaceTrayButton4, 0, 0, 7, 1);
         let labelSpaceTrayButton5 = new Gtk.Label({label: "\t", xalign: 0});
