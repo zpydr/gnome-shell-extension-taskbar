@@ -30,26 +30,23 @@ Align position
 Resize panels + contents        
 Top/bottom panel background color + opacity     
 Bottom panel tray button - activate the message tray        
-Tasks on all workspaces		
+Tasks on all workspaces		  
+Tasks Label     
 Tasks application menu         
 Close tasks with a right/middle click           
 Activate tasks on hover         
 Scroll tasks/workspaces         
 Separators          
 Thumbnail/label-preview         
-Hide activities button         
+Color or hide menu buttons         
 Disable hot corner          
-Hide application menu		
-Hide date menu		
-Hide system menu		
         
 Language support:       
-Chinese by tuhaihe      
 Czech by michal-ruzicka     
 French by narzb       
-German by jonnius, to-ba        
+German by jonnius       
 
-Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl        
+Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl, tuhaihe, to-ba        
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_PSh3ecJ.png)
         
