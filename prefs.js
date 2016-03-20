@@ -737,7 +737,7 @@ Prefs.prototype =
         this.gridTrayButton.attach(labelSpaceTrayButton4, 0, 0, 7, 1);
         let labelSpaceTrayButton5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTrayButton.attach(labelSpaceTrayButton5, 6, 1, 1, 1);
- 
+
         this.gridSeparator = new Gtk.Grid();
         this.gridSeparator.margin = this.gridSeparator.row_spacing = 10;
         this.gridSeparator.column_spacing = 2;
@@ -1079,7 +1079,7 @@ Prefs.prototype =
         let labelSpaceGPL4 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridGPL.attach(labelSpaceGPL4, 3, 4, 1, 1);
 
-        notebook.set_current_page(1);        
+        notebook.set_current_page(1);
         notebook.show_all();
         return notebook;
     },
@@ -1657,62 +1657,62 @@ Prefs.prototype =
 
     changeSeparatorLeftBoxMain: function(object)
     {
-        this.settings.set_int("separator-left-box-main", this.valueSeparatorLeftBoxMain.get_value());        
+        this.settings.set_int("separator-left-box-main", this.valueSeparatorLeftBoxMain.get_value());
     },
 
     changeSeparatorRightBoxMain: function(object)
     {
-        this.settings.set_int("separator-right-box-main", this.valueSeparatorRightBoxMain.get_value());        
+        this.settings.set_int("separator-right-box-main", this.valueSeparatorRightBoxMain.get_value());
     },
 
     changeSeparatorLeftTasks: function(object)
     {
-        this.settings.set_int("separator-left-tasks", this.valueSeparatorLeftTasks.get_value());        
+        this.settings.set_int("separator-left-tasks", this.valueSeparatorLeftTasks.get_value());
     },
 
     changeSeparatorRightTasks: function(object)
     {
-        this.settings.set_int("separator-right-tasks", this.valueSeparatorRightTasks.get_value());        
+        this.settings.set_int("separator-right-tasks", this.valueSeparatorRightTasks.get_value());
     },
 
     changeSeparatorLeftDesktop: function(object)
     {
-        this.settings.set_int("separator-left-desktop", this.valueSeparatorLeftDesktop.get_value());        
+        this.settings.set_int("separator-left-desktop", this.valueSeparatorLeftDesktop.get_value());
     },
 
     changeSeparatorRightDesktop: function(object)
     {
-        this.settings.set_int("separator-right-desktop", this.valueSeparatorRightDesktop.get_value());        
+        this.settings.set_int("separator-right-desktop", this.valueSeparatorRightDesktop.get_value());
     },
 
     changeSeparatorLeftWorkspaces: function(object)
     {
-        this.settings.set_int("separator-left-workspaces", this.valueSeparatorLeftWorkspaces.get_value());        
+        this.settings.set_int("separator-left-workspaces", this.valueSeparatorLeftWorkspaces.get_value());
     },
 
     changeSeparatorRightWorkspaces: function(object)
     {
-        this.settings.set_int("separator-right-workspaces", this.valueSeparatorRightWorkspaces.get_value());        
+        this.settings.set_int("separator-right-workspaces", this.valueSeparatorRightWorkspaces.get_value());
     },
 
     changeSeparatorLeftAppview: function(object)
     {
-        this.settings.set_int("separator-left-appview", this.valueSeparatorLeftAppview.get_value());        
+        this.settings.set_int("separator-left-appview", this.valueSeparatorLeftAppview.get_value());
     },
 
     changeSeparatorRightAppview: function(object)
     {
-        this.settings.set_int("separator-right-appview", this.valueSeparatorRightAppview.get_value());        
+        this.settings.set_int("separator-right-appview", this.valueSeparatorRightAppview.get_value());
     },
 
     changeSeparatorLeftFavorites: function(object)
     {
-        this.settings.set_int("separator-left-favorites", this.valueSeparatorLeftFavorites.get_value());        
+        this.settings.set_int("separator-left-favorites", this.valueSeparatorLeftFavorites.get_value());
     },
 
     changeSeparatorRightFavorites: function(object)
     {
-        this.settings.set_int("separator-right-favorites", this.valueSeparatorRightFavorites.get_value());        
+        this.settings.set_int("separator-right-favorites", this.valueSeparatorRightFavorites.get_value());
     },
 
     changeDisplayActivitiesButton: function(object, pspec)

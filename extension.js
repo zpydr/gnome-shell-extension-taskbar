@@ -435,7 +435,7 @@ TaskBar.prototype =
         if (! this.settings.get_boolean("workspace-selector"))
         {
             ThumbnailsSlider._getAlwaysZoomOut = this.alwaysZoomOut;
-            ThumbnailsSlider.getNonExpandedWidth = this.nonExpandedWidth;            
+            ThumbnailsSlider.getNonExpandedWidth = this.nonExpandedWidth;
         }
 
         //Disconnect Workspace Signals
@@ -1858,7 +1858,8 @@ TaskBar.prototype =
             this.inactiveTaskFrame();
             //Task Menu
             this.taskMenu = null;
-            this.taskMenuUp = false;        
+            this.taskMenuUp = false;
+            this.tasksContainerSize();
             this.windows = new Windows.Windows(this, this.onWindowsListChanged, this.onWindowChanged);
         }
     },
@@ -1908,6 +1909,20 @@ TaskBar.prototype =
                 this
             );
         }
+    },
+
+    //Tasks Container Size
+    tasksContainerSize: function()
+    {
+        let spaces = this.settings.get_int("tasks-spaces");
+        let buttonTaskWidth = 0;
+        this.tasksWidth = this.settings.get_int("tasks-width");
+        if (this.settings.get_boolean("tasks-label"))
+            buttonTaskWidth = this.tasksWidth;
+        else
+            buttonTaskWidth = (this.iconSize + 8);
+        this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
+        this.boxMainTasks.set_width(this.newTasksContainerWidth);
     },
 
     //Active Tasks
@@ -2058,16 +2073,8 @@ TaskBar.prototype =
                 buttonTask.add_style_pseudo_class(this.inactiveTask);
                 buttonTask.set_style(this.inactiveBackgroundStyleColor);
             }
-            let spaces = this.settings.get_int("tasks-spaces");
-            let buttonTaskWidth = 0;
-            if (this.settings.get_boolean("tasks-label"))
-                buttonTaskWidth = buttonTask.get_width();
-            else
-                buttonTaskWidth = (this.iconSize + 8);
-            this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
             if ((buttonTask.visible) || (this.settings.get_boolean("tasks-all-workspaces")))
                 this.countTasks ++;
-            this.boxMainTasks.set_width(this.newTasksContainerWidth);
             this.boxMainTasks.add_actor(buttonTask);
             this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
         }
