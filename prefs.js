@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2016 zpydr
 //
-//  Version 48
+//  Version 49
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ Prefs.prototype =
         let linkImage7 = new Gtk.Image({file: FSFICON});
         let linkImage8 = new Gtk.Image({file: SPACERICON});
 
-        let labelVersion1 = new Gtk.Label({label: _("Version")+" 48"});
+        let labelVersion1 = new Gtk.Label({label: _("Version")+" 49"});
         this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
         let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
         this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
@@ -146,7 +146,7 @@ Prefs.prototype =
         labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
         let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _("Report a Bug"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 48%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 49%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
         bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 6, 1, 1);
         let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
@@ -429,7 +429,7 @@ Prefs.prototype =
         this.gridTasks.attach(labelTasksContainerWidth, 1, 5, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 1, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
-        value2TasksContainerWidth.set_value(this.settings.get_int("tasks-container-width"));
+        value2TasksContainerWidth.set_value(this.settings.get_int("tasks-container-width-new"));
         value2TasksContainerWidth.connect("value-changed", Lang.bind(this, this.changeTasksContainerWidth));
         this.gridTasks.attach(value2TasksContainerWidth, 3, 5, 2, 1);
 
@@ -1273,7 +1273,7 @@ Prefs.prototype =
 
     changeTasksContainerWidth: function(object)
     {
-        this.settings.set_int("tasks-container-width", this.valueTasksContainerWidth.get_value());
+        this.settings.set_int("tasks-container-width-new", this.valueTasksContainerWidth.get_value());
     },
 
     changeCloseButton: function(object)

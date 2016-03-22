@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2016 zpydr
 //
-//  Version 48
+//  Version 49
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -669,7 +669,7 @@ TaskBar.prototype =
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::tasks-container-width", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tasks-container-width-new", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
             this.settings.connect("changed::reset-flag", Lang.bind(this, this.onParamChanged))
@@ -766,7 +766,7 @@ TaskBar.prototype =
             if (this.settings.get_boolean("display-tasks"))
             {
                 this.boxMainTasks = new St.BoxLayout({ style_class: "tkb-box", reactive: true });
-                this.tasksContainerWidth = this.settings.get_int('tasks-container-width');
+                this.tasksContainerWidth = this.settings.get_int("tasks-container-width-new");
                 this.boxMainTasksId = this.boxMainTasks.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
             }
             if ((this.settings.get_enum("tray-button") !== 0) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
