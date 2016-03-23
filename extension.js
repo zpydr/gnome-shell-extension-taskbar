@@ -1895,7 +1895,7 @@ TaskBar.prototype =
     //Tasks Container
     tasksContainer: function(window)
     {
-        if (this.countTasks > this.tasksContainerWidth)
+        if ((this.tasksContainerWidth !== 0) && (this.countTasks > this.tasksContainerWidth))
         {
             let totalWidth = this.boxMainTasks.get_width();
             let spaces = this.settings.get_int("tasks-spaces");
@@ -1914,15 +1914,18 @@ TaskBar.prototype =
     //Tasks Container Size
     tasksContainerSize: function()
     {
-        let spaces = this.settings.get_int("tasks-spaces");
-        let buttonTaskWidth = 0;
-        this.tasksWidth = this.settings.get_int("tasks-width");
-        if (this.settings.get_boolean("tasks-label"))
-            buttonTaskWidth = this.tasksWidth;
-        else
-            buttonTaskWidth = (this.iconSize + 8);
-        this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
-        this.boxMainTasks.set_width(this.newTasksContainerWidth);
+        if (this.tasksContainerWidth !== 0)
+        {
+            let spaces = this.settings.get_int("tasks-spaces");
+            let buttonTaskWidth = 0;
+            this.tasksWidth = this.settings.get_int("tasks-width");
+            if (this.settings.get_boolean("tasks-label"))
+                buttonTaskWidth = this.tasksWidth;
+            else
+                buttonTaskWidth = (this.iconSize + 8);
+            this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
+            this.boxMainTasks.set_width(this.newTasksContainerWidth);
+        }
     },
 
     //Active Tasks

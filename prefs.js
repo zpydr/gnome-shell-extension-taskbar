@@ -425,9 +425,9 @@ Prefs.prototype =
         value2TasksLabelWidth.connect("value-changed", Lang.bind(this, this.changeTasksLabelWidth));
         this.gridTasks.attach(value2TasksLabelWidth, 3, 4, 2, 1);
 
-        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width (6 Tasks)"), xalign: 0});
+        let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width (0 Tasks)"), xalign: 0});
         this.gridTasks.attach(labelTasksContainerWidth, 1, 5, 2, 1);
-        this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 1, upper: 100, step_increment: 1});
+        this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
         value2TasksContainerWidth.set_value(this.settings.get_int("tasks-container-width-new"));
         value2TasksContainerWidth.connect("value-changed", Lang.bind(this, this.changeTasksContainerWidth));
@@ -1998,7 +1998,7 @@ Prefs.prototype =
         this.settings.set_string("tasks-label-color", "unset");
         this.value2TasksLabelColor.set_active(false);
         this.valueTaskMenu.set_active(2);
-        this.valueTasksContainerWidth.set_value(6);
+        this.valueTasksContainerWidth.set_value(0);
         this.valueCloseButton.set_active(0);
         this.valueTasksSpaces.set_value(4);
         this.settings.set_boolean("reset-flag", false);
