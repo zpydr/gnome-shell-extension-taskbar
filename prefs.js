@@ -397,14 +397,20 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
+        let labelAllWorkspaces = new Gtk.Label({label: _("Group tasks"), xalign: 0});
+        this.gridTasks.attach(labelAllWorkspaces, 1, 2, 1, 1);
+        this.valueAllWorkspaces = new Gtk.Switch({active: this.settings.get_boolean("tasks-grouped")});
+        this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeTasksGrouped));
+        this.gridTasks.attach(this.valueAllWorkspaces, 4, 2, 1, 1);
+
         let labelTasksLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
-        this.gridTasks.attach(labelTasksLabel, 1, 2, 1, 1);
+        this.gridTasks.attach(labelTasksLabel, 1, 3, 1, 1);
         this.valueTasksLabel = new Gtk.Switch({active: this.settings.get_boolean("tasks-label")});
         this.valueTasksLabel.connect('notify::active', Lang.bind(this, this.changeTasksLabel));
-        this.gridTasks.attach(this.valueTasksLabel, 4, 2, 1, 1);
+        this.gridTasks.attach(this.valueTasksLabel, 4,3, 1, 1);
 
         let labelTasksLabelColor = new Gtk.Label({label: _("Tasks Label Color"), xalign: 0});
-        this.gridTasks.attach(labelTasksLabelColor, 1, 3, 1, 1);
+        this.gridTasks.attach(labelTasksLabelColor, 1, 4, 1, 1);
         let colorTLC = this.settings.get_string("tasks-label-color");
         let rgbaTLC = new Gdk.RGBA();
         rgbaTLC.parse(colorTLC);
@@ -412,73 +418,73 @@ Prefs.prototype =
         this.valueTasksLabelColor.set_use_alpha(true);
         this.valueTasksLabelColor.set_rgba(rgbaTLC);
         this.valueTasksLabelColor.connect('color-set', Lang.bind(this, this.changeTasksLabelColor));
-        this.gridTasks.attach(this.valueTasksLabelColor, 3, 3, 1, 1);
+        this.gridTasks.attach(this.valueTasksLabelColor, 3, 4, 1, 1);
         this.value2TasksLabelColor = new Gtk.Switch({active: this.settings.get_boolean("display-tasks-label-color")});
         this.value2TasksLabelColor.connect('notify::active', Lang.bind(this, this.changeTasksLabelColorSet));
-        this.gridTasks.attach(this.value2TasksLabelColor, 4, 3, 1, 1);
+        this.gridTasks.attach(this.value2TasksLabelColor, 4, 4, 1, 1);
 
         let labelTasksLabelWidth = new Gtk.Label({label: _("Tasks Label Width (150 px)"), xalign: 0});
-        this.gridTasks.attach(labelTasksLabelWidth, 1, 4, 2, 1);
+        this.gridTasks.attach(labelTasksLabelWidth, 1, 5, 2, 1);
         this.valueTasksLabelWidth = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
         let value2TasksLabelWidth = new Gtk.SpinButton({adjustment: this.valueTasksLabelWidth, snap_to_ticks: true});
         value2TasksLabelWidth.set_value(this.settings.get_int("tasks-width"));
         value2TasksLabelWidth.connect("value-changed", Lang.bind(this, this.changeTasksLabelWidth));
-        this.gridTasks.attach(value2TasksLabelWidth, 3, 4, 2, 1);
+        this.gridTasks.attach(value2TasksLabelWidth, 3, 5, 2, 1);
 
         let labelTasksContainerWidth = new Gtk.Label({label: _("Tasks Container Width (0 Tasks)"), xalign: 0});
-        this.gridTasks.attach(labelTasksContainerWidth, 1, 5, 2, 1);
+        this.gridTasks.attach(labelTasksContainerWidth, 1, 6, 2, 1);
         this.valueTasksContainerWidth = new Gtk.Adjustment({lower: 0, upper: 100, step_increment: 1});
         let value2TasksContainerWidth = new Gtk.SpinButton({adjustment: this.valueTasksContainerWidth, snap_to_ticks: true});
         value2TasksContainerWidth.set_value(this.settings.get_int("tasks-container-width-new"));
         value2TasksContainerWidth.connect("value-changed", Lang.bind(this, this.changeTasksContainerWidth));
-        this.gridTasks.attach(value2TasksContainerWidth, 3, 5, 2, 1);
+        this.gridTasks.attach(value2TasksContainerWidth, 3, 6, 2, 1);
 
         let labelTaskMenu = new Gtk.Label({label: _("Tasks Application Menu"), xalign: 0});
-        this.gridTasks.attach(labelTaskMenu, 1, 6, 1, 1);
+        this.gridTasks.attach(labelTaskMenu, 1, 7, 1, 1);
         this.valueTaskMenu = new Gtk.ComboBoxText();
         this.valueTaskMenu.append_text(_("OFF"));
         this.valueTaskMenu.append_text(_("Middle Click"));
         this.valueTaskMenu.append_text(_("Right Click"));
         this.valueTaskMenu.set_active(this.settings.get_enum("task-menu"));
         this.valueTaskMenu.connect('changed', Lang.bind(this, this.changeTaskMenu));
-        this.gridTasks.attach(this.valueTaskMenu, 3, 6, 2, 1);
+        this.gridTasks.attach(this.valueTaskMenu, 3, 7, 2, 1);
 
         let labelCloseButton = new Gtk.Label({label: _("Close Tasks"), xalign: 0});
-        this.gridTasks.attach(labelCloseButton, 1, 7, 1, 1);
+        this.gridTasks.attach(labelCloseButton, 1, 8, 1, 1);
         this.valueCloseButton = new Gtk.ComboBoxText();
         this.valueCloseButton.append_text(_("OFF"));
         this.valueCloseButton.append_text(_("Middle Click"));
         this.valueCloseButton.append_text(_("Right Click"));
         this.valueCloseButton.set_active(this.settings.get_enum("close-button"));
         this.valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton));
-        this.gridTasks.attach(this.valueCloseButton, 3, 7, 2, 1);
+        this.gridTasks.attach(this.valueCloseButton, 3, 8, 2, 1);
 
         let labelTasksSpaces = new Gtk.Label({label: _("Space between Tasks (4 px)"), xalign: 0});
-        this.gridTasks.attach(labelTasksSpaces, 1, 8, 2, 1);
+        this.gridTasks.attach(labelTasksSpaces, 1, 9, 2, 1);
         this.valueTasksSpaces = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 1});
         let value2TasksSpaces = new Gtk.SpinButton({adjustment: this.valueTasksSpaces, snap_to_ticks: true});
         value2TasksSpaces.set_value(this.settings.get_int("tasks-spaces"));
         value2TasksSpaces.connect("value-changed", Lang.bind(this, this.changeTasksSpaces));
-        this.gridTasks.attach(value2TasksSpaces, 3, 8, 2, 1);
+        this.gridTasks.attach(value2TasksSpaces, 3, 9, 2, 1);
 
         let resetTasksButton = new Gtk.Button({label: _("Reset Tasks (I) Tab")});
         resetTasksButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetTasksButton.connect('clicked', Lang.bind(this, this.resetTasks));
         resetTasksButton.set_tooltip_text(_("Reset the Tasks (I) Tab to the Original Tasks Settings"));
-        this.gridTasks.attach(resetTasksButton, 1, 10, 1, 1);
+        this.gridTasks.attach(resetTasksButton, 1, 11, 1, 1);
 
         let labelSpaceTasks1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks1, 0, 11, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks1, 0, 12, 1, 1);
         let labelSpaceTasks2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridTasks.attach(labelSpaceTasks2, 2, 9, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks2, 2, 10, 1, 1);
         let labelSpaceTasks3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
+        this.gridTasks.attach(labelSpaceTasks3, 3, 1, 1, 1);
         let labelSpaceTasks4 = new Gtk.Label({label: "<b>"+_("Tasks (I)")+"</b>", hexpand: true});
         labelSpaceTasks4.set_use_markup(true);
-        this.gridTasks.attach(labelSpaceTasks4, 0, 0, 6, 1);
+        this.gridTasks.attach(labelSpaceTasks4, 0, 1, 6, 1);
         let labelSpaceTasks5 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks.attach(labelSpaceTasks5, 5, 1, 1, 1);
-
+        this.gridTasks.attach(labelSpaceTasks5, 5, 2, 1, 1);
+        
         this.gridTasks2 = new Gtk.Grid();
         this.gridTasks2.margin = this.gridTasks2.row_spacing = 10;
         this.gridTasks2.column_spacing = 2;
@@ -1243,6 +1249,11 @@ Prefs.prototype =
     changeAllWorkspaces: function(object)
     {
         this.settings.set_boolean("tasks-all-workspaces", object.active);
+    },
+    
+    changeTasksGrouped: function(object)
+    {
+        this.settings.set_boolean("tasks-grouped", object.active);
     },
 
     changeTasksLabel: function(object)
