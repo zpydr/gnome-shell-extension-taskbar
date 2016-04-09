@@ -669,6 +669,7 @@ TaskBar.prototype =
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tasks-grouped", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-container-width-new", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
@@ -2078,8 +2079,40 @@ TaskBar.prototype =
             }
             if ((buttonTask.visible) || (this.settings.get_boolean("tasks-all-workspaces")))
                 this.countTasks ++;
-            this.boxMainTasks.add_actor(buttonTask);
-            this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+                
+            let inserted = false;
+            if (this.settings.get_boolean("tasks-grouped"))
+            {
+                let app_name = "";
+                if (window.get_title().indexOf(" - ") > -1)
+                {
+                    let res = window.get_title().split(" - ");
+                    app_name = res[res.length-1];
+                }
+                for (let i = this.tasksList.length - 1; i >= 0; i--)
+                {
+                    let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+
+                    let _app_name = "";
+                    if (app_name != "" && _windowTask.get_title().indexOf(" - ") > -1)
+                    {
+                        let res = _windowTask.get_title().split(" - ");
+                        _app_name = res[res.length-1];
+                    }
+                    if ( (app_name != "" && app_name == _app_name ) || _windowTask.get_title() == window.get_title())
+                    {
+                        this.boxMainTasks.insert_child_below(buttonTask,_buttonTask);
+                        this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+                        inserted = true;
+                        break;
+                    }
+                }
+            }
+            if (!inserted)
+            {
+                this.boxMainTasks.add_child(buttonTask);
+                this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+            }
         }
     },
 
