@@ -2083,26 +2083,16 @@ TaskBar.prototype =
             let inserted = false;
             if (this.settings.get_boolean("tasks-grouped"))
             {
-                let app_name = "";
-                if (window.get_title().indexOf(" - ") > -1)
-                {
-                    let res = window.get_title().split(" - ");
-                    app_name = res[res.length-1];
-                }
-                for (let i = this.tasksList.length - 1; i >= 0; i--)
+                let app_name = app.get_name()
+                for (let i = this.tasksList.length-1; i >= 0; i--)
                 {
                     let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
 
-                    let _app_name = "";
-                    if (app_name != "" && _windowTask.get_title().indexOf(" - ") > -1)
+                    let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
+                    if ( app_name == _app_name )
                     {
-                        let res = _windowTask.get_title().split(" - ");
-                        _app_name = res[res.length-1];
-                    }
-                    if ( (app_name != "" && app_name == _app_name ) || _windowTask.get_title() == window.get_title())
-                    {
-                        this.boxMainTasks.insert_child_below(buttonTask,_buttonTask);
-                        this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+                        this.boxMainTasks.insert_child_above(buttonTask,_buttonTask);
+                        this.tasksList.splice(i+1,0,[ window, buttonTask, signalsTask, labelTask ]);
                         inserted = true;
                         break;
                     }
