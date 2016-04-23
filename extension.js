@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2016 zpydr
 //
-//  Version 51
+//  Version 52
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
