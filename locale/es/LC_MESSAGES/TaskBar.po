@@ -1,0 +1,533 @@
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2016 zpydr
+#
+#  Version 50
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@openmailbox.org
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-16 00:05-0300\n"
+"PO-Revision-Date: 2016-04-22 22:02-0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: Testoriano <mojomonkey@openmailbox.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+
+#: prefs.js:120
+msgid "About"
+msgstr "Acerca de"
+
+#: prefs.js:132
+msgid "Version"
+msgstr "Versión"
+
+#: prefs.js:134
+msgid "GNOME Shell Version"
+msgstr "Versión de GNOME Shell"
+
+#: prefs.js:148
+msgid "Report a Bug"
+msgstr "Reportar una falla"
+
+#: prefs.js:152
+msgid "Donate for TaskBar"
+msgstr "Donar a TaskBar"
+
+#: prefs.js:156
+msgid "Become a Friend of GNOME"
+msgstr "Hacerse amigo de GNOME"
+
+#: prefs.js:160
+msgid "Free Software Foundation"
+msgstr "Fundación de Software Libre"
+
+#: prefs.js:165
+msgid "RESET ALL !"
+msgstr "RESTRABLECER TODAS LAS CONFIGURACIONES !"
+
+#: prefs.js:168
+msgid "Reset All TaskBar Settings to the Original TaskBar Settings"
+msgstr ""
+"Restablece Todas las Configuraciones de TaskBar a sus Valores por "
+"Defecto"
+
+#: prefs.js:175 prefs.js:758 prefs.js:756
+msgid "TaskBar"
+msgstr "TaskBar"
+
+#: prefs.js:188 prefs.js:274
+msgid "Overview"
+msgstr "Resumen"
+
+#: prefs.js:191 prefs.js:224
+msgid "Tasks"
+msgstr "Tareas"
+
+#: prefs.js:197 prefs.js:225 prefs.js:784 prefs.js:782
+msgid "Desktop Button"
+msgstr "Botón de Mostrar Escritorio"
+
+#: prefs.js:203 prefs.js:226 prefs.js:797 prefs.js:795
+msgid "Workspace Button"
+msgstr "Botón de Área de Trabajo"
+
+#: prefs.js:209 prefs.js:227 prefs.js:810 prefs.js:808
+msgid "Appview Button"
+msgstr "Botón de Mostrar Todas las Aplicaciones"
+
+#: prefs.js:215 prefs.js:228 prefs.js:823 prefs.js:821
+msgid "Favorites"
+msgstr "Favoritos"
+
+#: prefs.js:222
+msgid "Align"
+msgstr "Alinear"
+
+#: prefs.js:251 prefs.js:290
+msgid "Top Panel"
+msgstr "Panel Superior"
+
+#: prefs.js:257 prefs.js:292
+msgid "Bottom Panel"
+msgstr "Panel Inferior"
+
+#: prefs.js:263
+msgid "Reset Overview Tab"
+msgstr "Restablecer Pestaña de Resumen"
+
+#: prefs.js:266
+msgid "Reset the Overview Tab to the Original Overview Settings"
+msgstr ""
+"Restablece a las Configuraciones por Defecto de la Pestaña de Resumen"
+
+#: prefs.js:287 prefs.js:378
+msgid "Panels"
+msgstr "Paneles"
+
+#: prefs.js:295
+msgid "Panel Height"
+msgstr "Altura del Panel"
+
+#: prefs.js:308
+msgid "Align TaskBar"
+msgstr "Alinear TaskBar"
+
+#: prefs.js:323
+msgid "Anchor Point"
+msgstr "Punto de Anclaje"
+
+#: prefs.js:331
+msgid ""
+"Panel Background\n"
+"Color & Opacity"
+msgstr "Color de Fondo y Opacidad del Panel"
+
+#: prefs.js:359 prefs.js:362
+msgid "Reset Color"
+msgstr "Restablecer Color"
+
+#: prefs.js:366
+msgid "Reset Panels Tab"
+msgstr "Restablecer Pestaña de Paneles"
+
+#: prefs.js:369
+msgid "Reset the Panels Tab to the Original Panels Settings"
+msgstr ""
+"Restablece a las Configuraciones por Defecto de la Pestaña de Paneles"
+
+#: prefs.js:391 prefs.js:476
+msgid "Tasks (I)"
+msgstr "Tareas (I)"
+
+#: prefs.js:394
+msgid "Tasks on All Workspaces"
+msgstr "Tareas de Todas las Áreas de Trabajo"
+
+#: prefs.js:400 prefs.js:868 prefs.js:866
+msgid "Tasks Label"
+msgstr "Nombre de la Tarea"
+
+#: prefs.js:406
+msgid "Tasks Label Color"
+msgstr "Color del Nombre de la Tarea"
+
+#: prefs.js:420
+msgid "Tasks Label Width (150 px)"
+msgstr "Ancho (150 px) del Nombre de la Tarea"
+
+#: prefs.js:428
+msgid "Tasks Container Width (0 Tasks)"
+msgstr "Ancho del Contenedor de la Tarea (0 Tareas)"
+
+#: prefs.js:436
+msgid "Tasks Application Menu"
+msgstr "Menú de la Tarea"
+
+#: prefs.js:439 prefs.js:449 prefs.js:495 prefs.js:613 prefs.js:690
+#: prefs.js:689
+msgid "OFF"
+msgstr "APAGADO"
+
+#: prefs.js:440 prefs.js:450
+msgid "Middle Click"
+msgstr "Click del Medio"
+
+#: prefs.js:441 prefs.js:451
+msgid "Right Click"
+msgstr "Click Derecho"
+
+#: prefs.js:446
+msgid "Close Tasks"
+msgstr "Cerrar Tarea"
+
+#: prefs.js:456
+msgid "Space between Tasks (4 px)"
+msgstr "Espacio entre Tareas (4 px)"
+
+#: prefs.js:464
+msgid "Reset Tasks (I) Tab"
+msgstr "Restablecer Pestaña de Tareas (I)"
+
+#: prefs.js:467
+msgid "Reset the Tasks Tab to the Original Tasks Settings"
+msgstr ""
+"Restablece a las Configuraciones por Defecto de la Pestaña de Tareas"
+
+#: prefs.js:489 prefs.js:568
+msgid "Tasks (II)"
+msgstr "Tareas (II)"
+
+#: prefs.js:492
+msgid "Scroll Tasks"
+msgstr "Desplazamiento de las Tareas"
+
+#: prefs.js:496 prefs.js:614
+msgid "Standard"
+msgstr "Tradicional"
+
+#: prefs.js:497 prefs.js:615
+msgid "Invert"
+msgstr "Invertida"
+
+#: prefs.js:502
+msgid "Active Task Frame"
+msgstr "Marco Activo de la Tarea"
+
+#: prefs.js:508
+msgid "Inactive Task Frame"
+msgstr "Marco Inactivo de la Tarea"
+
+#: prefs.js:514
+msgid ""
+"Active Task Background\n"
+"Color & Opacity"
+msgstr "Color de Fondo & Opacidad de la Tarea Activa"
+
+#: prefs.js:528
+msgid ""
+"Inactive Task Background\n"
+"Color & Opacity"
+msgstr "Color de Fondo & Opacidad de la Tarea Inactiva"
+
+#: prefs.js:542
+msgid "Activate Tasks on Hover"
+msgstr "Activar Tarea al Pasar el Ratón por Arriba"
+
+#: prefs.js:548
+msgid "Hover Delay"
+msgstr "Retrazo de la Activación"
+
+#: prefs.js:556
+msgid "Reset Tasks (II) Tab"
+msgstr "Restablecer Pestaña de Tareas (II)"
+
+#: prefs.js:559
+msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
+msgstr ""
+"Restablece a las Configuraciones por Defecto de la Pestaña de Tareas "
+"(II)"
+
+#: prefs.js:581 prefs.js:668
+msgid "Buttons"
+msgstr "Botones"
+
+#: prefs.js:584
+msgid ""
+"Desktop Button Right Click\n"
+"opens Preferences (this)"
+msgstr ""
+"Click Derecho en el Botón de Escritorio\n"
+"abre éstas Preferencias"
+
+#: prefs.js:590
+msgid "Desktop Button Icon"
+msgstr "Icono del Botón de Escritorio"
+
+#: prefs.js:601
+msgid "Workspace Button Index"
+msgstr "Índice del Botón de Áreas de Trabajo"
+
+#: prefs.js:604 prefs.js:692 prefs.js:691
+msgid "Index"
+msgstr "Actual"
+
+#: prefs.js:605
+msgid "Index/Total"
+msgstr "Actual/Total"
+
+#: prefs.js:610
+msgid "Scroll Workspaces"
+msgstr "Deslizar entre Áreas de Trabajo"
+
+#: prefs.js:620
+msgid "Workspace Button Color"
+msgstr "Color del Botón de Áreas de Trabajo"
+
+#: prefs.js:636
+msgid ""
+"Appview Button\n"
+"Left & Right Click Toggle"
+msgstr "Botón de Mostrar Aplicaciones"
+
+#: prefs.js:639
+msgid ""
+"L Appview\n"
+"R Overview"
+msgstr ""
+"I Mostrar Aplicaciones\n"
+"D Resúmen"
+
+#: prefs.js:640
+msgid ""
+"L Overview\n"
+"R Appview"
+msgstr ""
+"I Resúmen\n"
+"D Mostrar Aplicaciones"
+
+#: prefs.js:645
+msgid "Appview Button Icon"
+msgstr "Icono del Botón de Mostrar Aplicaciones"
+
+#: prefs.js:656
+msgid "Reset Buttons Tab"
+msgstr "Restablecer Pestaña de Botones"
+
+#: prefs.js:659
+msgid ""
+"Reset the Buttons Tab except the Icons to the Original Buttons "
+"Settings.\n"
+"The Icons can be Reset within their own Settings."
+msgstr ""
+"Restablece a las Configuraciones por Defecto de la Pestaña de "
+"Botones.\n"
+"Los Iconos pueden restablecerse con sus propias Configuraciones."
+
+#: prefs.js:681
+msgid "Tray Button"
+msgstr "Botón de Bandeja de Entrada"
+
+#: prefs.js:687 prefs.js:686
+msgid "Bottom Panel Tray Button"
+msgstr "Botón de la Bandeja de Entrada del Panel Inferior"
+
+#: prefs.js:691 prefs.js:690
+msgid "Icon"
+msgstr "Icono"
+
+#: prefs.js:697 prefs.js:696
+msgid "When Tray is Empty"
+msgstr "Cuando la Bandeja de Entrada Está Vacía"
+
+#: prefs.js:700 prefs.js:699
+msgid "Show Icon"
+msgstr "Mostrar Icono"
+
+#: prefs.js:701 prefs.js:700
+msgid "Show 0"
+msgstr "Mostrar 0"
+
+#: prefs.js:702 prefs.js:701
+msgid "Hide"
+msgstr "Esconder"
+
+#: prefs.js:707 prefs.js:706
+msgid "Tray Button Icon"
+msgstr "Icono del Botón de la Bandeja de Entrada"
+
+#: prefs.js:718 prefs.js:717
+msgid "Activate Tray on Hover"
+msgstr "Activar Bandeja de Entrada al Pasar el Ratón por Arriba"
+
+#: prefs.js:724 prefs.js:723
+msgid "Reset Tray Button Tab"
+msgstr "Restablecer Pestaña de Bandeja de Entrada Inferior"
+
+#: prefs.js:727 prefs.js:726
+msgid ""
+"Reset the Tray Button Tab except the Icon to the Original Tray Button "
+"Settings.\n"
+"The Icon can be Reset within its own Settings."
+msgstr ""
+"Restablecer a Configuraciones por Defecto de la Pestaña de Bandeja de "
+"Entrada Inferior excepto el Icono.\n"
+"El Icono Puede Restablecerse Desde su Configuración."
+
+#: prefs.js:736 prefs.js:735
+msgid "TrayButton"
+msgstr "Botón Bandeja de Entrada"
+
+#: prefs.js:750 prefs.js:852 prefs.js:748 prefs.js:850
+msgid "Separators"
+msgstr "Separadores"
+
+#: prefs.js:753 prefs.js:751
+msgid "Left (px)"
+msgstr "Izquierda (px)"
+
+#: prefs.js:755 prefs.js:753
+msgid "Right (px)"
+msgstr "Derecha (px)"
+
+#: prefs.js:771 prefs.js:769
+msgid "Tasks Container"
+msgstr "Contenedor de la Tarea"
+
+#: prefs.js:836 prefs.js:834
+msgid "Reset Separators Tab"
+msgstr "Restablecer la Pestaña de Separadores"
+
+#: prefs.js:839 prefs.js:837
+msgid "Reset the Separators Tab to the Original Separators Settings"
+msgstr ""
+"Restablece a Configuraciones por Defecto de la Pestaña de Separadores"
+
+#: prefs.js:865 prefs.js:914 prefs.js:863 prefs.js:912
+msgid "Preview"
+msgstr "Vista Previa"
+
+#: prefs.js:874 prefs.js:872
+msgid "Tasks Thumbnail"
+msgstr "Vista en Miniatura de la Tarea"
+
+#: prefs.js:880 prefs.js:878
+msgid "Favorites Label"
+msgstr "Nombre de Favoritos"
+
+#: prefs.js:886 prefs.js:884
+msgid "Thumbnail Size"
+msgstr "Tamaño de la Vista en Miniatura"
+
+#: prefs.js:894 prefs.js:892
+msgid "Preview Delay"
+msgstr "Retrazo de la Vista Previa"
+
+#: prefs.js:902 prefs.js:900
+msgid "Reset Preview Tab"
+msgstr "Restablecer Pestaña de Vista Previa"
+
+#: prefs.js:905 prefs.js:903
+msgid "Reset the Preview Tab to the Original Preview Settings"
+msgstr ""
+"Restablece a la Configuración por Defecto de la Pestaña de Vista "
+"Previa"
+
+#: prefs.js:927 prefs.js:1043 prefs.js:925 prefs.js:1041
+msgid "Misc"
+msgstr "Misceláneo"
+
+#: prefs.js:930 prefs.js:928
+msgid "Color & Opacity"
+msgstr "Color & Opacidad"
+
+#: prefs.js:933 prefs.js:931
+msgid "Activities Button"
+msgstr "Botón de Actividades"
+
+#: prefs.js:948 prefs.js:967 prefs.js:986 prefs.js:1005 prefs.js:946
+#: prefs.js:965 prefs.js:984 prefs.js:1003
+msgid "Reset"
+msgstr "Restablecer"
+
+#: prefs.js:952 prefs.js:950
+msgid "Application Menu"
+msgstr "Menú de la Aplicación"
+
+#: prefs.js:971 prefs.js:969
+msgid "Date Menu"
+msgstr "Menú de la Fecha"
+
+#: prefs.js:990 prefs.js:988
+msgid "System Menu"
+msgstr "Menú del Sistema"
+
+#: prefs.js:1009 prefs.js:1007
+msgid "Hot Corner"
+msgstr "Esquina Activa"
+
+#: prefs.js:1015 prefs.js:1013
+msgid "Dash (Overview)"
+msgstr "Dash (Vista Previa)"
+
+#: prefs.js:1021 prefs.js:1019
+msgid "Workspace Selector (Overview)"
+msgstr "Selector de Áreas de Trabajo (Vista Previa)"
+
+#: prefs.js:1027 prefs.js:1025
+msgid "TaskBar (Overview)"
+msgstr "TaskBar (Vista Previa)"
+
+#: prefs.js:1033 prefs.js:1031
+msgid "Reset Misc Tab"
+msgstr "Restablecer Pestaña de Misceláneos"
+
+#: prefs.js:1036 prefs.js:1034
+msgid "Reset the Misc Tab to the Original Misc Settings"
+msgstr ""
+"Restablece a Configuraciones por Defecto de la Pestaña de Misceláneos"
+
+#: prefs.js:1058 prefs.js:1056
+msgid "GNU GPL"
+msgstr "GNU GPL"
+
+#: prefs.js:1078 prefs.js:1076
+msgid "GNU General Public License"
+msgstr "Licencia Pública General de GNU"
+
+#: prefs.js:1376 prefs.js:1374
+msgid "TaskBar Preferences - Desktop Button Icon"
+msgstr "Preferencias de TaskBar  - Icono del Botón de Escritorio"
+
+#: prefs.js:1389 prefs.js:1501 prefs.js:1591 prefs.js:1387 prefs.js:1499
+#: prefs.js:1589
+msgid "Images"
+msgstr "Imágenes"
+
+#: prefs.js:1488 prefs.js:1486
+msgid "TaskBar Preferences - Appview Button Icon"
+msgstr "Preferencias de TaskBar - Icono del Botón de Appview"
+
+#: prefs.js:1578 prefs.js:1576
+msgid "TaskBar Preferences - Tray Button Icon"
+msgstr ""
+"Preferencias de TaskBar - Icono del Botón de la Bandeja de Entrada"
