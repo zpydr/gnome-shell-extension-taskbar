@@ -111,6 +111,7 @@ TaskBar.prototype =
     buttonTaskWidth: null,
     buttonTray: null,
     buttonWorkspace: null,
+    cancelReset: null,
     changedId: null,
     countTasks: null,
     dash: null,
@@ -2026,6 +2027,8 @@ TaskBar.prototype =
     addTaskInList: function(window)
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
+
+        this.cancelReset = false;
         let buttonTask = null;
         let labelTask = null;
         if (app)
@@ -2057,7 +2060,8 @@ TaskBar.prototype =
             let signalsTask = [
                 buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
                 buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
-                buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
+                buttonTask.connect("enter-event", Lang.bind(this, this.cancelResetPreview)),
+                buttonTask.connect("leave-event", Lang.bind(this, this.lazyResetPreview, window))
             ];
             //Display Tasks of All Workspaces
             if (! this.settings.get_boolean("tasks-all-workspaces"))
@@ -2184,13 +2188,49 @@ TaskBar.prototype =
         }
     },
 
+    updatePreview: function(_task, pspec, _task2)
+    {
+        /*//Switch Task on Hover
+        this.resetHover = false;
+        if (this.settings.get_boolean("hover-switch-task"))
+        {
+            if (this.settings.get_int("hover-delay") === 0)
+                this.onHoverSwitchTask(button, window);
+            else
+                this.previewTimer2 = Mainloop.timeout_add(this.settings.get_int("hover-delay"),
+                    Lang.bind(this, this.onHoverSwitchTask, button, window));
+        }*/
+        //Hide current preview if necessary
+        /*this.hidePreview();
+        if ((this.settings.get_boolean("display-label")) || (this.settings.get_boolean("display-thumbnail")))
+        {
+            if (this.settings.get_int("preview-delay") === 0)
+                this.showPreview2(button, window, keep_pos);
+            else
+                this.previewTimer = Mainloop.timeout_add(this.settings.get_int("preview-delay"),
+                    Lang.bind(this, this.showPreview2, button, window, keep_pos));
+        }*/
+        this.preview_task_box_list.forEach ( function(task) {
+            task.clear_effects();
+            this._brightnessContrast = new Clutter.BrightnessContrastEffect();
+            this._brightnessContrast.set_enabled(true);
+
+            if ( task == _task )
+                this._brightnessContrast.set_brightness(0.15);
+            else
+                this._brightnessContrast.set_brightness(-0.15);
+            task.add_effect(this._brightnessContrast)
+        }, this)
+    },
+
     showPreview2: function(button, window)
     {
         //Hide current preview if necessary
+        this.cancelReset = false;
         this.hidePreview();
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        this.preview = new St.BoxLayout({ style_class: "tkb-preview", vertical: true});
-        if (this.settings.get_boolean("display-label"))
+        this.preview = new St.BoxLayout({ style_class: "tkb-preview", vertical: true, reactive: true});
+        /*if (this.settings.get_boolean("display-label"))
         {
             let labelNamePreview = new St.Label({ text: app.get_name(), style_class: "tkb-preview-name" });
             this.preview.add_actor(labelNamePreview);
@@ -2200,14 +2240,71 @@ TaskBar.prototype =
             let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
             this.preview.add_actor(labelTitlePreview);
         }
+        */
         if (this.settings.get_boolean("display-thumbnail"))
         {
-            let thumbnail = this.getThumbnail(window, this.settings.get_int("preview-size"));
-            this.preview.add_actor(thumbnail);
+            //let thumbnail = this.getThumbnail(window, this.settings.get_int("preview-size"));
+            //this.preview.add_actor(thumbnail);
+
+            this.preview_task_box_list = [];
+
+            for (let i = 0; i < this.tasksList.length; i++)
+            {
+                let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+
+                let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
+                if ( app.get_name() == _app_name )
+                {            
+                    let task_box = new St.BoxLayout({ style_class: "tkb-preview", vertical: true, reactive: true});
+                    this.preview.add_actor(task_box);
+                    if (this.settings.get_boolean("display-label"))
+                    {
+                        //let labelNamePreview = new St.Label({ text: app.get_name(), style_class: "tkb-preview-name" });
+                        //this.preview.add_actor(labelNamePreview);
+                        let title = _windowTask.get_title();
+                        if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
+	                        title = title.substr(0, 47) + "...";
+                        let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
+                        task_box.add_actor(labelTitlePreview);
+                        labelTitlePreview.connect("enter-event", Lang.bind(this, this.cancelResetPreview));
+                    }
+                    let thumbnail = this.getThumbnail(_windowTask, this.settings.get_int("preview-size"));
+
+                    this._brightnessContrast = new Clutter.BrightnessContrastEffect();
+                    this._brightnessContrast.set_enabled(true);
+
+                    if ( _windowTask == window )
+                        this._brightnessContrast.set_brightness(0.15);
+                    else
+                        this._brightnessContrast.set_brightness(-0.15);
+
+                    task_box.add_effect(this._brightnessContrast);
+                    task_box.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, _windowTask));
+                    task_box.connect("button-press-event", Lang.bind(this, this.hidePreview, _windowTask));
+                    //task_box.connect("leave-event", Lang.bind(this, this.resetPreview, _windowTask));
+                    task_box.connect("enter-event", Lang.bind(this, this.updatePreview, task_box));
+                    thumbnail.connect("enter-event", Lang.bind(this, this.cancelResetPreview));
+                    task_box.connect("enter-event", Lang.bind(this, this.cancelResetPreview));
+                    /*let signalsTask = [
+                        buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
+                        buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window))/*,
+                        buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))* /
+                    ];*/
+                    task_box.add_actor(thumbnail);
+                    //this.boxMainTasks.insert_child_above(buttonTask,_buttonTask);
+                    //this.tasksList.splice(i+1,0,[ window, buttonTask, signalsTask, labelTask ]);
+                    //inserted = true;
+                    //break;
+                    this.preview_task_box_list.push(task_box)
+                }
+            }
         }
-        global.stage.add_actor(this.preview);
+        Main.layoutManager.addChrome(this.preview);
+        //global.stage.add_actor(this.preview);
         this.button = button;
         this.setPreviewPosition();
+        this.preview.connect("leave-event", Lang.bind(this, this.lazyResetPreview, window));
+        this.preview.connect("enter-event", Lang.bind(this, this.cancelResetPreview));
     },
 
     showFavoritesPreview: function(buttonfavorite, favoriteapp)
@@ -2256,6 +2353,32 @@ TaskBar.prototype =
             x = Math.min(x, posparentWidth - labelWidth - 6);
         }
         this.preview.set_position(x, y);
+    },
+
+    cancelResetPreview: function(button)
+    {
+        this.cancelReset = true;
+    },
+
+    lazyResetPreview: function(button, window)
+    {
+        var delay=1000; //1 second
+        if (this.settings.get_int("preview-delay") === 0)
+            delay = 500;
+        else
+            delay = this.settings.get_int("preview-delay");
+
+        this.cancelReset = false;
+        Mainloop.timeout_add(delay,Lang.bind(this, this.doLazyResetPreview, window));
+    },
+
+    doLazyResetPreview: function(button, window)
+    {
+        if (this.cancelReset)
+            return false;
+
+        this.resetPreview(button, window);
+        return false;
     },
 
     resetPreview: function(button, window)
