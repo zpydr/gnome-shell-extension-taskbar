@@ -178,6 +178,11 @@
             <summary>Display Tasks from all Workspaces</summary>
             <description/>
         </key>
+        <key name="tasks-grouped" type="b">
+            <default>false</default>
+            <summary>Group tasks</summary>
+            <description/>
+        </key>
         <key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
             <default>'right'</default>
            <summary>Middle/Right Click to Show Tasks Menu</summary>

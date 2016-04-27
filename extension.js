@@ -669,6 +669,7 @@ TaskBar.prototype =
             this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::position-bottom-box", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tasks-grouped", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-container-width-new", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
@@ -2078,8 +2079,30 @@ TaskBar.prototype =
             }
             if ((buttonTask.visible) || (this.settings.get_boolean("tasks-all-workspaces")))
                 this.countTasks ++;
-            this.boxMainTasks.add_actor(buttonTask);
-            this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+                
+            let inserted = false;
+            if (this.settings.get_boolean("tasks-grouped"))
+            {
+                let app_name = app.get_name()
+                for (let i = this.tasksList.length-1; i >= 0; i--)
+                {
+                    let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+
+                    let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
+                    if ( app_name == _app_name )
+                    {
+                        this.boxMainTasks.insert_child_above(buttonTask,_buttonTask);
+                        this.tasksList.splice(i+1,0,[ window, buttonTask, signalsTask, labelTask ]);
+                        inserted = true;
+                        break;
+                    }
+                }
+            }
+            if (!inserted)
+            {
+                this.boxMainTasks.add_child(buttonTask);
+                this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+            }
         }
     },
 
