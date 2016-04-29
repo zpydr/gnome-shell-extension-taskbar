@@ -81,9 +81,12 @@ TaskBar.prototype =
     appMenuColor: null,
     appMenuContainer: null,
     appMenuStyle: null,
+    appname: null,
     backgroundColor: null,
     backgroundStyleColor: null,
     barriers: null,
+    blacklist: [],
+    blacklistapp: null,
     bottomPanelActor: null,
     bottomPanelBackgroundColor: null,
     bottomPanelBackgroundStyle: null,
@@ -671,6 +674,7 @@ TaskBar.prototype =
             this.settings.connect("changed::tasks-all-workspaces", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-container-width-new", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
+            this.settings.connect("changed::blacklist", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
             this.settings.connect("changed::reset-flag", Lang.bind(this, this.onParamChanged))
         ];
@@ -2026,10 +2030,21 @@ TaskBar.prototype =
     addTaskInList: function(window)
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
+        let appname = app.get_name();
         let buttonTask = null;
         let labelTask = null;
         if (app)
         {
+            let blacklist = this.settings.get_strv("blacklist");
+            if (blacklist.length > 0)
+            {
+                for (let j = 0; j < blacklist.length; j++)
+                {
+                    let blacklistapp = blacklist[j];
+                    if (appname === blacklistapp)
+                        return;
+                }
+            }
             if (this.settings.get_boolean("tasks-label"))
             {
                 let buttonTaskLayout = new St.BoxLayout({ style_class: "tkb-task-button" });
@@ -2092,7 +2107,7 @@ TaskBar.prototype =
                     break;
                 }
             }
-            if ( !inserted)
+            if (! inserted)
             {
                 this.boxMainTasks.add_child(buttonTask);
                 this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);

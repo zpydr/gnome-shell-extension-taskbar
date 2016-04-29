@@ -256,6 +256,11 @@
             <summary>Tasks Spaces Width</summary>
             <description/>
         </key>
+        <key name="blacklist" type="as">
+            <default>[]</default>
+            <summary>Tasks Blacklist</summary>
+            <description/>
+        </key>
         <key name="top-panel-background-color" type="s">
             <default>'unset'</default>
             <summary>Top Panel Background Color</summary>

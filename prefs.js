@@ -553,16 +553,35 @@ Prefs.prototype =
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
         this.gridTasks2.attach(value2HoverDelay, 3, 7, 2, 1);
 
+        let labelBlacklistTask = new Gtk.Label({label: _("Blacklist Apps"), xalign: 0});
+        this.gridTasks2.attach(labelBlacklistTask, 1, 8, 1, 1);
+        this.valueBlacklistTask = new Gtk.Entry();
+        let blacklisttext = "";
+        let blacklistlength = this.settings.get_strv("blacklist").length;
+        if (blacklistlength > 0)
+        {
+            for (let k = 0; k < blacklistlength; k++)
+            {
+                let blacklistapps = this.settings.get_strv("blacklist")[k];
+                blacklisttext += blacklistapps;
+                if (k < blacklistlength - 1) 
+                    blacklisttext += ", ";
+            }
+        }
+        this.valueBlacklistTask.set_text(blacklisttext);
+        this.valueBlacklistTask.connect('changed', Lang.bind(this, this.changeBlacklistTask));
+        this.gridTasks2.attach(this.valueBlacklistTask, 2, 8, 3, 1);
+
         let resetTasks2Button = new Gtk.Button({label: _("Reset Tasks (II) Tab")});
         resetTasks2Button.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetTasks2Button.connect('clicked', Lang.bind(this, this.resetTasks2));
         resetTasks2Button.set_tooltip_text(_("Reset the Tasks II Tab to the Original Tasks II Settings"));
-        this.gridTasks2.attach(resetTasks2Button, 1, 9, 1, 1);
+        this.gridTasks2.attach(resetTasks2Button, 1, 10, 1, 1);
 
         let labelSpaceTasks21 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks2.attach(labelSpaceTasks21, 0, 10, 1, 1);
+        this.gridTasks2.attach(labelSpaceTasks21, 0, 11, 1, 1);
         let labelSpaceTasks22 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridTasks2.attach(labelSpaceTasks22, 2, 8, 1, 1);
+        this.gridTasks2.attach(labelSpaceTasks22, 2, 9, 1, 1);
         let labelSpaceTasks23 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks2.attach(labelSpaceTasks23, 3, 0, 1, 1);
         let labelSpaceTasks24 = new Gtk.Label({label: "<b>"+_("Tasks (II)")+"</b>", hexpand: true});
@@ -1363,6 +1382,19 @@ Prefs.prototype =
         this.settings.set_boolean("hover-switch-task", object.active);
     },
 
+    changeBlacklistTask: function()
+    {
+        let blacklist = [];
+        let blacklisttext = this.valueBlacklistTask.get_text();
+        let blacklistapps = blacklisttext.split(", ");
+        for (let i = 0; i < blacklistapps.length; i++)
+        {
+            if (blacklistapps[i].length !== 1)
+                blacklist.push(blacklistapps[i]);
+        }
+        this.settings.set_strv("blacklist", blacklist);
+    },
+
     changeHoverDelay: function(object)
     {
         this.settings.set_int("hover-delay", this.valueHoverDelay.get_value());
@@ -2021,6 +2053,8 @@ Prefs.prototype =
         this.value2InactiveTaskBackgroundColor.set_active(false);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
+        this.valueBlacklistTask.set_text("");
+        this.settings.set_strv("blacklist", []);
         this.settings.set_boolean("reset-flag", false);
     },
 
