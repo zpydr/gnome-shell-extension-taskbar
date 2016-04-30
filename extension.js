@@ -270,6 +270,7 @@ TaskBar.prototype =
     userTime: null,
     variant: null,
     width: null,
+    windowDemandsAttentionId: null,
     windows: null,
     windowsList: [],
     windowTask: null,
@@ -539,6 +540,13 @@ TaskBar.prototype =
             this.globalThemeChangedId = null;
         }
 
+        //Disconnect Window Demands Attention Signals
+        if (this.windowDemandsAttentionId !== null)
+        {
+            global.display.disconnect(this.windowDemandsAttentionId);
+            this.windowDemandsAttentionId = null;
+        }
+
         //Disconnect Lock Screen Signals
         if (this.screenShieldLockId !== null)
         {
@@ -686,6 +694,7 @@ TaskBar.prototype =
         this.monitorChangedId = null;
         this.iconThemeChangedId = null;
         this.globalThemeChangedId = null;
+        this.windowDemandsAttentionId = null;
         this.screenShieldLockId = null;
         this.panelStyleChangedId = null;
         this.mainBox = null;
@@ -694,6 +703,8 @@ TaskBar.prototype =
         this.monitorChangedId = Main.layoutManager.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
         this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         this.globalThemeChangedId = St.ThemeContext.get_for_stage(global.stage).connect('changed', Lang.bind(this, this.onParamChanged));
+        if (this.settings.get_boolean("display-tasks"))
+            this.windowDemandsAttentionId = global.display.connect('window-demands-attention', Lang.bind(this, this.onWindowDemandsAttention));
         if (Main.screenShield !== null)
             this.screenShieldLockId = Main.screenShield.connect('lock-status-changed', Lang.bind(this, this.onParamChanged));
 	this.setOverview();
@@ -1849,6 +1860,48 @@ TaskBar.prototype =
             Mainloop.source_remove(this.previewTimer2);
             this.previewTimer2 = null;
         }
+    },
+
+    //Window Demands Attention
+    onWindowDemandsAttention: function(display, window)
+    {
+        if (this.settings.get_boolean("display-tasks"))
+        {
+            this.attentionStyleChangeTimeout = null;
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    if ((windowTask === window) && (! windowTask.has_focus()))
+                    {
+                        this.attentionStyleChanged = false;
+//                        this.attentionStyle = "background-color: " + this.blinkAlertColor + "; margin-right: " + this.inactiveMargin + "px;";
+                        this.attentionStyle = "background-color: red; margin-right: " + this.inactiveMargin + "px;";
+//                        this.attentionStyleChange = Mainloop.timeout_add(this.settings.get_int("blink-rate"), Lang.bind(this, this.onHoverSwitchTask, button, window));
+                        this.attentionStyleChangeTimeout = Mainloop.timeout_add(750, Lang.bind(this, this.changeAttentionStyle, windowTask, buttonTask));
+                    }
+                },
+                this
+            );
+        }
+    },
+
+    changeAttentionStyle: function(windowTask, buttonTask)
+    {
+        if ((! this.attentionStyleChanged) && (! windowTask.has_focus()))
+        {
+            buttonTask.set_style(this.attentionStyle);
+            this.attentionStyleChanged = true;
+            return true;
+        }
+        else if ((this.attentionStyleChanged) && (! windowTask.has_focus()))
+        {
+            buttonTask.set_style(this.inactiveBackgroundStyleColor);
+            this.attentionStyleChanged = false;
+            return true;
+        }
+        else
+            return false;
     },
 
     //Init Windows Manage Callbacks

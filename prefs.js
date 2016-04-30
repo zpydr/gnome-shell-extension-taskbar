@@ -547,14 +547,75 @@ Prefs.prototype =
 
         let labelHoverDelay = new Gtk.Label({label: _("Hover Delay")+" (350 ms)", xalign: 0});
         this.gridTasks2.attach(labelHoverDelay, 1, 7, 2, 1);
-        this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 1000, step_increment: 50});
+        this.valueHoverDelay = new Gtk.Adjustment({lower: 0, upper: 10000, step_increment: 1});
         let value2HoverDelay = new Gtk.SpinButton({adjustment: this.valueHoverDelay, snap_to_ticks: true});
         value2HoverDelay.set_value(this.settings.get_int("hover-delay"));
         value2HoverDelay.connect("value-changed", Lang.bind(this, this.changeHoverDelay));
         this.gridTasks2.attach(value2HoverDelay, 3, 7, 2, 1);
 
+        let resetTasks2Button = new Gtk.Button({label: _("Reset Tasks (II) Tab")});
+        resetTasks2Button.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+        resetTasks2Button.connect('clicked', Lang.bind(this, this.resetTasks2));
+        resetTasks2Button.set_tooltip_text(_("Reset the Tasks II Tab to the Original Tasks II Settings"));
+        this.gridTasks2.attach(resetTasks2Button, 1, 9, 1, 1);
+
+        let labelSpaceTasks21 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTasks2.attach(labelSpaceTasks21, 0, 10, 1, 1);
+        let labelSpaceTasks22 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
+        this.gridTasks2.attach(labelSpaceTasks22, 2, 8, 1, 1);
+        let labelSpaceTasks23 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTasks2.attach(labelSpaceTasks23, 3, 0, 1, 1);
+        let labelSpaceTasks24 = new Gtk.Label({label: "<b>"+_("Tasks (II)")+"</b>", hexpand: true});
+        labelSpaceTasks24.set_use_markup(true);
+        this.gridTasks2.attach(labelSpaceTasks24, 0, 0, 6, 1);
+        let labelSpaceTasks25 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTasks2.attach(labelSpaceTasks25, 5, 1, 1, 1);
+
+
+
+
+
+
+
+
+
+        this.gridTasks3 = new Gtk.Grid();
+        this.gridTasks3.margin = this.gridTasks3.row_spacing = 10;
+        this.gridTasks3.column_spacing = 2;
+
+        let scrollWindowTasks3 = this.gridTasks3;
+
+        scrollWindowTasks3.show_all();
+        let labelTasks3 = new Gtk.Label({label: _("Tasks (III)")});
+        notebook.append_page(scrollWindowTasks3, labelTasks3);
+
+        let labelBlinkTasks = new Gtk.Label({label: _("Blink Tasks on Alert"), xalign: 0});
+        this.gridTasks3.attach(labelBlinkTasks, 1, 1, 1, 1);
+        this.valueBlinkTasks = new Gtk.Switch(); //{active: this.settings.get_boolean("blink-tasks")});
+//        this.valueBlinkTasks.connect('notify::active', Lang.bind(this, this.changeBlinkTasks));
+        this.gridTasks3.attach(this.valueBlinkTasks, 4, 1, 1, 1);
+
+        let labelTasksBlinkRate = new Gtk.Label({label: _("Blink Rate") + " (750 ms)", xalign: 0});
+        this.gridTasks3.attach(labelTasksBlinkRate, 1, 2, 2, 1);
+        this.valueTasksBlinkRate = new Gtk.Adjustment({lower: 0, upper: 10000, step_increment: 1});
+        let value2TasksBlinkRate = new Gtk.SpinButton({adjustment: this.valueTasksBlinkRate, snap_to_ticks: true});
+//        value2TasksBlinkRate.set_value(this.settings.get_int("blink-rate"));
+//        value2TasksBlinkRate.connect("value-changed", Lang.bind(this, this.changeTasksBlinkRate));
+        this.gridTasks3.attach(value2TasksBlinkRate, 3, 2, 2, 1);
+
+        let labelTasksBlinkAlertColor = new Gtk.Label({label: _("Blink Color"), xalign: 0});
+        this.gridTasks3.attach(labelTasksBlinkAlertColor, 1, 3, 1, 1);
+//        let color = this.settings.get_string("blink-color");
+        let rgba = new Gdk.RGBA();
+//        rgba.parse(color);
+        this.valueTasksBlinkAlertColor = new Gtk.ColorButton({title: "TaskBar Preferences - Blink Color"});
+        this.valueTasksBlinkAlertColor.set_use_alpha(true);
+        this.valueTasksBlinkAlertColor.set_rgba(rgba);
+//        this.valueTasksBlinkAlertColor.connect('color-set', Lang.bind(this, this.changeTasksBlinkAlertColor));
+        this.gridTasks3.attach(this.valueTasksBlinkAlertColor, 4, 3, 1, 1);
+
         let labelBlacklistTask = new Gtk.Label({label: _("Blacklist Apps"), xalign: 0});
-        this.gridTasks2.attach(labelBlacklistTask, 1, 8, 1, 1);
+        this.gridTasks3.attach(labelBlacklistTask, 1, 4, 1, 1);
         this.valueBlacklistTask = new Gtk.Entry();
         let blacklisttext = "";
         let blacklistlength = this.settings.get_strv("blacklist").length;
@@ -570,25 +631,49 @@ Prefs.prototype =
         }
         this.valueBlacklistTask.set_text(blacklisttext);
         this.valueBlacklistTask.connect('changed', Lang.bind(this, this.changeBlacklistTask));
-        this.gridTasks2.attach(this.valueBlacklistTask, 2, 8, 3, 1);
+        this.gridTasks3.attach(this.valueBlacklistTask, 2, 4, 2, 1);
+        this.value2BlacklistTask = new Gtk.Switch(); //{active: this.settings.get_boolean("blacklist")});
+//        this.value2BlacklistTask.connect('notify::active', Lang.bind(this, this.changeBlacklist));
+        this.gridTasks3.attach(this.value2BlacklistTask, 4, 4, 1, 1);
 
-        let resetTasks2Button = new Gtk.Button({label: _("Reset Tasks (II) Tab")});
-        resetTasks2Button.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
-        resetTasks2Button.connect('clicked', Lang.bind(this, this.resetTasks2));
-        resetTasks2Button.set_tooltip_text(_("Reset the Tasks II Tab to the Original Tasks II Settings"));
-        this.gridTasks2.attach(resetTasks2Button, 1, 10, 1, 1);
+        let findAppNamesButton = new Gtk.Button({label: _("Find App Names")});
+//        findAppNamesButton.connect('clicked', Lang.bind(this, this.findAppNames));
+        findAppNamesButton.set_tooltip_text(_("Find App Names at 'Show Applications' in the Desktop Overview.\nShould the name be cut off (...) choose 'Show Details' from the right click menu and copy/paste from there.\nIf you intend to blacklist more than one app, separate the app names by Comma AND Space.\nExample:\nTerminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files"));
+        this.gridTasks3.attach(findAppNamesButton, 1, 5, 1, 1);
 
-        let labelSpaceTasks21 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks2.attach(labelSpaceTasks21, 0, 11, 1, 1);
-        let labelSpaceTasks22 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
-        this.gridTasks2.attach(labelSpaceTasks22, 2, 9, 1, 1);
-        let labelSpaceTasks23 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks2.attach(labelSpaceTasks23, 3, 0, 1, 1);
-        let labelSpaceTasks24 = new Gtk.Label({label: "<b>"+_("Tasks (II)")+"</b>", hexpand: true});
-        labelSpaceTasks24.set_use_markup(true);
-        this.gridTasks2.attach(labelSpaceTasks24, 0, 0, 6, 1);
-        let labelSpaceTasks25 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTasks2.attach(labelSpaceTasks25, 5, 1, 1, 1);
+        let resetTasks3Button = new Gtk.Button({label: _("Reset Tasks (III) Tab")});
+        resetTasks3Button.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
+//        resetTasks3Button.connect('clicked', Lang.bind(this, this.resetTasks3));
+        resetTasks3Button.set_tooltip_text(_("Reset the Tasks III Tab to the Original Tasks III Settings"));
+        this.gridTasks3.attach(resetTasks3Button, 1, 7, 1, 1);
+
+        let labelSpaceTasks31 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTasks3.attach(labelSpaceTasks31, 0, 8, 1, 1);
+        let labelSpaceTasks32 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
+        this.gridTasks3.attach(labelSpaceTasks32, 2, 6, 1, 1);
+        let labelSpaceTasks33 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTasks3.attach(labelSpaceTasks33, 3, 0, 1, 1);
+        let labelSpaceTasks34 = new Gtk.Label({label: "<b>"+_("Tasks (III)")+"</b>", hexpand: true});
+        labelSpaceTasks34.set_use_markup(true);
+        this.gridTasks3.attach(labelSpaceTasks34, 0, 0, 6, 1);
+        let labelSpaceTasks35 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridTasks3.attach(labelSpaceTasks35, 5, 1, 1, 1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         this.gridButtons = new Gtk.Grid();
         this.gridButtons.margin = this.gridButtons.row_spacing = 10;
@@ -902,7 +987,7 @@ Prefs.prototype =
 
         let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" (350 px)", xalign: 0});
         this.gridPreview.attach(labelPreviewSize, 1, 4, 1, 1);
-        this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 10});
+        this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 1});
         let value2PreviewSize = new Gtk.SpinButton({adjustment: this.valuePreviewSize, snap_to_ticks: true});
         value2PreviewSize.set_value(this.settings.get_int("preview-size"));
         value2PreviewSize.connect("value-changed", Lang.bind(this, this.changePreviewSize));
@@ -910,7 +995,7 @@ Prefs.prototype =
 
         let labelPreviewDelay = new Gtk.Label({label: _("Preview Delay")+" (500 ms)", xalign: 0});
         this.gridPreview.attach(labelPreviewDelay, 1, 5, 2, 1);
-        this.valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 3000, step_increment: 50});
+        this.valuePreviewDelay = new Gtk.Adjustment({lower: 0, upper: 10000, step_increment: 1});
         let value2PreviewDelay = new Gtk.SpinButton({adjustment: this.valuePreviewDelay, snap_to_ticks: true});
         value2PreviewDelay.set_value(this.settings.get_int("preview-delay"));
         value2PreviewDelay.connect("value-changed", Lang.bind(this, this.changePreviewDelay));
