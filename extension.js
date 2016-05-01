@@ -82,6 +82,9 @@ TaskBar.prototype =
     appMenuContainer: null,
     appMenuStyle: null,
     appname: null,
+    attentionStyle: null,
+    attentionStyleChanged: null,
+    attentionStyleChangeTimeout: null,
     backgroundColor: null,
     backgroundStyleColor: null,
     barriers: null,
@@ -150,6 +153,8 @@ TaskBar.prototype =
     i: null,
     itemHeight: null,
     itemWidth: null,
+    j: null,
+    k: null,
     labelHeight: null,
     labelNamePreview: null,
     labelTask: null,
@@ -647,6 +652,8 @@ TaskBar.prototype =
             this.settings.connect("changed::display-tasks-label-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-width", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-spaces", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::blink-tasks", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::blacklist-set", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::top-panel-background-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::top-panel-background-alpha", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::bottom-panel-background-color", Lang.bind(this, this.onParamChanged)),
@@ -683,6 +690,7 @@ TaskBar.prototype =
             this.settings.connect("changed::tasks-container-width-new", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
             this.settings.connect("changed::blacklist", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::find-apps", Lang.bind(this, this.findApps)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
             this.settings.connect("changed::reset-flag", Lang.bind(this, this.onParamChanged))
         ];
@@ -703,7 +711,7 @@ TaskBar.prototype =
         this.monitorChangedId = Main.layoutManager.connect('monitors-changed', Lang.bind(this, this.onParamChanged));
         this.iconThemeChangedId = St.TextureCache.get_default().connect('icon-theme-changed', Lang.bind(this, this.onParamChanged));
         this.globalThemeChangedId = St.ThemeContext.get_for_stage(global.stage).connect('changed', Lang.bind(this, this.onParamChanged));
-        if (this.settings.get_boolean("display-tasks"))
+        if ((this.settings.get_boolean("display-tasks")) && (this.settings.get_boolean("blink-tasks")))
             this.windowDemandsAttentionId = global.display.connect('window-demands-attention', Lang.bind(this, this.onWindowDemandsAttention));
         if (Main.screenShield !== null)
             this.screenShieldLockId = Main.screenShield.connect('lock-status-changed', Lang.bind(this, this.onParamChanged));
@@ -842,6 +850,17 @@ TaskBar.prototype =
         if (this.settings.get_boolean("reset-all"))
         {
             Main.Util.trySpawnCommandLine('dconf reset -f /org/gnome/shell/extensions/TaskBar/');
+        }
+    },
+
+    //Find Apps
+    findApps: function()
+    {
+        if (this.settings.get_boolean("find-apps"))
+        {
+            Main.overview.show();
+            Main.overview.viewSelector._showAppsButton.checked = true;
+            this.settings.set_boolean("find-apps", false);
         }
     },
 
@@ -1865,9 +1884,8 @@ TaskBar.prototype =
     //Window Demands Attention
     onWindowDemandsAttention: function(display, window)
     {
-        if (this.settings.get_boolean("display-tasks"))
+        if ((this.settings.get_boolean("display-tasks")) && (this.settings.get_boolean("blink-tasks")))
         {
-            this.attentionStyleChangeTimeout = null;
             this.tasksList.forEach(
                 function(task)
                 {
@@ -1875,10 +1893,8 @@ TaskBar.prototype =
                     if ((windowTask === window) && (! windowTask.has_focus()))
                     {
                         this.attentionStyleChanged = false;
-//                        this.attentionStyle = "background-color: " + this.blinkAlertColor + "; margin-right: " + this.inactiveMargin + "px;";
-                        this.attentionStyle = "background-color: red; margin-right: " + this.inactiveMargin + "px;";
-//                        this.attentionStyleChange = Mainloop.timeout_add(this.settings.get_int("blink-rate"), Lang.bind(this, this.onHoverSwitchTask, button, window));
-                        this.attentionStyleChangeTimeout = Mainloop.timeout_add(750, Lang.bind(this, this.changeAttentionStyle, windowTask, buttonTask));
+                        this.attentionStyle = "background-color: " + this.settings.get_string("blink-color") + "; margin-right: " + this.inactiveMargin + "px;";
+                        this.attentionStyleChangeTimeout = Mainloop.timeout_add(this.settings.get_int("blink-rate"), Lang.bind(this, this.changeAttentionStyle, windowTask, buttonTask));
                     }
                 },
                 this
@@ -2088,14 +2104,17 @@ TaskBar.prototype =
         let labelTask = null;
         if (app)
         {
-            let blacklist = this.settings.get_strv("blacklist");
-            if (blacklist.length > 0)
+            if (this.settings.get_boolean("blacklist-set"))
             {
-                for (let j = 0; j < blacklist.length; j++)
+                let blacklist = this.settings.get_strv("blacklist");
+                if (blacklist.length > 0)
                 {
-                    let blacklistapp = blacklist[j];
-                    if (appname === blacklistapp)
-                        return;
+                    for (let j = 0; j < blacklist.length; j++)
+                    {
+                        let blacklistapp = blacklist[j];
+                        if (appname === blacklistapp)
+                            return;
+                    }
                 }
             }
             if (this.settings.get_boolean("tasks-label"))

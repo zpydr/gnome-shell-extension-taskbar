@@ -40,6 +40,7 @@ const schema = "org.gnome.shell.extensions.TaskBar";
 
 const RESETCOLOR = 'rgba(0,0,0,0)';
 const RESETCOLORWHITE = 'rgba(255,255,255,1.0)';
+const RESETCOLORRED = 'rgba(255,0,0,1.0)';
 
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
@@ -50,7 +51,6 @@ const GNOMEICON = Extension.path + '/images/settings-gnome.png';
 const FSFICON = Extension.path + '/images/settings-fsf.png';
 const GPLICON = Extension.path + '/images/settings-gpl.png';
 const SPACERICON = Extension.path + '/images/settings-1px.png';
-
 
 function init()
 {
@@ -513,9 +513,9 @@ Prefs.prototype =
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task Background\nColor & Opacity"), xalign: 0});
         this.gridTasks2.attach(labelActiveTaskBackgroundColor, 1, 4, 1, 1);
-        let color = this.settings.get_string("active-task-background-color");
+        let activeColor = this.settings.get_string("active-task-background-color");
         let rgba = new Gdk.RGBA();
-        rgba.parse(color);
+        rgba.parse(activeColor);
         this.valueActiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Background Color"});
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgba);
@@ -527,9 +527,9 @@ Prefs.prototype =
 
         let labelInactiveTaskBackgroundColor = new Gtk.Label({label: _("Inactive Task Background\nColor & Opacity"), xalign: 0});
         this.gridTasks2.attach(labelInactiveTaskBackgroundColor, 1, 5, 1, 1);
-        let color = this.settings.get_string("inactive-task-background-color");
+        let inactiveColor = this.settings.get_string("inactive-task-background-color");
         let rgba = new Gdk.RGBA();
-        rgba.parse(color);
+        rgba.parse(inactiveColor);
         this.valueInactiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Task Background Color"});
         this.valueInactiveTaskBackgroundColor.set_use_alpha(true);
         this.valueInactiveTaskBackgroundColor.set_rgba(rgba);
@@ -571,14 +571,6 @@ Prefs.prototype =
         let labelSpaceTasks25 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks2.attach(labelSpaceTasks25, 5, 1, 1, 1);
 
-
-
-
-
-
-
-
-
         this.gridTasks3 = new Gtk.Grid();
         this.gridTasks3.margin = this.gridTasks3.row_spacing = 10;
         this.gridTasks3.column_spacing = 2;
@@ -591,27 +583,29 @@ Prefs.prototype =
 
         let labelBlinkTasks = new Gtk.Label({label: _("Blink Tasks on Alert"), xalign: 0});
         this.gridTasks3.attach(labelBlinkTasks, 1, 1, 1, 1);
-        this.valueBlinkTasks = new Gtk.Switch(); //{active: this.settings.get_boolean("blink-tasks")});
-//        this.valueBlinkTasks.connect('notify::active', Lang.bind(this, this.changeBlinkTasks));
+        this.valueBlinkTasks = new Gtk.Switch({active: this.settings.get_boolean("blink-tasks")});
+        this.valueBlinkTasks.connect('notify::active', Lang.bind(this, this.changeBlinkTasks));
         this.gridTasks3.attach(this.valueBlinkTasks, 4, 1, 1, 1);
 
         let labelTasksBlinkRate = new Gtk.Label({label: _("Blink Rate") + " (750 ms)", xalign: 0});
         this.gridTasks3.attach(labelTasksBlinkRate, 1, 2, 2, 1);
         this.valueTasksBlinkRate = new Gtk.Adjustment({lower: 0, upper: 10000, step_increment: 1});
         let value2TasksBlinkRate = new Gtk.SpinButton({adjustment: this.valueTasksBlinkRate, snap_to_ticks: true});
-//        value2TasksBlinkRate.set_value(this.settings.get_int("blink-rate"));
-//        value2TasksBlinkRate.connect("value-changed", Lang.bind(this, this.changeTasksBlinkRate));
+        value2TasksBlinkRate.set_value(this.settings.get_int("blink-rate"));
+        value2TasksBlinkRate.connect("value-changed", Lang.bind(this, this.changeTasksBlinkRate));
         this.gridTasks3.attach(value2TasksBlinkRate, 3, 2, 2, 1);
 
         let labelTasksBlinkAlertColor = new Gtk.Label({label: _("Blink Color"), xalign: 0});
         this.gridTasks3.attach(labelTasksBlinkAlertColor, 1, 3, 1, 1);
-//        let color = this.settings.get_string("blink-color");
+        let blinkColor = this.settings.get_string("blink-color");
         let rgba = new Gdk.RGBA();
-//        rgba.parse(color);
+        if (blinkColor === 'unset')
+            blinkColor = RESETCOLORRED;
+        rgba.parse(blinkColor);
         this.valueTasksBlinkAlertColor = new Gtk.ColorButton({title: "TaskBar Preferences - Blink Color"});
         this.valueTasksBlinkAlertColor.set_use_alpha(true);
         this.valueTasksBlinkAlertColor.set_rgba(rgba);
-//        this.valueTasksBlinkAlertColor.connect('color-set', Lang.bind(this, this.changeTasksBlinkAlertColor));
+        this.valueTasksBlinkAlertColor.connect('color-set', Lang.bind(this, this.changeTasksBlinkAlertColor));
         this.gridTasks3.attach(this.valueTasksBlinkAlertColor, 4, 3, 1, 1);
 
         let labelBlacklistTask = new Gtk.Label({label: _("Blacklist Apps"), xalign: 0});
@@ -632,18 +626,18 @@ Prefs.prototype =
         this.valueBlacklistTask.set_text(blacklisttext);
         this.valueBlacklistTask.connect('changed', Lang.bind(this, this.changeBlacklistTask));
         this.gridTasks3.attach(this.valueBlacklistTask, 2, 4, 2, 1);
-        this.value2BlacklistTask = new Gtk.Switch(); //{active: this.settings.get_boolean("blacklist")});
-//        this.value2BlacklistTask.connect('notify::active', Lang.bind(this, this.changeBlacklist));
+        this.value2BlacklistTask = new Gtk.Switch({active: this.settings.get_boolean("blacklist-set")});
+        this.value2BlacklistTask.connect('notify::active', Lang.bind(this, this.changeBlacklist));
         this.gridTasks3.attach(this.value2BlacklistTask, 4, 4, 1, 1);
 
         let findAppNamesButton = new Gtk.Button({label: _("Find App Names")});
-//        findAppNamesButton.connect('clicked', Lang.bind(this, this.findAppNames));
-        findAppNamesButton.set_tooltip_text(_("Find App Names at 'Show Applications' in the Desktop Overview.\nShould the name be cut off (...) choose 'Show Details' from the right click menu and copy/paste from there.\nIf you intend to blacklist more than one app, separate the app names by Comma AND Space.\nExample:\nTerminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files"));
+        findAppNamesButton.connect('clicked', Lang.bind(this, this.findAppNames));
+        findAppNamesButton.set_tooltip_text(_("Find App Names at 'Show Applications' in the Desktop Overview.\nShould the name be cut short (...) choose 'Show Details' from the right-click menu and copy/paste from there.\nApp names are Case-Sensitive.\nIf you intend to blacklist more than one app, separate app names by Comma AND Space.\n\nExample:\nTerminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files"));
         this.gridTasks3.attach(findAppNamesButton, 1, 5, 1, 1);
 
         let resetTasks3Button = new Gtk.Button({label: _("Reset Tasks (III) Tab")});
         resetTasks3Button.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
-//        resetTasks3Button.connect('clicked', Lang.bind(this, this.resetTasks3));
+        resetTasks3Button.connect('clicked', Lang.bind(this, this.resetTasks3));
         resetTasks3Button.set_tooltip_text(_("Reset the Tasks III Tab to the Original Tasks III Settings"));
         this.gridTasks3.attach(resetTasks3Button, 1, 7, 1, 1);
 
@@ -658,22 +652,6 @@ Prefs.prototype =
         this.gridTasks3.attach(labelSpaceTasks34, 0, 0, 6, 1);
         let labelSpaceTasks35 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridTasks3.attach(labelSpaceTasks35, 5, 1, 1, 1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         this.gridButtons = new Gtk.Grid();
         this.gridButtons.margin = this.gridButtons.row_spacing = 10;
@@ -1467,6 +1445,27 @@ Prefs.prototype =
         this.settings.set_boolean("hover-switch-task", object.active);
     },
 
+    changeHoverDelay: function(object)
+    {
+        this.settings.set_int("hover-delay", this.valueHoverDelay.get_value());
+    },
+
+    changeBlinkTasks: function(object)
+    {
+        this.settings.set_boolean("blink-tasks", object.active);
+    },
+
+    changeTasksBlinkRate: function(object)
+    {
+        this.settings.set_int("blink-rate", this.valueTasksBlinkRate.get_value());
+    },
+
+    changeTasksBlinkAlertColor: function()
+    {
+        this.tasksBlinkAlertColor = this.valueTasksBlinkAlertColor.get_rgba().to_string();
+        this.settings.set_string("blink-color", this.tasksBlinkAlertColor);
+    },
+
     changeBlacklistTask: function()
     {
         let blacklist = [];
@@ -1474,15 +1473,20 @@ Prefs.prototype =
         let blacklistapps = blacklisttext.split(", ");
         for (let i = 0; i < blacklistapps.length; i++)
         {
-            if (blacklistapps[i].length !== 1)
+            if (blacklistapps[i].length > 1)
                 blacklist.push(blacklistapps[i]);
         }
         this.settings.set_strv("blacklist", blacklist);
     },
 
-    changeHoverDelay: function(object)
+    changeBlacklist: function(object)
     {
-        this.settings.set_int("hover-delay", this.valueHoverDelay.get_value());
+        this.settings.set_boolean("blacklist-set", object.active);
+    },
+
+    findAppNames: function()
+    {
+        this.settings.set_boolean("find-apps", true);
     },
 
     changeDesktopButtonIcon: function()
@@ -2138,6 +2142,20 @@ Prefs.prototype =
         this.value2InactiveTaskBackgroundColor.set_active(false);
         this.valueHoverSwitchTask.set_active(false);
         this.valueHoverDelay.set_value(350);
+        this.settings.set_boolean("reset-flag", false);
+    },
+
+    resetTasks3: function()
+    {
+        this.settings.set_boolean("reset-flag", true);
+        this.valueBlinkTasks.set_active(false);
+        this.valueTasksBlinkRate.set_value(750);
+        let color = RESETCOLORRED;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valueTasksBlinkAlertColor.set_rgba(rgba);
+        this.settings.set_string("blink-color", "unset");
+        this.value2BlacklistTask.set_active(false);        
         this.valueBlacklistTask.set_text("");
         this.settings.set_strv("blacklist", []);
         this.settings.set_boolean("reset-flag", false);

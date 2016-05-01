@@ -256,9 +256,35 @@
             <summary>Tasks Spaces Width</summary>
             <description/>
         </key>
+        <key name="blink-tasks" type="b">
+            <default>false</default>
+            <summary>Blink Tasks on Alert</summary>
+            <description/>
+        </key>
+        <key name="blink-rate" type="i">
+            <range min="0" max="10000"/>
+            <default>750</default>
+            <summary>Tasks Blink Rate</summary>
+            <description/>
+        </key>
+        <key name="blink-color" type="s">
+            <default>'rgba(255,0,0,1)'</default>
+            <summary>Tasks Blink Color</summary>
+            <description/>
+        </key>
         <key name="blacklist" type="as">
             <default>[]</default>
             <summary>Tasks Blacklist</summary>
+            <description/>
+        </key>
+        <key name="blacklist-set" type="b">
+            <default>false</default>
+            <summary>Tasks Blacklist Set</summary>
+            <description/>
+        </key>
+        <key name="find-apps" type="b">
+            <default>false</default>
+            <summary>Find Apps</summary>
             <description/>
         </key>
         <key name="top-panel-background-color" type="s">
