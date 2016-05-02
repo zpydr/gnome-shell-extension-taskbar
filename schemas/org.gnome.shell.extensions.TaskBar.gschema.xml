@@ -36,6 +36,11 @@
         <value value="1" nick="standard"/>
         <value value="2" nick="invert"/>
     </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.tasks-label-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="window"/>
+        <value value="2" nick="app"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.workspace-button-index-style">
         <value value="0" nick="index"/>
         <value value="1" nick="total"/>
@@ -178,6 +183,11 @@
             <summary>Display Tasks from all Workspaces</summary>
             <description/>
         </key>
+        <key name="sort-tasks" type="b">
+            <default>false</default>
+            <summary>Sort Tasks by Application</summary>
+            <description/>
+        </key>
         <key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
             <default>'right'</default>
            <summary>Middle/Right Click to Show Tasks Menu</summary>
@@ -229,8 +239,8 @@
             <summary>Inactive Task Background Color</summary>
             <description/>
         </key>
-        <key name="tasks-label" type="b">
-            <default>false</default>
+        <key name="tasks-label" enum="org.gnome.shell.extensions.TaskBar.tasks-label-style">
+            <default>'off'</default>
             <summary>Tasks Label</summary>
             <description/>
         </key>
@@ -242,6 +252,16 @@
         <key name="display-tasks-label-color" type="b">
             <default>false</default>
             <summary>Display Tasks Label Color</summary>
+            <description/>
+        </key>
+        <key name="inactive-tasks-label-color" type="s">
+            <default>'unset'</default>
+            <summary>Inactive Tasks Label Color</summary>
+            <description/>
+        </key>
+        <key name="display-inactive-tasks-label-color" type="b">
+            <default>false</default>
+            <summary>Display Inactive Tasks Label Color</summary>
             <description/>
         </key>
         <key name="tasks-width" type="i">
