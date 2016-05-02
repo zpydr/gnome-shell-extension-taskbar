@@ -971,9 +971,14 @@ Prefs.prototype =
 
         let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
         this.gridPreview.attach(labelDisplayLabel, 1, 1, 1, 1);
-        this.valueDisplayLabel = new Gtk.Switch({active: this.settings.get_boolean("display-label")});
-        this.valueDisplayLabel.connect('notify::active', Lang.bind(this, this.changeDisplayLabel));
-        this.gridPreview.attach(this.valueDisplayLabel, 4, 1, 1, 1);
+        this.valueDisplayLabel = new Gtk.ComboBoxText();
+        this.valueDisplayLabel.append_text(_("OFF"));
+        this.valueDisplayLabel.append_text(_("App Name"));
+        this.valueDisplayLabel.append_text(_("Window Title"));
+        this.valueDisplayLabel.append_text(_("App Name &\nWindow Title"));
+        this.valueDisplayLabel.set_active(this.settings.get_enum("display-label"));
+        this.valueDisplayLabel.connect('changed', Lang.bind(this, this.changeDisplayLabel));
+        this.gridPreview.attach(this.valueDisplayLabel, 3, 1, 2, 1);
 
         let labelDisplayThumbnail = new Gtk.Label({label: _("Tasks Thumbnail"), xalign: 0});
         this.gridPreview.attach(labelDisplayThumbnail, 1, 2, 1, 1);
@@ -983,9 +988,14 @@ Prefs.prototype =
 
         let labelDisplayFavoritesLabel = new Gtk.Label({label: _("Favorites Label"), xalign: 0});
         this.gridPreview.attach(labelDisplayFavoritesLabel, 1, 3, 1, 1);
-        this.valueDisplayFavoritesLabel = new Gtk.Switch({active: this.settings.get_boolean("display-favorites-label")});
-        this.valueDisplayFavoritesLabel.connect('notify::active', Lang.bind(this, this.changeDisplayFavoritesLabel));
-        this.gridPreview.attach(this.valueDisplayFavoritesLabel, 4, 3, 1, 1);
+        this.valueDisplayFavoritesLabel = new Gtk.ComboBoxText();
+        this.valueDisplayFavoritesLabel.append_text(_("OFF"));
+        this.valueDisplayFavoritesLabel.append_text(_("App Name"));
+        this.valueDisplayFavoritesLabel.append_text(_("Description"));
+        this.valueDisplayFavoritesLabel.append_text(_("App Name &\nDescription"));
+        this.valueDisplayFavoritesLabel.set_active(this.settings.get_enum("display-favorites-label"));
+        this.valueDisplayFavoritesLabel.connect('changed', Lang.bind(this, this.changeDisplayFavoritesLabel));
+        this.gridPreview.attach(this.valueDisplayFavoritesLabel, 3, 3, 2, 1);
 
         let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" (350 px)", xalign: 0});
         this.gridPreview.attach(labelPreviewSize, 1, 4, 1, 1);
@@ -1971,9 +1981,9 @@ Prefs.prototype =
         this.settings.set_boolean("workspace-selector", object.active);
     },
 
-    changeDisplayLabel: function(object, pspec)
+    changeDisplayLabel: function(object)
     {
-        this.settings.set_boolean("display-label", object.active);
+        this.settings.set_enum("display-label", this.valueDisplayLabel.get_active());
     },
 
     changeDisplayThumbnail: function(object, pspec)
@@ -1981,9 +1991,9 @@ Prefs.prototype =
         this.settings.set_boolean("display-thumbnail", object.active);
     },
 
-    changeDisplayFavoritesLabel: function(object, pspec)
+    changeDisplayFavoritesLabel: function(object)
     {
-        this.settings.set_boolean("display-favorites-label", object.active);
+        this.settings.set_enum("display-favorites-label", this.valueDisplayFavoritesLabel.get_active());
     },
 
     changePreviewSize: function(object)
@@ -2246,9 +2256,9 @@ Prefs.prototype =
     resetPreview: function()
     {
         this.settings.set_boolean("reset-flag", true);
-        this.valueDisplayLabel.set_active(true);
+        this.valueDisplayLabel.set_active(3);
         this.valueDisplayThumbnail.set_active(true);
-        this.valueDisplayFavoritesLabel.set_active(true);
+        this.valueDisplayFavoritesLabel.set_active(3);
         this.valuePreviewSize.set_value(350);
         this.valuePreviewDelay.set_value(500);
         this.settings.set_boolean("reset-flag", false);

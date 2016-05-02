@@ -54,6 +54,18 @@
         <value value="0" nick="leftclickappview"/>
         <value value="1" nick="leftclickoverview"/>
     </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.display-label-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="app"/>
+        <value value="2" nick="window"/>
+        <value value="3" nick="both"/>
+    </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.display-favorites-label-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="app"/>
+        <value value="2" nick="description"/>
+        <value value="3" nick="both"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.appearance-style">
         <value value="0" nick="tasks"/>
         <value value="1" nick="desktopbutton"/>
@@ -530,8 +542,8 @@
             <summary>Workspace Selector</summary>
             <description/>
         </key>
-        <key name="display-label" type="b">
-            <default>true</default>
+        <key name="display-label" enum="org.gnome.shell.extensions.TaskBar.display-label-style">
+            <default>'both'</default>
             <summary>Display Label</summary>
             <description/>
         </key>
@@ -540,8 +552,8 @@
             <summary>Display Thumbnail</summary>
             <description/>
         </key>
-        <key name="display-favorites-label" type="b">
-            <default>true</default>
+        <key name="display-favorites-label" enum="org.gnome.shell.extensions.TaskBar.display-favorites-label-style">
+            <default>'both'</default>
             <summary>Display Favorites Label</summary>
             <description/>
         </key>

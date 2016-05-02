@@ -1004,7 +1004,7 @@ TaskBar.prototype =
                 {
                     //Hide current preview if necessary
                     this.hidePreview();
-                    if (this.settings.get_boolean("display-favorites-label"))
+                    if (this.settings.get_enum("display-favorites-label") !== 0)
                     {
                         if (this.settings.get_int("preview-delay") === 0)
                             this.showFavoritesPreview(buttonfavorite, favoriteapp);
@@ -2325,7 +2325,7 @@ TaskBar.prototype =
         }
         //Hide current preview if necessary
         this.hidePreview();
-        if ((this.settings.get_boolean("display-label")) || (this.settings.get_boolean("display-thumbnail")))
+        if ((this.settings.get_enum("display-label") !== 0) || (this.settings.get_boolean("display-thumbnail")))
         {
             if (this.settings.get_int("preview-delay") === 0)
                 this.showPreview2(button, window);
@@ -2341,15 +2341,21 @@ TaskBar.prototype =
         this.hidePreview();
         let app = Shell.WindowTracker.get_default().get_window_app(window);
         this.preview = new St.BoxLayout({ style_class: "tkb-preview", vertical: true});
-        if (this.settings.get_boolean("display-label"))
+        if (this.settings.get_enum("display-label") !== 0)
         {
-            let labelNamePreview = new St.Label({ text: app.get_name(), style_class: "tkb-preview-name" });
-            this.preview.add_actor(labelNamePreview);
-            let title = window.get_title();
-            if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
+            if (this.settings.get_enum("display-label") !== 2)
+            {
+                let labelNamePreview = new St.Label({ text: app.get_name(), style_class: "tkb-preview-name" });
+                this.preview.add_actor(labelNamePreview);
+            }
+            if (this.settings.get_enum("display-label") !== 1)
+            {
+                let title = window.get_title();
+                if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
 	            title = title.substr(0, 47) + "...";
-            let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
-            this.preview.add_actor(labelTitlePreview);
+                let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
+                this.preview.add_actor(labelTitlePreview);
+            }
         }
         if (this.settings.get_boolean("display-thumbnail"))
         {
@@ -2369,7 +2375,10 @@ TaskBar.prototype =
         let favoriteappName = favoriteapp.get_name();
         if (favoriteapp.get_description())
         {
-            favoriteappName += '\n' + favoriteapp.get_description();
+            if (this.settings.get_enum("display-favorites-label") === 2)
+                favoriteappName = favoriteapp.get_description();
+            if (this.settings.get_enum("display-favorites-label") === 3)
+                favoriteappName += '\n' + favoriteapp.get_description();
         }
         let labelNamePreview = new St.Label({ text: favoriteappName, style_class: "tkb-preview-name" });
         this.favoritesPreview.add_actor(labelNamePreview);
