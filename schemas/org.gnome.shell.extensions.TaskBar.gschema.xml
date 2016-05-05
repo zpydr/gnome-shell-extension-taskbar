@@ -276,6 +276,26 @@
             <summary>Display Inactive Tasks Label Color</summary>
             <description/>
         </key>
+        <key name="tasks-frame-color" type="s">
+            <default>'unset'</default>
+            <summary>Tasks Frame Color</summary>
+            <description/>
+        </key>
+        <key name="display-tasks-frame-color" type="b">
+            <default>false</default>
+            <summary>Display Tasks Frame Color</summary>
+            <description/>
+        </key>
+        <key name="inactive-tasks-frame-color" type="s">
+            <default>'unset'</default>
+            <summary>Inactive Tasks Frame Color</summary>
+            <description/>
+        </key>
+        <key name="display-inactive-tasks-frame-color" type="b">
+            <default>false</default>
+            <summary>Display Inactive Tasks Frame Color</summary>
+            <description/>
+        </key>
         <key name="tasks-width" type="i">
             <range min="1" max="1000"/>
             <default>150</default>

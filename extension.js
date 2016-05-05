@@ -653,6 +653,10 @@ TaskBar.prototype =
             this.settings.connect("changed::display-tasks-label-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::inactive-tasks-label-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-inactive-tasks-label-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tasks-frame-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-tasks-frame-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::inactive-tasks-frame-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-inactive-tasks-frame-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-width", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::tasks-spaces", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::blink-tasks", Lang.bind(this, this.onParamChanged)),
@@ -1441,38 +1445,34 @@ TaskBar.prototype =
     activeTaskFrame: function()
     {
         this.backgroundColor = this.settings.get_string("active-task-background-color");
+        this.activeTasksFrameColor = this.settings.get_string("tasks-frame-color");
         this.margin = this.settings.get_int("tasks-spaces");
-        if ((this.settings.get_boolean("active-task-background-color-set")) && (this.settings.get_int("tasks-spaces") !== 0))
-            this.backgroundStyleColor = "background-color: " + this.backgroundColor + "; margin-right: " + this.margin + "px;";
-        else if (this.settings.get_int("tasks-spaces") !== 0)
-            this.backgroundStyleColor = "margin-right: " + this.margin + "px;";
-        else if (this.settings.get_boolean("active-task-background-color-set"))
-            this.backgroundStyleColor = "background-color: " + this.backgroundColor + ";";
-        else
-            this.backgroundStyleColor = "None";
-        if (this.settings.get_boolean("active-task-frame"))
-            this.activeTask = "active-task-frame";
-        else
-            this.activeTask = "active-task-no-frame";
+        this.backgroundStyleColor = "border-radius: 5px; ";
+        if (this.settings.get_boolean("active-task-background-color-set"))
+            this.backgroundStyleColor += "background-color: " + this.backgroundColor + "; ";
+        if ((this.settings.get_boolean("active-task-frame")) && (this.settings.get_boolean("display-tasks-frame-color")))
+            this.backgroundStyleColor += "border: 1px " + this.activeTasksFrameColor + "; background-image: url('" + Extension.path + "/images/active-task-background.svg'); ";
+        else if ((this.settings.get_boolean("active-task-frame")) && (! this.settings.get_boolean("display-tasks-frame-color")))
+            this.backgroundStyleColor += "border: 1px solid gray; background-image: url('" + Extension.path + "/images/active-task-background.svg'); ";
+        if (this.settings.get_int("tasks-spaces") !== 0)
+            this.backgroundStyleColor += "margin-right: " + this.margin + "px;";
     },
 
     //Inactive Task Frame / Background Color
     inactiveTaskFrame: function()
     {
         this.inactiveBackgroundColor = this.settings.get_string("inactive-task-background-color");
+        this.inactiveTasksFrameColor = this.settings.get_string("inactive-tasks-frame-color");
         this.inactiveMargin = this.settings.get_int("tasks-spaces");
-        if ((this.settings.get_boolean("inactive-task-background-color-set")) && (this.settings.get_int("tasks-spaces") !== 0))
-            this.inactiveBackgroundStyleColor = "background-color: " + this.inactiveBackgroundColor + "; margin-right: " + this.inactiveMargin + "px;";
-        else if (this.settings.get_int("tasks-spaces") !== 0)
-            this.inactiveBackgroundStyleColor = "margin-right: " + this.inactiveMargin + "px;";
-        else if (this.settings.get_boolean("inactive-task-background-color-set"))
-            this.inactiveBackgroundStyleColor = "background-color: " + this.inactiveBackgroundColor + ";";
-        else
-            this.inactiveBackgroundStyleColor = "None";
-        if (this.settings.get_boolean("inactive-task-frame"))
-            this.inactiveTask = "inactive-task-frame";
-        else
-            this.inactiveTask = "inactive-task-no-frame";
+        this.inactiveBackgroundStyleColor = "border-radius: 5px; ";
+        if (this.settings.get_boolean("inactive-task-background-color-set"))
+            this.inactiveBackgroundStyleColor += "background-color: " + this.inactiveBackgroundColor + "; ";
+        if ((this.settings.get_boolean("inactive-task-frame")) && (this.settings.get_boolean("display-inactive-tasks-frame-color")))
+            this.inactiveBackgroundStyleColor += "border: 1px " + this.inactiveTasksFrameColor + "; background-image: url('" + Extension.path + "/images/active-task-background.svg'); ";
+        else if ((this.settings.get_boolean("inactive-task-frame")) && (! this.settings.get_boolean("display-inactive-tasks-frame-color")))
+            this.inactiveBackgroundStyleColor += "border: 1px solid gray; background-image: url('" + Extension.path + "/images/active-task-background.svg'); ";
+        if (this.settings.get_int("tasks-spaces") !== 0)
+            this.inactiveBackgroundStyleColor += "margin-right: " + this.inactiveMargin + "px;";
     },
 
     //Top Panel Background Color
@@ -2036,8 +2036,6 @@ TaskBar.prototype =
                     let [windowTask, buttonTask, signalsTask, labelTask] = task;
                     if (windowTask === window)
                     {
-                        buttonTask.remove_style_pseudo_class(this.inactiveTask);
-                        buttonTask.add_style_pseudo_class(this.activeTask);
                         buttonTask.set_style(this.backgroundStyleColor);
                         if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-tasks-label-color")))
                         {
@@ -2055,8 +2053,6 @@ TaskBar.prototype =
                     }
                     else
                     {
-                        buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.add_style_pseudo_class(this.inactiveTask);
                         buttonTask.set_style(this.inactiveBackgroundStyleColor);
                         if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-inactive-tasks-label-color")))
                         {
@@ -2098,8 +2094,6 @@ TaskBar.prototype =
                     let [windowTask, buttonTask, signalsTask, labelTask] = task;
                     if (windowTask === window)
                     {
-                        buttonTask.remove_style_pseudo_class(this.activeTask);
-                        buttonTask.add_style_pseudo_class(this.inactiveTask);
                         buttonTask.set_style(this.inactiveBackgroundStyleColor);
                         if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-inactive-tasks-label-color")))
                         {
@@ -2194,7 +2188,6 @@ TaskBar.prototype =
             }
             if (window.has_focus())
             {
-                buttonTask.add_style_pseudo_class(this.activeTask);
                 buttonTask.set_style(this.backgroundStyleColor);
                 if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-tasks-label-color")))
                 {
@@ -2210,7 +2203,6 @@ TaskBar.prototype =
             }
             else
             {
-                buttonTask.add_style_pseudo_class(this.inactiveTask);
                 buttonTask.set_style(this.inactiveBackgroundStyleColor);
                 if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-inactive-tasks-label-color")))
                 {
