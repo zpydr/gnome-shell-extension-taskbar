@@ -279,7 +279,7 @@ msgstr ""
 
 #: prefs.js:590
 msgid "Desktop Button Icon"
-msgstr "Icone du bouton bureau"
+msgstr "Icône du bouton bureau"
 
 #: prefs.js:601
 msgid "Workspace Button Index"
@@ -327,7 +327,7 @@ msgstr ""
 
 #: prefs.js:645
 msgid "Appview Button Icon"
-msgstr "Icone du bouton Vue Application"
+msgstr "Icône du bouton Vue Application"
 
 #: prefs.js:656
 msgid "Reset Buttons Tab"
@@ -340,7 +340,7 @@ msgid ""
 "The Icons can be Reset within their own Settings."
 msgstr ""
 "Réinitialiser Onglet Boutons avec les paramètres par défaut.\n"
-"Les icones peuvent être réinitialisés dans leur propre menu "
+"Les icônes peuvent être réinitialisées dans leur propre menu "
 "paramètres."
 
 #: prefs.js:681
@@ -353,7 +353,7 @@ msgstr "Bouton plateau panneau du bas"
 
 #: prefs.js:691 prefs.js:690
 msgid "Icon"
-msgstr "Icone"
+msgstr "Icône"
 
 #: prefs.js:697 prefs.js:696
 msgid "When Tray is Empty"
@@ -361,7 +361,7 @@ msgstr "Quand le plateau est vide"
 
 #: prefs.js:700 prefs.js:699
 msgid "Show Icon"
-msgstr "Afficher Icone"
+msgstr "Afficher Icône"
 
 #: prefs.js:701 prefs.js:700
 msgid "Show 0"
@@ -373,7 +373,7 @@ msgstr "Masquer"
 
 #: prefs.js:707 prefs.js:706
 msgid "Tray Button Icon"
-msgstr "Icone bouton plateau"
+msgstr "Icône bouton plateau"
 
 #: prefs.js:718 prefs.js:717
 msgid "Activate Tray on Hover"
@@ -390,7 +390,7 @@ msgid ""
 "The Icon can be Reset within its own Settings."
 msgstr ""
 "Réinitialiser Bouton Plateau avec les paramètres originaux.\n"
-"L'icone peuvent être réinitialisés dans leur propre menu paramètres."
+"L'icône peut être réinitialisée dans son propre menu Paramètres."
 
 #: prefs.js:736 prefs.js:735
 msgid "TrayButton"
@@ -426,7 +426,7 @@ msgstr "Aperçu"
 
 #: prefs.js:874 prefs.js:872
 msgid "Tasks Thumbnail"
-msgstr "Tâches Mignature"
+msgstr "Tâches Miniatures"
 
 #: prefs.js:880 prefs.js:878
 msgid "Favorites Label"
@@ -434,7 +434,7 @@ msgstr "Nom Favoris"
 
 #: prefs.js:886 prefs.js:884
 msgid "Thumbnail Size"
-msgstr "Taille Mignature"
+msgstr "Taille Miniature"
 
 #: prefs.js:894 prefs.js:892
 msgid "Preview Delay"
@@ -511,7 +511,7 @@ msgstr "Licence Publique Générale GNU"
 
 #: prefs.js:1376 prefs.js:1374
 msgid "TaskBar Preferences - Desktop Button Icon"
-msgstr "TaskBar Préférences - Icone du Bouton Bureau"
+msgstr "TaskBar Préférences - Icône du Bouton Bureau"
 
 #: prefs.js:1389 prefs.js:1501 prefs.js:1591 prefs.js:1387 prefs.js:1499
 #: prefs.js:1589
@@ -520,17 +520,17 @@ msgstr "Images"
 
 #: prefs.js:1488 prefs.js:1486
 msgid "TaskBar Preferences - Appview Button Icon"
-msgstr "TaskBar Préférences - Icone du Bouton Vue Applications"
+msgstr "TaskBar Préférences - Icône du Bouton Vue Applications"
 
 #: prefs.js:1578 prefs.js:1576
 msgid "TaskBar Preferences - Tray Button Icon"
-msgstr "TaskBar Préférences - Icone du Bouton Plateau"
+msgstr "TaskBar Préférences - Icône du Bouton Plateau"
 
 #~ msgid "Align "
 #~ msgstr "Aligner "
 
 #~ msgid "Icon Size"
-#~ msgstr "Taille de l'icone"
+#~ msgstr "Taille de l'icône"
 
 #~ msgid "Font Size"
 #~ msgstr "Taille de police"
