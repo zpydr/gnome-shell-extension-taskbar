@@ -1,0 +1,529 @@
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2016 zpydr
+#
+#  Version 52
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@openmailbox.org
+#  tuhaihe <1132321739qq@gmail.com>, 2014.
+#  Dingzhong Chen <wsxy162@gmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-04 16:56+0800\n"
+"PO-Revision-Date: 2016-09-04 18:29+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
+
+#: prefs.js:120
+msgid "About"
+msgstr "关于"
+
+#: prefs.js:132
+msgid "Version"
+msgstr "版本"
+
+#: prefs.js:134
+msgid "GNOME Shell Version"
+msgstr "GNOME Shell 版本"
+
+#: prefs.js:148
+msgid "Report a Bug"
+msgstr "报告错误"
+
+#: prefs.js:152
+msgid "Donate for TaskBar"
+msgstr "为本项目捐款"
+
+#: prefs.js:156
+msgid "Become a Friend of GNOME"
+msgstr "成为 GNOME 的朋友"
+
+#: prefs.js:160
+msgid "Free Software Foundation"
+msgstr "自由软件基金会"
+
+#: prefs.js:165
+msgid "RESET ALL !"
+msgstr "重置全部 ！"
+
+#: prefs.js:168
+msgid "Reset All TaskBar Settings to the Original TaskBar Settings"
+msgstr "重置所有任务栏设置为初始设置"
+
+#: prefs.js:175 prefs.js:758 prefs.js:756
+msgid "TaskBar"
+msgstr "任务栏"
+
+#: prefs.js:188 prefs.js:274
+msgid "Overview"
+msgstr "概览"
+
+#: prefs.js:191 prefs.js:224
+msgid "Tasks"
+msgstr "任务"
+
+#: prefs.js:197 prefs.js:225 prefs.js:784 prefs.js:782
+msgid "Desktop Button"
+msgstr "桌面按钮"
+
+#: prefs.js:203 prefs.js:226 prefs.js:797 prefs.js:795
+msgid "Workspace Button"
+msgstr "工作区按钮"
+
+#: prefs.js:209 prefs.js:227 prefs.js:810 prefs.js:808
+msgid "Appview Button"
+msgstr "应用程序视图按钮"
+
+#: prefs.js:215 prefs.js:228 prefs.js:823 prefs.js:821
+msgid "Favorites"
+msgstr "收藏"
+
+#: prefs.js:222
+msgid "Align"
+msgstr "对齐"
+
+#: prefs.js:251 prefs.js:290
+msgid "Top Panel"
+msgstr "顶部面板"
+
+#: prefs.js:257 prefs.js:292
+msgid "Bottom Panel"
+msgstr "底部面板"
+
+#: prefs.js:263
+msgid "Reset Overview Tab"
+msgstr "重置概览标签页"
+
+#: prefs.js:266
+msgid "Reset the Overview Tab to the Original Overview Settings"
+msgstr "重置概览标签页为初始设置"
+
+#: prefs.js:287 prefs.js:378
+msgid "Panels"
+msgstr "面板"
+
+#: prefs.js:295
+msgid "Panel Height"
+msgstr "面板高度"
+
+#: prefs.js:308
+msgid "Align TaskBar"
+msgstr "对齐任务栏"
+
+#: prefs.js:323
+msgid "Anchor Point"
+msgstr "定位点"
+
+#: prefs.js:331
+msgid ""
+"Panel Background\n"
+"Color & Opacity"
+msgstr ""
+"面板背景颜色\n"
+"和不透明度"
+
+#: prefs.js:359 prefs.js:362
+msgid "Reset Color"
+msgstr "重置颜色"
+
+#: prefs.js:366
+msgid "Reset Panels Tab"
+msgstr "重置面板标签页"
+
+#: prefs.js:369
+msgid "Reset the Panels Tab to the Original Panels Settings"
+msgstr "重置面板标签页为初始设置"
+
+#: prefs.js:391 prefs.js:476
+msgid "Tasks (I)"
+msgstr "任务 (I)"
+
+#: prefs.js:394
+msgid "Tasks on All Workspaces"
+msgstr "所有工作区上的任务"
+
+#: prefs.js:400 prefs.js:868 prefs.js:866
+msgid "Tasks Label"
+msgstr "任务标签"
+
+#: prefs.js:406
+msgid "Tasks Label Color"
+msgstr "任务标签颜色"
+
+#: prefs.js:420
+msgid "Tasks Label Width (150 px)"
+msgstr "任务标签宽度 (150 px)"
+
+#: prefs.js:428
+msgid "Tasks Container Width (6 Tasks)"
+msgstr "任务容器宽度（6 个任务）"
+
+#: prefs.js:436
+msgid "Tasks Application Menu"
+msgstr "任务应用程序菜单"
+
+#: prefs.js:439 prefs.js:449 prefs.js:495 prefs.js:613 prefs.js:690
+#: prefs.js:689
+msgid "OFF"
+msgstr "无/关闭"
+
+#: prefs.js:440 prefs.js:450
+msgid "Middle Click"
+msgstr "中键点击"
+
+#: prefs.js:441 prefs.js:451
+msgid "Right Click"
+msgstr "右键点击"
+
+#: prefs.js:446
+msgid "Close Tasks"
+msgstr "关闭任务"
+
+#: prefs.js:456
+msgid "Space between Tasks (4 px)"
+msgstr "任务中的空间 (4 px)"
+
+#: prefs.js:464
+msgid "Reset Tasks (I) Tab"
+msgstr "重置任务 (I) 标签页"
+
+#: prefs.js:467
+msgid "Reset the Tasks Tab to the Original Tasks Settings"
+msgstr "重置任务 (I) 标签页为初始设置"
+
+#: prefs.js:489 prefs.js:568
+msgid "Tasks (II)"
+msgstr "任务 (II)"
+
+#: prefs.js:492
+msgid "Scroll Tasks"
+msgstr "滚动任务"
+
+#: prefs.js:496 prefs.js:614
+msgid "Standard"
+msgstr "标准"
+
+#: prefs.js:497 prefs.js:615
+msgid "Invert"
+msgstr "反向"
+
+#: prefs.js:502
+msgid "Active Task Frame"
+msgstr "活动任务框架"
+
+#: prefs.js:508
+msgid "Inactive Task Frame"
+msgstr "非活动任务框架"
+
+#: prefs.js:514
+msgid ""
+"Active Task Background\n"
+"Color & Opacity"
+msgstr ""
+"活动任务背景\n"
+"颜色和不透明度"
+
+#: prefs.js:528
+msgid ""
+"Inactive Task Background\n"
+"Color & Opacity"
+msgstr ""
+"非活动任务背景\n"
+"颜色和不透明度"
+
+#: prefs.js:542
+msgid "Activate Tasks on Hover"
+msgstr "悬停时激活任务"
+
+#: prefs.js:548
+msgid "Hover Delay"
+msgstr "悬停延迟"
+
+#: prefs.js:556
+msgid "Reset Tasks (II) Tab"
+msgstr "重置任务 (II) 标签页"
+
+#: prefs.js:559
+msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
+msgstr "重置任务 (II) 标签页为初始设置"
+
+#: prefs.js:581 prefs.js:668
+msgid "Buttons"
+msgstr "按钮"
+
+#: prefs.js:584
+msgid ""
+"Desktop Button Right Click\n"
+"opens Preferences (this)"
+msgstr ""
+"桌面按钮右键点击\n"
+"打开该首选项窗口"
+
+#: prefs.js:590
+msgid "Desktop Button Icon"
+msgstr "桌面按钮图标"
+
+#: prefs.js:601
+msgid "Workspace Button Index"
+msgstr "工作区按钮索引"
+
+#: prefs.js:604 prefs.js:692 prefs.js:691
+msgid "Index"
+msgstr "当前位置"
+
+#: prefs.js:605
+msgid "Index/Total"
+msgstr "当前位置/总数"
+
+#: prefs.js:610
+msgid "Scroll Workspaces"
+msgstr "工作区滚动"
+
+#: prefs.js:620
+msgid "Workspace Button Color"
+msgstr "工作区按钮颜色"
+
+#: prefs.js:636
+msgid ""
+"Appview Button\n"
+"Left & Right Click Toggle"
+msgstr ""
+"应用程序视图按钮\n"
+"左右键点击切换"
+
+#: prefs.js:639
+msgid ""
+"L Appview\n"
+"R Overview"
+msgstr ""
+"左：应用程序视图\n"
+"右：活动窗口概览"
+
+#: prefs.js:640
+msgid ""
+"L Overview\n"
+"R Appview"
+msgstr ""
+"左：活动窗口概览\n"
+"右：应用程序视图"
+
+#: prefs.js:645
+msgid "Appview Button Icon"
+msgstr "应用程序视图按钮图标"
+
+#: prefs.js:656
+msgid "Reset Buttons Tab"
+msgstr "重置按钮标签页"
+
+#: prefs.js:659
+msgid ""
+"Reset the Buttons Tab except the Icons to the Original Buttons "
+"Settings.\n"
+"The Icons can be Reset within their own Settings."
+msgstr ""
+"重置底部标签页除了图标的设置为初始设置。\n"
+"图标可以从它自己的设置中重置。"
+
+#: prefs.js:681
+msgid "Tray Button"
+msgstr "托盘按钮"
+
+#: prefs.js:687 prefs.js:686
+msgid "Bottom Panel Tray Button"
+msgstr "底部面板托盘按钮"
+
+#: prefs.js:691 prefs.js:690
+msgid "Icon"
+msgstr "图标"
+
+#: prefs.js:697 prefs.js:696
+msgid "When Tray is Empty"
+msgstr "当托盘为空时"
+
+#: prefs.js:700 prefs.js:699
+msgid "Show Icon"
+msgstr "显示图标"
+
+#: prefs.js:701 prefs.js:700
+msgid "Show 0"
+msgstr "显示 0"
+
+#: prefs.js:702 prefs.js:701
+msgid "Hide"
+msgstr "隐藏"
+
+#: prefs.js:707 prefs.js:706
+msgid "Tray Button Icon"
+msgstr "托盘底部图标"
+
+#: prefs.js:718 prefs.js:717
+msgid "Activate Tray on Hover"
+msgstr "悬停时激活托盘"
+
+#: prefs.js:724 prefs.js:723
+msgid "Reset Tray Button Tab"
+msgstr "重置托盘按钮标签页"
+
+#: prefs.js:727 prefs.js:726
+msgid ""
+"Reset the Tray Button Tab except the Icon to the Original Tray Button "
+"Settings.\n"
+"The Icon can be Reset within its own Settings."
+msgstr ""
+"重置托盘按钮标签页除了图标的设置为初始设置。\n"
+"图标可以从它自己的设置中重置。"
+
+#: prefs.js:736 prefs.js:735
+msgid "TrayButton"
+msgstr "托盘按钮"
+
+#: prefs.js:750 prefs.js:852 prefs.js:748 prefs.js:850
+msgid "Separators"
+msgstr "分隔"
+
+#: prefs.js:753 prefs.js:751
+msgid "Left (px)"
+msgstr "左 (px)"
+
+#: prefs.js:755 prefs.js:753
+msgid "Right (px)"
+msgstr "右 (px)"
+
+#: prefs.js:771 prefs.js:769
+msgid "Tasks Container"
+msgstr "任务容器"
+
+#: prefs.js:836 prefs.js:834
+msgid "Reset Separators Tab"
+msgstr "重置分隔标签页"
+
+#: prefs.js:839 prefs.js:837
+msgid "Reset the Separators Tab to the Original Separators Settings"
+msgstr "重置分隔标签页为初始设置"
+
+#: prefs.js:865 prefs.js:914 prefs.js:863 prefs.js:912
+msgid "Preview"
+msgstr "预览"
+
+#: prefs.js:874 prefs.js:872
+msgid "Tasks Thumbnail"
+msgstr "任务缩略图"
+
+#: prefs.js:880 prefs.js:878
+msgid "Favorites Label"
+msgstr "收藏标签"
+
+#: prefs.js:886 prefs.js:884
+msgid "Thumbnail Size"
+msgstr "缩略图大小"
+
+#: prefs.js:894 prefs.js:892
+msgid "Preview Delay"
+msgstr "预览延迟"
+
+#: prefs.js:902 prefs.js:900
+msgid "Reset Preview Tab"
+msgstr "重置预览标签页"
+
+#: prefs.js:905 prefs.js:903
+msgid "Reset the Preview Tab to the Original Preview Settings"
+msgstr "重置预览标签页为初始设置"
+
+#: prefs.js:927 prefs.js:1043 prefs.js:925 prefs.js:1041
+msgid "Misc"
+msgstr "杂项"
+
+#: prefs.js:930 prefs.js:928
+msgid "Color & Opacity"
+msgstr "颜色和不透明度"
+
+#: prefs.js:933 prefs.js:931
+msgid "Activities Button"
+msgstr "活动按钮"
+
+#: prefs.js:948 prefs.js:967 prefs.js:986 prefs.js:1005 prefs.js:946
+#: prefs.js:965 prefs.js:984 prefs.js:1003
+msgid "Reset"
+msgstr "重置"
+
+#: prefs.js:952 prefs.js:950
+msgid "Application Menu"
+msgstr "应用程序菜单"
+
+#: prefs.js:971 prefs.js:969
+msgid "Date Menu"
+msgstr "日期菜单"
+
+#: prefs.js:990 prefs.js:988
+msgid "System Menu"
+msgstr "系统菜单"
+
+#: prefs.js:1009 prefs.js:1007
+msgid "Hot Corner"
+msgstr "热区"
+
+#: prefs.js:1015 prefs.js:1013
+msgid "Dash (Overview)"
+msgstr "Dash（概览）"
+
+#: prefs.js:1021 prefs.js:1019
+msgid "Workspace Selector (Overview)"
+msgstr "工作区选择器（概览）"
+
+#: prefs.js:1027 prefs.js:1025
+msgid "TaskBar (Overview)"
+msgstr "任务栏（概览）"
+
+#: prefs.js:1033 prefs.js:1031
+msgid "Reset Misc Tab"
+msgstr "重置杂项标签页"
+
+#: prefs.js:1036 prefs.js:1034
+msgid "Reset the Misc Tab to the Original Misc Settings"
+msgstr "重置杂项标签页为初始设置"
+
+#: prefs.js:1058 prefs.js:1056
+msgid "GNU GPL"
+msgstr "GNU GPL"
+
+#: prefs.js:1078 prefs.js:1076
+msgid "GNU General Public License"
+msgstr "GNU 通用公共许可证"
+
+#: prefs.js:1376 prefs.js:1374
+msgid "TaskBar Preferences - Desktop Button Icon"
+msgstr "任务栏首选项 - 桌面按钮图标"
+
+#: prefs.js:1389 prefs.js:1501 prefs.js:1591 prefs.js:1387 prefs.js:1499
+#: prefs.js:1589
+msgid "Images"
+msgstr "图像"
+
+#: prefs.js:1488 prefs.js:1486
+msgid "TaskBar Preferences - Appview Button Icon"
+msgstr "任务栏首选项 - 应用程序视图按钮图标"
+
+#: prefs.js:1578 prefs.js:1576
+msgid "TaskBar Preferences - Tray Button Icon"
+msgstr "任务栏首选项 - 托盘按钮图标"
