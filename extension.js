@@ -2135,11 +2135,11 @@ TaskBar.prototype =
     addTaskInList: function(window)
     {
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        let appname = app.get_name();
         let buttonTask = null;
         let labelTask = null;
-        if (app)
+        if (app !== null)
         {
+            let appname = app.get_name();
             //Check Blacklisted Apps
             if (this.settings.get_boolean("blacklist-set"))
             {
