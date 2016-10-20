@@ -292,44 +292,78 @@ Prefs.prototype =
         let labelPanel4 = new Gtk.Label({label: _("Bottom Panel")});
         this.gridSettings.attach(labelPanel4, 6, 1, 2, 1);
 
-        let labelIconSize = new Gtk.Label({label: _("Panel Height")+" (22 px)", xalign: 0});
-        this.gridSettings.attach(labelIconSize, 1, 2, 1, 1);
-        this.valueIconSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
-        let value2IconSize = new Gtk.SpinButton({adjustment: this.valueIconSize, snap_to_ticks: true});
-        value2IconSize.set_value(this.settings.get_int("icon-size"));
-        value2IconSize.connect("value-changed", Lang.bind(this, this.changeIconSize));
-        this.gridSettings.attach(value2IconSize, 3, 2, 2, 1);
-        this.valueIconSizeBottom = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
-        let value2IconSizeBottom = new Gtk.SpinButton({adjustment: this.valueIconSizeBottom, snap_to_ticks: true});
-        value2IconSizeBottom.set_value(this.settings.get_int("icon-size-bottom"));
-        value2IconSizeBottom.connect("value-changed", Lang.bind(this, this.changeIconSizeBottom));
-        this.gridSettings.attach(value2IconSizeBottom, 6, 2, 2, 1);
-
         let labelPanelPosition = new Gtk.Label({label: _("Align TaskBar"), xalign: 0});
-        this.gridSettings.attach(labelPanelPosition, 1, 4, 1, 1);
+        this.gridSettings.attach(labelPanelPosition, 1, 2, 1, 1);
         let valuePanelPosition = new Gtk.Button({label: "<"});
         let value2PanelPosition = new Gtk.Button({label: ">"});
         valuePanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionLeft));
         value2PanelPosition.connect('clicked', Lang.bind(this, this.changePanelPositionRight));
-        this.gridSettings.attach(valuePanelPosition, 3, 4, 1, 1);
-        this.gridSettings.attach(value2PanelPosition, 4, 4, 1, 1);
+        this.gridSettings.attach(valuePanelPosition, 3, 2, 1, 1);
+        this.gridSettings.attach(value2PanelPosition, 4, 2, 1, 1);
         let valuePanelPositionBottom = new Gtk.Button({label: "<"});
         let value2PanelPositionBottom = new Gtk.Button({label: ">"});
         valuePanelPositionBottom.connect('clicked', Lang.bind(this, this.changePanelPositionBottomLeft));
         value2PanelPositionBottom.connect('clicked', Lang.bind(this, this.changePanelPositionBottomRight));
-        this.gridSettings.attach(valuePanelPositionBottom, 6, 4, 1, 1);
-        this.gridSettings.attach(value2PanelPositionBottom, 7, 4, 1, 1);
+        this.gridSettings.attach(valuePanelPositionBottom, 6, 2, 1, 1);
+        this.gridSettings.attach(value2PanelPositionBottom, 7, 2, 1, 1);
+
+        let labelIconSize = new Gtk.Label({label: _("Panel Size")+" (27 px)", xalign: 0});
+        this.gridSettings.attach(labelIconSize, 1, 3, 1, 1);
+        this.valueIconSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
+        let value2IconSize = new Gtk.SpinButton({adjustment: this.valueIconSize, snap_to_ticks: true});
+        value2IconSize.set_value(this.settings.get_int("panel-size"));
+        value2IconSize.connect("value-changed", Lang.bind(this, this.changeIconSize));
+        this.gridSettings.attach(value2IconSize, 3, 3, 2, 1);
+        this.valueIconSizeBottom = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
+        let value2IconSizeBottom = new Gtk.SpinButton({adjustment: this.valueIconSizeBottom, snap_to_ticks: true});
+        value2IconSizeBottom.set_value(this.settings.get_int("panel-size-bottom"));
+        value2IconSizeBottom.connect("value-changed", Lang.bind(this, this.changeIconSizeBottom));
+        this.gridSettings.attach(value2IconSizeBottom, 6, 3, 2, 1);
+
+        let labelTBIconSize = new Gtk.Label({label: _("Adjust TaskBar Icon Size")+" (0 px)", xalign: 0});
+        this.gridSettings.attach(labelTBIconSize, 1, 4, 1, 1);
+        this.valueTBIconSize = new Gtk.Adjustment({lower: -96, upper: 96, step_increment: 1});
+        let value2TBIconSize = new Gtk.SpinButton({adjustment: this.valueTBIconSize, snap_to_ticks: true});
+        value2TBIconSize.set_value(this.settings.get_int("tb-icon-size"));
+        value2TBIconSize.connect("value-changed", Lang.bind(this, this.changeTBIconSize));
+        this.gridSettings.attach(value2TBIconSize, 3, 4, 2, 1);
+        this.valueTBIconSizeBottom = new Gtk.Adjustment({lower: -96, upper: 96, step_increment: 1});
+        let value2TBIconSizeBottom = new Gtk.SpinButton({adjustment: this.valueTBIconSizeBottom, snap_to_ticks: true});
+        value2TBIconSizeBottom.set_value(this.settings.get_int("tb-icon-size-bottom"));
+        value2TBIconSizeBottom.connect("value-changed", Lang.bind(this, this.changeTBIconSizeBottom));
+        this.gridSettings.attach(value2TBIconSizeBottom, 6, 4, 2, 1);
+
+        let labelTBLabelSize = new Gtk.Label({label: _("Adjust TaskBar Label Size")+" (0 px)", xalign: 0});
+        this.gridSettings.attach(labelTBLabelSize, 1, 5, 1, 1);
+        this.valueTBLabelSize = new Gtk.Adjustment({lower: -96, upper: 96, step_increment: 1});
+        let value2TBLabelSize = new Gtk.SpinButton({adjustment: this.valueTBLabelSize, snap_to_ticks: true});
+        value2TBLabelSize.set_value(this.settings.get_int("tb-label-size"));
+        value2TBLabelSize.connect("value-changed", Lang.bind(this, this.changeTBLabelSize));
+        this.gridSettings.attach(value2TBLabelSize, 3, 5, 2, 1);
+        this.valueTBLabelSizeBottom = new Gtk.Adjustment({lower: -96, upper: 96, step_increment: 1});
+        let value2TBLabelSizeBottom = new Gtk.SpinButton({adjustment: this.valueTBLabelSizeBottom, snap_to_ticks: true});
+        value2TBLabelSizeBottom.set_value(this.settings.get_int("tb-label-size-bottom"));
+        value2TBLabelSizeBottom.connect("value-changed", Lang.bind(this, this.changeTBLabelSizeBottom));
+        this.gridSettings.attach(value2TBLabelSizeBottom, 6, 5, 2, 1);
+
+        let labelOtherPanelContent = new Gtk.Label({label: _("Adjust Panel Content Size")+" (0 px)", xalign: 0});
+        this.gridSettings.attach(labelOtherPanelContent, 1, 6, 1, 1);
+        this.valueOtherPanelContent = new Gtk.Adjustment({lower: -96, upper: 96, step_increment: 1});
+        let value2OtherPanelContent = new Gtk.SpinButton({adjustment: this.valueOtherPanelContent, snap_to_ticks: true});
+        value2OtherPanelContent.set_value(this.settings.get_int("content-size"));
+        value2OtherPanelContent.connect("value-changed", Lang.bind(this, this.changeOtherPanelContent));
+        this.gridSettings.attach(value2OtherPanelContent, 3, 6, 2, 1);
 
         let labelBottomPanelVertical = new Gtk.Label({label: _("Anchor Point")+" (0 px)", xalign: 0});
-        this.gridSettings.attach(labelBottomPanelVertical, 1, 5, 1, 1);
+        this.gridSettings.attach(labelBottomPanelVertical, 1, 7, 1, 1);
         this.valueBottomPanelVertical = new Gtk.Adjustment({lower: -100, upper: 100, step_increment: 1});
         this.value2BottomPanelVertical = new Gtk.SpinButton({adjustment: this.valueBottomPanelVertical, snap_to_ticks: true});
         this.value2BottomPanelVertical.set_value(this.settings.get_int("bottom-panel-vertical"));
         this.value2BottomPanelVertical.connect("value-changed", Lang.bind(this, this.changeBottomPanelVertical));
-        this.gridSettings.attach(this.value2BottomPanelVertical, 6, 5, 2, 1);
+        this.gridSettings.attach(this.value2BottomPanelVertical, 6, 7, 2, 1);
 
         let labelPanelBackgroundColor = new Gtk.Label({label: _("Panel Background\nColor & Opacity"), xalign: 0});
-        this.gridSettings.attach(labelPanelBackgroundColor, 1, 6, 1, 1);
+        this.gridSettings.attach(labelPanelBackgroundColor, 1, 8, 1, 1);
         let colorTop = this.settings.get_string("top-panel-background-color");
         let colorTopOriginal = this.settings.get_string("top-panel-original-background-color");
         if (colorTop === 'unset')
@@ -340,7 +374,7 @@ Prefs.prototype =
         this.valueTopPanelBackgroundColor.set_use_alpha(true);
         this.valueTopPanelBackgroundColor.set_rgba(rgbaTop);
         this.valueTopPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeTopPanelBackgroundColor));
-        this.gridSettings.attach(this.valueTopPanelBackgroundColor, 3, 6, 2, 1);
+        this.gridSettings.attach(this.valueTopPanelBackgroundColor, 3, 8, 2, 1);
         let colorBottom = this.settings.get_string("bottom-panel-background-color");
         let colorBottomOriginal = this.settings.get_string("bottom-panel-original-background-color");
         if (colorBottom === 'unset')
@@ -355,26 +389,26 @@ Prefs.prototype =
         this.valueBottomPanelBackgroundColor.set_use_alpha(true);
         this.valueBottomPanelBackgroundColor.set_rgba(rgbaBottom);
         this.valueBottomPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeBottomPanelBackgroundColor));
-        this.gridSettings.attach(this.valueBottomPanelBackgroundColor, 6, 6, 2, 1);
+        this.gridSettings.attach(this.valueBottomPanelBackgroundColor, 6, 8, 2, 1);
         this.resetTopPanelBackgroundColorButton = new Gtk.Button({label: _("Reset Color")});
         this.resetTopPanelBackgroundColorButton.connect('clicked', Lang.bind(this, this.resetTopPanelBackgroundColor));
-        this.gridSettings.attach(this.resetTopPanelBackgroundColorButton, 3, 7, 2, 1);
+        this.gridSettings.attach(this.resetTopPanelBackgroundColorButton, 3, 9, 2, 1);
         this.resetBottomPanelBackgroundColorButton = new Gtk.Button({label: _("Reset Color")});
         this.resetBottomPanelBackgroundColorButton.connect('clicked', Lang.bind(this, this.resetBottomPanelBackgroundColor));
-        this.gridSettings.attach(this.resetBottomPanelBackgroundColorButton, 6, 7, 2, 1);
+        this.gridSettings.attach(this.resetBottomPanelBackgroundColorButton, 6, 9, 2, 1);
 
         let resetSettingsButton = new Gtk.Button({label: _("Reset Panels Tab")});
         resetSettingsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetSettingsButton.connect('clicked', Lang.bind(this, this.resetSettings));
         resetSettingsButton.set_tooltip_text(_("Reset the Panels Tab to the Original Panels Settings"));
-        this.gridSettings.attach(resetSettingsButton, 1, 9, 1, 1);
+        this.gridSettings.attach(resetSettingsButton, 1, 11, 1, 1);
 
         let labelSpaceSettings1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSettings.attach(labelSpaceSettings1, 0, 10, 1, 1);
+        this.gridSettings.attach(labelSpaceSettings1, 0, 12, 1, 1);
         let labelSpaceSettings2 = new Gtk.Label({label: "\t", xalign: 0, hexpand: true});
         this.gridSettings.attach(labelSpaceSettings2, 2, 2, 1, 1);
         let labelSpaceSettings3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridSettings.attach(labelSpaceSettings3, 5, 8, 1, 1);
+        this.gridSettings.attach(labelSpaceSettings3, 5, 10, 1, 1);
         let labelSpaceSettings4 = new Gtk.Label({label: "<b>"+_("Panels")+"</b>", hexpand: true});
         labelSpaceSettings4.set_use_markup(true);
         this.gridSettings.attach(labelSpaceSettings4, 0, 0, 9, 1);
@@ -399,9 +433,13 @@ Prefs.prototype =
 
         let labelSortTasks = new Gtk.Label({label: _("Sort Tasks by Application"), xalign: 0});
         this.gridTasks.attach(labelSortTasks, 1, 2, 1, 1);
-        this.valueSortTasks = new Gtk.Switch({active: this.settings.get_boolean("sort-tasks")});
-        this.valueSortTasks.connect('notify::active', Lang.bind(this, this.changeSortTasks));
-        this.gridTasks.attach(this.valueSortTasks, 4, 2, 1, 1);
+        this.valueSortTasks = new Gtk.ComboBoxText();
+        this.valueSortTasks.append_text(_("OFF"));
+        this.valueSortTasks.append_text(_("Sort"));
+        this.valueSortTasks.append_text(_("Sort Workspace"));
+        this.valueSortTasks.set_active(this.settings.get_enum("sort-tasks"));
+        this.valueSortTasks.connect('changed', Lang.bind(this, this.changeSortTasks));
+        this.gridTasks.attach(this.valueSortTasks, 3, 2, 2, 1);
 
         let labelTasksLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
         this.gridTasks.attach(labelTasksLabel, 1, 3, 1, 1);
@@ -577,92 +615,119 @@ Prefs.prototype =
         notebook.append_page(scrollWindowTasks3, labelTasks3);
 
         let labelActiveTaskBackgroundColor = new Gtk.Label({label: _("Active Task Background\nColor & Opacity"), xalign: 0});
+	let tooltipActiveTaskBackgroundColor = _("Active Task Background Color & Opacity\nClick the color button to set the color and opacity of the active task background. This opens a new window with a table of preset colors to choose from. Click the '+' button under 'Custom' to customize color and opacity. Clicking '+' changes the window. In the center is a color picker, the left slider changes color and the bottom slider changes opacity. At the top, a indicator and entry field displays hexadecimal values in the form: #RRGGBB, where RR (red), GG (green) and BB (blue) are values between 00 and FF. When selected, customized colors will be available in all color settings. Back on the 'Tasks (III)' tab, flip the switch next to the color button to activate/deactivate the background color.\nToggle tasks at the 'Overview' tab.");
+        labelActiveTaskBackgroundColor.set_tooltip_text(tooltipActiveTaskBackgroundColor);
         this.gridTasks3.attach(labelActiveTaskBackgroundColor, 1, 1, 1, 1);
         let activeColor = this.settings.get_string("active-task-background-color");
         let rgbaActive = new Gdk.RGBA();
         rgbaActive.parse(activeColor);
         this.valueActiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Background Color"});
+        this.valueActiveTaskBackgroundColor.set_tooltip_text(tooltipActiveTaskBackgroundColor);
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgbaActive);
         this.valueActiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeActiveTaskBackgroundColor));
         this.gridTasks3.attach(this.valueActiveTaskBackgroundColor, 3, 1, 1, 1);
         this.value2ActiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("active-task-background-color-set")});
+        this.value2ActiveTaskBackgroundColor.set_tooltip_text(tooltipActiveTaskBackgroundColor);
         this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
         this.gridTasks3.attach(this.value2ActiveTaskBackgroundColor, 4, 1, 1, 1);
 
-        let labelInactiveTaskBackgroundColor = new Gtk.Label({label: _("Inactive Task Background\nColor & Opacity"), xalign: 0});
+        let labelInactiveTaskBackgroundColor = new Gtk.Label({label: _("Inactive Tasks Background\nColor & Opacity"), xalign: 0});
+        let tooltipInactiveTaskBackgroundColor = _("Inactive Tasks Background Color & Opacity\nClick the color button to set the color and opacity of inactive task backgrounds. This opens a new window with a table of preset colors to choose from. Click the '+' button under 'Custom' to customize color and opacity. Clicking '+' changes the window. In the center is a color picker, the left slider changes color and the bottom slider changes opacity. At the top, a indicator and entry field displays hexadecimal values in the form: #RRGGBB, where RR (red), GG (green) and BB (blue) are values between 00 and FF. When selected, customized colors will be available in all color settings. Back on the 'Tasks (III)' tab, flip the switch next to the color button to activate/deactivate the background color.\nToggle tasks at the 'Overview' tab.");
+        labelInactiveTaskBackgroundColor.set_tooltip_text(tooltipInactiveTaskBackgroundColor);
         this.gridTasks3.attach(labelInactiveTaskBackgroundColor, 1, 2, 1, 1);
         let inactiveColor = this.settings.get_string("inactive-task-background-color");
         let rgbaInactive = new Gdk.RGBA();
         rgbaInactive.parse(inactiveColor);
-        this.valueInactiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Task Background Color"});
+        this.valueInactiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Tasks Background Color"});
+        this.valueInactiveTaskBackgroundColor.set_tooltip_text(tooltipInactiveTaskBackgroundColor);
         this.valueInactiveTaskBackgroundColor.set_use_alpha(true);
         this.valueInactiveTaskBackgroundColor.set_rgba(rgbaInactive);
         this.valueInactiveTaskBackgroundColor.connect('color-set', Lang.bind(this, this.changeInactiveTaskBackgroundColor));
         this.gridTasks3.attach(this.valueInactiveTaskBackgroundColor, 3, 2, 1, 1);
         this.value2InactiveTaskBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("inactive-task-background-color-set")});
+        this.value2InactiveTaskBackgroundColor.set_tooltip_text(tooltipInactiveTaskBackgroundColor);
         this.value2InactiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeInactiveTaskBackgroundColorSet));
         this.gridTasks3.attach(this.value2InactiveTaskBackgroundColor, 4, 2, 1, 1);
 
         let labelTasksLabelColor = new Gtk.Label({label: _("Active Task Label Color"), xalign: 0});
+        let tooltipTasksLabelColor = _("Active Task Label Color & Opacity\nClick the color button to set the color and opacity of the active task label. This opens a new window with a table of preset colors to choose from. Click the '+' button under 'Custom' to customize color and opacity. Clicking '+' changes the window. In the center is a color picker, the left slider changes color and the bottom slider changes opacity. At the top, a indicator and entry field displays hexadecimal values in the form: #RRGGBB, where RR (red), GG (green) and BB (blue) are values between 00 and FF. When selected, customized colors will be available in all color settings. Back on the 'Tasks (III)' tab, flip the switch next to the color button to activate/deactivate the label color.\nToggle task labels at the 'Tasks (I)' tab.\nToggle tasks at the 'Overview' tab.");
+        labelTasksLabelColor.set_tooltip_text(tooltipTasksLabelColor);
         this.gridTasks3.attach(labelTasksLabelColor, 1, 3, 1, 1);
         let colorTLC = this.settings.get_string("tasks-label-color");
         let rgbaTLC = new Gdk.RGBA();
         rgbaTLC.parse(colorTLC);
         this.valueTasksLabelColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Label Color"});
+        this.valueTasksLabelColor.set_tooltip_text(tooltipTasksLabelColor);
         this.valueTasksLabelColor.set_use_alpha(true);
         this.valueTasksLabelColor.set_rgba(rgbaTLC);
         this.valueTasksLabelColor.connect('color-set', Lang.bind(this, this.changeTasksLabelColor));
         this.gridTasks3.attach(this.valueTasksLabelColor, 3, 3, 1, 1);
         this.value2TasksLabelColor = new Gtk.Switch({active: this.settings.get_boolean("display-tasks-label-color")});
+        this.value2TasksLabelColor.set_tooltip_text(tooltipTasksLabelColor);
         this.value2TasksLabelColor.connect('notify::active', Lang.bind(this, this.changeTasksLabelColorSet));
         this.gridTasks3.attach(this.value2TasksLabelColor, 4, 3, 1, 1);
 
-        let labelInactiveTasksLabelColor = new Gtk.Label({label: _("Inactive Task Label Color"), xalign: 0});
+        let labelInactiveTasksLabelColor = new Gtk.Label({label: _("Inactive Tasks Label Color"), xalign: 0});
+        let tooltipInactiveTasksLabelColor = _("Inactive Tasks Label Color & Opacity\nClick the color button to set the color and opacity of inactive task labels. This opens a new window with a table of preset colors to choose from. Click the '+' button under 'Custom' to customize color and opacity. Clicking '+' changes the window. In the center is a color picker, the left slider changes color and the bottom slider changes opacity. At the top, a indicator and entry field displays hexadecimal values in the form: #RRGGBB, where RR (red), GG (green) and BB (blue) are values between 00 and FF. When selected, customized colors will be available in all color settings. Back on the 'Tasks (III)' tab, flip the switch next to the color button to activate/deactivate the label color.\nToggle task labels at the 'Tasks (I)' tab.\nToggle tasks at the 'Overview' tab.");
+        labelInactiveTasksLabelColor.set_tooltip_text(tooltipInactiveTasksLabelColor);
         this.gridTasks3.attach(labelInactiveTasksLabelColor, 1, 4, 1, 1);
         let colorITLC = this.settings.get_string("inactive-tasks-label-color");
         let rgbaITLC = new Gdk.RGBA();
         rgbaITLC.parse(colorITLC);
-        this.valueInactiveTasksLabelColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Task Label Color"});
+        this.valueInactiveTasksLabelColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Tasks Label Color"});
+        this.valueInactiveTasksLabelColor.set_tooltip_text(tooltipInactiveTasksLabelColor);
         this.valueInactiveTasksLabelColor.set_use_alpha(true);
         this.valueInactiveTasksLabelColor.set_rgba(rgbaITLC);
         this.valueInactiveTasksLabelColor.connect('color-set', Lang.bind(this, this.changeInactiveTasksLabelColor));
         this.gridTasks3.attach(this.valueInactiveTasksLabelColor, 3, 4, 1, 1);
         this.value2InactiveTasksLabelColor = new Gtk.Switch({active: this.settings.get_boolean("display-inactive-tasks-label-color")});
+        this.value2InactiveTasksLabelColor.set_tooltip_text(tooltipInactiveTasksLabelColor);
         this.value2InactiveTasksLabelColor.connect('notify::active', Lang.bind(this, this.changeInactiveTasksLabelColorSet));
         this.gridTasks3.attach(this.value2InactiveTasksLabelColor, 4, 4, 1, 1);
 
         let labelTasksFrameColor = new Gtk.Label({label: _("Active Task Frame Color"), xalign: 0});
+        let tooltipTasksFrameColor = _("Active Task Frame Color & Opacity\nClick the color button to set the color and opacity of the active task frame. This opens a new window with a table of preset colors to choose from. Click the '+' button under 'Custom' to customize color and opacity. Clicking '+' changes the window. In the center is a color picker, the left slider changes color and the bottom slider changes opacity. At the top, a indicator and entry field displays hexadecimal values in the form: #RRGGBB, where RR (red), GG (green) and BB (blue) are values between 00 and FF. When selected, customized colors will be available in all color settings. Back on the 'Tasks (III)' tab, flip the switch next to the color button to activate/deactivate the frame color.\nToggle the active task frame at the 'Tasks (II)' tab.\nToggle tasks at the 'Overview' tab.");
+        labelTasksFrameColor.set_tooltip_text(tooltipTasksFrameColor);
         this.gridTasks3.attach(labelTasksFrameColor, 1, 5, 1, 1);
         let colorTFC = this.settings.get_string("tasks-frame-color");
         let rgbaTFC = new Gdk.RGBA();
         rgbaTFC.parse(colorTFC);
         this.valueTasksFrameColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Frame Color"});
+	this.valueTasksFrameColor.set_tooltip_text(tooltipTasksFrameColor);
         this.valueTasksFrameColor.set_use_alpha(true);
         this.valueTasksFrameColor.set_rgba(rgbaTFC);
         this.valueTasksFrameColor.connect('color-set', Lang.bind(this, this.changeTasksFrameColor));
         this.gridTasks3.attach(this.valueTasksFrameColor, 3, 5, 1, 1);
         this.value2TasksFrameColor = new Gtk.Switch({active: this.settings.get_boolean("display-tasks-frame-color")});
+	this.value2TasksFrameColor.set_tooltip_text(tooltipTasksFrameColor);
         this.value2TasksFrameColor.connect('notify::active', Lang.bind(this, this.changeTasksFrameColorSet));
         this.gridTasks3.attach(this.value2TasksFrameColor, 4, 5, 1, 1);
 
-        let labelInactiveTasksFrameColor = new Gtk.Label({label: _("Inactive Task Frame Color"), xalign: 0});
+        let labelInactiveTasksFrameColor = new Gtk.Label({label: _("Inactive Tasks Frame Color"), xalign: 0});
+        let tooltipInactiveTasksFrameColor = _("Inactive Tasks Frame Color & Opacity\nClick the color button to set the color and opacity of inactive task frames. This opens a new window with a table of preset colors to choose from. Click the '+' button under 'Custom' to customize color and opacity. Clicking '+' changes the window. In the center is a color picker, the left slider changes color and the bottom slider changes opacity. At the top, a indicator and entry field displays hexadecimal values in the form: #RRGGBB, where RR (red), GG (green) and BB (blue) are values between 00 and FF. When selected, customized colors will be available in all color settings. Back on the 'Tasks (III)' tab, flip the switch next to the color button to activate/deactivate the frame color.\nToggle inactive task frames at the 'Tasks (II)' tab.\nToggle tasks at the 'Overview' tab.");
+        labelInactiveTasksFrameColor.set_tooltip_text(tooltipInactiveTasksFrameColor);
         this.gridTasks3.attach(labelInactiveTasksFrameColor, 1, 6, 1, 1);
         let colorITFC = this.settings.get_string("inactive-tasks-frame-color");
         let rgbaITFC = new Gdk.RGBA();
         rgbaITFC.parse(colorITFC);
-        this.valueInactiveTasksFrameColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Task Frame Color"});
+        this.valueInactiveTasksFrameColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Tasks Frame Color"});
+        this.valueInactiveTasksFrameColor.set_tooltip_text(tooltipInactiveTasksFrameColor);
         this.valueInactiveTasksFrameColor.set_use_alpha(true);
         this.valueInactiveTasksFrameColor.set_rgba(rgbaITFC);
         this.valueInactiveTasksFrameColor.connect('color-set', Lang.bind(this, this.changeInactiveTasksFrameColor));
         this.gridTasks3.attach(this.valueInactiveTasksFrameColor, 3, 6, 1, 1);
         this.value2InactiveTasksFrameColor = new Gtk.Switch({active: this.settings.get_boolean("display-inactive-tasks-frame-color")});
+        this.value2InactiveTasksFrameColor.set_tooltip_text(tooltipInactiveTasksFrameColor);
         this.value2InactiveTasksFrameColor.connect('notify::active', Lang.bind(this, this.changeInactiveTasksFrameColorSet));
         this.gridTasks3.attach(this.value2InactiveTasksFrameColor, 4, 6, 1, 1);
 
         let labelBlacklistTask = new Gtk.Label({label: _("Blacklist Apps"), xalign: 0});
+        let tooltipBlacklistTask = _("Blacklist Apps\nFind app names by navigating to the 'Preview' tab and setting 'Tasks Label' to 'App Name'. Then hover the task you would like to blacklist. App names are case-sensitive. If you intend to blacklist more than one app, separate app names by comma and space:\nTerminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files\nFlip the switch next to the entry field to activate/deactivate the blacklist.\nToggle tasks at the 'Overview' tab.");
+	labelBlacklistTask.set_tooltip_text(tooltipBlacklistTask);
         this.gridTasks3.attach(labelBlacklistTask, 1, 7, 1, 1);
         this.valueBlacklistTask = new Gtk.Entry();
+	this.valueBlacklistTask.set_tooltip_text(tooltipBlacklistTask);
         let blacklisttext = "";
         let blacklistlength = this.settings.get_strv("blacklist").length;
         if (blacklistlength > 0)
@@ -679,18 +744,14 @@ Prefs.prototype =
         this.valueBlacklistTask.connect('changed', Lang.bind(this, this.changeBlacklistTask));
         this.gridTasks3.attach(this.valueBlacklistTask, 2, 7, 2, 1);
         this.value2BlacklistTask = new Gtk.Switch({active: this.settings.get_boolean("blacklist-set")});
+	this.value2BlacklistTask.set_tooltip_text(tooltipBlacklistTask);
         this.value2BlacklistTask.connect('notify::active', Lang.bind(this, this.changeBlacklist));
         this.gridTasks3.attach(this.value2BlacklistTask, 4, 7, 1, 1);
-
-        let findAppNamesButton = new Gtk.Button({label: _("Find App Names")});
-        findAppNamesButton.connect('clicked', Lang.bind(this, this.findAppNames));
-        findAppNamesButton.set_tooltip_text(_("Find App Names at 'Show Applications' in the Desktop Overview.\nShould the name be cut short (...) choose 'Show Details' from the right-click menu and copy/paste from there.\nApp names are Case-Sensitive.\nIf you intend to blacklist more than one app, separate app names by Comma AND Space.\n\nExample:\nTerminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files"));
-        this.gridTasks3.attach(findAppNamesButton, 1, 8, 1, 1);
 
         let resetTasks3Button = new Gtk.Button({label: _("Reset Tasks (III) Tab")});
         resetTasks3Button.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetTasks3Button.connect('clicked', Lang.bind(this, this.resetTasks3));
-        resetTasks3Button.set_tooltip_text(_("Reset the Tasks III Tab to the Original Tasks III Settings"));
+        resetTasks3Button.set_tooltip_text(_("Reset All Settings on this Tab"));
         this.gridTasks3.attach(resetTasks3Button, 1, 10, 1, 1);
 
         let labelSpaceTasks31 = new Gtk.Label({label: "\t", xalign: 0});
@@ -1154,19 +1215,19 @@ Prefs.prototype =
         this.valueEnableHotCorner.connect('notify::active', Lang.bind(this, this.changeEnableHotCorner));
         this.gridMisc.attach(this.valueEnableHotCorner, 3, 6, 1, 1);
 
-        let labelDisplayDash = new Gtk.Label({label: _("Dash (Overview)"), xalign: 0});
+        let labelDisplayDash = new Gtk.Label({label: _("Dash (Activities Overview)"), xalign: 0});
         this.gridMisc.attach(labelDisplayDash, 1, 7, 1, 1);
         this.valueDisplayDash = new Gtk.Switch({active: this.settings.get_boolean("dash")});
         this.valueDisplayDash.connect('notify::active', Lang.bind(this, this.changeDisplayDash));
         this.gridMisc.attach(this.valueDisplayDash, 3, 7, 1, 1);
 
-        let labelDisplayWorkspaceSelector = new Gtk.Label({label: _("Workspace Selector (Overview)"), xalign: 0});
+        let labelDisplayWorkspaceSelector = new Gtk.Label({label: _("Workspace Selector (Activities Overview)"), xalign: 0});
         this.gridMisc.attach(labelDisplayWorkspaceSelector, 1, 8, 1, 1);
         this.valueDisplayWorkspaceSelector = new Gtk.Switch({active: this.settings.get_boolean("workspace-selector")});
         this.valueDisplayWorkspaceSelector.connect('notify::active', Lang.bind(this, this.changeDisplayWorkspaceSelector));
         this.gridMisc.attach(this.valueDisplayWorkspaceSelector, 3, 8, 1, 1);
 
-        let labelOverview = new Gtk.Label({label: _("TaskBar (Overview)"), xalign: 0});
+        let labelOverview = new Gtk.Label({label: _("TaskBar (Activities Overview)"), xalign: 0});
         this.gridMisc.attach(labelOverview, 1, 9, 1, 1);
         this.valueOverview = new Gtk.Switch({active: this.settings.get_boolean("overview")});
         this.valueOverview.connect('notify::active', Lang.bind(this, this.changeOverview));
@@ -1360,15 +1421,46 @@ Prefs.prototype =
 
     changeIconSize: function(object)
     {
-        this.settings.set_int("icon-size", this.valueIconSize.get_value());
+        this.settings.set_int("panel-size", this.valueIconSize.get_value());
     },
 
     changeIconSizeBottom: function(object)
     {
         if (! this.settings.get_boolean("bottom-panel"))
-            this.valueIconSizeBottom.set_value(this.settings.get_int("icon-size-bottom"));
+            this.valueIconSizeBottom.set_value(this.settings.get_int("panel-size-bottom"));
         else
-            this.settings.set_int("icon-size-bottom", this.valueIconSizeBottom.get_value());
+            this.settings.set_int("panel-size-bottom", this.valueIconSizeBottom.get_value());
+    },
+
+    changeTBIconSize: function(object)
+    {
+        this.settings.set_int("tb-icon-size", this.valueTBIconSize.get_value());
+    },
+
+    changeTBIconSizeBottom: function(object)
+    {
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueTBIconSizeBottom.set_value(this.settings.get_int("tb-icon-size-bottom"));
+        else
+            this.settings.set_int("tb-icon-size-bottom", this.valueTBIconSizeBottom.get_value());
+    },
+
+    changeTBLabelSize: function(object)
+    {
+        this.settings.set_int("tb-label-size", this.valueTBLabelSize.get_value());
+    },
+
+    changeTBLabelSizeBottom: function(object)
+    {
+        if (! this.settings.get_boolean("bottom-panel"))
+            this.valueTBLabelSizeBottom.set_value(this.settings.get_int("tb-label-size-bottom"));
+        else
+            this.settings.set_int("tb-label-size-bottom", this.valueTBLabelSizeBottom.get_value());
+    },
+
+    changeOtherPanelContent: function(object)
+    {
+        this.settings.set_int("content-size", this.valueOtherPanelContent.get_value());
     },
 
     changeFontSize: function(object)
@@ -1391,7 +1483,7 @@ Prefs.prototype =
 
     changeSortTasks: function(object)
     {
-        this.settings.set_boolean("sort-tasks", object.active);
+        this.settings.set_enum("sort-tasks", this.valueSortTasks.get_active());
     },
 
     changeTasksLabel: function(object)
@@ -2192,10 +2284,20 @@ Prefs.prototype =
         this.settings.set_int("bottom-panel-vertical", 0);
         this.valueBottomPanelVertical.set_value(0);
         this.settings.set_int("position-bottom-box", 0);
-        this.settings.set_int("icon-size", 22);
-        this.valueIconSize.set_value(22);
-        this.settings.set_int("icon-size-bottom", 22);
-        this.valueIconSizeBottom.set_value(22);
+        this.settings.set_int("panel-size", 27);
+        this.valueIconSize.set_value(27);
+        this.settings.set_int("panel-size-bottom", 27);
+        this.valueIconSizeBottom.set_value(27);
+        this.settings.set_int("tb-icon-size", 0);
+        this.valueTBIconSize.set_value(0);
+        this.settings.set_int("tb-icon-size-bottom", 0);
+        this.valueTBIconSizeBottom.set_value(0);
+        this.settings.set_int("tb-label-size", 0);
+        this.valueTBLabelSize.set_value(0);
+        this.settings.set_int("tb-label-size-bottom", 0);
+        this.valueTBLabelSizeBottom.set_value(0);
+        this.settings.set_int("content-size", 0);
+        this.valueOtherPanelContent.set_value(0);
         this.settings.set_string("top-panel-background-color", "unset");
         this.settings.set_string("bottom-panel-background-color", "unset");
         let topPanelOriginalBackgroundColor = this.settings.get_string("top-panel-original-background-color");
@@ -2210,7 +2312,7 @@ Prefs.prototype =
     {
         this.settings.set_boolean("reset-flag", true);
         this.valueAllWorkspaces.set_active(false);
-        this.valueSortTasks.set_active(false);
+        this.valueSortTasks.set_active(0);
         this.valueTasksLabel.set_active(0);
         this.valueTasksLabelWidth.set_value(150);
         this.valueTasksContainerWidth.set_value(0);

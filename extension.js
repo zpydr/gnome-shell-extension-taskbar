@@ -141,7 +141,7 @@ TaskBar.prototype =
     iconDesktop: null,
     iconPath: null,
     iconShowApps: null,
-    iconSize: null,
+    panelSize: null,
     iconTask: null,
     iconThemeChangedId: null,
     iconTray: null,
@@ -195,7 +195,7 @@ TaskBar.prototype =
     panelIconSize: null,
     panelPosition: null,
     panelSet: null,
-    panelSize: null,
+    fontSize: null,
     panelStyleChangedId: null,
     pbchildren: null,
     positionAppearance: null,
@@ -623,8 +623,13 @@ TaskBar.prototype =
         //Reinit Extension on Param Change
         this.settingSignals =
         [
-            this.settings.connect("changed::icon-size", Lang.bind(this, this.onParamChanged)),
-            this.settings.connect("changed::icon-size-bottom", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::panel-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::panel-size-bottom", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tb-icon-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tb-icon-size-bottom", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tb-label-size", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::tb-label-size-bottom", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::content-size", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::font-size-bottom", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::panel-box", Lang.bind(this, this.onBoxChanged)),
             this.settings.connect("changed::panel-position", Lang.bind(this, this.onParamChanged)),
@@ -762,10 +767,11 @@ TaskBar.prototype =
         }
         if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode === 'user'))
         {
+            //Comment out the next line to disable the preferences window from opening at the first start
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
             this.settings.set_boolean("first-start", false);
         }
-	// Find out if the bottom panel extension is enabled
+        // Find out if the bottom panel extension is enabled
 	this.tbp = false;
 	let schemaSettings = new Gio.Settings({ schema: 'org.gnome.shell' });
 	let enabled_extensions = schemaSettings.get_strv('enabled-extensions');
@@ -999,7 +1005,7 @@ TaskBar.prototype =
                 {
                     continue;
                 }
-                let buttonfavorite = new St.Button({ style_class: "tkb-task-button", child: favoriteapp.create_icon_texture(this.iconSize) });
+                let buttonfavorite = new St.Button({ style_class: "tkb-task-button", child: favoriteapp.create_icon_texture(this.panelSize) });
                 buttonfavorite.connect('clicked', Lang.bind(this, function()
                 {
                     favoriteapp.open_new_window(-1);
@@ -1035,7 +1041,7 @@ TaskBar.prototype =
             this.iconShowApps = new St.Icon(
             {
                 gicon: this.showAppsIcon,
-                icon_size: (this.iconSize),
+                icon_size: (this.panelSize),
                 style_class: "tkb-desktop-icon"
             });
             this.buttonShowApps = new St.Button({ style_class: "tkb-task-button" });
@@ -1084,7 +1090,7 @@ TaskBar.prototype =
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex + "/" + labelTotalWorkspace) });
         else if (this.settings.get_enum("workspace-button-index") === 0)
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
-        this.labelWorkspace.style = 'font-size: ' + (this.iconSize * 2 / 3) + 'px' + ';';
+        this.labelWorkspace.style = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px' + ';';
         this.buttonWorkspace.set_child(this.labelWorkspace);
     },
 
@@ -1100,7 +1106,7 @@ TaskBar.prototype =
             let iconDesktop = new St.Icon(
             {
                 gicon: this.desktopButtonIcon,
-                icon_size: (this.iconSize),
+                icon_size: (this.panelSize),
                 style_class: "tkb-desktop-icon"
             });
             let buttonDesktop = new St.Button({ style_class: "tkb-task-button" });
@@ -1166,7 +1172,7 @@ TaskBar.prototype =
         this.iconTray = new St.Icon(
         {
             gicon: this.trayIcon,
-            icon_size: (this.iconSize),
+            icon_size: (this.panelSize),
             style_class: "tkb-desktop-icon"
         });
         this.buttonTray.set_child(this.iconTray);
@@ -1475,10 +1481,13 @@ TaskBar.prototype =
             this.inactiveBackgroundStyleColor += "margin-right: " + this.inactiveMargin + "px;";
     },
 
-    //Top Panel Background Color
+    //Top Panel Background Color and (Font) Size
     changeTopPanelBackgroundColor: function()
     {
-        this.iconSize = this.settings.get_int('icon-size');
+        this.panelSize = this.settings.get_int('panel-size');
+        this.adjustTBIconSize = this.settings.get_int('tb-icon-size');
+        this.adjustTBLabelSize = this.settings.get_int('tb-label-size');
+        this.adjustContentSize = this.settings.get_int('content-size');
         this.panelSet = false;
         this.originalTopPanelStyle = Main.panel.actor.get_style();
         this.originalLeftPanelCornerStyle = Main.panel._leftCorner.actor.get_style();
@@ -1492,22 +1501,19 @@ TaskBar.prototype =
         {
             this.settings.set_string("bottom-panel-original-background-color", topPanelOriginalBackgroundColor);
         }
-        if (this.iconSize !== 22)
+        if ((this.panelSize !== 27) || (this.adjustContentSize !== 0) || (this.adjustLabelSize !== 0))
         {
             //Set Font Size
-            this.panelIconSize = Math.round(this.iconSize * 2 / 3);
-            this.panelSize = 'font-size: ' + this.panelIconSize + 'px;';
-            Main.panel.actor.set_style(this.panelSize);
+            this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
+            this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
+            Main.panel.actor.set_style(this.fontSize);
             this.panelSet = true;
         }
         this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
         if (this.topPanelBackgroundColor !== 'unset')
         {
             this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor + ";";
-            if (this.iconSize !== 22)
-                Main.panel.actor.set_style(this.panelSize + ' ' + this.topPanelBackgroundStyle);
-            else
-                Main.panel.actor.set_style(this.topPanelBackgroundStyle);
+            Main.panel.actor.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
             if ((this.settings.get_boolean("top-panel-background-alpha")) && (ShellVersion[1] <= 16))
             {
                 Main.panel._leftCorner.actor.hide();
@@ -1525,22 +1531,27 @@ TaskBar.prototype =
             }
             this.panelSet = true;
         }
+        this.panelSize = ((this.settings.get_int('panel-size')) - 6 + (this.settings.get_int('tb-icon-size')));
     },
 
     //Bottom Panel
     bottomPanel: function()
     {
+        this.adjustTBIconSize = this.settings.get_int('tb-icon-size-bottom');
+        this.adjustTBLabelSize = this.settings.get_int('tb-label-size-bottom');
+        this.adjustContentSize = 0;
         let bottomPanelHeight = null;
         let newShowTray = null;
-        this.iconSize = this.settings.get_int('icon-size-bottom');
-        this.panelSize = 'font-size: ' + (this.iconSize * 2 / 3) + 'px;';
+        this.panelSize = this.settings.get_int('panel-size-bottom');
+        this.panelLabelSize = (this.panelSize - 12 + this.adjustTBLabelSize);
+        this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
         this.bottomPanelVertical = this.settings.get_int('bottom-panel-vertical');
         this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
         if (this.bottomPanelBackgroundColor === "unset")
             this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-original-background-color");
         this.bottomPanelBackgroundStyle = "background-color: " + this.bottomPanelBackgroundColor + ";";
         this.bottomPanelActor = new St.BoxLayout({name: 'bottomPanel'});
-        this.bottomPanelActor.set_style(this.panelSize + ' ' + this.bottomPanelBackgroundStyle);
+        this.bottomPanelActor.set_style(this.fontSize + ' ' + this.bottomPanelBackgroundStyle);
         this.bottomPanelActor.set_reactive(false);
         this.positionBoxBottomStart = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.START });
         this.positionBoxBottomMiddle = new St.Bin({ x_fill: false, x_expand: true, x_align: St.Align.MIDDLE });
@@ -1562,7 +1573,7 @@ TaskBar.prototype =
         this.bottomPanelActor.add_actor(this.positionBoxBottomMiddle);
         this.bottomPanelActor.add_actor(this.positionBoxBottomEnd);
         let primary = Main.layoutManager.primaryMonitor;
-        this.height = (this.iconSize + this.bottomPanelVertical + 2);
+        this.height = (this.panelSize + this.bottomPanelVertical);
         this.bottomPanelActor.set_position(primary.x, primary.y+primary.height-this.height);
         this.bottomPanelActor.set_size(primary.width, -1);
         if (ShellVersion[1] <= 14)
@@ -1580,6 +1591,7 @@ TaskBar.prototype =
                 this.setAnchorPoint = true;
             }));
         }
+        this.panelSize = ((this.settings.get_int('panel-size-bottom')) - 6 + (this.settings.get_int('tb-icon-size-bottom')));
     },
 
     //Click Events
@@ -1945,7 +1957,6 @@ TaskBar.prototype =
     {
             if (type === 0) //Add all windows (On init or workspace change)
             {
-                this.countTasks = null;
                 this.cleanTasksList();
                 windowsList.forEach(
                     function(window)
@@ -1971,7 +1982,7 @@ TaskBar.prototype =
     //Tasks Container
     tasksContainer: function(window)
     {
-        if ((this.tasksContainerWidth !== 0) && (this.countTasks > this.tasksContainerWidth))
+        if ((this.tasksContainerWidth > 0) && (this.countTasks > 0) && (this.countTasks > this.tasksContainerWidth))
         {
             let totalWidth = this.boxMainTasks.get_width();
             let spaces = this.settings.get_int("tasks-spaces");
@@ -1990,7 +2001,7 @@ TaskBar.prototype =
     //Tasks Container Size
     tasksContainerSize: function()
     {
-        if (this.tasksContainerWidth !== 0)
+        if (this.tasksContainerWidth > 0)
         {
             let spaces = this.settings.get_int("tasks-spaces");
             let buttonTaskWidth = 0;
@@ -1998,7 +2009,7 @@ TaskBar.prototype =
             if (this.settings.get_enum("tasks-label") !== 0)
                 buttonTaskWidth = this.tasksWidth;
             else
-                buttonTaskWidth = (this.iconSize + 8);
+                buttonTaskWidth = (this.panelSize + 8);
             this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
             this.boxMainTasks.set_width(this.newTasksContainerWidth);
         }
@@ -2042,14 +2053,17 @@ TaskBar.prototype =
                             this.tasksLabelColor = this.settings.get_string("tasks-label-color");
                             if (this.tasksLabelColor !== "unset")
                             {
-                                this.tasksLabelStyle = "color: " + this.tasksLabelColor + ";";
+                                this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.tasksLabelColor + ';';
                                 labelTask.set_style(this.tasksLabelStyle);
                             }
                             else
                                 labelTask.set_style("None");
                         }
                         else if (this.settings.get_enum("tasks-label") !== 0)
-                            labelTask.set_style("None");
+                        {
+                            this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;';
+                            labelTask.set_style(this.tasksLabelStyle);
+                        }
                     }
                     else
                     {
@@ -2059,14 +2073,17 @@ TaskBar.prototype =
                             this.inactiveTasksLabelColor = this.settings.get_string("inactive-tasks-label-color");
                             if (this.inactiveTasksLabelColor !== "unset")
                             {
-                                this.inactiveTasksLabelStyle = "color: " + this.inactiveTasksLabelColor + ";";
+                                this.inactiveTasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.inactiveTasksLabelColor + ';';
                                 labelTask.set_style(this.inactiveTasksLabelStyle);
                             }
                             else
                                 labelTask.set_style("None");
                         }
                         else if (this.settings.get_enum("tasks-label") !== 0)
-                            labelTask.set_style("None");
+                        {
+                            this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;';
+                            labelTask.set_style(this.tasksLabelStyle);
+                        }
                     }
                 },
                 this
@@ -2100,14 +2117,17 @@ TaskBar.prototype =
                             this.inactiveTasksLabelColor = this.settings.get_string("inactive-tasks-label-color");
                             if (this.inactiveTasksLabelColor !== "unset")
                             {
-                                this.inactiveTasksLabelStyle = "color: " + this.inactiveTasksLabelColor + ";";
+                                this.inactiveTasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.inactiveTasksLabelColor + ';';
                                 labelTask.set_style(this.inactiveTasksLabelStyle);
                             }
                             else
                                 labelTask.set_style("None");
                         }
                         else if (this.settings.get_enum("tasks-label") !== 0)
-                            labelTask.set_style("None");
+                        {
+                            this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;';
+                            labelTask.set_style(this.tasksLabelStyle);
+                        }
                     }
                 },
                 this
@@ -2157,13 +2177,18 @@ TaskBar.prototype =
             //Tasks Label
             if (this.settings.get_enum("tasks-label") !== 0)
             {
-                let buttonTaskLayout = new St.BoxLayout({ style_class: "tkb-task-button" });
-                let iconTask = app.create_icon_texture(this.iconSize - 2);
+                let buttonTaskLayout = null;
+                if (this.settings.get_boolean("bottom-panel"))
+                    buttonTaskLayout = new St.BoxLayout({ style_class: "tkb-task-button-bottom-label" });
+		else
+                    buttonTaskLayout = new St.BoxLayout({ style_class: "tkb-task-button" });
+                let iconTask = app.create_icon_texture(this.panelSize);
                 buttonTaskLayout.add_actor(iconTask);
                 if (this.settings.get_enum("tasks-label") === 1)
                     labelTask = new St.Label({ text: (" " + window.get_title() + " ") });
                 else
                     labelTask = new St.Label({ text: (" " + appname + " ") });
+		labelTask.set_style('font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;');
                 buttonTaskLayout.add_actor(labelTask);
                 buttonTask = new St.Button({ style_class: "tkb-task-button", child: buttonTaskLayout, x_align: St.Align.START });
                 this.tasksWidth = this.settings.get_int("tasks-width");
@@ -2171,7 +2196,10 @@ TaskBar.prototype =
             }
             else
             {
-                buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.iconSize) });
+                if (this.settings.get_boolean("bottom-panel"))
+                    buttonTask = new St.Button({ style_class: "tkb-task-button-bottom", child: app.create_icon_texture(this.panelSize) });
+		else
+                    buttonTask = new St.Button({ style_class: "tkb-task-button", child: app.create_icon_texture(this.panelSize) });
             }
             //Signals
             let signalsTask = [
@@ -2194,7 +2222,7 @@ TaskBar.prototype =
                     this.tasksLabelColor = this.settings.get_string("tasks-label-color");
                     if (this.tasksLabelColor !== "unset")
                     {
-                        this.tasksLabelStyle = "color: " + this.tasksLabelColor + ";";
+                        this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.tasksLabelColor + ';';
                         labelTask.set_style(this.tasksLabelStyle);
                     }
                     else
@@ -2209,7 +2237,7 @@ TaskBar.prototype =
                     this.inactiveTasksLabelColor = this.settings.get_string("inactive-tasks-label-color");
                     if (this.inactiveTasksLabelColor !== "unset")
                     {
-                        this.inactiveTasksLabelStyle = "color: " + this.inactiveTasksLabelColor + ";";
+                        this.inactiveTasksLabelStyle  = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.inactiveTasksLabelColor + ';';
                         labelTask.set_style(this.inactiveTasksLabelStyle);
                     }
                     else
@@ -2220,14 +2248,24 @@ TaskBar.prototype =
                 this.countTasks ++;
             //Sort Tasks
             let inserted = false;
-            if (this.settings.get_boolean("sort-tasks"))
+            if (this.settings.get_enum("sort-tasks") !== 0)
             {
                 for (let i = this.tasksList.length - 1; i >= 0; i--)
                 {
                     let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+                    			
                     let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
-                    if ( appname == _app_name )
+                    if ( appname === _app_name )
                     {
+                        if (this.settings.get_enum("sort-tasks") === 2)
+                        {
+                            let _workspaceTask = _windowTask.get_workspace();
+		            let workspaceTask = window.get_workspace();
+                            if (workspaceTask !== _workspaceTask)
+                            {
+                                break;
+                            }
+                        }
                         this.boxMainTasks.insert_child_above(buttonTask,_buttonTask);
                         this.tasksList.splice(i+1,0,[ window, buttonTask, signalsTask, labelTask ]);
                         inserted = true;
@@ -2260,8 +2298,10 @@ TaskBar.prototype =
             buttonTask.destroy();
             this.tasksList.splice(index, 1);
             this.countTasks --;
-            if (this.countTasks <= 0)
+            if (this.countTasks < 0)
                 this.countTasks = 0;
+            if (this.countTasks === 0)
+                this.cleanTasksList();
             return true;
         }
         else
@@ -2283,9 +2323,9 @@ TaskBar.prototype =
             );
             buttonTask.destroy();
             this.tasksList.splice(i, 1);
-            if (this.countTasks !== null)
-                this.countTasks = null;
         }
+        this.tasksList = [];
+        this.countTasks = 0;
     },
 
     //Preview

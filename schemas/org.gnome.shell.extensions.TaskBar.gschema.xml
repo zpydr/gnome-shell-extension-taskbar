@@ -21,6 +21,11 @@
   zpydr@openmailbox.org
 -->
 <schemalist gettext-domain="gnome-shell-extensions-TaskBar">
+    <enum id="org.gnome.shell.extensions.TaskBar.sort-tasks-style">
+        <value value="0" nick="off"/>
+        <value value="1" nick="sort"/>
+        <value value="2" nick="workspace"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.task-menu-style">
         <value value="0" nick="off"/>
         <value value="1" nick="middle"/>
@@ -172,16 +177,46 @@
             <summary>Hover Event</summary>
             <description/>
         </key>
-        <key name="icon-size" type="i">
+        <key name="panel-size" type="i">
             <range min="1" max="96"/>
-            <default>22</default>
-            <summary>Icon Size</summary>
+            <default>27</default>
+            <summary>Panel Size</summary>
             <description/>
         </key>
-        <key name="icon-size-bottom" type="i">
+        <key name="panel-size-bottom" type="i">
             <range min="1" max="96"/>
-            <default>22</default>
-            <summary>Icon Size</summary>
+            <default>27</default>
+            <summary>Bottom Panel Size</summary>
+            <description/>
+        </key>
+        <key name="tb-icon-size" type="i">
+            <range min="-96" max="96"/>
+            <default>0</default>
+            <summary>Adjust TaskBar Icon Size</summary>
+            <description/>
+        </key>
+        <key name="tb-icon-size-bottom" type="i">
+            <range min="-96" max="96"/>
+            <default>0</default>
+            <summary>Adjust TaskBar Icon Size Bottom</summary>
+            <description/>
+        </key>
+        <key name="tb-label-size" type="i">
+            <range min="-96" max="96"/>
+            <default>0</default>
+            <summary>Adjust TaskBar Label Size</summary>
+            <description/>
+        </key>
+        <key name="tb-label-size-bottom" type="i">
+            <range min="-96" max="96"/>
+            <default>0</default>
+            <summary>Adjust TaskBar Label Size Bottom</summary>
+            <description/>
+        </key>
+        <key name="content-size" type="i">
+            <range min="-96" max="96"/>
+            <default>0</default>
+            <summary>Adjust Other Panel Content Size</summary>
             <description/>
         </key>
         <key name="font-size-bottom" type="i">
@@ -195,12 +230,12 @@
             <summary>Display Tasks from all Workspaces</summary>
             <description/>
         </key>
-        <key name="sort-tasks" type="b">
-            <default>false</default>
-            <summary>Sort Tasks by Application</summary>
+        <key name="sort-tasks" enum="org.gnome.shell.extensions.TaskBar.sort-tasks-style">
+            <default>'off'</default>
+           <summary>Sort Tasks by Application</summary>
             <description/>
         </key>
-        <key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
+	<key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
             <default>'right'</default>
            <summary>Middle/Right Click to Show Tasks Menu</summary>
             <description/>
