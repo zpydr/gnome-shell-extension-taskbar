@@ -94,7 +94,7 @@
             <summary>Display Preferences on the first start of TaskBar</summary>
             <description/>
         </key>
-       <key name="extension-path" type="s">
+        <key name="extension-path" type="s">
             <default>'unset'</default>
             <summary>Extension Path</summary>
             <description/>
@@ -438,6 +438,12 @@
         <key name="display-workspace-button-color" type="b">
             <default>false</default>
             <summary>Display Workspace Button Color</summary>
+            <description/>
+        </key>
+        <key name="workspace-button-width" type="i">
+            <range min="-96" max="96"/>
+            <default>0</default>
+            <summary>Adjust Workspace Button Width</summary>
             <description/>
         </key>
         <key name="showapps-button-toggle" enum="org.gnome.shell.extensions.TaskBar.showapps-button-toggle-style">

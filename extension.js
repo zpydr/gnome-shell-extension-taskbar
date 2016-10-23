@@ -639,6 +639,7 @@ TaskBar.prototype =
             this.settings.connect("changed::workspace-button-index", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::workspace-button-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-workspace-button-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::workspace-button-width", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-desktop-button", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::overview", Lang.bind(this, this.setOverview)),
             this.settings.connect("changed::tray-button", Lang.bind(this, this.onParamChanged)),
@@ -1083,14 +1084,21 @@ TaskBar.prototype =
     updateWorkspaces: function()
     {
         this.activeWorkspaceIndex = global.screen.get_active_workspace().index();
+	let workspaceButtonWidth = this.settings.get_int("workspace-button-width");
         this.totalWorkspace = global.screen.n_workspaces - 1;
         let labelWorkspaceIndex = this.activeWorkspaceIndex + 1;
         let labelTotalWorkspace = this.totalWorkspace + 1;
         if (this.settings.get_enum("workspace-button-index") === 1)
+        {
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex + "/" + labelTotalWorkspace) });
+            this.labelWorkspace.set_width((this.panelSize * 2) + 2 + this.adjustTBLabelSize - this.adjustTBIconSize + workspaceButtonWidth);
+        }
         else if (this.settings.get_enum("workspace-button-index") === 0)
+        {
             this.labelWorkspace = new St.Label({ text: (labelWorkspaceIndex+"") });
-        this.labelWorkspace.style = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px' + ';';
+            this.labelWorkspace.set_width(this.panelSize - 2 + this.adjustTBLabelSize - this.adjustTBIconSize + workspaceButtonWidth);
+        }
+        this.labelWorkspace.style = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px' + '; text-align: center;';
         this.buttonWorkspace.set_child(this.labelWorkspace);
     },
 

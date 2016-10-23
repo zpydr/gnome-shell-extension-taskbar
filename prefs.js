@@ -828,17 +828,25 @@ Prefs.prototype =
         this.valueDisplayWorkspaceButtonColor.connect('notify::active', Lang.bind(this, this.displayWorkspaceButtonColor));
         this.gridButtons.attach(this.valueDisplayWorkspaceButtonColor, 4, 5, 1, 1);
 
+        let labelWorkspaceButtonWidth = new Gtk.Label({label: _("Adjust Workspace Button Width") + " (0 px)", xalign: 0});
+        this.gridButtons.attach(labelWorkspaceButtonWidth, 1, 6, 2, 1);
+        this.valueWorkspaceButtonWidth = new Gtk.Adjustment({lower: -96, upper: 96, step_increment: 1});
+        let value2WorkspaceButtonWidth = new Gtk.SpinButton({adjustment: this.valueWorkspaceButtonWidth, snap_to_ticks: true});
+        value2WorkspaceButtonWidth.set_value(this.settings.get_int("workspace-button-width"));
+        value2WorkspaceButtonWidth.connect("value-changed", Lang.bind(this, this.changeWorkspaceButtonWidth));
+        this.gridButtons.attach(value2WorkspaceButtonWidth, 3, 6, 2, 1);
+
         let labelShowAppsButtonToggle = new Gtk.Label({label: _("Appview Button\nLeft & Right Click Toggle"), xalign: 0});
-        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 6, 1, 1);
+        this.gridButtons.attach(labelShowAppsButtonToggle, 1, 7, 1, 1);
         this.valueShowAppsButtonToggle = new Gtk.ComboBoxText();
         this.valueShowAppsButtonToggle.append_text(_("L Appview\nR Overview"));
         this.valueShowAppsButtonToggle.append_text(_("L Overview\nR Appview"));
         this.valueShowAppsButtonToggle.set_active(this.settings.get_enum("showapps-button-toggle"));
         this.valueShowAppsButtonToggle.connect('changed', Lang.bind(this, this.changeShowAppsButtonToggle));
-        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 6, 2, 1);
+        this.gridButtons.attach(this.valueShowAppsButtonToggle, 3, 7, 2, 1);
 
         let labelAppviewButtonIcon = new Gtk.Label({label: _("Appview Button Icon"), xalign: 0});
-        this.gridButtons.attach(labelAppviewButtonIcon, 1, 7, 1, 1);
+        this.gridButtons.attach(labelAppviewButtonIcon, 1, 8, 1, 1);
         this.appviewIconFilename = this.settings.get_string("appview-button-icon");
         if (this.appviewIconFilename === 'unset')
             this.appviewIconFilename = APPVIEWICON;
@@ -846,7 +854,7 @@ Prefs.prototype =
         this.loadAppviewIcon();
         this.valueAppviewButtonIcon2 = new Gtk.Button({image: this.valueAppviewButtonIcon});
         this.valueAppviewButtonIcon2.connect('clicked', Lang.bind(this, this.changeAppviewButtonIcon));
-        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 7, 1, 1);
+        this.gridButtons.attach(this.valueAppviewButtonIcon2, 4, 8, 1, 1);
 
         let resetButtonsButton = new Gtk.Button({label: _("Reset Buttons Tab")});
         resetButtonsButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
@@ -1788,6 +1796,11 @@ Prefs.prototype =
         this.settings.set_boolean("display-workspace-button-color", object.active);
     },
 
+    changeWorkspaceButtonWidth: function(object)
+    {
+        this.settings.set_int("workspace-button-width", this.valueWorkspaceButtonWidth.get_value());
+    },
+
     changeShowAppsButtonToggle: function(object)
     {
         this.settings.set_enum("showapps-button-toggle", this.valueShowAppsButtonToggle.get_active());
@@ -2381,6 +2394,7 @@ Prefs.prototype =
         this.valueWorkspaceButtonColor.set_rgba(rgba);
         this.settings.set_string("workspace-button-color", "unset");
         this.valueDisplayWorkspaceButtonColor.set_active(false);
+        this.valueWorkspaceButtonWidth.set_value(0);
         this.valueShowAppsButtonToggle.set_active(0);
     },
 
