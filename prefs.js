@@ -39,6 +39,7 @@ const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function
 const schema = "org.gnome.shell.extensions.TaskBar";
 
 const RESETCOLOR = 'rgba(0,0,0,0)';
+const RESETCOLORBLACK = 'rgba(0,0,0,1.0)';
 const RESETCOLORWHITE = 'rgba(255,255,255,1.0)';
 const RESETCOLORRED = 'rgba(255,0,0,1.0)';
 
@@ -370,7 +371,7 @@ Prefs.prototype =
             colorTop = colorTopOriginal;
         let rgbaTop = new Gdk.RGBA();
         rgbaTop.parse(colorTop);
-        this.valueTopPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Top Panel Background Color"});
+        this.valueTopPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar - Set Top Panel Background Color"});
         this.valueTopPanelBackgroundColor.set_use_alpha(true);
         this.valueTopPanelBackgroundColor.set_rgba(rgbaTop);
         this.valueTopPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeTopPanelBackgroundColor));
@@ -385,7 +386,7 @@ Prefs.prototype =
         }
         let rgbaBottom = new Gdk.RGBA();
         rgbaBottom.parse(colorBottom);
-        this.valueBottomPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Bottom Panel Background Color"});
+        this.valueBottomPanelBackgroundColor = new Gtk.ColorButton({title: "TaskBar - Set Bottom Panel Background Color"});
         this.valueBottomPanelBackgroundColor.set_use_alpha(true);
         this.valueBottomPanelBackgroundColor.set_rgba(rgbaBottom);
         this.valueBottomPanelBackgroundColor.connect('color-set', Lang.bind(this, this.changeBottomPanelBackgroundColor));
@@ -580,7 +581,7 @@ Prefs.prototype =
         if (blinkColor === 'unset')
             blinkColor = RESETCOLORRED;
         rgbaBlink.parse(blinkColor);
-        this.valueTasksBlinkAlertColor = new Gtk.ColorButton({title: "TaskBar Preferences - Blink Color"});
+        this.valueTasksBlinkAlertColor = new Gtk.ColorButton({title: "TaskBar - Set Blink Color"});
         this.valueTasksBlinkAlertColor.set_use_alpha(true);
         this.valueTasksBlinkAlertColor.set_rgba(rgbaBlink);
         this.valueTasksBlinkAlertColor.connect('color-set', Lang.bind(this, this.changeTasksBlinkAlertColor));
@@ -621,7 +622,7 @@ Prefs.prototype =
         let activeColor = this.settings.get_string("active-task-background-color");
         let rgbaActive = new Gdk.RGBA();
         rgbaActive.parse(activeColor);
-        this.valueActiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Background Color"});
+        this.valueActiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar - Set Active Task Background Color"});
         this.valueActiveTaskBackgroundColor.set_tooltip_text(tooltipActiveTaskBackgroundColor);
         this.valueActiveTaskBackgroundColor.set_use_alpha(true);
         this.valueActiveTaskBackgroundColor.set_rgba(rgbaActive);
@@ -639,7 +640,7 @@ Prefs.prototype =
         let inactiveColor = this.settings.get_string("inactive-task-background-color");
         let rgbaInactive = new Gdk.RGBA();
         rgbaInactive.parse(inactiveColor);
-        this.valueInactiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Tasks Background Color"});
+        this.valueInactiveTaskBackgroundColor = new Gtk.ColorButton({title: "TaskBar - Set Inactive Tasks Background Color"});
         this.valueInactiveTaskBackgroundColor.set_tooltip_text(tooltipInactiveTaskBackgroundColor);
         this.valueInactiveTaskBackgroundColor.set_use_alpha(true);
         this.valueInactiveTaskBackgroundColor.set_rgba(rgbaInactive);
@@ -657,7 +658,7 @@ Prefs.prototype =
         let colorTLC = this.settings.get_string("tasks-label-color");
         let rgbaTLC = new Gdk.RGBA();
         rgbaTLC.parse(colorTLC);
-        this.valueTasksLabelColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Label Color"});
+        this.valueTasksLabelColor = new Gtk.ColorButton({title: "TaskBar - Set Active Task Label Color"});
         this.valueTasksLabelColor.set_tooltip_text(tooltipTasksLabelColor);
         this.valueTasksLabelColor.set_use_alpha(true);
         this.valueTasksLabelColor.set_rgba(rgbaTLC);
@@ -675,7 +676,7 @@ Prefs.prototype =
         let colorITLC = this.settings.get_string("inactive-tasks-label-color");
         let rgbaITLC = new Gdk.RGBA();
         rgbaITLC.parse(colorITLC);
-        this.valueInactiveTasksLabelColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Tasks Label Color"});
+        this.valueInactiveTasksLabelColor = new Gtk.ColorButton({title: "TaskBar - Set Inactive Tasks Label Color"});
         this.valueInactiveTasksLabelColor.set_tooltip_text(tooltipInactiveTasksLabelColor);
         this.valueInactiveTasksLabelColor.set_use_alpha(true);
         this.valueInactiveTasksLabelColor.set_rgba(rgbaITLC);
@@ -693,7 +694,7 @@ Prefs.prototype =
         let colorTFC = this.settings.get_string("tasks-frame-color");
         let rgbaTFC = new Gdk.RGBA();
         rgbaTFC.parse(colorTFC);
-        this.valueTasksFrameColor = new Gtk.ColorButton({title: "TaskBar Preferences - Active Task Frame Color"});
+        this.valueTasksFrameColor = new Gtk.ColorButton({title: "TaskBar - Set Active Task Frame Color"});
 	this.valueTasksFrameColor.set_tooltip_text(tooltipTasksFrameColor);
         this.valueTasksFrameColor.set_use_alpha(true);
         this.valueTasksFrameColor.set_rgba(rgbaTFC);
@@ -711,7 +712,7 @@ Prefs.prototype =
         let colorITFC = this.settings.get_string("inactive-tasks-frame-color");
         let rgbaITFC = new Gdk.RGBA();
         rgbaITFC.parse(colorITFC);
-        this.valueInactiveTasksFrameColor = new Gtk.ColorButton({title: "TaskBar Preferences - Inactive Tasks Frame Color"});
+        this.valueInactiveTasksFrameColor = new Gtk.ColorButton({title: "TaskBar - Set Inactive Tasks Frame Color"});
         this.valueInactiveTasksFrameColor.set_tooltip_text(tooltipInactiveTasksFrameColor);
         this.valueInactiveTasksFrameColor.set_use_alpha(true);
         this.valueInactiveTasksFrameColor.set_rgba(rgbaITFC);
@@ -815,7 +816,7 @@ Prefs.prototype =
         let labelDisplayWorkspaceButtonColor = new Gtk.Label({label: _("Workspace Button Color"), xalign: 0});
         this.gridButtons.attach(labelDisplayWorkspaceButtonColor, 1, 5, 1, 1);
         let colorWorkspaceButton = this.settings.get_string("workspace-button-color");
-        this.valueWorkspaceButtonColor = new Gtk.ColorButton({title: "TaskBar Preferences - Workspace Button Color"});
+        this.valueWorkspaceButtonColor = new Gtk.ColorButton({title: "TaskBar - Set Workspace Button Color"});
         this.valueWorkspaceButtonColor.set_use_alpha(true);
         let rgbaWorkspaceButton = new Gdk.RGBA();
         if (colorWorkspaceButton === 'unset')
@@ -1066,7 +1067,7 @@ Prefs.prototype =
         let labelPreview = new Gtk.Label({label: _("Preview")});
         notebook.append_page(scrollWindowPreview, labelPreview);
 
-        let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label"), xalign: 0});
+        let labelDisplayLabel = new Gtk.Label({label: _("Tasks Label Preview"), xalign: 0});
         this.gridPreview.attach(labelDisplayLabel, 1, 1, 1, 1);
         this.valueDisplayLabel = new Gtk.ComboBoxText();
         this.valueDisplayLabel.append_text(_("OFF"));
@@ -1077,13 +1078,13 @@ Prefs.prototype =
         this.valueDisplayLabel.connect('changed', Lang.bind(this, this.changeDisplayLabel));
         this.gridPreview.attach(this.valueDisplayLabel, 3, 1, 2, 1);
 
-        let labelDisplayThumbnail = new Gtk.Label({label: _("Tasks Thumbnail"), xalign: 0});
+        let labelDisplayThumbnail = new Gtk.Label({label: _("Tasks Thumbnail Preview"), xalign: 0});
         this.gridPreview.attach(labelDisplayThumbnail, 1, 2, 1, 1);
         this.valueDisplayThumbnail = new Gtk.Switch({active: this.settings.get_boolean("display-thumbnail")});
         this.valueDisplayThumbnail.connect('notify::active', Lang.bind(this, this.changeDisplayThumbnail));
         this.gridPreview.attach(this.valueDisplayThumbnail, 4, 2, 1, 1);
 
-        let labelDisplayFavoritesLabel = new Gtk.Label({label: _("Favorites Label"), xalign: 0});
+        let labelDisplayFavoritesLabel = new Gtk.Label({label: _("Favorites Label Preview"), xalign: 0});
         this.gridPreview.attach(labelDisplayFavoritesLabel, 1, 3, 1, 1);
         this.valueDisplayFavoritesLabel = new Gtk.ComboBoxText();
         this.valueDisplayFavoritesLabel.append_text(_("OFF"));
@@ -1094,7 +1095,7 @@ Prefs.prototype =
         this.valueDisplayFavoritesLabel.connect('changed', Lang.bind(this, this.changeDisplayFavoritesLabel));
         this.gridPreview.attach(this.valueDisplayFavoritesLabel, 3, 3, 2, 1);
 
-        let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Size")+" (350 px)", xalign: 0});
+        let labelPreviewSize = new Gtk.Label({label: _("Thumbnail Preview Size")+" (350 px)", xalign: 0});
         this.gridPreview.attach(labelPreviewSize, 1, 4, 1, 1);
         this.valuePreviewSize = new Gtk.Adjustment({lower: 100, upper: 1000, step_increment: 1});
         let value2PreviewSize = new Gtk.SpinButton({adjustment: this.valuePreviewSize, snap_to_ticks: true});
@@ -1110,18 +1111,50 @@ Prefs.prototype =
         value2PreviewDelay.connect("value-changed", Lang.bind(this, this.changePreviewDelay));
         this.gridPreview.attach(value2PreviewDelay, 3, 5, 2, 1);
 
+        let labelDisplayPreviewBackgroundColor = new Gtk.Label({label: _("Preview Background Color"), xalign: 0});
+        this.gridPreview.attach(labelDisplayPreviewBackgroundColor, 1, 6, 1, 1);
+        let colorPreviewBackground = this.settings.get_string("preview-background-color");
+        this.valuePreviewBackgroundColor = new Gtk.ColorButton({title: "TaskBar - Set Preview Background Color"});
+        this.valuePreviewBackgroundColor.set_use_alpha(true);
+        let rgbaPreviewBackground = new Gdk.RGBA();
+        if (colorPreviewBackground === 'unset')
+            colorPreviewBackground = RESETCOLORBLACK;
+        rgbaPreviewBackground.parse(colorPreviewBackground);
+        this.valuePreviewBackgroundColor.set_rgba(rgbaPreviewBackground);
+        this.valuePreviewBackgroundColor.connect('color-set', Lang.bind(this, this.changePreviewBackgroundColor));
+        this.gridPreview.attach(this.valuePreviewBackgroundColor, 3, 6, 1, 1);
+        this.valueDisplayPreviewBackgroundColor = new Gtk.Switch({active: this.settings.get_boolean("display-preview-background-color")});
+        this.valueDisplayPreviewBackgroundColor.connect('notify::active', Lang.bind(this, this.displayPreviewBackgroundColor));
+        this.gridPreview.attach(this.valueDisplayPreviewBackgroundColor, 4, 6, 1, 1);
+
+        let labelDisplayPreviewLabelColor = new Gtk.Label({label: _("Preview Label Color"), xalign: 0});
+        this.gridPreview.attach(labelDisplayPreviewLabelColor, 1, 7, 1, 1);
+        let colorPreviewLabel = this.settings.get_string("preview-label-color");
+        this.valuePreviewLabelColor = new Gtk.ColorButton({title: "TaskBar - Set Preview Label Color"});
+        this.valuePreviewLabelColor.set_use_alpha(true);
+        let rgbaPreviewLabel = new Gdk.RGBA();
+        if (colorPreviewLabel === 'unset')
+            colorPreviewLabel = RESETCOLORWHITE;
+        rgbaPreviewLabel.parse(colorPreviewLabel);
+        this.valuePreviewLabelColor.set_rgba(rgbaPreviewLabel);
+        this.valuePreviewLabelColor.connect('color-set', Lang.bind(this, this.changePreviewLabelColor));
+        this.gridPreview.attach(this.valuePreviewLabelColor, 3, 7, 1, 1);
+        this.valueDisplayPreviewLabelColor = new Gtk.Switch({active: this.settings.get_boolean("display-preview-label-color")});
+        this.valueDisplayPreviewLabelColor.connect('notify::active', Lang.bind(this, this.displayPreviewLabelColor));
+        this.gridPreview.attach(this.valueDisplayPreviewLabelColor, 4, 7, 1, 1);
+
         let resetPreviewButton = new Gtk.Button({label: _("Reset Preview Tab")});
         resetPreviewButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetPreviewButton.connect('clicked', Lang.bind(this, this.resetPreview));
         resetPreviewButton.set_tooltip_text(_("Reset the Preview Tab to the Original Preview Settings"));
-        this.gridPreview.attach(resetPreviewButton, 1, 7, 1, 1);
+        this.gridPreview.attach(resetPreviewButton, 1, 9, 1, 1);
 
         let labelSpacePreview1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridPreview.attach(labelSpacePreview1, 0, 8, 1, 1);
+        this.gridPreview.attach(labelSpacePreview1, 0, 10, 1, 1);
         let labelSpacePreview2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridPreview.attach(labelSpacePreview2, 2, 1, 1, 1);
         let labelSpacePreview3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridPreview.attach(labelSpacePreview3, 3, 6, 1, 1);
+        this.gridPreview.attach(labelSpacePreview3, 3, 8, 1, 1);
         let labelSpacePreview4 = new Gtk.Label({label: "<b>"+_("Preview")+"</b>", hexpand: true});
         labelSpacePreview4.set_use_markup(true);
         this.gridPreview.attach(labelSpacePreview4, 0, 0, 6, 1);
@@ -1147,7 +1180,7 @@ Prefs.prototype =
         this.valueDisplayActivitiesButton.connect('notify::active', Lang.bind(this, this.changeDisplayActivitiesButton));
         this.gridMisc.attach(this.valueDisplayActivitiesButton, 3, 2, 1, 1);
         let colorActivities = this.settings.get_string("activities-button-color");
-        this.valueActivitiesColor = new Gtk.ColorButton({title: "TaskBar Preferences - Activities Button Color"});
+        this.valueActivitiesColor = new Gtk.ColorButton({title: "TaskBar - Set Activities Button Color"});
         this.valueActivitiesColor.set_use_alpha(true);
         let rgbaActivities = new Gdk.RGBA();
         if (colorActivities === 'unset')
@@ -1166,7 +1199,7 @@ Prefs.prototype =
         this.valueDisplayApplicationMenu.connect('notify::active', Lang.bind(this, this.changeDisplayApplicationMenu));
         this.gridMisc.attach(this.valueDisplayApplicationMenu, 3, 3, 1, 1);
         let colorApplicationMenu = this.settings.get_string("application-menu-color");
-        this.valueApplicationMenuColor = new Gtk.ColorButton({title: "TaskBar Preferences - Application Menu Color"});
+        this.valueApplicationMenuColor = new Gtk.ColorButton({title: "TaskBar - Set Application Menu Color"});
         this.valueApplicationMenuColor.set_use_alpha(true);
         let rgbaApplicationMenu = new Gdk.RGBA();
         if (colorApplicationMenu === 'unset')
@@ -1185,7 +1218,7 @@ Prefs.prototype =
         this.valueDisplayDateMenu.connect('notify::active', Lang.bind(this, this.changeDisplayDateMenu));
         this.gridMisc.attach(this.valueDisplayDateMenu, 3, 4, 1, 1);
         let colorDateMenu = this.settings.get_string("date-menu-color");
-        this.valueDateMenuColor = new Gtk.ColorButton({title: "TaskBar Preferences - Date Menu Color"});
+        this.valueDateMenuColor = new Gtk.ColorButton({title: "TaskBar - Set Date Menu Color"});
         this.valueDateMenuColor.set_use_alpha(true);
         let rgbaDateMenu = new Gdk.RGBA();
         if (colorDateMenu === 'unset')
@@ -1204,7 +1237,7 @@ Prefs.prototype =
         this.valueDisplaySystemMenu.connect('notify::active', Lang.bind(this, this.changeDisplaySystemMenu));
         this.gridMisc.attach(this.valueDisplaySystemMenu, 3, 5, 1, 1);
         let colorSystemMenu = this.settings.get_string("system-menu-color");
-        this.valueSystemMenuColor = new Gtk.ColorButton({title: "TaskBar Preferences - System Menu Color"});
+        this.valueSystemMenuColor = new Gtk.ColorButton({title: "TaskBar - Set System Menu Color"});
         this.valueSystemMenuColor.set_use_alpha(true);
         let rgbaSystemMenu = new Gdk.RGBA();
         if (colorSystemMenu === 'unset')
@@ -1692,7 +1725,7 @@ Prefs.prototype =
     changeDesktopButtonIcon: function()
     {
         let iconPath = this.settings.get_string("desktop-button-icon");
-        this.dialogDesktopIcon = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Desktop Button Icon"), action: Gtk.FileChooserAction.OPEN });
+        this.dialogDesktopIcon = new Gtk.FileChooserDialog({ title: _("TaskBar - Set Desktop Button Icon"), action: Gtk.FileChooserAction.OPEN });
         this.dialogDesktopIcon.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
         this.dialogDesktopIcon.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
         this.dialogDesktopIcon.add_button("RESET", Gtk.ResponseType.NONE);
@@ -1809,7 +1842,7 @@ Prefs.prototype =
     changeAppviewButtonIcon: function()
     {
         let iconPath = this.settings.get_string("appview-button-icon");
-        this.dialogAppviewIcon = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Appview Button Icon"), action: Gtk.FileChooserAction.OPEN });
+        this.dialogAppviewIcon = new Gtk.FileChooserDialog({ title: _("TaskBar - Set Appview Button Icon"), action: Gtk.FileChooserAction.OPEN });
         this.dialogAppviewIcon.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
         this.dialogAppviewIcon.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
         this.dialogAppviewIcon.add_button("RESET", Gtk.ResponseType.NONE);
@@ -1899,7 +1932,7 @@ Prefs.prototype =
     changeTrayButtonIcon: function()
     {
         let iconPath = this.settings.get_string("tray-button-icon");
-        this.dialogTrayIcon = new Gtk.FileChooserDialog({ title: _("TaskBar Preferences - Tray Button Icon"), action: Gtk.FileChooserAction.OPEN });
+        this.dialogTrayIcon = new Gtk.FileChooserDialog({ title: _("TaskBar - Set Tray Button Icon"), action: Gtk.FileChooserAction.OPEN });
         this.dialogTrayIcon.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL);
         this.dialogTrayIcon.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.ACCEPT);
         this.dialogTrayIcon.add_button("RESET", Gtk.ResponseType.NONE);
@@ -2159,6 +2192,28 @@ Prefs.prototype =
     changePreviewDelay: function(object)
     {
         this.settings.set_int("preview-delay", this.valuePreviewDelay.get_value());
+    },
+
+    changePreviewBackgroundColor: function()
+    {
+        this.previewBackgroundColor = this.valuePreviewBackgroundColor.get_rgba().to_string();
+        this.settings.set_string("preview-background-color", this.previewBackgroundColor);
+    },
+
+    displayPreviewBackgroundColor: function(object, pspec)
+    {
+        this.settings.set_boolean("display-preview-background-color", object.active);
+    },
+
+    changePreviewLabelColor: function()
+    {
+        this.previewLabelColor = this.valuePreviewLabelColor.get_rgba().to_string();
+        this.settings.set_string("preview-label-color", this.previewLabelColor);
+    },
+
+    displayPreviewLabelColor: function(object, pspec)
+    {
+        this.settings.set_boolean("display-preview-label-color", object.active);
     },
 
     changeAppearanceLeft: function()
@@ -2433,6 +2488,18 @@ Prefs.prototype =
         this.valueDisplayFavoritesLabel.set_active(3);
         this.valuePreviewSize.set_value(350);
         this.valuePreviewDelay.set_value(500);
+        let color = RESETCOLORBLACK;
+        let rgba = new Gdk.RGBA();
+        rgba.parse(color);
+        this.valuePreviewBackgroundColor.set_rgba(rgba);
+        this.settings.set_string("preview-background-color", "unset");
+        this.valueDisplayPreviewBackgroundColor.set_active(false);
+        let color2 = RESETCOLORWHITE;
+        let rgba2 = new Gdk.RGBA();
+        rgba2.parse(color2);
+        this.valuePreviewLabelColor.set_rgba(rgba2);
+        this.settings.set_string("preview-label-color", "unset");
+        this.valueDisplayPreviewLabelColor.set_active(false);
         this.settings.set_boolean("reset-flag", false);
     },
 

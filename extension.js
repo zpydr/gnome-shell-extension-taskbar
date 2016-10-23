@@ -704,6 +704,8 @@ TaskBar.prototype =
             this.settings.connect("changed::hover-event", Lang.bind(this, this.hoverEvent)),
             this.settings.connect("changed::blacklist", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::find-apps", Lang.bind(this, this.findApps)),
+            this.settings.connect("changed::display-preview-background-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::display-preview-label-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
             this.settings.connect("changed::reset-flag", Lang.bind(this, this.onParamChanged))
         ];
@@ -772,7 +774,7 @@ TaskBar.prototype =
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
             this.settings.set_boolean("first-start", false);
         }
-        // Find out if the bottom panel extension is enabled
+        //Find out if the bottom panel extension is enabled
 	this.tbp = false;
 	let schemaSettings = new Gio.Settings({ schema: 'org.gnome.shell' });
 	let enabled_extensions = schemaSettings.get_strv('enabled-extensions');
@@ -2380,12 +2382,23 @@ TaskBar.prototype =
         //Hide current preview if necessary
         this.hidePreview();
         let app = Shell.WindowTracker.get_default().get_window_app(window);
-        this.preview = new St.BoxLayout({ style_class: "tkb-preview", vertical: true});
+        this.preview = new St.BoxLayout({ vertical: true });
         if (this.settings.get_enum("display-label") !== 0)
         {
             if (this.settings.get_enum("display-label") !== 2)
             {
-                let labelNamePreview = new St.Label({ text: app.get_name(), style_class: "tkb-preview-name" });
+                let labelNamePreview = new St.Label({ text: app.get_name() });
+                if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
+                {
+                    this.previewLabelColor = this.settings.get_string("preview-label-color");
+                    this.labelNamePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: 9pt; text-align: center;";
+                    labelNamePreview.set_style(this.labelNamePreviewStyle);
+                }
+                else
+                {
+                    this.labelNamePreviewStyle = "color: rgba(255,255,255,1); font-weight: bold; font-size: 9pt; text-align: center;";
+                    labelNamePreview.set_style(this.labelNamePreviewStyle);
+                }
                 this.preview.add_actor(labelNamePreview);
             }
             if (this.settings.get_enum("display-label") !== 1)
@@ -2393,7 +2406,18 @@ TaskBar.prototype =
                 let title = window.get_title();
                 if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
 	            title = title.substr(0, 47) + "...";
-                let labelTitlePreview = new St.Label({ text: title, style_class: "tkb-preview-title" });
+                let labelTitlePreview = new St.Label({ text: title });
+                if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
+                {
+                    this.previewLabelColor = this.settings.get_string("preview-label-color");
+                    this.labelTitlePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: 9pt; text-align: center;";
+                    labelTitlePreview.set_style(this.labelTitlePreviewStyle);
+                }
+                else
+                {
+                    this.labelTitlePreviewStyle = "color: rgba(255,255,255,1.0); font-weight: bold; font-size: 9pt; text-align: center;";
+                    labelTitlePreview.set_style(this.labelTitlePreviewStyle);
+                }
                 this.preview.add_actor(labelTitlePreview);
             }
         }
@@ -2401,6 +2425,17 @@ TaskBar.prototype =
         {
             let thumbnail = this.getThumbnail(window, this.settings.get_int("preview-size"));
             this.preview.add_actor(thumbnail);
+        }
+        if ((this.settings.get_string("preview-background-color") !== 'unset') && (this.settings.get_boolean("display-preview-background-color")))
+        {
+            this.previewBackgroundColor = this.settings.get_string("preview-background-color");
+            this.previewStyle = "background-color: " + this.previewBackgroundColor + "; padding: 5px; border-radius: 8px; -y-offset: 6px;";
+            this.preview.set_style(this.previewStyle);
+        }
+        else
+        {
+            this.previewStyle = "background-color: rgba(0,0,0,0.9); padding: 5px; border-radius: 8px; -y-offset: 6px;";
+            this.preview.set_style(this.previewStyle);
         }
         global.stage.add_actor(this.preview);
         this.button = button;
@@ -2411,7 +2446,7 @@ TaskBar.prototype =
     {
         //Hide current preview if necessary
         this.hidePreview();
-        this.favoritesPreview = new St.BoxLayout({ style_class: "tkb-preview", vertical: true});
+        this.favoritesPreview = new St.BoxLayout({ vertical: true });
         let favoriteappName = favoriteapp.get_name();
         if (favoriteapp.get_description())
         {
@@ -2420,8 +2455,30 @@ TaskBar.prototype =
             if (this.settings.get_enum("display-favorites-label") === 3)
                 favoriteappName += '\n' + favoriteapp.get_description();
         }
-        let labelNamePreview = new St.Label({ text: favoriteappName, style_class: "tkb-preview-name" });
+        let labelNamePreview = new St.Label({ text: favoriteappName });
+        if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
+        {
+            this.previewLabelColor = this.settings.get_string("preview-label-color");
+            this.labelNamePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: 9pt; text-align: center;";
+            labelNamePreview.set_style(this.labelNamePreviewStyle);
+        }
+        else
+        {
+            this.labelNamePreviewStyle = "color: rgba(255,255,255,1.0); font-weight: bold; font-size: 9pt; text-align: center;";
+            labelNamePreview.set_style(this.labelNamePreviewStyle);
+        }
         this.favoritesPreview.add_actor(labelNamePreview);
+        if ((this.settings.get_string("preview-background-color") !== 'unset') && (this.settings.get_boolean("display-preview-background-color")))
+        {
+            this.previewBackgroundColor = this.settings.get_string("preview-background-color");
+            this.favoritesPreviewStyle = "background-color: " + this.previewBackgroundColor + "; padding: 5px; border-radius: 8px; -y-offset: 6px;";
+            this.favoritesPreview.set_style(this.favoritesPreviewStyle);
+        }
+        else
+        {
+            this.favoritesPreviewStyle = "background-color: rgba(0,0,0,0.9); padding: 5px; border-radius: 8px; -y-offset: 6px;";
+            this.favoritesPreview.set_style(this.favoritesPreviewStyle);
+        }
         global.stage.add_actor(this.favoritesPreview);
         this.button = buttonfavorite;
         this.preview = this.favoritesPreview;

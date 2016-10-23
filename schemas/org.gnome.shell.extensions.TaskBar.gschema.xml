@@ -232,12 +232,12 @@
         </key>
         <key name="sort-tasks" enum="org.gnome.shell.extensions.TaskBar.sort-tasks-style">
             <default>'off'</default>
-           <summary>Sort Tasks by Application</summary>
+            <summary>Sort Tasks by Application</summary>
             <description/>
         </key>
 	<key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
             <default>'right'</default>
-           <summary>Middle/Right Click to Show Tasks Menu</summary>
+            <summary>Middle/Right Click to Show Tasks Menu</summary>
             <description/>
         </key>
         <key name="tasks-container-width-new" type="i">
@@ -628,6 +628,26 @@
             <range min="0" max="3000"/>
             <default>500</default>
             <summary>Delay before Preview</summary>
+            <description/>
+        </key>
+        <key name="preview-background-color" type="s">
+            <default>'unset'</default>
+            <summary>Preview Background Color</summary>
+            <description/>
+        </key>
+        <key name="display-preview-background-color" type="b">
+            <default>false</default>
+            <summary>Display Preview Background Color</summary>
+            <description/>
+        </key>
+        <key name="preview-label-color" type="s">
+            <default>'unset'</default>
+            <summary>Preview Label Color</summary>
+            <description/>
+        </key>
+        <key name="display-preview-label-color" type="b">
+            <default>false</default>
+            <summary>Display Preview Label Color</summary>
             <description/>
         </key>
         <key name="appearance-selection" enum="org.gnome.shell.extensions.TaskBar.appearance-style">
