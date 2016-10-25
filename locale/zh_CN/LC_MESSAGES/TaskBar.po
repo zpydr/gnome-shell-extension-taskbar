@@ -1,0 +1,811 @@
+#  GNOME Shell Extension TaskBar
+#  Copyright (C) 2016 zpydr
+#
+#  Version 52
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#  zpydr@openmailbox.org
+#  tuhaihe <1132321739qq@gmail.com>, 2014.
+#  Dingzhong Chen <wsxy162@gmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-25 04:03+0800\n"
+"PO-Revision-Date: 2016-10-25 14:24+0800\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: prefs.js:121
+msgid "About"
+msgstr "关于"
+
+#: prefs.js:133
+msgid "Version"
+msgstr "版本"
+
+#: prefs.js:135
+msgid "GNOME Shell Version"
+msgstr "GNOME Shell 版本"
+
+#: prefs.js:149
+msgid "Report a Bug"
+msgstr "报告错误"
+
+#: prefs.js:153
+msgid "Donate for TaskBar"
+msgstr "为本项目捐款"
+
+#: prefs.js:157
+msgid "Become a Friend of GNOME"
+msgstr "成为 GNOME 的朋友"
+
+#: prefs.js:161
+msgid "Free Software Foundation"
+msgstr "自由软件基金会"
+
+#: prefs.js:166
+msgid "RESET ALL !"
+msgstr "重置全部 ！"
+
+#: prefs.js:169
+msgid "Reset All TaskBar Settings to the Original TaskBar Settings"
+msgstr "重置所有 任务栏 设置为初始设置"
+
+#: prefs.js:176 prefs.js:960
+msgid "TaskBar"
+msgstr "任务栏"
+
+#: prefs.js:189 prefs.js:275
+msgid "Overview"
+msgstr "概览"
+
+#: prefs.js:192 prefs.js:225
+msgid "Tasks"
+msgstr "任务"
+
+#: prefs.js:198 prefs.js:226 prefs.js:986
+msgid "Desktop Button"
+msgstr "桌面按钮"
+
+#: prefs.js:204 prefs.js:227 prefs.js:999
+msgid "Workspace Button"
+msgstr "工作区按钮"
+
+#: prefs.js:210 prefs.js:228 prefs.js:1012
+msgid "Appview Button"
+msgstr "应用视图按钮"
+
+#: prefs.js:216 prefs.js:229 prefs.js:1025
+msgid "Favorites"
+msgstr "收藏"
+
+#: prefs.js:223
+msgid "Align"
+msgstr "对齐"
+
+#: prefs.js:252 prefs.js:291
+msgid "Top Panel"
+msgstr "顶部面板"
+
+#: prefs.js:258 prefs.js:293
+msgid "Bottom Panel"
+msgstr "底部面板"
+
+#: prefs.js:264
+msgid "Reset Overview Tab"
+msgstr "重置 概览 选项卡"
+
+#: prefs.js:267
+msgid "Reset the Overview Tab to the Original Overview Settings"
+msgstr "重置 概览 选项卡为初始设置"
+
+#: prefs.js:288 prefs.js:413
+msgid "Panels"
+msgstr "面板"
+
+#: prefs.js:296
+msgid "Align TaskBar"
+msgstr "对齐任务栏"
+
+#: prefs.js:311
+msgid "Panel Size"
+msgstr "面板大小"
+
+#: prefs.js:324
+msgid "Adjust TaskBar Icon Size"
+msgstr "调整任务栏图标大小"
+
+#: prefs.js:337
+msgid "Adjust TaskBar Label Size"
+msgstr "调整任务栏标签大小"
+
+#: prefs.js:350
+msgid "Adjust Panel Content Size"
+msgstr "调整面板内容大小"
+
+#: prefs.js:358
+msgid "Anchor Point"
+msgstr "定位点"
+
+#: prefs.js:366
+msgid ""
+"Panel Background\n"
+"Color & Opacity"
+msgstr ""
+"面板背景颜色\n"
+"和不透明度"
+
+#: prefs.js:394 prefs.js:397
+msgid "Reset Color"
+msgstr "重置颜色"
+
+#: prefs.js:401
+msgid "Reset Panels Tab"
+msgstr "重置 面板 选项卡"
+
+#: prefs.js:404
+msgid "Reset the Panels Tab to the Original Panels Settings"
+msgstr "重置 面板 选项卡为初始设置"
+
+#: prefs.js:426 prefs.js:511
+msgid "Tasks (I)"
+msgstr "任务 (I)"
+
+#: prefs.js:429
+msgid "Tasks on All Workspaces"
+msgstr "所有工作区上的任务"
+
+#: prefs.js:435
+msgid "Sort Tasks by Application"
+msgstr "排列任务"
+
+#: prefs.js:438 prefs.js:448 prefs.js:482 prefs.js:492 prefs.js:530
+#: prefs.js:809 prefs.js:893 prefs.js:1073 prefs.js:1090
+msgid "OFF"
+msgstr "无/关闭"
+
+#: prefs.js:439
+msgid "Sort"
+msgstr "按应用程序"
+
+#: prefs.js:440
+msgid "Sort Workspace"
+msgstr "按工作区"
+
+#: prefs.js:445
+msgid "Tasks Label"
+msgstr "任务标签"
+
+#: prefs.js:449 prefs.js:1075
+msgid "Window Title"
+msgstr "窗口标题"
+
+#: prefs.js:450 prefs.js:1074 prefs.js:1091
+msgid "App Name"
+msgstr "应用名称"
+
+#: prefs.js:455
+msgid "Tasks Label Width (150 px)"
+msgstr "任务标签宽度 (150 px)"
+
+#: prefs.js:463
+msgid "Tasks Container Width (0 Tasks)"
+msgstr "任务容器宽度 (0 个任务)"
+
+#: prefs.js:471
+msgid "Space between Tasks (4 px)"
+msgstr "任务中的空间 (4 px)"
+
+#: prefs.js:479
+msgid "Tasks Application Menu"
+msgstr "任务应用程序菜单"
+
+#: prefs.js:483 prefs.js:493
+msgid "Middle Click"
+msgstr "中键点击"
+
+#: prefs.js:484 prefs.js:494
+msgid "Right Click"
+msgstr "右键点击"
+
+#: prefs.js:489
+msgid "Close Tasks"
+msgstr "关闭任务"
+
+#: prefs.js:499
+msgid "Reset Tasks (I) Tab"
+msgstr "重置 任务 (I) 选项卡"
+
+#: prefs.js:502
+msgid "Reset the Tasks (I) Tab to the Original Tasks Settings"
+msgstr "重置 任务 (I) 选项卡为初始设置"
+
+#: prefs.js:524 prefs.js:602
+msgid "Tasks (II)"
+msgstr "任务 (II)"
+
+#: prefs.js:527
+msgid "Scroll Tasks"
+msgstr "滚动任务"
+
+#: prefs.js:531 prefs.js:810
+msgid "Standard"
+msgstr "标准"
+
+#: prefs.js:532 prefs.js:811
+msgid "Invert"
+msgstr "反向"
+
+#: prefs.js:537
+msgid "Active Task Frame"
+msgstr "活动任务框架"
+
+#: prefs.js:543
+msgid "Inactive Task Frame"
+msgstr "非活动任务框架"
+
+#: prefs.js:549
+msgid "Activate Tasks on Hover"
+msgstr "悬停时激活任务"
+
+#: prefs.js:555
+msgid "Hover Delay"
+msgstr "悬停延迟"
+
+#: prefs.js:563
+msgid "Blink Tasks on Alert"
+msgstr "通知时闪烁任务"
+
+#: prefs.js:569
+msgid "Blink Rate"
+msgstr "闪烁速率"
+
+#: prefs.js:577
+msgid "Blink Color"
+msgstr "闪烁颜色"
+
+#: prefs.js:590
+msgid "Reset Tasks (II) Tab"
+msgstr "重置 任务 (II) 选项卡"
+
+#: prefs.js:593
+msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
+msgstr "重置 任务 (II) 选项卡为初始设置"
+
+#: prefs.js:615 prefs.js:764
+msgid "Tasks (III)"
+msgstr "任务 (III)"
+
+#: prefs.js:618
+msgid ""
+"Active Task Background\n"
+"Color & Opacity"
+msgstr ""
+"活动任务背景的\n"
+"颜色和不透明度"
+
+#: prefs.js:619
+msgid ""
+"Active Task Background Color & Opacity\n"
+"Click the color button to set the color and opacity of the active task "
+"background. This opens a new window with a table of preset colors to choose "
+"from. Click the '+' button under 'Custom' to customize color and opacity. "
+"Clicking '+' changes the window. In the center is a color picker, the left "
+"slider changes color and the bottom slider changes opacity. At the top, a "
+"indicator and entry field displays hexadecimal values in the form: #RRGGBB, "
+"where RR (red), GG (green) and BB (blue) are values between 00 and FF. When "
+"selected, customized colors will be available in all color settings. Back on "
+"the 'Tasks (III)' tab, flip the switch next to the color button to activate/"
+"deactivate the background color.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"活动任务背景的颜色和不透明度\n"
+"点击颜色区块以设置活动任务背景的颜色和不透明度。这将打开一个新窗口，其中有一"
+"个预设颜色表供您选择。 单击“自定义”下的“+”按钮以定制颜色和不透明度。 点"
+"击“+”更改窗口。 中间是颜色选择器，左滑块用来改变颜色，底滑块改变不透明度。 在"
+"顶部有指示器和以下列形式显示十六进制值的输入字段：#RRGGBB，其中 RR（红色）、"
+"GG（绿色）和 BB（蓝色）是介于 00 和 FF 之间的值。 选择后，自定义颜色就可用于"
+"所有的颜色设置中。 回到“任务 (III)”选项卡上，转动颜色按钮旁边的开关以激活/停"
+"用背景颜色。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:636
+msgid ""
+"Inactive Tasks Background\n"
+"Color & Opacity"
+msgstr ""
+"非活动任务背景的\n"
+"颜色和不透明度"
+
+#: prefs.js:637
+msgid ""
+"Inactive Tasks Background Color & Opacity\n"
+"Click the color button to set the color and opacity of inactive task "
+"backgrounds. This opens a new window with a table of preset colors to choose "
+"from. Click the '+' button under 'Custom' to customize color and opacity. "
+"Clicking '+' changes the window. In the center is a color picker, the left "
+"slider changes color and the bottom slider changes opacity. At the top, a "
+"indicator and entry field displays hexadecimal values in the form: #RRGGBB, "
+"where RR (red), GG (green) and BB (blue) are values between 00 and FF. When "
+"selected, customized colors will be available in all color settings. Back on "
+"the 'Tasks (III)' tab, flip the switch next to the color button to activate/"
+"deactivate the background color.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"非活动任务背景的颜色和不透明度\n"
+"点击颜色区块以设置非活动任务背景的颜色和不透明度。这将打开一个新窗口，其中有"
+"一个预设颜色表供您选择。 单击“自定义”下的“+”按钮以定制颜色和不透明度。 点"
+"击“+”更改窗口。 中间是颜色选择器，左滑块用来改变颜色，底滑块改变不透明度。 在"
+"顶部有指示器和以下列形式显示十六进制值的输入字段：#RRGGBB，其中 RR（红色）、"
+"GG（绿色）和 BB（蓝色）是介于 00 和 FF 之间的值。 选择后，自定义颜色就可用于"
+"所有的颜色设置中。 回到“任务 (III)”选项卡上，转动颜色按钮旁边的开关以激活/停"
+"用背景颜色。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:654
+msgid "Active Task Label Color"
+msgstr "活动任务标签颜色"
+
+#: prefs.js:655
+msgid ""
+"Active Task Label Color & Opacity\n"
+"Click the color button to set the color and opacity of the active task "
+"label. This opens a new window with a table of preset colors to choose from. "
+"Click the '+' button under 'Custom' to customize color and opacity. Clicking "
+"'+' changes the window. In the center is a color picker, the left slider "
+"changes color and the bottom slider changes opacity. At the top, a indicator "
+"and entry field displays hexadecimal values in the form: #RRGGBB, where RR "
+"(red), GG (green) and BB (blue) are values between 00 and FF. When selected, "
+"customized colors will be available in all color settings. Back on the "
+"'Tasks (III)' tab, flip the switch next to the color button to activate/"
+"deactivate the label color.\n"
+"Toggle task labels at the 'Tasks (I)' tab.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"活动任务标签的颜色和不透明度\n"
+"点击颜色区块以设置活动任务标签的颜色和不透明度。这将打开一个新窗口，其中有一"
+"个预设颜色表供您选择。 单击“自定义”下的“+”按钮以定制颜色和不透明度。 点"
+"击“+”更改窗口。 中间是颜色选择器，左滑块用来改变颜色，底滑块改变不透明度。 在"
+"顶部有指示器和以下列形式显示十六进制值的输入字段：#RRGGBB，其中 RR（红色）、"
+"GG（绿色）和 BB（蓝色）是介于 00 和 FF 之间的值。 选择后，自定义颜色就可用于"
+"所有的颜色设置中。 回到“任务 (III)”选项卡上，转动颜色按钮旁边的开关以激活/停"
+"用背景颜色。\n"
+"任务标签显示切换在“任务 (I)”选项卡中。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:672
+msgid "Inactive Tasks Label Color"
+msgstr "非活动任务标签颜色"
+
+#: prefs.js:673
+msgid ""
+"Inactive Tasks Label Color & Opacity\n"
+"Click the color button to set the color and opacity of inactive task labels. "
+"This opens a new window with a table of preset colors to choose from. Click "
+"the '+' button under 'Custom' to customize color and opacity. Clicking '+' "
+"changes the window. In the center is a color picker, the left slider changes "
+"color and the bottom slider changes opacity. At the top, a indicator and "
+"entry field displays hexadecimal values in the form: #RRGGBB, where RR "
+"(red), GG (green) and BB (blue) are values between 00 and FF. When selected, "
+"customized colors will be available in all color settings. Back on the "
+"'Tasks (III)' tab, flip the switch next to the color button to activate/"
+"deactivate the label color.\n"
+"Toggle task labels at the 'Tasks (I)' tab.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"非活动任务标签的颜色和不透明度\n"
+"点击颜色区块以设置非活动任务的标签颜色和不透明度。这将打开一个新窗口，其中有"
+"一个预设颜色表供您选择。 单击“自定义”下的“+”按钮以定制颜色和不透明度。 点"
+"击“+”更改窗口。 中间是颜色选择器，左滑块用来改变颜色，底滑块改变不透明度。 在"
+"顶部有指示器和以下列形式显示十六进制值的输入字段：#RRGGBB，其中 RR（红色）、"
+"GG（绿色）和 BB（蓝色）是介于 00 和 FF 之间的值。 选择后，自定义颜色就可用于"
+"所有的颜色设置中。 回到“任务 (III)”选项卡上，转动颜色按钮旁边的开关以激活/停"
+"用背景颜色。\n"
+"任务标签显示切换在“任务 (I)”选项卡中。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:690
+msgid "Active Task Frame Color"
+msgstr "活动任务框架颜色"
+
+#: prefs.js:691
+msgid ""
+"Active Task Frame Color & Opacity\n"
+"Click the color button to set the color and opacity of the active task "
+"frame. This opens a new window with a table of preset colors to choose from. "
+"Click the '+' button under 'Custom' to customize color and opacity. Clicking "
+"'+' changes the window. In the center is a color picker, the left slider "
+"changes color and the bottom slider changes opacity. At the top, a indicator "
+"and entry field displays hexadecimal values in the form: #RRGGBB, where RR "
+"(red), GG (green) and BB (blue) are values between 00 and FF. When selected, "
+"customized colors will be available in all color settings. Back on the "
+"'Tasks (III)' tab, flip the switch next to the color button to activate/"
+"deactivate the frame color.\n"
+"Toggle the active task frame at the 'Tasks (II)' tab.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"活动任务框架的颜色和不透明度\n"
+"点击颜色区块以设置活动任务框架的颜色和不透明度。这将打开一个新窗口，其中有一"
+"个预设颜色表供您选择。 单击“自定义”下的“+”按钮以定制颜色和不透明度。 点"
+"击“+”更改窗口。 中间是颜色选择器，左滑块用来改变颜色，底滑块改变不透明度。 在"
+"顶部有指示器和以下列形式显示十六进制值的输入字段：#RRGGBB，其中 RR（红色）、"
+"GG（绿色）和 BB（蓝色）是介于 00 和 FF 之间的值。 选择后，自定义颜色就可用于"
+"所有的颜色设置中。 回到“任务 (III)”选项卡上，转动颜色按钮旁边的开关以激活/停"
+"用背景颜色。\n"
+"任务框架显示切换在“任务 (II)”选项卡中。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:708
+msgid "Inactive Tasks Frame Color"
+msgstr "非活动任务框架颜色"
+
+#: prefs.js:709
+msgid ""
+"Inactive Tasks Frame Color & Opacity\n"
+"Click the color button to set the color and opacity of inactive task frames. "
+"This opens a new window with a table of preset colors to choose from. Click "
+"the '+' button under 'Custom' to customize color and opacity. Clicking '+' "
+"changes the window. In the center is a color picker, the left slider changes "
+"color and the bottom slider changes opacity. At the top, a indicator and "
+"entry field displays hexadecimal values in the form: #RRGGBB, where RR "
+"(red), GG (green) and BB (blue) are values between 00 and FF. When selected, "
+"customized colors will be available in all color settings. Back on the "
+"'Tasks (III)' tab, flip the switch next to the color button to activate/"
+"deactivate the frame color.\n"
+"Toggle inactive task frames at the 'Tasks (II)' tab.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"非活动任务框架的颜色和不透明度\n"
+"点击颜色区块以设置非活动任务框架的颜色和不透明度。这将打开一个新窗口，其中有"
+"一个预设颜色表供您选择。 单击“自定义”下的“+”按钮以定制颜色和不透明度。 点"
+"击“+”更改窗口。 中间是颜色选择器，左滑块用来改变颜色，底滑块改变不透明度。 在"
+"顶部有指示器和以下列形式显示十六进制值的输入字段：#RRGGBB，其中 RR（红色）、"
+"GG（绿色）和 BB（蓝色）是介于 00 和 FF 之间的值。 选择后，自定义颜色就可用于"
+"所有的颜色设置中。 回到“任务 (III)”选项卡上，转动颜色按钮旁边的开关以激活/停"
+"用背景颜色。\n"
+"任务框架显示切换在“任务 (II)”选项卡中。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:726
+msgid "Blacklist Apps"
+msgstr "禁用应用列表"
+
+#: prefs.js:727
+msgid ""
+"Blacklist Apps\n"
+"Find app names by navigating to the 'Preview' tab and setting 'Tasks Label' "
+"to 'App Name'. Then hover the task you would like to blacklist. App names "
+"are case-sensitive. If you intend to blacklist more than one app, separate "
+"app names by comma and space:\n"
+"Terminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files\n"
+"Flip the switch next to the entry field to activate/deactivate the "
+"blacklist.\n"
+"Toggle tasks at the 'Overview' tab."
+msgstr ""
+"禁用应用列表\n"
+"可以切换到“预览”选项卡并将“任务标签”设置为“应用名称”来查找应用程序的名称。 然"
+"后将鼠标悬停到要列入禁用列表的任务上。 应用名称区分大小写。 如果您想将多个应"
+"用列入禁用列表，请以半角逗号和空格分隔应用名称：\n"
+"Terminal, gedit, Tweak Tool, GNU Image Manipulation Program, Files\n"
+"转动输入字段旁边的开关以激活/停用禁用列表。\n"
+"任务显示切换在“概览”选项卡中。"
+
+#: prefs.js:752
+msgid "Reset Tasks (III) Tab"
+msgstr "重置 任务 (III) 选项卡"
+
+#: prefs.js:755
+msgid "Reset All Settings on this Tab"
+msgstr "重置此选项卡上的所有设置"
+
+#: prefs.js:777 prefs.js:872
+msgid "Buttons"
+msgstr "按钮"
+
+#: prefs.js:780
+msgid ""
+"Desktop Button Right Click\n"
+"opens Preferences (this)"
+msgstr ""
+"桌面按钮右键点击\n"
+"打开此首选项窗口"
+
+#: prefs.js:786
+msgid "Desktop Button Icon"
+msgstr "桌面按钮图标"
+
+#: prefs.js:797
+msgid "Workspace Button Index"
+msgstr "工作区按钮索引"
+
+#: prefs.js:800 prefs.js:895
+msgid "Index"
+msgstr "当前位置"
+
+#: prefs.js:801
+msgid "Index/Total"
+msgstr "当前位置/总数"
+
+#: prefs.js:806
+msgid "Scroll Workspaces"
+msgstr "工作区滚动"
+
+#: prefs.js:816
+msgid "Workspace Button Color"
+msgstr "工作区按钮颜色"
+
+#: prefs.js:832
+msgid "Adjust Workspace Button Width"
+msgstr "调整工作区按钮宽度"
+
+#: prefs.js:840
+msgid ""
+"Appview Button\n"
+"Left & Right Click Toggle"
+msgstr ""
+"应用视图按钮\n"
+"左右键点击切换"
+
+#: prefs.js:843
+msgid ""
+"L Appview\n"
+"R Overview"
+msgstr ""
+"左：应用视图\n"
+"右：活动概览"
+
+#: prefs.js:844
+msgid ""
+"L Overview\n"
+"R Appview"
+msgstr ""
+"左：活动概览\n"
+"右：应用视图"
+
+#: prefs.js:849
+msgid "Appview Button Icon"
+msgstr "应用视图按钮图标"
+
+#: prefs.js:860
+msgid "Reset Buttons Tab"
+msgstr "重置 按钮 选项卡"
+
+#: prefs.js:863
+msgid ""
+"Reset the Buttons Tab except the Icons to the Original Buttons Settings.\n"
+"The Icons can be Reset within their own Settings."
+msgstr ""
+"重置 按钮 选项卡除了图标的设置为初始设置。\n"
+"图标可以从它自己的设置中重置。"
+
+#: prefs.js:885 prefs.js:939
+msgid "Tray Button"
+msgstr "托盘按钮"
+
+#: prefs.js:890
+msgid "Bottom Panel Tray Button"
+msgstr "底部面板托盘按钮"
+
+#: prefs.js:894
+msgid "Icon"
+msgstr "图标"
+
+#: prefs.js:900
+msgid "When Tray is Empty"
+msgstr "当托盘为空时"
+
+#: prefs.js:903
+msgid "Show Icon"
+msgstr "显示图标"
+
+#: prefs.js:904
+msgid "Show 0"
+msgstr "显示 0"
+
+#: prefs.js:905
+msgid "Hide"
+msgstr "隐藏"
+
+#: prefs.js:910
+msgid "Tray Button Icon"
+msgstr "托盘底部图标"
+
+#: prefs.js:921
+msgid "Activate Tray on Hover"
+msgstr "悬停时激活托盘"
+
+#: prefs.js:927
+msgid "Reset Tray Button Tab"
+msgstr "重置 托盘按钮 选项卡"
+
+#: prefs.js:930
+msgid ""
+"Reset the Tray Button Tab except the Icon to the Original Tray Button "
+"Settings.\n"
+"The Icon can be Reset within its own Settings."
+msgstr ""
+"重置 托盘按钮 选项卡除了图标的设置为初始设置。\n"
+"图标可以从它自己的设置中重置。"
+
+#: prefs.js:952 prefs.js:1054
+msgid "Separators"
+msgstr "分隔"
+
+#: prefs.js:955
+msgid "Left (px)"
+msgstr "左 (px)"
+
+#: prefs.js:957
+msgid "Right (px)"
+msgstr "右 (px)"
+
+#: prefs.js:973
+msgid "Tasks Container"
+msgstr "任务容器"
+
+#: prefs.js:1038
+msgid "Reset Separators Tab"
+msgstr "重置 分隔 选项卡"
+
+#: prefs.js:1041
+msgid "Reset the Separators Tab to the Original Separators Settings"
+msgstr "重置 分隔 选项卡为初始设置"
+
+#: prefs.js:1067 prefs.js:1158
+msgid "Preview"
+msgstr "预览"
+
+#: prefs.js:1070
+msgid "Tasks Label Preview"
+msgstr "任务标签预览"
+
+#: prefs.js:1076
+msgid ""
+"App Name &\n"
+"Window Title"
+msgstr ""
+"应用名称和\n"
+"窗口标题"
+
+#: prefs.js:1081
+msgid "Tasks Thumbnail Preview"
+msgstr "任务缩略图预览"
+
+#: prefs.js:1087
+msgid "Favorites Label Preview"
+msgstr "收藏标签预览"
+
+#: prefs.js:1092
+msgid "Description"
+msgstr "描述"
+
+#: prefs.js:1093
+msgid ""
+"App Name &\n"
+"Description"
+msgstr ""
+"应用名称\n"
+"和描述"
+
+#: prefs.js:1098
+msgid "Thumbnail Preview Size"
+msgstr "缩略图预览大小"
+
+#: prefs.js:1106
+msgid "Preview Delay"
+msgstr "预览延迟"
+
+#: prefs.js:1114
+msgid "Preview Background Color"
+msgstr "预览背景颜色"
+
+#: prefs.js:1130
+msgid "Preview Label Color"
+msgstr "预览标签颜色"
+
+#: prefs.js:1146
+msgid "Reset Preview Tab"
+msgstr "重置 预览 选项卡"
+
+#: prefs.js:1149
+msgid "Reset the Preview Tab to the Original Preview Settings"
+msgstr "重置 预览 选项卡为初始设置"
+
+#: prefs.js:1171 prefs.js:1287
+msgid "Misc"
+msgstr "杂项"
+
+#: prefs.js:1174
+msgid "Color & Opacity"
+msgstr "颜色和不透明度"
+
+#: prefs.js:1177
+msgid "Activities Button"
+msgstr "活动按钮"
+
+#: prefs.js:1192 prefs.js:1211 prefs.js:1230 prefs.js:1249
+msgid "Reset"
+msgstr "重置"
+
+#: prefs.js:1196
+msgid "Application Menu"
+msgstr "应用程序菜单"
+
+#: prefs.js:1215
+msgid "Date Menu"
+msgstr "日期菜单"
+
+#: prefs.js:1234
+msgid "System Menu"
+msgstr "系统菜单"
+
+#: prefs.js:1253
+msgid "Hot Corner"
+msgstr "热区"
+
+#: prefs.js:1259
+msgid "Dash (Activities Overview)"
+msgstr "Dash（活动概览）"
+
+#: prefs.js:1265
+msgid "Workspace Selector (Activities Overview)"
+msgstr "工作区选择器（活动概览）"
+
+#: prefs.js:1271
+msgid "TaskBar (Activities Overview)"
+msgstr "任务栏（活动概览）"
+
+#: prefs.js:1277
+msgid "Reset Misc Tab"
+msgstr "重置 杂项 选项卡"
+
+#: prefs.js:1280
+msgid "Reset the Misc Tab to the Original Misc Settings"
+msgstr "重置 杂项 选项卡为初始设置"
+
+#: prefs.js:1302
+msgid "GNU GPL"
+msgstr "GNU GPL"
+
+#: prefs.js:1322
+msgid "GNU General Public License"
+msgstr "GNU 通用公共许可证"
+
+#: prefs.js:1728
+msgid "TaskBar - Set Desktop Button Icon"
+msgstr "任务栏 - 设置桌面按钮图标"
+
+#: prefs.js:1741 prefs.js:1858 prefs.js:1948
+msgid "Images"
+msgstr "图像"
+
+#: prefs.js:1845
+msgid "TaskBar - Set Appview Button Icon"
+msgstr "任务栏 - 设置应用视图按钮图标"
+
+#: prefs.js:1935
+msgid "TaskBar - Set Tray Button Icon"
+msgstr "任务栏 - 设置托盘按钮图标"
+
+#~ msgid "TrayButton"
+#~ msgstr "托盘按钮"
