@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-30 02:26+0200\n"
-"PO-Revision-Date: 2016-10-30 02:58+0200\n"
+"POT-Creation-Date: 2016-10-30 11:31+0100\n"
+"PO-Revision-Date: 2016-10-30 11:34+0100\n"
 "Last-Translator: Michal Růžička <ruzicka.mich@gmail.com>\n"
 "Language-Team: Michal Růžička <ruzicka.mich@gmail.com>\n"
 "Language: cs_CZ\n"
@@ -127,9 +127,8 @@ msgid "Align TaskBar"
 msgstr "Zarovnání TaskBaru"
 
 #: prefs.js:311
-#, fuzzy
 msgid "Panel Size"
-msgstr "Výška panelu"
+msgstr "Velikost panelu"
 
 #: prefs.js:324
 msgid "Adjust TaskBar Icon Size"
@@ -176,9 +175,8 @@ msgid "Tasks on All Workspaces"
 msgstr "Úlohy na všech plochách"
 
 #: prefs.js:435
-#, fuzzy
 msgid "Sort Tasks by Application"
-msgstr "Aplikační menu úloh"
+msgstr "Seřadit úlohy dle aplikace"
 
 #: prefs.js:438 prefs.js:448 prefs.js:482 prefs.js:492 prefs.js:530
 #: prefs.js:809 prefs.js:893 prefs.js:1073 prefs.js:1090
@@ -190,9 +188,8 @@ msgid "Sort"
 msgstr "Seřadit"
 
 #: prefs.js:440
-#, fuzzy
 msgid "Sort Workspace"
-msgstr "Přepínat kolečkem plochy"
+msgstr "Seřadit pracovní plochy"
 
 #: prefs.js:445
 msgid "Tasks Label"
@@ -211,9 +208,8 @@ msgid "Tasks Label Width (150 px)"
 msgstr "Šířka popisky úloh (150 px)"
 
 #: prefs.js:463
-#, fuzzy
 msgid "Tasks Container Width (0 Tasks)"
-msgstr "Šířka sekce úloh (6 úloh)"
+msgstr "Šířka sekce úloh (0 úloh)"
 
 #: prefs.js:471
 msgid "Space between Tasks (4 px)"
@@ -240,7 +236,6 @@ msgid "Reset Tasks (I) Tab"
 msgstr "Resetovat záložku Úlohy (I)"
 
 #: prefs.js:502
-#, fuzzy
 msgid "Reset the Tasks (I) Tab to the Original Tasks Settings"
 msgstr "Resetovat záložku Úlohy (I) na původní hodnoty"
 
@@ -277,9 +272,8 @@ msgid "Hover Delay"
 msgstr "Prodleva aktivace úlohy najetím kurzoru"
 
 #: prefs.js:563
-#, fuzzy
 msgid "Blink Tasks on Alert"
-msgstr "Aktivovat úlohy najetím kurzoru"
+msgstr "Úlohy blikají při oznámení"
 
 #: prefs.js:569
 msgid "Blink Rate"
@@ -298,9 +292,8 @@ msgid "Reset the Tasks II Tab to the Original Tasks II Settings"
 msgstr "Resetovat záložku Úlohy (II) na původní hodnoty"
 
 #: prefs.js:615 prefs.js:764
-#, fuzzy
 msgid "Tasks (III)"
-msgstr "Úlohy (II)"
+msgstr "Úlohy (III)"
 
 #: prefs.js:618
 msgid ""
@@ -338,7 +331,6 @@ msgstr ""
 "Přepnout úlohy na panel „Přehled činností“."
 
 #: prefs.js:636
-#, fuzzy
 msgid ""
 "Inactive Tasks Background\n"
 "Color & Opacity"
@@ -374,7 +366,6 @@ msgstr ""
 "Přepnout úlohy na panel „Přehled činností“."
 
 #: prefs.js:654
-#, fuzzy
 msgid "Active Task Label Color"
 msgstr "Barva popisky úlohy"
 
@@ -408,9 +399,8 @@ msgstr ""
 "Přepnout úlohy na panel „Přehled činností“."
 
 #: prefs.js:672
-#, fuzzy
 msgid "Inactive Tasks Label Color"
-msgstr "Barva popisky úlohy"
+msgstr "Barva popisky neaktivní úlohy"
 
 #: prefs.js:673
 msgid ""
@@ -442,9 +432,8 @@ msgstr ""
 "Přepnout úlohy na panel „Přehled činností“."
 
 #: prefs.js:690
-#, fuzzy
 msgid "Active Task Frame Color"
-msgstr "Rámeček kolem aktivní úlohy"
+msgstr "Barva rámeček úlohy"
 
 #: prefs.js:691
 msgid ""
@@ -476,9 +465,8 @@ msgstr ""
 "Přepnout úlohy na panel „Přehled činností“."
 
 #: prefs.js:708
-#, fuzzy
 msgid "Inactive Tasks Frame Color"
-msgstr "Rámeček kolem neaktivní úlohy"
+msgstr "Rámeček rámečku neaktivní úlohy"
 
 #: prefs.js:709
 msgid ""
@@ -511,7 +499,7 @@ msgstr ""
 
 #: prefs.js:726
 msgid "Blacklist Apps"
-msgstr "Černá listina aplikací"
+msgstr "Aplikace na černé listině"
 
 #: prefs.js:727
 msgid ""
@@ -536,14 +524,12 @@ msgstr ""
 "Přepnout úlohy na panel „Přehled činností“."
 
 #: prefs.js:752
-#, fuzzy
 msgid "Reset Tasks (III) Tab"
-msgstr "Resetovat záložku Úlohy (II)"
+msgstr "Resetovat záložku Úlohy (III)"
 
 #: prefs.js:755
-#, fuzzy
 msgid "Reset All Settings on this Tab"
-msgstr "Resetovat záložku Tlačítka"
+msgstr "Resetova všechna nastavení na této záložce"
 
 #: prefs.js:777 prefs.js:872
 msgid "Buttons"
@@ -582,9 +568,8 @@ msgid "Workspace Button Color"
 msgstr "Barva přepínače ploch"
 
 #: prefs.js:832
-#, fuzzy
 msgid "Adjust Workspace Button Width"
-msgstr "Přepínač ploch"
+msgstr "Nastavit šířku tlačítka Pracovní plochy"
 
 #: prefs.js:840
 msgid ""
@@ -706,9 +691,8 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: prefs.js:1070
-#, fuzzy
 msgid "Tasks Label Preview"
-msgstr "Popiska úlohy"
+msgstr "Náhled popisky úloh"
 
 #: prefs.js:1076
 msgid ""
@@ -716,17 +700,15 @@ msgid ""
 "Window Title"
 msgstr ""
 "Jméno aplikace &\n"
-"Název okna"
+"název okna"
 
 #: prefs.js:1081
-#, fuzzy
 msgid "Tasks Thumbnail Preview"
-msgstr "Náhled úlohy"
+msgstr "Náhled náhledu úlohy"
 
 #: prefs.js:1087
-#, fuzzy
 msgid "Favorites Label Preview"
-msgstr "Popisky oblíbených"
+msgstr "Náhled popisky oblíbených"
 
 #: prefs.js:1092
 msgid "Description"
@@ -741,7 +723,6 @@ msgstr ""
 "popis"
 
 #: prefs.js:1098
-#, fuzzy
 msgid "Thumbnail Preview Size"
 msgstr "Velikost náhledu"
 
@@ -750,16 +731,12 @@ msgid "Preview Delay"
 msgstr "Prodleva náhledu"
 
 #: prefs.js:1114
-#, fuzzy
 msgid "Preview Background Color"
-msgstr ""
-"Pozadí panelu\n"
-"barva & průhlednost"
+msgstr "Náhled barvy pozadí"
 
 #: prefs.js:1130
-#, fuzzy
 msgid "Preview Label Color"
-msgstr "Barva popisky úlohy"
+msgstr "Náhled barvy popisky"
 
 #: prefs.js:1146
 msgid "Reset Preview Tab"
@@ -802,17 +779,14 @@ msgid "Hot Corner"
 msgstr "Aktivní roh"
 
 #: prefs.js:1259
-#, fuzzy
 msgid "Dash (Activities Overview)"
 msgstr "Dash (v přehledu činností)"
 
 #: prefs.js:1265
-#, fuzzy
 msgid "Workspace Selector (Activities Overview)"
 msgstr "Výběr pracovní plochy (v přehledu činností)"
 
 #: prefs.js:1271
-#, fuzzy
 msgid "TaskBar (Activities Overview)"
 msgstr "TaskBar (v přehledu činností)"
 
@@ -833,23 +807,20 @@ msgid "GNU General Public License"
 msgstr "GNU General Public License"
 
 #: prefs.js:1728
-#, fuzzy
 msgid "TaskBar - Set Desktop Button Icon"
-msgstr "Nastavení TaskBar – ikona tlačítka Plocha"
+msgstr "TaskBar – Nastavit ikonu tlačítka Plocha"
 
 #: prefs.js:1741 prefs.js:1858 prefs.js:1948
 msgid "Images"
 msgstr "Obrázky"
 
 #: prefs.js:1845
-#, fuzzy
 msgid "TaskBar - Set Appview Button Icon"
-msgstr "Nastavení TaskBar – ikona tlačítka Aplikace"
+msgstr "TaskBar – Nastavit ikonu tlačítka Aplikace"
 
 #: prefs.js:1935
-#, fuzzy
 msgid "TaskBar - Set Tray Button Icon"
-msgstr "Nastavení TaskBar – ikona tlačítka lišty zpráv"
+msgstr "TaskBar – Nastavit ikonu tlačítka lišty zpráv"
 
 #~ msgid "TrayButton"
 #~ msgstr "Tlačítko lišty zpráv"
