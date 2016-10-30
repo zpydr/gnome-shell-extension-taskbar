@@ -1,0 +1,5 @@
+# Vim Swap Files
+.*.swp
+
+# PO backup files
+locale/*/LC_MESSAGES/TaskBar.po~
