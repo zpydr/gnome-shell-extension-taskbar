@@ -1,5 +1,5 @@
 ![TaskBar Icon](https://extensions.gnome.org/static/extension-data/icons/icon_584.png)          
-**GNOME Shell Extension TaskBar Version 52 for GNOME 3.10 - 3.20**  
+**GNOME Shell Extension TaskBar Version 53 for GNOME 3.10 - 3.22**  
 zpydr@openmailbox.org        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
@@ -27,7 +27,7 @@ Workspace button - switch workspaces left/right-click: cycle forward/backwards
 Appview button - left/right-click: toggle appview/overview      
 Favorites - add from dash       
 Align position      
-Resize panels + contents        
+Resize panels + adjust icon, label and content sizes        
 Top/bottom panel background color + opacity     
 Bottom panel tray button - activate the message tray        
 Tasks on all workspaces		  
@@ -38,16 +38,18 @@ Activate tasks on hover
 Scroll tasks/workspaces         
 Separators          
 Thumbnail/label-preview         
+Preview color + opacity      
 Color or hide menu buttons         
 Disable hot corner          
         
 Language support:       
+Chinese by wsxy162        
 Czech by michal-ruzicka     
 French by narzb       
 German by jonnius       
 Spanish by Testoriano		
 
-Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl, tuhaihe, to-ba        
+Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl, tuhaihe, to-ba, tobimensch        
         
 ![TaskBar Image](https://extensions.gnome.org/static/extension-data/screenshots/screenshot_584_PSh3ecJ.png)
         
