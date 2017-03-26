@@ -887,8 +887,8 @@ Prefs.prototype =
         if (ShellVersion[1] <= 14)
             notebook.append_page(scrollWindowTrayButton, labelTrayButton);
 
-        let labelTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
-        this.gridTrayButton.attach(labelTrayButton, 1, 1, 1, 1);
+        let labelBottomTrayButton = new Gtk.Label({label: _("Bottom Panel Tray Button"), xalign: 0});
+        this.gridTrayButton.attach(labelBottomTrayButton, 1, 1, 1, 1);
         this.valueTrayButton = new Gtk.ComboBoxText();
         this.valueTrayButton.append_text(_("OFF"));
         this.valueTrayButton.append_text(_("Icon"));
@@ -1299,8 +1299,8 @@ Prefs.prototype =
         let scrollWindowGPL = this.gridGPL;
 
         scrollWindowGPL.show_all();
-        let labelGPL = new Gtk.Label({label: _("GNU GPL")});
-        notebook.append_page(scrollWindowGPL, labelGPL);
+        let labelTitleGPL = new Gtk.Label({label: _("GNU GPL")});
+        notebook.append_page(scrollWindowGPL, labelTitleGPL);
 
         let gplImage = new Gtk.Image({file: GPLICON, xalign: 1});
         let gplSpacer = new Gtk.Image({file: SPACERICON});
