@@ -1,6 +1,29 @@
 ![TaskBar Icon](https://extensions.gnome.org/extension-data/icons/icon_584_ZS33QUn.png)          
-**GNOME Shell Extension TaskBar Version 54 for GNOME 3.10 - 3.24**  
-zpydr@openmailbox.org        
+**GNOME Shell Extension TaskBar**    
+Copyright (C) 2013-2017 zpydr             
+                
+This program is free software: you can redistribute it and/or modify            
+it under the terms of the GNU General Public License as published by            
+the Free Software Foundation, either version 3 of the License, or               
+(at your option) any later version.             
+                
+This program is distributed in the hope that it will be useful,         
+but WITHOUT ANY WARRANTY; without even the implied warranty of          
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            
+GNU General Public License for more details.            
+                
+You should have received a copy of the GNU General Public License               
+along with this program. If not, see https://www.gnu.org/licenses/.              
+                
+zpydr@openmailbox.org            
+                
+![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
+        
+         
+![TaskBar Image](https://extensions.gnome.org/extension-data/screenshots/screenshot_584_PSh3ecJ.png)        
+        
+ **Version 54 for GNOME 3.10 - 3.24**       
+        
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
 https://launchpad.net/gnome-shell-extension-taskbar/            
@@ -51,25 +74,4 @@ Russian by dersteinkauz
 Spanish by Testoriano		
 
 Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl, tuhaihe, to-ba, tobimensch, navarrano        
-        
-![TaskBar Image](https://extensions.gnome.org/extension-data/screenshots/screenshot_584_PSh3ecJ.png)
-        
-GNOME Shell Extension TaskBar           
-Copyright (C) 2013-2017 zpydr             
-                
-This program is free software: you can redistribute it and/or modify            
-it under the terms of the GNU General Public License as published by            
-the Free Software Foundation, either version 3 of the License, or               
-(at your option) any later version.             
-                
-This program is distributed in the hope that it will be useful,         
-but WITHOUT ANY WARRANTY; without even the implied warranty of          
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            
-GNU General Public License for more details.            
-                
-You should have received a copy of the GNU General Public License               
-along with this program. If not, see https://www.gnu.org/licenses/.              
-                
-zpydr@openmailbox.org            
-                
-![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
+          
