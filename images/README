@@ -1,0 +1,32 @@
+GNOME Shell Extension TaskBar
+Copyright (C) 2013-2017 zpydr
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see https://www.gnu.org/licenses/.
+
+zpydr@openmailbox.org
+
+Icons:
+active-task-background.svg - Copyright (C) 2013-2017 zpydr - GPLv3+
+appview-button-default.svg - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+bottom-panel-tray-button.svg - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+desktop-button-dark.png - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+desktop-button-default.png - Copyright (C) 2013-2017 zpydr - GPLv3+
+desktop-button-gnome.png - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+settings-1px.png - Copyright (C) 2013-2017 zpydr - GPLv3+
+settings-fsf.png - Copyright (C) 2013-2017 GNU Project - GPLv3+
+settings-gnome.png - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+settings-gpl.png - Copyright (C) 2013-2017 GNU Project - GPLv3+
+settings-home.png - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+settings-mail.png - Copyright (C) 2013-2017 GNOME Project - GPLv2+
+transparent-icon.svg - Copyright (C) 2013-2017 zpydr - GPLv3+
