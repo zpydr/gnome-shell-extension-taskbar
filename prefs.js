@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2016 zpydr
+//  Copyright (C) 2013-2017 zpydr
 //
-//  Version 53
+//  Version 54
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ Prefs.prototype =
         let linkImage7 = new Gtk.Image({file: FSFICON});
         let linkImage8 = new Gtk.Image({file: SPACERICON});
 
-        let labelVersion1 = new Gtk.Label({label: _("Version")+" 53"});
+        let labelVersion1 = new Gtk.Label({label: _("Version")+" 54"});
         this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
         let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
         this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
@@ -147,7 +147,7 @@ Prefs.prototype =
         labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
         let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _("Report a Bug"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 53%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 54%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
         bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 6, 1, 1);
         let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
@@ -1305,7 +1305,7 @@ Prefs.prototype =
         let gplImage = new Gtk.Image({file: GPLICON, xalign: 1});
         let gplSpacer = new Gtk.Image({file: SPACERICON});
 
-        let labelGPL = new Gtk.Label({label: "GNOME Shell Extension TaskBar\nCopyright (C) 2016 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see", xalign: 0});
+        let labelGPL = new Gtk.Label({label: "GNOME Shell Extension TaskBar\nCopyright (C) 2013-2017 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see", xalign: 0});
         let labelLinkGPL = new Gtk.LinkButton ({image: gplSpacer, label: "https://www.gnu.org/licenses/",
             uri: "https://www.gnu.org/licenses/", xalign: 0});
         let labelEmailLinkGPL = new Gtk.LinkButton ({image: gplSpacer, label: "zpydr@openmailbox.org",
