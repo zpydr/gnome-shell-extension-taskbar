@@ -728,8 +728,8 @@ TaskBar.prototype =
         this.globalThemeChangedId = St.ThemeContext.get_for_stage(global.stage).connect('changed', Lang.bind(this, this.onParamChanged));
         if ((this.settings.get_boolean("display-tasks")) && (this.settings.get_boolean("blink-tasks")))
             this.windowDemandsAttentionId = global.display.connect('window-demands-attention', Lang.bind(this, this.onWindowDemandsAttention));
-        if (Main.screenShield !== null)
-            this.screenShieldLockId = Main.screenShield.connect('lock-status-changed', Lang.bind(this, this.onParamChanged));
+//        if (Main.screenShield !== null)
+//            this.screenShieldLockId = Main.screenShield.connect('lock-status-changed', Lang.bind(this, this.onParamChanged));
 	this.setOverview();
     },
 
