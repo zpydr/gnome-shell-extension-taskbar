@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2013-2017 zpydr
 //
-//  Version 54
+//  Version 55
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ Prefs.prototype =
         let linkImage7 = new Gtk.Image({file: FSFICON});
         let linkImage8 = new Gtk.Image({file: SPACERICON});
 
-        let labelVersion1 = new Gtk.Label({label: _("Version")+" 54"});
+        let labelVersion1 = new Gtk.Label({label: _("Version")+" 55"});
         this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
         let labelVersion2 = new Gtk.Label({label: _("GNOME Shell Version")+" 3."+ShellVersion[1]});
         this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
@@ -147,7 +147,7 @@ Prefs.prototype =
         labelLink2.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
         let bugReport = new Gtk.LinkButton ({image: linkImage4, label: _("Report a Bug"),
-            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 54%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
+            uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 55%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A", xalign: 0 });
         bugReport.set_always_show_image(true);
         this.gridTaskBar.attach(bugReport, 1, 6, 1, 1);
         let labelLink4 = new Gtk.LinkButton ({image: linkImage5, label: " "+_("Donate for TaskBar"),
