@@ -19,7 +19,7 @@
 //  zpydr@openmailbox.org
 
 const Clutter = imports.gi.Clutter;
-const Gdk = imports.gi.Gdk;adjustLabelSize
+const Gdk = imports.gi.Gdk;
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
