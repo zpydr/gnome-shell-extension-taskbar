@@ -22,7 +22,7 @@ zpydr@openmailbox.org
          
 ![TaskBar Image](https://extensions.gnome.org/extension-data/screenshots/screenshot_584_PSh3ecJ.png)        
         
- **Version 54 for GNOME 3.10 - 3.24**       
+ **Version 55 for GNOME 3.10 - 3.24**       
         
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
