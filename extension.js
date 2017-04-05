@@ -19,7 +19,7 @@
 //  zpydr@openmailbox.org
 
 const Clutter = imports.gi.Clutter;
-const Gdk = imports.gi.Gdk;
+const Gdk = imports.gi.Gdk;adjustLabelSize
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
@@ -1511,7 +1511,7 @@ TaskBar.prototype =
         {
             this.settings.set_string("bottom-panel-original-background-color", topPanelOriginalBackgroundColor);
         }
-        if ((this.panelSize !== 27) || (this.adjustContentSize !== 0) || (this.adjustLabelSize !== 0))
+        if ((this.panelSize !== 27) || (this.adjustContentSize !== 0))
         {
             //Set Font Size
             this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
