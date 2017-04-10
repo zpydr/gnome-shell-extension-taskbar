@@ -2023,6 +2023,14 @@ TaskBar.prototype =
             this.newTasksContainerWidth = (this.tasksContainerWidth * (buttonTaskWidth + spaces));
             this.boxMainTasks.set_width(this.newTasksContainerWidth);
         }
+        this.tasksList.sort(
+            function(taskA, taskB)
+	    {
+                let [windowTaskA, buttonTaskA, signalsTaskA] = taskA;
+                let [windowTaskB, buttonTaskB, signalsTaskB] = taskB;
+                return windowTaskA.get_stable_sequence() > windowTaskB.get_stable_sequence();
+            }
+        );
     },
 
     //Active Tasks
