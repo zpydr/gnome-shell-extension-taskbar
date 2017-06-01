@@ -1,25 +1,184 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg id="svg7384" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="16" width="16" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
- <metadata id="metadata90">
-  <rdf:RDF>
-   <cc:Work rdf:about="">
-    <dc:format>image/svg+xml</dc:format>
-    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:title>Gnome Symbolic Icon Theme</dc:title>
-   </cc:Work>
-  </rdf:RDF>
- </metadata>
- <title id="title9167">Gnome Symbolic Icon Theme</title>
- <g id="layer12" transform="translate(-61 -867)">
-  <rect id="rect13363" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="870" x="64"/>
-  <rect id="rect13365" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="870" x="68"/>
-  <rect id="rect13367" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="870" x="72"/>
-  <rect id="rect13369" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="874.02" x="64"/>
-  <rect id="rect13371" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="874.02" x="68"/>
-  <rect id="rect13373" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="874.02" x="72"/>
-  <rect id="rect13375" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="878" x="64"/>
-  <rect id="rect13377" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="878" x="68"/>
-  <rect id="rect13379" style="color:#000000;enable-background:new;fill:#bebebe" rx=".38462" ry=".37879" height="2" width="2" y="878" x="72"/>
- </g>
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   sodipodi:docname="appview-button-default.svg"
+   inkscape:version="0.92.1 r15371">
+  <defs
+     id="defs17" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1053"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gnome Symbolic Icon Theme</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <title
+     id="title9167">Gnome Symbolic Icon Theme</title>
+  <g
+     id="layer12"
+     transform="translate(-61 -867)">
+    <rect
+       id="rect13363"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="870"
+       x="64" />
+    <rect
+       id="rect13365"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="870"
+       x="68" />
+    <rect
+       id="rect13367"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="870"
+       x="72" />
+    <rect
+       id="rect13369"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="874.02"
+       x="64" />
+    <rect
+       id="rect13371"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="874.02"
+       x="68" />
+    <rect
+       id="rect13373"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="874.02"
+       x="72" />
+    <rect
+       id="rect13375"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="878"
+       x="64" />
+    <rect
+       id="rect13377"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="878"
+       x="68" />
+    <rect
+       id="rect13379"
+       style="color:#000000;enable-background:new;fill:#bebebe"
+       rx=".38462"
+       ry=".37879"
+       height="2"
+       width="2"
+       y="878"
+       x="72" />
+  </g>
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="M 3.1302663,4.8561743 C 3.0458685,4.7717765 3.0237288,4.5889454 3.0237288,3.9763813 c 0,-0.9939414 0.00954,-1.00271 1.0540452,-0.9690615 0.9150746,0.029479 0.9120565,0.026141 0.9120565,1.0086898 0,0.9501833 0.00368,0.9467023 -1.0004957,0.9467023 -0.5937235,0 -0.7750137,-0.022483 -0.8590685,-0.1065376 z"
+     id="path3692"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="M 7.1302663,4.8561743 C 7.0458685,4.7717765 7.0237288,4.5889454 7.0237288,3.9763813 c 0,-0.9939414 0.00954,-1.00271 1.0540452,-0.9690615 0.9150746,0.029479 0.9120565,0.026141 0.9120565,1.0086898 0,0.9501833 0.00368,0.9467023 -1.0004957,0.9467023 -0.5937235,0 -0.7750137,-0.022483 -0.8590685,-0.1065376 z"
+     id="path3694"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="m 11.130266,4.8561743 c -0.0844,-0.084398 -0.106537,-0.2672289 -0.106537,-0.879793 0,-0.9939414 0.0095,-1.00271 1.054045,-0.9690615 0.915075,0.029479 0.912057,0.026141 0.912057,1.0086898 0,0.9501833 0.0037,0.9467023 -1.000496,0.9467023 -0.593724,0 -0.775014,-0.022483 -0.859069,-0.1065376 z"
+     id="path3696"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="m 11.328814,8.9866848 c -0.255426,-0.066707 -0.305085,-0.222422 -0.305085,-0.9566422 0,-0.9947471 -0.02854,-0.9656358 0.946695,-0.9656358 1.040112,0 1.019407,-0.019113 1.019407,0.9410372 0,0.9793221 -0.0018,0.9814647 -0.856971,1.0012143 -0.367649,0.00849 -0.72947,-4.971e-4 -0.804046,-0.019973 z"
+     id="path3698"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="M 7.3288136,8.9866848 C 7.0733882,8.9199778 7.0237288,8.7642628 7.0237288,8.0300426 c 0,-0.9947471 -0.02854,-0.9656358 0.9466953,-0.9656358 1.0401115,0 1.0194064,-0.019113 1.0194064,0.9410372 0,0.9793221 -0.00183,0.9814647 -0.856971,1.0012143 -0.367649,0.00849 -0.7294697,-4.971e-4 -0.8040459,-0.019973 z"
+     id="path3700"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="M 3.3288136,8.9866848 C 3.0733882,8.9199778 3.0237288,8.7642628 3.0237288,8.0300426 c 0,-0.9947471 -0.02854,-0.9656358 0.9466953,-0.9656358 1.0401115,0 1.0194064,-0.019113 1.0194064,0.9410372 0,0.9793221 -0.00183,0.9814647 -0.856971,1.0012143 -0.367649,0.00849 -0.7294697,-4.971e-4 -0.8040459,-0.019973 z"
+     id="path3702"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="m 3.1302663,12.856174 c -0.084398,-0.0844 -0.1065375,-0.267229 -0.1065375,-0.879793 0,-0.993941 0.00954,-1.00271 1.0540452,-0.969061 0.9150746,0.02948 0.9120565,0.02614 0.9120565,1.00869 0,0.950183 0.00368,0.946702 -1.0004957,0.946702 -0.5937235,0 -0.7750137,-0.02248 -0.8590685,-0.106538 z"
+     id="path3704"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="m 7.1302663,12.856174 c -0.084398,-0.0844 -0.1065375,-0.267229 -0.1065375,-0.879793 0,-0.993941 0.00954,-1.00271 1.0540452,-0.969061 0.9150746,0.02948 0.9120565,0.02614 0.9120565,1.00869 0,0.950183 0.00368,0.946702 -1.0004957,0.946702 -0.5937235,0 -0.7750137,-0.02248 -0.8590685,-0.106538 z"
+     id="path3706"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#ffffff;stroke-width:0.06779661"
+     d="m 11.130266,12.856174 c -0.0844,-0.0844 -0.106537,-0.267229 -0.106537,-0.879793 0,-0.993941 0.0095,-1.00271 1.054045,-0.969061 0.915075,0.02948 0.912057,0.02614 0.912057,1.00869 0,0.950183 0.0037,0.946702 -1.000496,0.946702 -0.593724,0 -0.775014,-0.02248 -0.859069,-0.106538 z"
+     id="path3708"
+     inkscape:connector-curvature="0" />
 </svg>

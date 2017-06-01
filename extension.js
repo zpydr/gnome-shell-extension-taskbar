@@ -1545,6 +1545,8 @@ TaskBar.prototype =
         if (this.topPanelBackgroundColor !== 'unset')
         {
             this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor + ";";
+            this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
+            this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
             Main.panel.actor.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
             if ((this.settings.get_boolean("top-panel-background-alpha")) && (ShellVersion[1] <= 16))
             {
