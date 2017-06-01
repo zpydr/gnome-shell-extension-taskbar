@@ -1683,11 +1683,8 @@ TaskBar.prototype =
     {
         let maxWindows = false;
         let userTime = null;
-        let windowTask = null;
         let activeWorkspace = global.screen.get_active_workspace();
         let windows = activeWorkspace.list_windows().filter(function (w) {return w.get_window_type() !== Meta.WindowType.DESKTOP;});
-//        let windows = global.display.sort_windows_by_stacking(win);
-//	let windows = activeWorkspace.list_windows();
         let numButton = pspec.get_button();
         if (numButton === LEFTBUTTON) //Left Button
         {
@@ -1719,26 +1716,6 @@ TaskBar.prototype =
         }
         else if ((numButton === RIGHTBUTTON) && (this.settings.get_boolean("desktop-button-right-click"))) //Right Button
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-    },
-
-    lastWindow: function()
-    {
-        let win = global.display.focus_window,
-        workspace = global.screen.get_active_workspace(),
-        windows = workspace.list_windows().filter(function (w) {return w.get_window_type() !== Meta.WindowType.DESKTOP;});
-        windows = global.display.sort_windows_by_stacking(windows);
-        if (win === null || win.get_window_type() === Meta.WindowType.DESKTOP)
-	{
-            if (windows.length)
-            {
-                win = windows[windows.length - 1];
-                if(!('get_maximized' in win))
-                {
-                    win = win.get_meta_window();
-                }
-            }
-        }
-        win.activate(global.get_current_time());
     },
 
     onClickTaskButton: function(button, pspec, window)
