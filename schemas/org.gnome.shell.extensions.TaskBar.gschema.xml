@@ -685,6 +685,16 @@
             <summary>Position Favorites</summary>
             <description/>
         </key>
+        <key name="export-settings" type="b">
+            <default>false</default>
+            <summary>Export Settings</summary>
+            <description/>
+        </key>
+        <key name="import-settings" type="b">
+            <default>false</default>
+            <summary>Import Settings</summary>
+            <description/>
+        </key>
         <key name="reset-all" type="b">
             <default>false</default>
             <summary>RESET ALL !</summary>

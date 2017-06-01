@@ -706,6 +706,8 @@ TaskBar.prototype =
             this.settings.connect("changed::find-apps", Lang.bind(this, this.findApps)),
             this.settings.connect("changed::display-preview-background-color", Lang.bind(this, this.onParamChanged)),
             this.settings.connect("changed::display-preview-label-color", Lang.bind(this, this.onParamChanged)),
+            this.settings.connect("changed::export-settings", Lang.bind(this, this.exportSettings)),
+            this.settings.connect("changed::import-settings", Lang.bind(this, this.importSettings)),
             this.settings.connect("changed::reset-all", Lang.bind(this, this.resetAll)),
             this.settings.connect("changed::reset-flag", Lang.bind(this, this.onParamChanged))
         ];
@@ -857,6 +859,26 @@ TaskBar.prototype =
                 this.separatorTasks = 'padding-left: ' + separatorLeftTasks + 'px; padding-right: ' + separatorRightTasks + 'px; ';
                 this.boxMainTasks.set_style(this.separatorTasks);
             }
+        }
+    },
+
+    //Export Settings
+    exportSettings: function()
+    {
+        if (this.settings.get_boolean("export-settings"))
+        {
+            Main.Util.trySpawnCommandLine('sh ' + Extension.path + '/scripts/export.sh');
+            this.settings.set_boolean("export-settings", false);
+        }
+    },
+
+    //Import Settings
+    importSettings: function()
+    {
+        if (this.settings.get_boolean("import-settings"))
+        {
+            Main.Util.trySpawnCommandLine('sh ' + Extension.path + '/scripts/import.sh');
+            this.settings.set_boolean("import-settings", false);
         }
     },
 

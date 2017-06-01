@@ -163,16 +163,26 @@ Prefs.prototype =
         labelLink6.set_always_show_image(true);
         this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
 
+        let exportButton = new Gtk.Button({label: _("Export Settings")});
+        exportButton.connect('clicked', Lang.bind(this, this.exportSettings));
+        exportButton.set_tooltip_text(_("Export All TaskBar Settings. This will create a taskbar.dconf file in your home folder."));
+        this.gridTaskBar.attach(exportButton, 1, 8, 1, 1);
+
+        let importButton = new Gtk.Button({label: _("Import Settings")});
+        importButton.connect('clicked', Lang.bind(this, this.importSettings));
+        importButton.set_tooltip_text(_("Import All TaskBar Settings. This will import the taskbar.dconf file located in your home folder."));
+        this.gridTaskBar.attach(importButton, 3, 8, 1, 1);
+
         let resetAllButton = new Gtk.Button({label: _("RESET ALL !")});
         resetAllButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetAllButton.connect('clicked', Lang.bind(this, this.resetAll));
         resetAllButton.set_tooltip_text(_("Reset All TaskBar Settings to the Original TaskBar Settings"));
-        this.gridTaskBar.attach(resetAllButton, 1, 8, 1, 1);
+        this.gridTaskBar.attach(resetAllButton, 1, 10, 1, 1);
 
         let labelSpaceTaskBar1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 9, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 11, 1, 1);
         let labelSpaceTaskBar2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
-        this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 1, 1, 1);
+        this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 9, 1, 1);
         let labelSpaceTaskBar3 = new Gtk.Label({label: "<b>"+_("TaskBar")+"</b>", hexpand: true});
         labelSpaceTaskBar3.set_use_markup(true);
         this.gridTaskBar.attach(labelSpaceTaskBar3, 0, 0, 5, 1);
@@ -2320,6 +2330,16 @@ Prefs.prototype =
         this.settings.set_int(this.appearanceName, this.newValueAppearance);
         this.settings.set_int(this.resetAppearance, this.oldValueAppearance);
         this.settings.set_boolean("position-changed", true);
+    },
+
+    exportSettings: function()
+    {
+        this.settings.set_boolean("export-settings", true);
+    },
+
+    importSettings: function()
+    {
+        this.settings.set_boolean("import-settings", true);
     },
 
     resetComponents: function()
