@@ -705,5 +705,13 @@
             <summary>Reset Flag</summary>
             <description/>
         </key>
+        <key name="key-previous-task" type="as">
+            <default>['']</default>
+	    <summary>Key to access the previous task</summary>
+        </key>
+        <key name="key-next-task" type="as">
+            <default>['']</default>
+	    <summary>Key to access the next task</summary>
+        </key>
     </schema>
 </schemalist>

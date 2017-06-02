@@ -38,6 +38,7 @@ const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 const RemoteMenu = imports.ui.remoteMenu;
 const ThumbnailsSlider = imports.ui.overviewControls.ThumbnailsSlider.prototype;
+const Tweener = imports.ui.tweener;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -56,6 +57,8 @@ const NOHOTCORNER = 54321;
 const DESKTOPICON = Extension.path + '/images/desktop-button-default.png';
 const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 const BPTRAYICON = Extension.path + '/images/bottom-panel-tray-button.svg';
+const PREVIOUSKEY = 'key-previous-task';
+const NEXTKEY = 'key-next-task';
 
 function init(extensionMeta)
 {
@@ -156,6 +159,7 @@ TaskBar.prototype =
     itemWidth: null,
     j: null,
     k: null,
+    key: null,
     labelHeight: null,
     labelNamePreview: null,
     labelTask: null,
@@ -378,6 +382,9 @@ TaskBar.prototype =
         //Reinit Extension on Param Change
         this.setSignals();
         this.setSystemSignals();
+
+        //Keybindings
+        this.keybindings();
     },
 
     disable: function()
@@ -568,6 +575,18 @@ TaskBar.prototype =
         {
             this.boxMainTasks.disconnect(this.boxMainTasksId);
             this.boxMainTasksId = null;
+        }
+
+      //Remove Keybindings
+        if (Main.wm.removeKeybinding)
+	{
+            Main.wm.removeKeybinding('key-previous-task');
+            Main.wm.removeKeybinding('key-next-task');
+        }
+        else
+        {
+            global.display.remove_keybinding('key-previous-task');
+            global.display.remove_keybinding('key-next-task');
         }
 
         //Remove TaskBar
@@ -901,6 +920,86 @@ TaskBar.prototype =
             Main.overview.viewSelector._showAppsButton.checked = true;
             this.settings.set_boolean("find-apps", false);
         }
+    },
+
+    //Keybindings
+    keybindings: function()
+    {
+        if (Main.wm.addKeybinding && Shell.ActionMode) //3.16
+            Main.wm.addKeybinding(PREVIOUSKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Shell.ActionMode.NORMAL | Shell.ActionMode.MESSAGE_TRAY,
+            Lang.bind(this, this.keyPreviousTask));
+        else if (Main.wm.addKeybinding && Shell.KeyBindingMode) //3.8
+            Main.wm.addKeybinding(PREVIOUSKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Shell.KeyBindingMode.NORMAL | Shell.KeyBindingMode.MESSAGE_TRAY,
+            Lang.bind(this, this.keyPreviousTask));
+        else
+            global.display.add_keybinding(PREVIOUSKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Lang.bind(this, this.keyPreviousTask));
+        if (Main.wm.addKeybinding && Shell.ActionMode) //3.16
+            Main.wm.addKeybinding(NEXTKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Shell.ActionMode.NORMAL | Shell.ActionMode.MESSAGE_TRAY,
+            Lang.bind(this, this.keyNextTask));
+        else if (Main.wm.addKeybinding && Shell.KeyBindingMode) //3.8
+            Main.wm.addKeybinding(NEXTKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Shell.KeyBindingMode.NORMAL | Shell.KeyBindingMode.MESSAGE_TRAY,
+            Lang.bind(this, this.keyNextTask));
+        else
+            global.display.add_keybinding(NEXTKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Lang.bind(this, this.keyNextTask));
+    },
+
+    //Keybinding Activate Previous Task
+    keyPreviousTask: function()
+    {
+        this.previousTask = null;
+        let focusWindow = global.display.focus_window;
+        let activeWorkspace = global.screen.get_active_workspace();
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                if ((windowTask === focusWindow) && (this.previousTask !== null))
+                {
+                    let [windowTask, buttonTask, signalsTask] = this.previousTask;
+                    let windowWorkspace = windowTask.get_workspace();
+                    if (windowWorkspace !== activeWorkspace)
+                        windowWorkspace.activate(global.get_current_time());
+                    windowTask.activate(global.get_current_time());
+                }
+                this.previousTask = task;
+            },
+            this
+        );
+        if (Main.overview.visible)
+            Main.overview.hide();
+    },
+
+    //Keybinding Activate Next Task
+    keyNextTask: function()
+    {
+        this.nextTask = false;
+        let focusWindow = global.display.focus_window;
+        let activeWorkspace = global.screen.get_active_workspace();
+        this.tasksList.forEach(
+            function(task)
+            {
+                let [windowTask, buttonTask, signalsTask] = task;
+                let windowWorkspace = windowTask.get_workspace();
+                if (this.nextTask)
+                {
+                    if (windowWorkspace !== activeWorkspace)
+                        windowWorkspace.activate(global.get_current_time());
+                    windowTask.activate(global.get_current_time());
+                    this.nextTask = false;
+                }
+                if (windowTask === focusWindow)
+                    this.nextTask = true;
+            },
+            this
+        );
+        if (Main.overview.visible)
+            Main.overview.hide();
     },
 
     //Align Position

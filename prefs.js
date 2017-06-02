@@ -53,6 +53,11 @@ const FSFICON = Extension.path + '/images/settings-fsf.png';
 const GPLICON = Extension.path + '/images/settings-gpl.png';
 const SPACERICON = Extension.path + '/images/settings-1px.png';
 
+const pretty_names = {
+    'key-previous-task': 'Activate the previous Task',
+    'key-next-task': 'Activate the next Task'
+}
+
 function init()
 {
     initTranslations("TaskBar");
@@ -1171,6 +1176,95 @@ Prefs.prototype =
         let labelSpacePreview5 = new Gtk.Label({label: "\t", xalign: 0});
         this.gridPreview.attach(labelSpacePreview5, 5, 1, 1, 1);
 
+        this.gridKeybindings = new Gtk.Grid();
+        this.gridKeybindings.margin = this.gridKeybindings.row_spacing = 10;
+        this.gridKeybindings.column_spacing = 2;
+
+        let scrollWindowKeybindings = this.gridKeybindings;
+
+        scrollWindowKeybindings.show_all();
+        let labelKeybindings = new Gtk.Label({label: _("Keybindings")});
+        notebook.append_page(scrollWindowKeybindings, labelKeybindings);
+
+        let model = new Gtk.ListStore();
+        model.set_column_types
+        ([
+            GObject.TYPE_STRING,
+            GObject.TYPE_STRING,
+            GObject.TYPE_INT,
+            GObject.TYPE_INT
+        ]);
+        let key;
+        let settings = this.settings;
+        for (key in pretty_names)
+        {
+            this.append_hotkey(model, settings, key, pretty_names[key]);
+        }
+        let treeview = new Gtk.TreeView
+        ({
+            'expand': true,
+            'model': model
+        });
+        let col;
+        let cellrend;
+        cellrend = new Gtk.CellRendererText();
+        col = new Gtk.TreeViewColumn
+        ({
+            'title': 'Keybinding',
+            'expand': true
+        });
+        col.pack_start(cellrend, true);
+        col.add_attribute(cellrend, 'text', 1);
+        treeview.append_column(col);
+        cellrend = new Gtk.CellRendererAccel
+        ({
+            'editable': true,
+            'accel-mode': Gtk.CellRendererAccelMode.GTK
+        });
+        cellrend.connect('accel-edited', function(rend, iter, key, mods)
+        {
+            let value = Gtk.accelerator_name(key, mods);
+            let success = false;
+            [success, iter] = model.get_iter_from_string(iter);
+            if (!success)
+            {
+                throw new Error("Something be broken, yo.");
+            }
+            let name = model.get_value(iter, 0);
+            model.set(iter, [ 2, 3 ], [ mods, key ]);
+            settings.set_strv(name, [value]);
+        });
+        cellrend.connect('accel-cleared', function(rend, iter, key, mods)
+        {
+            let success = false;
+            [success, iter] = model.get_iter_from_string(iter);
+            if (!success)
+	    {
+                throw new Error("Error clearing keybinding");
+            }
+            let name = model.get_value(iter, 0);
+            model.set(iter, [ 2, 3 ], [ 0, 0 ]);
+            settings.set_strv(name, ['']);
+        });
+        col = new Gtk.TreeViewColumn
+        ({
+            'title': 'Accel'
+        });
+        col.pack_end(cellrend, false);
+        col.add_attribute(cellrend, 'accel-mods', 2);
+        col.add_attribute(cellrend, 'accel-key', 3);
+        treeview.append_column(col);
+        this.gridKeybindings.attach(treeview, 1, 1, 5, 1);
+
+        let labelBackspace = new Gtk.Label({label: _("Backspace to disable Keybindings"), xalign: 0});
+        this.gridKeybindings.attach(labelBackspace, 1, 2, 5, 1);
+
+        let labelSpaceKeybindings1 = new Gtk.Label({label: "\t", xalign: 0});
+        this.gridKeybindings.attach(labelSpaceKeybindings1, 2, 3, 1, 1);
+        let labelSpaceKeybindings2 = new Gtk.Label({label: "<b>"+_("Keybindings")+"</b>", hexpand: true});
+        labelSpaceKeybindings2.set_use_markup(true);
+        this.gridKeybindings.attach(labelSpaceKeybindings2, 0, 0, 7, 1);
+
         this.gridMisc = new Gtk.Grid();
         this.gridMisc.margin = this.gridMisc.row_spacing = 10;
         this.gridMisc.column_spacing = 2;
@@ -2102,6 +2196,13 @@ Prefs.prototype =
         rgba.parse(color);
         this.valueActivitiesColor.set_rgba(rgba);
         this.settings.set_string("activities-button-color", "unset");
+    },
+
+    append_hotkey: function(model, settings, name, pretty_name)
+    {
+        let [key, mods] = Gtk.accelerator_parse(settings.get_strv(name)[0]);
+        let row = model.insert(10);
+        model.set(row, [0, 1, 2, 3], [name, pretty_name, mods, key ]);
     },
 
     changeEnableHotCorner: function(object, pspec)
