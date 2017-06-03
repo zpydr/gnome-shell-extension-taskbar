@@ -2332,12 +2332,22 @@ TaskBar.prototype =
         {
             let totalWidth = this.boxMainTasks.get_width();
             let spaces = this.settings.get_int("tasks-spaces");
-            let newWidth = ((totalWidth - (spaces * this.countTasks)) / this.countTasks);
+            let counter = 0;
             this.tasksList.forEach(
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
-                    buttonTask.set_width(newWidth);
+                    if (buttonTask.visible)
+                        counter ++;
+                },
+                this
+            );
+            let newWidth = ((totalWidth - (spaces * counter)) / counter);
+            this.tasksList.forEach(
+                function(_task)
+                {
+                    let [_windowTask, _buttonTask, _signalsTask] = _task;
+                    _buttonTask.set_width(newWidth);
                 },
                 this
             );
@@ -2600,8 +2610,6 @@ TaskBar.prototype =
                         labelTask.set_style("None");
                 }
             }
-            if ((buttonTask.visible) || (this.settings.get_boolean("tasks-all-workspaces")))
-                this.countTasks ++;
             //Sort Tasks
             let inserted = false;
             if (this.settings.get_enum("sort-tasks") !== 0)
@@ -2636,6 +2644,7 @@ TaskBar.prototype =
                 this.boxMainTasks.add_child(buttonTask);
                 this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
             }
+            this.countTasks ++;
         }
     },
 
