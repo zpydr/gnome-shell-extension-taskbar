@@ -59,6 +59,7 @@ const APPVIEWICON = Extension.path + '/images/appview-button-default.svg';
 const BPTRAYICON = Extension.path + '/images/bottom-panel-tray-button.svg';
 const PREVIOUSKEY = 'key-previous-task';
 const NEXTKEY = 'key-next-task';
+const DESKTOPKEY = 'key-toggle-desktop';
 
 function init(extensionMeta)
 {
@@ -577,16 +578,20 @@ TaskBar.prototype =
             this.boxMainTasksId = null;
         }
 
-      //Remove Keybindings
+        //Remove Keybindings
         if (Main.wm.removeKeybinding)
 	{
-            Main.wm.removeKeybinding('key-previous-task');
-            Main.wm.removeKeybinding('key-next-task');
+            Main.wm.removeKeybinding(PREVIOUSKEY);
+            Main.wm.removeKeybinding(NEXTKEY);
+            Main.wm.removeKeybinding(DESKTOPKEY);
+            Main.wm.removeKeybinding(APPVIEWKEY);
         }
         else
         {
-            global.display.remove_keybinding('key-previous-task');
-            global.display.remove_keybinding('key-next-task');
+            global.display.remove_keybinding(PREVIOUSKEY);
+            global.display.remove_keybinding(NEXTKEY);
+            global.display.remove_keybinding(DESKTOPKEY);
+            global.display.remove_keybinding(APPVIEWKEY);
         }
 
         //Remove TaskBar
@@ -947,6 +952,17 @@ TaskBar.prototype =
         else
             global.display.add_keybinding(NEXTKEY, this.settings, Meta.KeyBindingFlags.NONE,
             Lang.bind(this, this.keyNextTask));
+        if (Main.wm.addKeybinding && Shell.ActionMode) //3.16
+            Main.wm.addKeybinding(DESKTOPKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Shell.ActionMode.NORMAL | Shell.ActionMode.MESSAGE_TRAY,
+            Lang.bind(this, this.keyToggleDesktop));
+        else if (Main.wm.addKeybinding && Shell.KeyBindingMode) //3.8
+            Main.wm.addKeybinding(DESKTOPKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Shell.KeyBindingMode.NORMAL | Shell.KeyBindingMode.MESSAGE_TRAY,
+            Lang.bind(this, this.keyToggleDesktop));
+        else
+            global.display.add_keybinding(DESKTOPKEY, this.settings, Meta.KeyBindingFlags.NONE,
+            Lang.bind(this, this.keyToggleDesktop));
     },
 
     //Keybinding Activate Previous Task
@@ -998,6 +1014,40 @@ TaskBar.prototype =
             },
             this
         );
+        if (Main.overview.visible)
+            Main.overview.hide();
+    },
+
+    //Keybinding Toggle Desktop
+    keyToggleDesktop: function()
+    {
+        let maxWindows = false;
+        let userTime = null;
+        let activeWorkspace = global.screen.get_active_workspace();
+        let windows = activeWorkspace.list_windows().filter(function (w) {return w.get_window_type() !== Meta.WindowType.DESKTOP;});
+        for ( let i = 0; i < windows.length; ++i )
+        {
+            if ((this.desktopView) && (! Main.overview.visible))
+            {
+                userTime = windows[i].user_time;
+                if (userTime > this.lastFocusedWindowUserTime)
+                {
+                    this.lastFocusedWindowUserTime = userTime;
+                    this.lastFocusedWindow = windows[i];
+                }
+                windows[i].unminimize(global.get_current_time());
+                maxWindows = true;
+            }
+            else
+            {
+                windows[i].minimize(global.get_current_time());
+            }
+        }
+        if (maxWindows)
+        {
+            this.lastFocusedWindow.activate(global.get_current_time());
+        }
+        this.desktopView = ! this.desktopView;
         if (Main.overview.visible)
             Main.overview.hide();
     },

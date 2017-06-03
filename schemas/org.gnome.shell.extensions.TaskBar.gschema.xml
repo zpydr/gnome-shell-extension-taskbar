@@ -713,5 +713,9 @@
             <default>['']</default>
 	    <summary>Key to access the next task</summary>
         </key>
+        <key name="key-toggle-desktop" type="as">
+            <default>['']</default>
+	    <summary>Key to toogle the Desktop View</summary>
+        </key>
     </schema>
 </schemalist>

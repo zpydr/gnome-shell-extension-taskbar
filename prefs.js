@@ -54,8 +54,9 @@ const GPLICON = Extension.path + '/images/settings-gpl.png';
 const SPACERICON = Extension.path + '/images/settings-1px.png';
 
 const pretty_names = {
-    'key-previous-task': 'Activate the previous Task',
-    'key-next-task': 'Activate the next Task'
+    'key-previous-task': 'Focus previous Task (Scroll left)',
+    'key-next-task': 'Focus next Task (Scroll right)',
+    'key-toggle-desktop': 'Toggle Desktop View',
 }
 
 function init()
