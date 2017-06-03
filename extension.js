@@ -1870,33 +1870,28 @@ TaskBar.prototype =
         let maxWindows = false;
         let userTime = null;
         let activeWorkspace = global.screen.get_active_workspace();
-        this.activeTasks();
+        let windows = activeWorkspace.list_windows().filter(function (w) {return w.get_window_type() !== Meta.WindowType.DESKTOP;});
         let numButton = pspec.get_button();
         if (numButton === LEFTBUTTON) //Left Button
         {
-            this.tasksList.forEach(
-                function(task)
+            for ( let i = 0; i < windows.length; ++i )
+            {
+                if ((this.desktopView) && (! Main.overview.visible))
                 {
-                    let [windowTask, buttonTask, signalsTask] = task;
-                    let windowWorkspace = windowTask.get_workspace();
-                    if (this.desktopView && (! Main.overview.visible) && (windowWorkspace === activeWorkspace))
+                    userTime = windows[i].user_time;
+                    if (userTime > this.lastFocusedWindowUserTime)
                     {
-                        userTime = windowTask.user_time;
-                        if (userTime > this.lastFocusedWindowUserTime)
-                        {
-                            this.lastFocusedWindowUserTime = userTime;
-                            this.lastFocusedWindow = windowTask;
-                        }
-                        windowTask.unminimize(global.get_current_time());
-                        maxWindows = true;
+                        this.lastFocusedWindowUserTime = userTime;
+                        this.lastFocusedWindow = windows[i];
                     }
-                    else if (windowWorkspace === activeWorkspace)
-                    {
-                        windowTask.minimize(global.get_current_time());
-                    }
-                },
-                this
-            );
+                    windows[i].unminimize(global.get_current_time());
+                    maxWindows = true;
+                }
+                else
+                {
+                    windows[i].minimize(global.get_current_time());
+                }
+            }
             if (maxWindows)
             {
                 this.lastFocusedWindow.activate(global.get_current_time());
