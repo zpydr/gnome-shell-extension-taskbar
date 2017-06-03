@@ -2213,13 +2213,16 @@ TaskBar.prototype =
     {
         if (! this.resetHover)
         {
+            let focusWindow = global.display.focus_window;
+            let appname = Shell.WindowTracker.get_default().get_window_app(focusWindow).get_name();
             let activeWorkspace = global.screen.get_active_workspace();
             this.tasksList.forEach(
                 function(task)
                 {
                     let [windowTask, buttonTask, signalsTask] = task;
                     let windowWorkspace = windowTask.get_workspace();
-                    if (windowTask === window)
+                    let _app_name = Shell.WindowTracker.get_default().get_window_app(windowTask).get_name();
+                    if ((windowTask === window) && (((appname !== _app_name) && ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))) || ((this.settings.get_enum("sort-tasks") !== 3) && (this.settings.get_enum("sort-tasks") !== 4))))
                     {
                         if (windowWorkspace !== activeWorkspace)
                         {
