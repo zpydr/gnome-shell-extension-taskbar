@@ -584,14 +584,12 @@ TaskBar.prototype =
             Main.wm.removeKeybinding(PREVIOUSKEY);
             Main.wm.removeKeybinding(NEXTKEY);
             Main.wm.removeKeybinding(DESKTOPKEY);
-            Main.wm.removeKeybinding(APPVIEWKEY);
         }
         else
         {
             global.display.remove_keybinding(PREVIOUSKEY);
             global.display.remove_keybinding(NEXTKEY);
             global.display.remove_keybinding(DESKTOPKEY);
-            global.display.remove_keybinding(APPVIEWKEY);
         }
 
         //Remove TaskBar
@@ -1867,6 +1865,50 @@ TaskBar.prototype =
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
     },
 
+    onClickDesktopButton: function(button, pspec)
+    {
+        let maxWindows = false;
+        let userTime = null;
+        let activeWorkspace = global.screen.get_active_workspace();
+        this.activeTasks();
+        let numButton = pspec.get_button();
+        if (numButton === LEFTBUTTON) //Left Button
+        {
+            this.tasksList.forEach(
+                function(task)
+                {
+                    let [windowTask, buttonTask, signalsTask] = task;
+                    let windowWorkspace = windowTask.get_workspace();
+                    if (this.desktopView && (! Main.overview.visible) && (windowWorkspace === activeWorkspace))
+                    {
+                        userTime = windowTask.user_time;
+                        if (userTime > this.lastFocusedWindowUserTime)
+                        {
+                            this.lastFocusedWindowUserTime = userTime;
+                            this.lastFocusedWindow = windowTask;
+                        }
+                        windowTask.unminimize(global.get_current_time());
+                        maxWindows = true;
+                    }
+                    else if (windowWorkspace === activeWorkspace)
+                    {
+                        windowTask.minimize(global.get_current_time());
+                    }
+                },
+                this
+            );
+            if (maxWindows)
+            {
+                this.lastFocusedWindow.activate(global.get_current_time());
+            }
+            this.desktopView = ! this.desktopView;
+            if (Main.overview.visible)
+                Main.overview.hide();
+        }
+        else if ((numButton === RIGHTBUTTON) && (this.settings.get_boolean("desktop-button-right-click"))) //Right Button
+            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+    },
+
     onClickTaskButton: function(button, pspec, window)
     {
         if (this.taskMenuUp)
@@ -1880,6 +1922,11 @@ TaskBar.prototype =
         }
         let activeWorkspace = global.screen.get_active_workspace();
         let numButton = pspec.get_button();
+        let index = this.searchTaskInList(window);
+        let appname = Shell.WindowTracker.get_default().get_window_app(window).get_name();
+        let nextApp = false;
+        let focusWindow = global.display.focus_window;
+        let originalWindowWorkspace = window.get_workspace();
         if (numButton === LEFTBUTTON) //Left Button
         {
             this.tasksList.forEach(
@@ -1896,6 +1943,61 @@ TaskBar.prototype =
                         }
                         else if (! windowTask.has_focus())
                             windowTask.activate(global.get_current_time());
+                        else if ((! Main.overview.visible) && ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4)))
+                        {
+                            for (let i = index - 1; i >= 0; i--)
+                            {
+                                let sameWorkspace = true;
+                                let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+                                let _appname = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
+                                let _windowWorkspace = _windowTask.get_workspace();
+                                if ((appname === _appname) && (_windowTask !== focusWindow))
+                                {
+                                    if (_windowWorkspace !== activeWorkspace)
+                                    {
+                                        if (this.settings.get_enum("sort-tasks") === 4)
+                                        {
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            _windowWorkspace.activate(global.get_current_time());
+                                        }
+                                    }
+                                    _windowTask.activate(global.get_current_time());
+                                    nextApp = true;
+			            break;
+                                }
+                            }
+                            if (! nextApp)
+                            {
+                                for (let k = this.tasksList.length - 1; k >= index; k--)
+                                {
+                                    let [_windowTask2, _buttonTask2, _signalsTask2] = this.tasksList[k];
+                                    let _appname2 = Shell.WindowTracker.get_default().get_window_app(_windowTask2).get_name();
+                                    let _windowWorkspace2 = _windowTask2.get_workspace();
+                                    if ((appname === _appname2) && (_windowTask2 !== focusWindow))
+                                    {
+                                        if (_windowWorkspace2 !== activeWorkspace)
+                                        {
+                                            if (this.settings.get_enum("sort-tasks") === 4)
+                                            {
+                                                continue;
+                                            }
+                                            else
+                                            {
+                                                _windowWorkspace2.activate(global.get_current_time());
+                                            }
+                                        }
+                                        _windowTask2.activate(global.get_current_time());
+                                        nextApp = true;
+			                break;
+                                    }
+                                }
+                            }
+                            if (! nextApp)
+                                windowTask.minimize(global.get_current_time());
+                        }
                         else if (! Main.overview.visible)
                             windowTask.minimize(global.get_current_time());
                     }
@@ -1912,7 +2014,9 @@ TaskBar.prototype =
             let app = Shell.WindowTracker.get_default().get_window_app(window);
             let taskMenuManager = new PopupMenu.PopupMenuManager({actor: button});
             if (app.action_group && app.menu)
+            {
                 this.taskMenu = new RemoteMenu.RemoteMenu(button, app.menu, app.action_group);
+            }
             else
             {
                 this.taskMenu = new PopupMenu.PopupMenu(button, 0.0, St.Side.TOP);
@@ -1922,6 +2026,74 @@ TaskBar.prototype =
                     window.delete(global.get_current_time());
                 }));
                 this.taskMenu.addMenuItem(menuQuit);
+            }
+            if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))
+            {
+                let counter = 1;
+                let windowsList = null;
+                let title = null;
+                this.tasksList.forEach(
+                    function(task)
+                    {
+                        let [windowTask, buttonTask, signalsTask] = task;
+                        let _appname = Shell.WindowTracker.get_default().get_window_app(windowTask).get_name();
+                        let windowWorkspace = windowTask.get_workspace();
+                        if ((appname === _appname) && (windowTask !== window))
+                        {
+                            if ((windowWorkspace !== originalWindowWorkspace) && (this.settings.get_enum("sort-tasks") === 4))
+                            {
+                                return;
+			    }
+                            windowsList = null;
+                            title = null;
+                            title = windowTask.get_title();
+                            if (title.length > 50)
+	                        title = title.substr(0, 47) + "...";
+                            windowsList = new PopupMenu.PopupMenuItem(title);
+                            windowsList.connect('activate', Lang.bind(this, function()
+                            {
+                                if (windowWorkspace !== activeWorkspace)
+                                {
+                                    windowWorkspace.activate(global.get_current_time());
+                                }
+                                windowTask.activate(global.get_current_time());
+                            }));
+                            this.taskMenu.addMenuItem(windowsList, 0);
+                            counter ++;
+                        }
+                    },
+                    this
+                );
+                if (counter > 1)
+                {
+                    windowsList = null;
+                    title = null;
+                    title = window.get_title();
+                    if (title.length > 50)
+	            title = title.substr(0, 47) + "...";
+                    windowsList = new PopupMenu.PopupMenuItem(title);
+                    let _windowWorkspace = window.get_workspace();
+                    windowsList.connect('activate', Lang.bind(this, function()
+                    {
+                        window.activate(global.get_current_time());
+                    }));
+                    this.taskMenu.addMenuItem(windowsList, 0);
+                }
+                else
+                {
+                    counter --;
+                }
+                if (counter > 1)
+                {
+                    let mini = new PopupMenu.PopupMenuItem("Minimize Window");
+                    mini.connect('activate', Lang.bind(this, function()
+                    {
+                        window.minimize(global.get_current_time());
+                    }));
+                    this.taskMenu.addMenuItem(mini, counter);
+                    let separator  = new PopupMenu.PopupSeparatorMenuItem();
+                    this.taskMenu.addMenuItem(separator, counter);
+                }
             }
             this.taskMenu.actor.hide();
             let [stageX, stageY] = this.taskMenu.actor.get_transformed_position();
@@ -2227,6 +2399,7 @@ TaskBar.prototype =
                     if (windowTask === window)
                     {
                         buttonTask.set_style(this.backgroundStyleColor);
+			buttonTask.show();
                         if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-tasks-label-color")))
                         {
                             this.tasksLabelColor = this.settings.get_string("tasks-label-color");
@@ -2247,6 +2420,15 @@ TaskBar.prototype =
                     else
                     {
                         buttonTask.set_style(this.inactiveBackgroundStyleColor);
+                        if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))
+                        {
+                            let _app_name = Shell.WindowTracker.get_default().get_window_app(window).get_name();
+                            let appname = Shell.WindowTracker.get_default().get_window_app(windowTask).get_name();
+                            let workspaceTask = windowTask.get_workspace();
+                            let activeWorkspace = global.screen.get_active_workspace();
+                            if ((_app_name === appname) && ((workspaceTask === activeWorkspace) || (this.settings.get_enum("sort-tasks") === 3)))
+                                buttonTask.hide();
+                        }
                         if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-inactive-tasks-label-color")))
                         {
                             this.inactiveTasksLabelColor = this.settings.get_string("inactive-tasks-label-color");
@@ -2436,7 +2618,7 @@ TaskBar.prototype =
                     let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
                     if ( appname === _app_name )
                     {
-                        if (this.settings.get_enum("sort-tasks") === 2)
+                        if ((this.settings.get_enum("sort-tasks") === 2) || (this.settings.get_enum("sort-tasks") === 4))
                         {
                             let _workspaceTask = _windowTask.get_workspace();
 		            let workspaceTask = window.get_workspace();
@@ -2446,6 +2628,8 @@ TaskBar.prototype =
                             }
                         }
                         this.boxMainTasks.insert_child_above(buttonTask,_buttonTask);
+                        if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))
+                            buttonTask.hide();
                         this.tasksList.splice(i+1,0,[ window, buttonTask, signalsTask, labelTask ]);
                         inserted = true;
                         break;

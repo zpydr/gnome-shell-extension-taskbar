@@ -24,7 +24,9 @@
     <enum id="org.gnome.shell.extensions.TaskBar.sort-tasks-style">
         <value value="0" nick="off"/>
         <value value="1" nick="sort"/>
-        <value value="2" nick="workspace"/>
+	<value value="2" nick="sortworkspace"/>
+        <value value="3" nick="group"/>
+        <value value="4" nick="groupworkspace"/>
     </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.task-menu-style">
         <value value="0" nick="off"/>

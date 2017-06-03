@@ -448,12 +448,14 @@ Prefs.prototype =
         this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
         this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
-        let labelSortTasks = new Gtk.Label({label: _("Sort Tasks by Application"), xalign: 0});
+        let labelSortTasks = new Gtk.Label({label: _("Sort or Group Tasks by Application"), xalign: 0});
         this.gridTasks.attach(labelSortTasks, 1, 2, 1, 1);
         this.valueSortTasks = new Gtk.ComboBoxText();
         this.valueSortTasks.append_text(_("OFF"));
         this.valueSortTasks.append_text(_("Sort"));
         this.valueSortTasks.append_text(_("Sort Workspace"));
+        this.valueSortTasks.append_text(_("Group"));
+        this.valueSortTasks.append_text(_("Group Workspace"));
         this.valueSortTasks.set_active(this.settings.get_enum("sort-tasks"));
         this.valueSortTasks.connect('changed', Lang.bind(this, this.changeSortTasks));
         this.gridTasks.attach(this.valueSortTasks, 3, 2, 2, 1);
