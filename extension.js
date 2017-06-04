@@ -2727,8 +2727,29 @@ TaskBar.prototype =
         }
         //Hide current preview if necessary
         this.hidePreview();
+        this.grouped = false;
         if ((this.settings.get_enum("display-label") !== 0) || (this.settings.get_boolean("display-thumbnail")))
         {
+            if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))
+            {
+                let appname = Shell.WindowTracker.get_default().get_window_app(window).get_name();
+                let focuswindow = global.display.focus_window;
+                let focusappname = Shell.WindowTracker.get_default().get_window_app(focuswindow).get_name();
+                for (let i = this.tasksList.length - 1; i >= 0; i--)
+                {
+                    let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+                    let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
+                    if ((appname === _app_name) && (_windowTask !== window))
+                    {
+                        this.grouped = true;
+                        if (appname === focusappname)
+                        {
+                            window = global.display.focus_window;
+                            break;
+                        }
+                    }
+                }
+            }
             if (this.settings.get_int("preview-delay") === 0)
                 this.showPreview2(button, window);
             else
@@ -2747,7 +2768,15 @@ TaskBar.prototype =
         {
             if (this.settings.get_enum("display-label") !== 2)
             {
-                let labelNamePreview = new St.Label({ text: app.get_name() });
+                let labelNamePreview;
+                if (this.grouped)
+                {
+                    labelNamePreview = new St.Label({ text: ' ' + app.get_name() + ' (Group)' });
+                }
+                else
+                {
+                    labelNamePreview = new St.Label({ text: ' ' + app.get_name() + ' ' });
+                }
                 if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
                 {
                     this.previewLabelColor = this.settings.get_string("preview-label-color");
@@ -2766,7 +2795,7 @@ TaskBar.prototype =
                 let title = window.get_title();
                 if ((title.length > 50) && (this.settings.get_boolean("display-thumbnail")))
 	            title = title.substr(0, 47) + "...";
-                let labelTitlePreview = new St.Label({ text: title });
+                let labelTitlePreview = new St.Label({ text: ' ' + title + ' ' });
                 if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
                 {
                     this.previewLabelColor = this.settings.get_string("preview-label-color");
