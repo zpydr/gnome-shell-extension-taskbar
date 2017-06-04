@@ -642,6 +642,12 @@
             <summary>Display Preview Background Color</summary>
             <description/>
         </key>
+        <key name="preview-font-size" type="i">
+            <range min="1" max="96"/>
+            <default>9</default>
+            <summary>Preview Font Size</summary>
+            <description/>
+        </key>
         <key name="preview-label-color" type="s">
             <default>'unset'</default>
             <summary>Preview Label Color</summary>

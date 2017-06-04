@@ -2763,6 +2763,7 @@ TaskBar.prototype =
         //Hide current preview if necessary
         this.hidePreview();
         let app = Shell.WindowTracker.get_default().get_window_app(window);
+        this.previewFontSize = this.settings.get_int("preview-font-size");
         this.preview = new St.BoxLayout({ vertical: true });
         if (this.settings.get_enum("display-label") !== 0)
         {
@@ -2771,7 +2772,7 @@ TaskBar.prototype =
                 let labelNamePreview;
                 if (this.grouped)
                 {
-                    labelNamePreview = new St.Label({ text: ' ' + app.get_name() + ' (Group)' });
+                    labelNamePreview = new St.Label({ text: ' ' + app.get_name() + ' (Group) ' });
                 }
                 else
                 {
@@ -2780,12 +2781,12 @@ TaskBar.prototype =
                 if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
                 {
                     this.previewLabelColor = this.settings.get_string("preview-label-color");
-                    this.labelNamePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: 9pt; text-align: center;";
+                    this.labelNamePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: " + this.previewFontSize + "pt; text-align: center;";
                     labelNamePreview.set_style(this.labelNamePreviewStyle);
                 }
                 else
                 {
-                    this.labelNamePreviewStyle = "color: rgba(255,255,255,1); font-weight: bold; font-size: 9pt; text-align: center;";
+                    this.labelNamePreviewStyle = "color: rgba(255,255,255,1); font-weight: bold; font-size: " + this.previewFontSize + "pt; text-align: center;";
                     labelNamePreview.set_style(this.labelNamePreviewStyle);
                 }
                 this.preview.add_actor(labelNamePreview);
@@ -2799,12 +2800,12 @@ TaskBar.prototype =
                 if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
                 {
                     this.previewLabelColor = this.settings.get_string("preview-label-color");
-                    this.labelTitlePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: 9pt; text-align: center;";
+                    this.labelTitlePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: " + this.previewFontSize + "pt; text-align: center;";
                     labelTitlePreview.set_style(this.labelTitlePreviewStyle);
                 }
                 else
                 {
-                    this.labelTitlePreviewStyle = "color: rgba(255,255,255,1.0); font-weight: bold; font-size: 9pt; text-align: center;";
+                    this.labelTitlePreviewStyle = "color: rgba(255,255,255,1.0); font-weight: bold; font-size: " + this.previewFontSize + "pt; text-align: center;";
                     labelTitlePreview.set_style(this.labelTitlePreviewStyle);
                 }
                 this.preview.add_actor(labelTitlePreview);
@@ -2835,6 +2836,7 @@ TaskBar.prototype =
     {
         //Hide current preview if necessary
         this.hidePreview();
+        this.previewFontSize = this.settings.get_int("preview-font-size");
         this.favoritesPreview = new St.BoxLayout({ vertical: true });
         let favoriteappName = favoriteapp.get_name();
         if (favoriteapp.get_description())
@@ -2848,12 +2850,12 @@ TaskBar.prototype =
         if ((this.settings.get_string("preview-label-color") !== 'unset') && (this.settings.get_boolean("display-preview-label-color")))
         {
             this.previewLabelColor = this.settings.get_string("preview-label-color");
-            this.labelNamePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: 9pt; text-align: center;";
+            this.labelNamePreviewStyle = "color: " + this.previewLabelColor + "; font-weight: bold; font-size: " + this.previewFontSize + "pt; text-align: center;";
             labelNamePreview.set_style(this.labelNamePreviewStyle);
         }
         else
         {
-            this.labelNamePreviewStyle = "color: rgba(255,255,255,1.0); font-weight: bold; font-size: 9pt; text-align: center;";
+            this.labelNamePreviewStyle = "color: rgba(255,255,255,1.0); font-weight: bold; font-size: " + this.previewFontSize + "pt; text-align: center;";
             labelNamePreview.set_style(this.labelNamePreviewStyle);
         }
         this.favoritesPreview.add_actor(labelNamePreview);

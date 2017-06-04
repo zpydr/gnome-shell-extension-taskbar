@@ -1161,18 +1161,26 @@ Prefs.prototype =
         this.valueDisplayPreviewLabelColor.connect('notify::active', Lang.bind(this, this.displayPreviewLabelColor));
         this.gridPreview.attach(this.valueDisplayPreviewLabelColor, 4, 7, 1, 1);
 
+        let labelPreviewFontSize = new Gtk.Label({label: _("Preview Font Size")+" (9 pt)", xalign: 0});
+        this.gridPreview.attach(labelPreviewFontSize, 1, 8, 2, 1);
+        this.valuePreviewFontSize = new Gtk.Adjustment({lower: 1, upper: 96, step_increment: 1});
+        let value2PreviewFontSize = new Gtk.SpinButton({adjustment: this.valuePreviewFontSize, snap_to_ticks: true});
+        value2PreviewFontSize.set_value(this.settings.get_int("preview-font-size"));
+        value2PreviewFontSize.connect("value-changed", Lang.bind(this, this.changePreviewFontSize));
+        this.gridPreview.attach(value2PreviewFontSize, 3, 8, 2, 1);
+
         let resetPreviewButton = new Gtk.Button({label: _("Reset Preview Tab")});
         resetPreviewButton.modify_fg(Gtk.StateType.NORMAL, new Gdk.Color({red: 65535, green: 0, blue: 0}));
         resetPreviewButton.connect('clicked', Lang.bind(this, this.resetPreview));
         resetPreviewButton.set_tooltip_text(_("Reset the Preview Tab to the Original Preview Settings"));
-        this.gridPreview.attach(resetPreviewButton, 1, 9, 1, 1);
+        this.gridPreview.attach(resetPreviewButton, 1, 10, 1, 1);
 
         let labelSpacePreview1 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridPreview.attach(labelSpacePreview1, 0, 10, 1, 1);
+        this.gridPreview.attach(labelSpacePreview1, 0, 11, 1, 1);
         let labelSpacePreview2 = new Gtk.Label({label: "\t", xalign: 0,  hexpand: true});
         this.gridPreview.attach(labelSpacePreview2, 2, 1, 1, 1);
         let labelSpacePreview3 = new Gtk.Label({label: "\t", xalign: 0});
-        this.gridPreview.attach(labelSpacePreview3, 3, 8, 1, 1);
+        this.gridPreview.attach(labelSpacePreview3, 3, 9, 1, 1);
         let labelSpacePreview4 = new Gtk.Label({label: "<b>"+_("Preview")+"</b>", hexpand: true});
         labelSpacePreview4.set_use_markup(true);
         this.gridPreview.attach(labelSpacePreview4, 0, 0, 6, 1);
@@ -2330,6 +2338,11 @@ Prefs.prototype =
         this.settings.set_boolean("display-preview-label-color", object.active);
     },
 
+    changePreviewFontSize: function(object)
+    {
+        this.settings.set_int("preview-font-size", this.valuePreviewFontSize.get_value());
+    },
+
     changeAppearanceLeft: function()
     {
         this.appearanceSelection = this.settings.get_enum("appearance-selection");
@@ -2612,6 +2625,7 @@ Prefs.prototype =
         this.valueDisplayFavoritesLabel.set_active(3);
         this.valuePreviewSize.set_value(350);
         this.valuePreviewDelay.set_value(500);
+        this.valuePreviewFontSize.set_value(9);
         let color = RESETCOLORBLACK;
         let rgba = new Gdk.RGBA();
         rgba.parse(color);
