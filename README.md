@@ -27,7 +27,7 @@ zpydr@openmailbox.org
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
            
-TaskBar Wiki (Installation - Settings - Translation How To - Troubleshooting)                                    
+TaskBar Wiki (Installation - Settings - Translation - Troubleshooting)                                    
 https://github.com/zpydr/gnome-shell-extension-taskbar/wiki/                              
                  
 Arch Linux User Repository              
@@ -67,7 +67,7 @@ Color or hide menu buttons
 Disable hot corner                        
 Export/import settings                       
                
-Language support:       
+Translation:       
 Chinese by wsxy162        
 Czech by Michal Růžička           
 French by narzb       
