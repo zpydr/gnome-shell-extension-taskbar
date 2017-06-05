@@ -70,11 +70,11 @@ Export/import settings
                
 Language support:       
 Chinese by wsxy162        
-Czech by Michal Růžička
+Czech by Michal Růžička           
 French by narzb       
 German by jonnius       
 Russian by dersteinkauz     
 Spanish by Testoriano		
 
-Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, michal-ruzicka, skochxxl, tuhaihe, to-ba, tobimensch, navarrano        
+Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano        
           
