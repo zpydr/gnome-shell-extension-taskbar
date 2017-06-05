@@ -2655,6 +2655,7 @@ TaskBar.prototype =
             {
                 this.boxMainTasks.add_child(buttonTask);
                 this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
+                window.set_icon_geometry(this.iconGeometry(buttonTask));
             }
             this.countTasks ++;
         }
@@ -2705,6 +2706,14 @@ TaskBar.prototype =
         }
         this.tasksList = [];
         this.countTasks = 0;
+    },
+
+    iconGeometry: function(buttonTask)
+    {
+        let rect = new Meta.Rectangle();
+        [rect.x, rect.y] = buttonTask.get_transformed_position();
+        [rect.width, rect.height] = buttonTask.get_transformed_size();
+        return rect;
     },
 
     //Preview
