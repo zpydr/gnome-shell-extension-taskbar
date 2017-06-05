@@ -70,7 +70,7 @@ Export/import settings
                
 Language support:       
 Chinese by wsxy162        
-Czech by michal-ruzicka     
+Czech by Michal Růžička
 French by narzb       
 German by jonnius       
 Russian by dersteinkauz     
