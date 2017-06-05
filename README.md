@@ -27,15 +27,15 @@ zpydr@openmailbox.org
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
 https://launchpad.net/gnome-shell-extension-taskbar/            
-                
+           
+TaskBar Wiki (Installation / Settings / Translation How To / Troubleshooting)                      
+https://github.com/zpydr/gnome-shell-extension-taskbar/wiki/                            
+                 
 Arch Linux User Repository              
 https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
         
 Debian / Ubuntu PPA Repository                   
-https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                        
-
-TaskBar Installation Wiki                       
-https://github.com/zpydr/gnome-shell-extension-taskbar/wiki/TaskBar-Installation/                               
+https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                         
         
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/       
@@ -77,4 +77,4 @@ Russian by dersteinkauz
 Spanish by Testoriano		
 
 Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano        
-          
+            
