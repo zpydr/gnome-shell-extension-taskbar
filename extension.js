@@ -323,6 +323,9 @@ TaskBar.prototype =
         //First Start
         this.firstStart();
 
+        //Verify other Extensions
+        this.otherExtensions();
+
         //Add TaskBar
         this.addTaskBar();
 
@@ -799,11 +802,16 @@ TaskBar.prototype =
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
             this.settings.set_boolean("first-start", false);
         }
+    },
+
+    //Verify other Extensions
+    otherExtensions: function()
+    {
         //Find out if the bottom panel extension is enabled
 	this.tbp = false;
 	let schemaSettings = new Gio.Settings({ schema: 'org.gnome.shell' });
 	let enabled_extensions = schemaSettings.get_strv('enabled-extensions');
-	if (enabled_extensions.indexOf("bottompanel@tmoer93") != -1)
+	if (enabled_extensions.indexOf("bottompanel@tmoer93") !== -1)
 	    this.tbp = true;
     },
 
