@@ -2333,6 +2333,7 @@ TaskBar.prototype =
     {
         if ((this.tasksContainerWidth > 0) && (this.countTasks > 0) && (this.countTasks > this.tasksContainerWidth))
         {
+            let setTaskWidth = this.settings.get_int("tasks-width");
             let totalWidth = this.boxMainTasks.get_width();
             let spaces = this.settings.get_int("tasks-spaces");
             let counter = 0;
@@ -2346,6 +2347,10 @@ TaskBar.prototype =
                 this
             );
             let newWidth = ((totalWidth - (spaces * counter)) / counter);
+            if (newWidth > setTaskWidth)
+            {
+                newWidth = setTaskWidth;
+            }
             this.tasksList.forEach(
                 function(_task)
                 {
