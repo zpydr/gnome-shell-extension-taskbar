@@ -2334,6 +2334,7 @@ TaskBar.prototype =
                 this.hidePreview();
             }
             this.tasksContainer();
+            this.iconGeometry();
     },
 
     //Tasks Container
@@ -2663,7 +2664,6 @@ TaskBar.prototype =
             {
                 this.boxMainTasks.add_child(buttonTask);
                 this.tasksList.push([ window, buttonTask, signalsTask, labelTask ]);
-                window.set_icon_geometry(this.iconGeometry(buttonTask));
             }
             this.countTasks ++;
         }
@@ -2716,12 +2716,16 @@ TaskBar.prototype =
         this.countTasks = 0;
     },
 
-    iconGeometry: function(buttonTask)
+    iconGeometry: function()
     {
-        let rect = new Meta.Rectangle();
-        [rect.x, rect.y] = buttonTask.get_transformed_position();
-        [rect.width, rect.height] = buttonTask.get_transformed_size();
-        return rect;
+        for (let i = this.tasksList.length - 1; i >= 0; i--)
+        {
+            let [windowTask, buttonTask, signalsTask, labelTask] = this.tasksList[i];
+            let rect = new Meta.Rectangle();
+            [rect.x, rect.y] = buttonTask.get_transformed_position();
+            [rect.width, rect.height] = buttonTask.get_transformed_size();
+            windowTask.set_icon_geometry(rect);
+        }
     },
 
     //Preview

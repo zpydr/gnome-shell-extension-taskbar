@@ -1,3 +1,4 @@
+#!/bin/bash
 #  GNOME Shell Extension TaskBar
 #  Copyright (C) 2013-2017 zpydr
 #
@@ -18,7 +19,6 @@
 #
 #  zpydr@openmailbox.org
 #
-#!/bin/bash
 if [ ! -f $HOME/taskbar.dconf ]; then
     zenity --info --text 'Import of TaskBar Settings Failed!'
 else
