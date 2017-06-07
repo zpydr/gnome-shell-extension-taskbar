@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: TaskBar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-05 13:16+0100\n"
-"PO-Revision-Date: 2017-06-05 18:01+0200\n"
+"PO-Revision-Date: 2017-06-07 15:28+0200\n"
 "Last-Translator: Michal Růžička <ruzicka.mich@gmail.com>\n"
 "Language-Team: Michal Růžička <ruzicka.mich@gmail.com>\n"
 "Language: cs_CZ\n"
@@ -875,11 +875,11 @@ msgstr "Náhled velikosti fontů"
 
 #: prefs.js:1197 prefs.js:1275
 msgid "Keybindings"
-msgstr "Navázání kláves"
+msgstr "Klávesové zkratky"
 
 #: prefs.js:1270
 msgid "Backspace to disable Keybindings"
-msgstr "Použijte Backspace pro zrušení vazby klávesy"
+msgstr "Použijte Backspace pro zrušení klávesové zkratky"
 
 #: prefs.js:57
 msgid "Focus previous Task (Scroll left)"
