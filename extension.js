@@ -1873,45 +1873,6 @@ TaskBar.prototype =
             Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
     },
 
-    onClickDesktopButton: function(button, pspec)
-    {
-        let maxWindows = false;
-        let userTime = null;
-        let activeWorkspace = global.screen.get_active_workspace();
-        let windows = activeWorkspace.list_windows().filter(function (w) {return w.get_window_type() !== Meta.WindowType.DESKTOP;});
-        let numButton = pspec.get_button();
-        if (numButton === LEFTBUTTON) //Left Button
-        {
-            for ( let i = 0; i < windows.length; ++i )
-            {
-                if ((this.desktopView) && (! Main.overview.visible))
-                {
-                    userTime = windows[i].user_time;
-                    if (userTime > this.lastFocusedWindowUserTime)
-                    {
-                        this.lastFocusedWindowUserTime = userTime;
-                        this.lastFocusedWindow = windows[i];
-                    }
-                    windows[i].unminimize(global.get_current_time());
-                    maxWindows = true;
-                }
-                else
-                {
-                    windows[i].minimize(global.get_current_time());
-                }
-            }
-            if (maxWindows)
-            {
-                this.lastFocusedWindow.activate(global.get_current_time());
-            }
-            this.desktopView = ! this.desktopView;
-            if (Main.overview.visible)
-                Main.overview.hide();
-        }
-        else if ((numButton === RIGHTBUTTON) && (this.settings.get_boolean("desktop-button-right-click"))) //Right Button
-            Main.Util.trySpawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
-    },
-
     onClickTaskButton: function(button, pspec, window)
     {
         if (this.taskMenuUp)
@@ -2334,7 +2295,7 @@ TaskBar.prototype =
                 this.hidePreview();
             }
             this.tasksContainer();
-            this.iconGeometry();
+//            this.iconGeometry();
     },
 
     //Tasks Container
@@ -2723,7 +2684,7 @@ TaskBar.prototype =
             let [windowTask, buttonTask, signalsTask, labelTask] = this.tasksList[i];
             let rect = new Meta.Rectangle();
             [rect.x, rect.y] = buttonTask.get_transformed_position();
-            [rect.width, rect.height] = buttonTask.get_transformed_size();
+//            [rect.width, rect.height] = buttonTask.get_transformed_size();
             windowTask.set_icon_geometry(rect);
         }
     },
