@@ -20,7 +20,7 @@ zpydr@openmailbox.org
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
         
          
-![TaskBar Image](https://extensions.gnome.org/extension-data/screenshots/screenshot_584_PSh3ecJ.png)        
+![TaskBar Image](https://github.com/zpydr/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
         
  **Version 56 for GNOME 3.10 - 3.26**       
         
