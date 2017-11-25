@@ -1529,7 +1529,7 @@ TaskBar.prototype = {
 		this.backgroundColor = this.settings.get_string("active-task-background-color");
 		this.activeTasksFrameColor = this.settings.get_string("tasks-frame-color");
 		this.margin = this.settings.get_int("tasks-spaces");
-		this.backgroundStyleColor = "border-radius: 5px; ";
+		this.backgroundStyleColor = "";
 		if (this.settings.get_boolean("active-task-background-color-set"))
 			this.backgroundStyleColor += "background-color: " + this.backgroundColor + "; ";
 		if ((this.settings.get_boolean("active-task-frame")) && (this.settings.get_boolean("display-tasks-frame-color")))
