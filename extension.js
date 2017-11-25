@@ -2182,12 +2182,12 @@ TaskBar.prototype = {
 						if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-tasks-label-color"))) {
 							this.tasksLabelColor = this.settings.get_string("tasks-label-color");
 							if (this.tasksLabelColor !== "unset") {
-								this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.tasksLabelColor + ';';
+								this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px; color: ' + this.tasksLabelColor + ';';
 								labelTask.set_style(this.tasksLabelStyle);
 							} else
 								labelTask.set_style("None");
 						} else if (this.settings.get_enum("tasks-label") !== 0) {
-							this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;';
+							this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px;';
 							labelTask.set_style(this.tasksLabelStyle);
 						}
 					} else {
@@ -2208,7 +2208,7 @@ TaskBar.prototype = {
 							} else
 								labelTask.set_style("None");
 						} else if (this.settings.get_enum("tasks-label") !== 0) {
-							this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;';
+							this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px;';
 							labelTask.set_style(this.tasksLabelStyle);
 						}
 					}
@@ -2241,7 +2241,7 @@ TaskBar.prototype = {
 							} else
 								labelTask.set_style("None");
 						} else if (this.settings.get_enum("tasks-label") !== 0) {
-							this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;';
+							this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px;';
 							labelTask.set_style(this.tasksLabelStyle);
 						}
 					}
@@ -2303,7 +2303,7 @@ TaskBar.prototype = {
 					labelTask = new St.Label({
 						text: (" " + appname + " ")
 					});
-				labelTask.set_style('font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px;');
+				labelTask.set_style('font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px;');
 				buttonTaskLayout.add_actor(labelTask);
 				buttonTask = new St.Button({
 					style_class: "tkb-task-button",
@@ -2341,7 +2341,7 @@ TaskBar.prototype = {
 				if ((this.settings.get_enum("tasks-label") !== 0) && (this.settings.get_boolean("display-tasks-label-color"))) {
 					this.tasksLabelColor = this.settings.get_string("tasks-label-color");
 					if (this.tasksLabelColor !== "unset") {
-						this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.tasksLabelColor + ';';
+						this.tasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px; color: ' + this.tasksLabelColor + ';';
 						labelTask.set_style(this.tasksLabelStyle);
 					} else
 						labelTask.set_style("None");
