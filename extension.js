@@ -982,10 +982,10 @@ TaskBar.prototype = {
 					this.lastFocusedWindowUserTime = userTime;
 					this.lastFocusedWindow = windows[i];
 				}
-				windows[i].unminimize(global.get_current_time());
+				windows[i].unminimize();
 				maxWindows = true;
 			} else {
-				windows[i].minimize(global.get_current_time());
+				windows[i].minimize();
 			}
 		}
 		if (maxWindows) {
@@ -1737,10 +1737,10 @@ TaskBar.prototype = {
 						this.lastFocusedWindowUserTime = userTime;
 						this.lastFocusedWindow = windows[i];
 					}
-					windows[i].unminimize(global.get_current_time());
+					windows[i].unminimize();
 					maxWindows = true;
 				} else {
-					windows[i].minimize(global.get_current_time());
+					windows[i].minimize();
 				}
 			}
 			if (maxWindows) {
@@ -1819,9 +1819,9 @@ TaskBar.prototype = {
 								}
 							}
 							if (!nextApp)
-								windowTask.minimize(global.get_current_time());
+								windowTask.minimize();
 						} else if (!Main.overview.visible)
-							windowTask.minimize(global.get_current_time());
+							windowTask.minimize();
 					}
 				},
 				this
@@ -1895,7 +1895,7 @@ TaskBar.prototype = {
 				if (counter > 1) {
 					let mini = new PopupMenu.PopupMenuItem("Minimize Window");
 					mini.connect('activate', Lang.bind(this, function() {
-						window.minimize(global.get_current_time());
+						window.minimize();
 					}));
 					this.taskMenu.addMenuItem(mini, counter);
 					let separator = new PopupMenu.PopupSeparatorMenuItem();
