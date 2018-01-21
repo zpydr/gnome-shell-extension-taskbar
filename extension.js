@@ -1903,14 +1903,6 @@ TaskBar.prototype = {
 				}
 			}
 			this.taskMenu.actor.hide();
-			let [stageX, stageY] = this.taskMenu.actor.get_transformed_position();
-			let y = 0;
-			if ((this.settings.get_boolean("bottom-panel")) || (this.tbp))
-				y = stageY - 4;
-			else
-				y = stageY + 4;
-			let x = stageX
-			this.taskMenu.actor.set_position(x, y);
 			taskMenuManager.addMenu(this.taskMenu);
 			Main.uiGroup.add_actor(this.taskMenu.actor);
 			this.taskMenuUp = true;
