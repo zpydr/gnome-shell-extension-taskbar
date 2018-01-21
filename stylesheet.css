@@ -20,66 +20,40 @@
   zpydr@openmailbox.org
 */
 
-#bottomPanel {
+#bottomPanel {}
 
+.tkb-box {}
+
+.tkb-desktop-box {}
+
+.tkb-desktop-icon {}
+
+.tkb-task-button {
+	padding-left: 3px;
+	padding-right: 3px;
+	border: 1px;
 }
 
-.tkb-box
-{
-
+.tkb-task-button-bottom {
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border: 1px;
 }
 
-.tkb-desktop-box
-{
-
+.tkb-task-button-bottom-label {
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border: 1px;
 }
 
-.tkb-desktop-icon
-{
+.tkb-task-button:active-task-frame {}
 
-}
+.tkb-task-button:active-task-no-frame {}
 
-.tkb-task-button
-{
-    padding-left: 3px;
-    padding-right: 3px;
-    border: 1px;
-}
+.tkb-task-button:inactive-task-frame {}
 
-.tkb-task-button-bottom
-{
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border: 1px;
-}
-
-.tkb-task-button-bottom-label
-{
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    border: 1px;
-}
-
-.tkb-task-button:active-task-frame
-{
-
-}
-
-.tkb-task-button:active-task-no-frame
-{
-
-}
-
-.tkb-task-button:inactive-task-frame
-{
-
-}
-
-.tkb-task-button:inactive-task-no-frame
-{
-
-}
+.tkb-task-button:inactive-task-no-frame {}
