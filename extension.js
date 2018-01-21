@@ -1041,12 +1041,12 @@ TaskBar.prototype =
                     this.lastFocusedWindowUserTime = userTime;
                     this.lastFocusedWindow = windows[i];
                 }
-                windows[i].unminimize();
+                windows[i].unminimize(global.get_current_time());
                 maxWindows = true;
             }
             else
             {
-                windows[i].minimize();
+                windows[i].minimize(global.get_current_time());
             }
         }
         if (maxWindows)
@@ -1853,12 +1853,12 @@ TaskBar.prototype =
                         this.lastFocusedWindowUserTime = userTime;
                         this.lastFocusedWindow = windows[i];
                     }
-                    windows[i].unminimize();
+                    windows[i].unminimize(global.get_current_time());
                     maxWindows = true;
                 }
                 else
                 {
-                    windows[i].minimize();
+                    windows[i].minimize(global.get_current_time());
                 }
             }
             if (maxWindows)
@@ -1960,10 +1960,10 @@ TaskBar.prototype =
                                 }
                             }
                             if (! nextApp)
-                                windowTask.minimize();
+                                windowTask.minimize(global.get_current_time());
                         }
                         else if (! Main.overview.visible)
-                            windowTask.minimize();
+                            windowTask.minimize(global.get_current_time());
                     }
                 },
                 this
@@ -2052,7 +2052,7 @@ TaskBar.prototype =
                     let mini = new PopupMenu.PopupMenuItem("Minimize Window");
                     mini.connect('activate', Lang.bind(this, function()
                     {
-                        window.minimize();
+                        window.minimize(global.get_current_time());
                     }));
                     this.taskMenu.addMenuItem(mini, counter);
                     let separator  = new PopupMenu.PopupSeparatorMenuItem();
@@ -2599,7 +2599,7 @@ TaskBar.prototype =
                 for (let i = this.tasksList.length - 1; i >= 0; i--)
                 {
                     let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
-
+                    			
                     let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
                     if ( appname === _app_name )
                     {
