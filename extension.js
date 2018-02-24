@@ -349,7 +349,7 @@ TaskBar.prototype = {
 		this.initDisplayActivitiesButton();
 
 		//Hot Corner
-		this.initEnableHotCorner();
+		this.updateHotCorner();
 
 		//Application Menu
 		this.initDisplayApplicationMenu();
@@ -674,7 +674,7 @@ TaskBar.prototype = {
 			this.settings.connect("changed::top-panel", Lang.bind(this, this.displayTopPanel)),
 			this.settings.connect("changed::activities-button", Lang.bind(this, this.displayActivities)),
 			this.settings.connect("changed::activities-button-color", Lang.bind(this, this.colorActivities)),
-			this.settings.connect("changed::hot-corner", Lang.bind(this, this.enableHotCorner)),
+			this.settings.connect("changed::hot-corner", Lang.bind(this, this.updateHotCorner)),
 			this.settings.connect("changed::application-menu", Lang.bind(this, this.displayApplicationMenu)),
 			this.settings.connect("changed::application-menu-color", Lang.bind(this, this.colorApplicationMenu)),
 			this.settings.connect("changed::date-menu", Lang.bind(this, this.displayDateMenu)),
@@ -1344,19 +1344,18 @@ TaskBar.prototype = {
 		}
 	},
 
-	//Hot Corner
-	enableHotCorner: function() {
-		this.initEnableHotCorner();
-		if (this.settings.get_boolean("hot-corner")) {
-			Main.layoutManager._updateHotCorners();
-		}
-	},
+	//Hot Corners
+	updateHotCorner: function() {
+		let size = Main.layoutManager.panelBox.height;
 
-	initEnableHotCorner: function() {
-		if (!this.settings.get_boolean("hot-corner")) {
-			Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._toggleOverview = function() {};
-			Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._trigger = function() {};
-		}
+		Main.layoutManager.hotCorners.forEach(corner => {
+			if (corner) {
+				if (!this.settings.get_boolean("hot-corner"))
+					corner.setBarrierSize(0);
+				else
+					corner.setBarrierSize(size);
+			}
+		});
 	},
 
 	//Application Menu
