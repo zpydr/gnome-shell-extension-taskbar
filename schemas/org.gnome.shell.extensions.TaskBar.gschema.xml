@@ -28,6 +28,12 @@
         <value value="3" nick="group"/>
         <value value="4" nick="groupworkspace"/>
     </enum>
+    <enum id="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+        <value value="0" nick="none"/>
+        <value value="1" nick="minmax"/>
+        <value value="2" nick="openmenu"/>
+        <value value="3" nick="close"/>
+    </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.task-menu-style">
         <value value="0" nick="off"/>
         <value value="1" nick="middle"/>
@@ -237,7 +243,22 @@
             <summary>Sort Tasks by Application</summary>
             <description/>
         </key>
-	<key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
+        <key name="tasks-left-click" enum="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+            <default>'minmax'</default>
+            <summary>Left Click Action</summary>
+            <description/>
+        </key>
+        <key name="tasks-middle-click" enum="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+            <default>'none'</default>
+            <summary>Middle Click Action</summary>
+            <description/>
+        </key>
+        <key name="tasks-right-click" enum="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+            <default>'openmenu'</default>
+            <summary>Left Click Action</summary>
+            <description/>
+        </key>
+        <key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
             <default>'right'</default>
             <summary>Middle/Right Click to Show Tasks Menu</summary>
             <description/>
