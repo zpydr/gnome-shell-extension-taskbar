@@ -2571,16 +2571,8 @@ Prefs.prototype = {
 		this.settings.set_enum("tasks-right-click", this.valueTasksRightClickMenu.get_active());
 	},
 
-	changeTaskMenu: function(object) {
-		this.settings.set_enum("task-menu", this.valueTaskMenu.get_active());
-	},
-
 	changeTasksContainerWidth: function(object) {
 		this.settings.set_int("tasks-container-width-new", this.valueTasksContainerWidth.get_value());
-	},
-
-	changeCloseButton: function(object) {
-		this.settings.set_enum("close-button", this.valueCloseButton.get_active());
 	},
 
 	changeTasksSpaces: function(object) {
@@ -2760,7 +2752,6 @@ Prefs.prototype = {
 		}
 		this.dialogDesktopIcon.set_preview_widget_active(have_preview);
 	},
-
 
 	changeDesktopButtonRightClick: function(object, pspec) {
 		this.settings.set_boolean("desktop-button-right-click", object.active);
@@ -3280,8 +3271,9 @@ Prefs.prototype = {
 		this.valueTasksLabelWidth.set_value(150);
 		this.valueTasksContainerWidth.set_value(0);
 		this.valueTasksSpaces.set_value(4);
-		this.valueTaskMenu.set_active(2);
-		this.valueCloseButton.set_active(0);
+		this.valueTasksLeftClickMenu.set_value(1);
+		this.valueTasksMiddleClickMenu.set_value(0);
+		this.valueTasksRightClickMenu.set_value(2);
 		this.settings.set_boolean("reset-flag", false);
 	},
 
