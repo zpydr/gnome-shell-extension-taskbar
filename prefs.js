@@ -828,32 +828,6 @@ Prefs.prototype = {
 		this.valueTasksRightClickMenu.connect('changed', Lang.bind(this, this.changeTasksRightClickMenu));
 		this.gridTasks.attach(this.valueTasksRightClickMenu, 3, 9, 2, 1);
 
-		let labelTaskMenu = new Gtk.Label({
-			label: _("Tasks Application Menu"),
-			xalign: 0
-		});
-		this.gridTasks.attach(labelTaskMenu, 1, 10, 1, 1);
-		this.valueTaskMenu = new Gtk.ComboBoxText();
-		this.valueTaskMenu.append_text(_("OFF"));
-		this.valueTaskMenu.append_text(_("Middle Click"));
-		this.valueTaskMenu.append_text(_("Right Click"));
-		this.valueTaskMenu.set_active(this.settings.get_enum("task-menu"));
-		this.valueTaskMenu.connect('changed', Lang.bind(this, this.changeTaskMenu));
-		this.gridTasks.attach(this.valueTaskMenu, 3, 10, 2, 1);
-
-		let labelCloseButton = new Gtk.Label({
-			label: _("Close Tasks"),
-			xalign: 0
-		});
-		this.gridTasks.attach(labelCloseButton, 1, 11, 1, 1);
-		this.valueCloseButton = new Gtk.ComboBoxText();
-		this.valueCloseButton.append_text(_("OFF"));
-		this.valueCloseButton.append_text(_("Middle Click"));
-		this.valueCloseButton.append_text(_("Right Click"));
-		this.valueCloseButton.set_active(this.settings.get_enum("close-button"));
-		this.valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton));
-		this.gridTasks.attach(this.valueCloseButton, 3, 11, 2, 1);
-
 		let resetTasksButton = new Gtk.Button({
 			label: _("Reset Tasks (I) Tab")
 		});
@@ -864,7 +838,7 @@ Prefs.prototype = {
 		}));
 		resetTasksButton.connect('clicked', Lang.bind(this, this.resetTasks));
 		resetTasksButton.set_tooltip_text(_("Reset the Tasks (I) Tab to the Original Tasks Settings"));
-		this.gridTasks.attach(resetTasksButton, 1, 12, 1, 1);
+		this.gridTasks.attach(resetTasksButton, 1, 11, 1, 1);
 
 		let labelSpaceTasks1 = new Gtk.Label({
 			label: "\t",
