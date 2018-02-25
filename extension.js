@@ -1754,163 +1754,40 @@ TaskBar.prototype = {
 	},
 
 	onClickTaskButton: function(button, pspec, window) {
-		if (this.taskMenuUp) {
-			let taskMenuIsOpen = this.taskMenu.isOpen;
-			if (taskMenuIsOpen) {
-				this.taskMenu.close();
-				return;
-			}
-		}
-		let activeWorkspace = global.screen.get_active_workspace();
+	    if (this.taskMenuUp && this.taskMenu.isOpen) {
+	        this.taskMenu.close();
+	        return;
+	    }
+
 		let numButton = pspec.get_button();
-		let index = this.searchTaskInList(window);
+		let buttonAction = 0;
+
+	    if (numButton === LEFTBUTTON)
+	        buttonAction = this.settings.get_enum("tasks-left-click");
+	    else if (numButton === MIDDLEBUTTON)
+	        buttonAction = this.settings.get_enum("tasks-middle-click");
+	    else if (numButton === RIGHTBUTTON)
+	        buttonAction = this.settings.get_enum("tasks-right-click");
+
 		let appname = Shell.WindowTracker.get_default().get_window_app(window).get_name();
-		let nextApp = false;
-		let focusWindow = global.display.focus_window;
-		let originalWindowWorkspace = window.get_workspace();
-		if (numButton === LEFTBUTTON) //Left Button
-		{
-			this.tasksList.forEach(
-				function(task) {
-					let [windowTask, buttonTask, signalsTask] = task;
-					let windowWorkspace = windowTask.get_workspace();
-					if (windowTask === window) {
-						if (windowWorkspace !== activeWorkspace) {
-							windowWorkspace.activate(global.get_current_time());
-							windowTask.activate(global.get_current_time());
-						} else if (!windowTask.has_focus())
-							windowTask.activate(global.get_current_time());
-						else if ((!Main.overview.visible) && ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))) {
-							for (let i = index - 1; i >= 0; i--) {
-								let sameWorkspace = true;
-								let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
-								let _appname = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
-								let _windowWorkspace = _windowTask.get_workspace();
-								if ((appname === _appname) && (_windowTask !== focusWindow)) {
-									if (_windowWorkspace !== activeWorkspace) {
-										if (this.settings.get_enum("sort-tasks") === 4) {
-											continue;
-										} else {
-											_windowWorkspace.activate(global.get_current_time());
-										}
-									}
-									_windowTask.activate(global.get_current_time());
-									nextApp = true;
-									break;
-								}
-							}
-							if (!nextApp) {
-								for (let k = this.tasksList.length - 1; k >= index; k--) {
-									let [_windowTask2, _buttonTask2, _signalsTask2] = this.tasksList[k];
-									let _appname2 = Shell.WindowTracker.get_default().get_window_app(_windowTask2).get_name();
-									let _windowWorkspace2 = _windowTask2.get_workspace();
-									if ((appname === _appname2) && (_windowTask2 !== focusWindow)) {
-										if (_windowWorkspace2 !== activeWorkspace) {
-											if (this.settings.get_enum("sort-tasks") === 4) {
-												continue;
-											} else {
-												_windowWorkspace2.activate(global.get_current_time());
-											}
-										}
-										_windowTask2.activate(global.get_current_time());
-										nextApp = true;
-										break;
-									}
-								}
-							}
-							if (!nextApp)
-								windowTask.minimize();
-						} else if (!Main.overview.visible)
-							windowTask.minimize();
-					}
-				},
-				this
-			);
-			if (Main.overview.visible)
-				Main.overview.hide();
-		} else if (((numButton === MIDDLEBUTTON) && (this.settings.get_enum("task-menu") === 1)) ||
-			((numButton === RIGHTBUTTON) && (this.settings.get_enum("task-menu") === 2))) //Middle or Right Button
-		{
-			this.taskMenu = null;
-			let app = Shell.WindowTracker.get_default().get_window_app(window);
-			let taskMenuManager = new PopupMenu.PopupMenuManager({
-				actor: button
-			});
-			if (app.action_group && app.menu) {
-				this.taskMenu = new RemoteMenu.RemoteMenu(button, app.menu, app.action_group);
-			} else {
-				this.taskMenu = new PopupMenu.PopupMenu(button, 0.0, St.Side.TOP);
-				let menuQuit = new PopupMenu.PopupMenuItem("Quit");
-				menuQuit.connect('activate', Lang.bind(this, function() {
-					window.delete(global.get_current_time());
-				}));
-				this.taskMenu.addMenuItem(menuQuit);
-			}
-			if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4)) {
-				let counter = 1;
-				let windowsList = null;
-				let title = null;
-				this.tasksList.forEach(
-					function(task) {
-						let [windowTask, buttonTask, signalsTask] = task;
-						let _appname = Shell.WindowTracker.get_default().get_window_app(windowTask).get_name();
-						let windowWorkspace = windowTask.get_workspace();
-						if ((appname === _appname) && (windowTask !== window)) {
-							if ((windowWorkspace !== originalWindowWorkspace) && (this.settings.get_enum("sort-tasks") === 4)) {
-								return;
-							}
-							windowsList = null;
-							title = null;
-							title = windowTask.get_title();
-							if (title.length > 50)
-								title = title.substr(0, 47) + "...";
-							windowsList = new PopupMenu.PopupMenuItem(title);
-							windowsList.connect('activate', Lang.bind(this, function() {
-								if (windowWorkspace !== activeWorkspace) {
-									windowWorkspace.activate(global.get_current_time());
-								}
-								windowTask.activate(global.get_current_time());
-							}));
-							this.taskMenu.addMenuItem(windowsList, 0);
-							counter++;
-						}
-					},
-					this
-				);
-				if (counter > 1) {
-					windowsList = null;
-					title = null;
-					title = window.get_title();
-					if (title.length > 50)
-						title = title.substr(0, 47) + "...";
-					windowsList = new PopupMenu.PopupMenuItem(title);
-					let _windowWorkspace = window.get_workspace();
-					windowsList.connect('activate', Lang.bind(this, function() {
-						window.activate(global.get_current_time());
-					}));
-					this.taskMenu.addMenuItem(windowsList, 0);
-				} else {
-					counter--;
-				}
-				if (counter > 1) {
-					let mini = new PopupMenu.PopupMenuItem("Minimize Window");
-					mini.connect('activate', Lang.bind(this, function() {
-						window.minimize();
-					}));
-					this.taskMenu.addMenuItem(mini, counter);
-					let separator = new PopupMenu.PopupSeparatorMenuItem();
-					this.taskMenu.addMenuItem(separator, counter);
-				}
-			}
-			this.taskMenu.actor.hide();
-			taskMenuManager.addMenu(this.taskMenu);
-			Main.uiGroup.add_actor(this.taskMenu.actor);
-			this.taskMenuUp = true;
-			this.hidePreview();
-			this.taskMenu.open();
-		} else if (((numButton === MIDDLEBUTTON) && (this.settings.get_enum("close-button") === 1)) ||
-			((numButton === RIGHTBUTTON) && (this.settings.get_enum("close-button") === 2))) //Middle or Right Button
-			window.delete(global.get_current_time());
+		let index = this.searchTaskInList(window);
+
+	    switch (buttonAction)
+	    {
+	        case 0: //Action === 'none'
+	            return;
+	        case 1: //Action === 'minmax'
+	            this.clickActionMinMax(window, appname, index);
+	            break;
+	        case 2: //Action === 'openmenu'
+	            this.clickActionOpenMenu(window, appname, button);
+	            break;
+	        case 3: //Action === 'close'
+	            window.delete(global.get_current_time());
+	            break;
+	        default: //Same as 'none'
+	            return;
+	    }
 	},
 
 	onClickTrayButton: function(button, pspec) {
@@ -1919,6 +1796,166 @@ TaskBar.prototype = {
 		{
 			Main.messageTray.toggle();
 		}
+	},
+
+	//Actions executed depending on button click on Task
+	clickActionMinMax: function(window, appname, index) {
+	    let activeWorkspace = global.screen.get_active_workspace();
+	    let focusWindow = global.display.focus_window;
+	    let nextApp = false;
+
+	    this.tasksList.forEach(
+	        function(task) {
+	            let [windowTask, buttonTask, signalsTask] = task;
+	            let windowWorkspace = windowTask.get_workspace();
+
+	            if (windowTask === window) {
+	                if (windowWorkspace !== activeWorkspace) {
+	                    windowWorkspace.activate(global.get_current_time());
+	                    windowTask.activate(global.get_current_time());
+	                }
+	                else if (!windowTask.has_focus()) {
+	                    windowTask.activate(global.get_current_time());
+	                }
+	                else if ((!Main.overview.visible) && ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))) {
+	                    for (let i = index - 1; i >= 0; i--) {
+	                        let sameWorkspace = true;
+	                        let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
+	                        let _appname = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
+	                        let _windowWorkspace = _windowTask.get_workspace();
+
+	                        if ((appname === _appname) && (_windowTask !== focusWindow)) {
+	                            if (_windowWorkspace !== activeWorkspace) {
+	                                if (this.settings.get_enum("sort-tasks") === 4) continue;
+	                                else _windowWorkspace.activate(global.get_current_time());
+	                            }
+	                            _windowTask.activate(global.get_current_time());
+	                            nextApp = true;
+	                            break;
+	                        }
+	                    }
+
+	                    if (!nextApp) {
+	                        for (let k = this.tasksList.length - 1; k >= index; k--) {
+	                            let [_windowTask2, _buttonTask2, _signalsTask2] = this.tasksList[k];
+	                            let _appname2 = Shell.WindowTracker.get_default().get_window_app(_windowTask2).get_name();
+	                            let _windowWorkspace2 = _windowTask2.get_workspace();
+
+	                            if ((appname === _appname2) && (_windowTask2 !== focusWindow)) {
+	                                if (_windowWorkspace2 !== activeWorkspace) {
+	                                    if (this.settings.get_enum("sort-tasks") === 4)
+	                                        continue;
+	                                    else
+	                                        _windowWorkspace2.activate(global.get_current_time());
+	                                }
+	                                _windowTask2.activate(global.get_current_time());
+	                                nextApp = true;
+	                                break;
+	                            }
+	                        }
+	                        windowTask.minimize();
+	                    }
+	                }
+	                else if (!Main.overview.visible)
+	                    windowTask.minimize();
+	            }
+	        },
+	        this
+	    );
+
+	    if (Main.overview.visible)
+	        Main.overview.hide();
+	},
+
+	clickActionOpenMenu: function(window, appname, button) {
+	    this.taskMenu = null;
+	    let app = Shell.WindowTracker.get_default().get_window_app(window);
+	    let taskMenuManager = new PopupMenu.PopupMenuManager({
+	        actor: button
+	    });
+
+	    if (app.action_group && app.menu) {
+	        this.taskMenu = new RemoteMenu.RemoteMenu(button, app.menu, app.action_group);
+	    }
+	    else {
+	        this.taskMenu = new PopupMenu.PopupMenu(button, 0.0, St.Side.TOP);
+	        let menuQuit = new PopupMenu.PopupMenuItem("Quit");
+
+	        menuQuit.connect('activate', Lang.bind(this, function() {
+	            window.delete(global.get_current_time());
+	        }));
+	        this.taskMenu.addMenuItem(menuQuit);
+	    }
+
+	    if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4)) {
+	        let counter = 1;
+	        let windowsList = null;
+	        let title = null;
+
+	        this.tasksList.forEach(
+	            function(task) {
+	                let [windowTask, buttonTask, signalsTask] = task;
+	                let _appname = Shell.WindowTracker.get_default().get_window_app(windowTask).get_name();
+	                let windowWorkspace = windowTask.get_workspace();
+
+	                if ((appname === _appname) && (windowTask !== window)) {
+	                    if ((windowWorkspace !== window.get_workspace()) && (this.settings.get_enum("sort-tasks") === 4))
+	                        return;
+
+	                    windowsList = null;
+	                    title = windowTask.get_title();
+
+	                    if (title.length > 50)
+	                        title = title.substr(0, 47) + "...";
+
+	                    windowsList = new PopupMenu.PopupMenuItem(title);
+	                    windowsList.connect('activate', Lang.bind(this, function() {
+	                        if (windowWorkspace !== global.screen.get_active_workspace())
+	                            windowWorkspace.activate(global.get_current_time());
+	                        windowTask.activate(global.get_current_time());
+	                    }));
+
+	                    this.taskMenu.addMenuItem(windowsList, 0);
+	                    counter++;
+	                }
+	            },
+	            this
+	        );
+
+	        if (counter > 1) {
+	            windowsList = null;
+	            title = null;
+	            title = window.get_title();
+	            if (title.length > 50)
+	                title = title.substr(0, 47) + "...";
+	            windowsList = new PopupMenu.PopupMenuItem(title);
+	            let _windowWorkspace = window.get_workspace();
+	            windowsList.connect('activate', Lang.bind(this, function() {
+	                window.activate(global.get_current_time());
+	            }));
+	            this.taskMenu.addMenuItem(windowsList, 0);
+	        }
+	        else {
+	            counter--;
+	        }
+
+	        if (counter > 1) {
+	            let mini = new PopupMenu.PopupMenuItem("Minimize Window");
+	            mini.connect('activate', Lang.bind(this, function() {
+	                window.minimize();
+	            }));
+	            this.taskMenu.addMenuItem(mini, counter);
+	            let separator = new PopupMenu.PopupSeparatorMenuItem();
+	            this.taskMenu.addMenuItem(separator, counter);
+	        }
+	    }
+
+	    this.taskMenu.actor.hide();
+	    taskMenuManager.addMenu(this.taskMenu);
+	    Main.uiGroup.add_actor(this.taskMenu.actor);
+	    this.taskMenuUp = true;
+	    this.hidePreview();
+	    this.taskMenu.open();
 	},
 
 	//Scroll Events
