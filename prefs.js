@@ -786,44 +786,53 @@ Prefs.prototype = {
 		value2TasksSpaces.connect("value-changed", Lang.bind(this, this.changeTasksSpaces));
 		this.gridTasks.attach(value2TasksSpaces, 3, 6, 2, 1);
 
+		//Array of action strings
+		let arrayTasksClickMenus = [
+			"Do Nothing",
+			"Minimize/Maximize Task",
+			"Open Application Menu",
+			"Close Task",
+			"New Instance"
+		];
+
+		//Left Click actions menu
 		let labelLeftClickMenu = new Gtk.Label({
 			label: _("Left Click Action"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelLeftClickMenu, 1, 7, 1, 1);
 		this.valueTasksLeftClickMenu = new Gtk.ComboBoxText();
-		this.valueTasksLeftClickMenu.append_text(_("Do Nothing"));
-		this.valueTasksLeftClickMenu.append_text(_("Minimize/Maximize Task"));
-		this.valueTasksLeftClickMenu.append_text(_("Open Application Menu"));
-		this.valueTasksLeftClickMenu.append_text(_("Close Task"));
+		arrayTasksClickMenus.forEach(string => {
+			this.valueTasksLeftClickMenu.append_text(_(string));
+		});
 		this.valueTasksLeftClickMenu.set_active(this.settings.get_enum("tasks-left-click"));
 		this.valueTasksLeftClickMenu.connect('changed', Lang.bind(this, this.changeTasksLeftClickMenu));
 		this.gridTasks.attach(this.valueTasksLeftClickMenu, 3, 7, 2, 1);
 
+		//Middle Click actions menu
 		let labelMiddleClickMenu = new Gtk.Label({
 			label: _("Middle Click Action"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelMiddleClickMenu, 1, 8, 1, 1);
 		this.valueTasksMiddleClickMenu = new Gtk.ComboBoxText();
-		this.valueTasksMiddleClickMenu.append_text(_("Do Nothing"));
-		this.valueTasksMiddleClickMenu.append_text(_("Minimize/Maximize Task"));
-		this.valueTasksMiddleClickMenu.append_text(_("Open Application Menu"));
-		this.valueTasksMiddleClickMenu.append_text(_("Close Task"));
+		arrayTasksClickMenus.forEach(string => {
+			this.valueTasksMiddleClickMenu.append_text(_(string));
+		});
 		this.valueTasksMiddleClickMenu.set_active(this.settings.get_enum("tasks-middle-click"));
 		this.valueTasksMiddleClickMenu.connect('changed', Lang.bind(this, this.changeTasksMiddleClickMenu));
 		this.gridTasks.attach(this.valueTasksMiddleClickMenu, 3, 8, 2, 1);
 
+		//Right Click actions menu
 		let labelRightClickMenu = new Gtk.Label({
 			label: _("Right Click Action"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelRightClickMenu, 1, 9, 1, 1);
 		this.valueTasksRightClickMenu = new Gtk.ComboBoxText();
-		this.valueTasksRightClickMenu.append_text(_("Do Nothing"));
-		this.valueTasksRightClickMenu.append_text(_("Minimize/Maximize Task"));
-		this.valueTasksRightClickMenu.append_text(_("Open Application Menu"));
-		this.valueTasksRightClickMenu.append_text(_("Close Task"));
+		arrayTasksClickMenus.forEach(string => {
+			this.valueTasksRightClickMenu.append_text(_(string));
+		});
 		this.valueTasksRightClickMenu.set_active(this.settings.get_enum("tasks-right-click"));
 		this.valueTasksRightClickMenu.connect('changed', Lang.bind(this, this.changeTasksRightClickMenu));
 		this.gridTasks.attach(this.valueTasksRightClickMenu, 3, 9, 2, 1);
