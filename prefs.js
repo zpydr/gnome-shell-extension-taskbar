@@ -3373,7 +3373,9 @@ Prefs.prototype = {
 		rgba.parse(color);
 		this.valueActivitiesColor.set_rgba(rgba);
 		this.settings.set_string("activities-button-color", "unset");
-		this.valueEnableHotCorner.set_active(true);
+        if (ShellVersion[1] < 26) {
+		    this.valueEnableHotCorner.set_active(true);
+        }
 		this.valueDisplayApplicationMenu.set_active(true);
 		this.valueApplicationMenuColor.set_rgba(rgba);
 		this.settings.set_string("application-menu-color", "unset");
