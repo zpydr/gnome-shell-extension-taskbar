@@ -406,7 +406,7 @@ TaskBar.prototype = {
 			Main.panel.statusArea.activities.actor.set_style("None");
 
 		//Enable Hot Corner if disabled
-		if (!this.settings.get_boolean("hot-corner"))
+		if ((!this.settings.get_boolean("hot-corner")) && (ShellVersion[1] < 26))
 			Main.layoutManager._updateHotCorners();
 
 		//Show and disconnect Application Menu if hidden
@@ -1346,14 +1346,16 @@ TaskBar.prototype = {
 
 	//Hot Corner
 	enableHotCorner: function() {
-		this.initEnableHotCorner();
-		if (this.settings.get_boolean("hot-corner")) {
-			Main.layoutManager._updateHotCorners();
-		}
+        if (ShellVersion[1] < 26) {
+		    this.initEnableHotCorner();
+		    if (this.settings.get_boolean("hot-corner")) {
+			    Main.layoutManager._updateHotCorners();
+		    }
+        }
 	},
 
 	initEnableHotCorner: function() {
-		if (!this.settings.get_boolean("hot-corner")) {
+		if ((!this.settings.get_boolean("hot-corner")) && (ShellVersion[1] < 26)) {
 			Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._toggleOverview = function() {};
 			Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._trigger = function() {};
 		}

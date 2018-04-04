@@ -2186,18 +2186,18 @@ Prefs.prototype = {
 		});
 		this.resetSystemMenuColorButton.connect('clicked', Lang.bind(this, this.resetSystemMenuColor));
 		this.gridMisc.attach(this.resetSystemMenuColorButton, 6, 5, 1, 1);
-
-		let labelEnableHotCorner = new Gtk.Label({
-			label: _("Hot Corner"),
-			xalign: 0
-		});
-		this.gridMisc.attach(labelEnableHotCorner, 1, 6, 1, 1);
-		this.valueEnableHotCorner = new Gtk.Switch({
-			active: this.settings.get_boolean("hot-corner")
-		});
+        if (ShellVersion[1] < 26) {
+		    let labelEnableHotCorner = new Gtk.Label({
+			    label: _("Hot Corner"),
+			    xalign: 0
+		    });
+		    this.gridMisc.attach(labelEnableHotCorner, 1, 6, 1, 1);
+		    this.valueEnableHotCorner = new Gtk.Switch({
+			    active: this.settings.get_boolean("hot-corner")
+		    });
 		this.valueEnableHotCorner.connect('notify::active', Lang.bind(this, this.changeEnableHotCorner));
 		this.gridMisc.attach(this.valueEnableHotCorner, 3, 6, 1, 1);
-
+        }
 		let labelDisplayDash = new Gtk.Label({
 			label: _("Dash (Activities Overview)"),
 			xalign: 0
