@@ -887,7 +887,7 @@ TaskBar.prototype = {
 	keybindings: function() {
 		if (Main.wm.addKeybinding && Shell.ActionMode) //3.16
 			Main.wm.addKeybinding(PREVIOUSKEY, this.settings, Meta.KeyBindingFlags.NONE,
-				Shell.ActionMode.NORMAL | Shell.ActionMode.MESSAGE_TRAY,
+				Shell.ActionMode.NORMAL,
 				Lang.bind(this, this.keyPreviousTask));
 		else if (Main.wm.addKeybinding && Shell.KeyBindingMode) //3.8
 			Main.wm.addKeybinding(PREVIOUSKEY, this.settings, Meta.KeyBindingFlags.NONE,
@@ -898,7 +898,7 @@ TaskBar.prototype = {
 				Lang.bind(this, this.keyPreviousTask));
 		if (Main.wm.addKeybinding && Shell.ActionMode) //3.16
 			Main.wm.addKeybinding(NEXTKEY, this.settings, Meta.KeyBindingFlags.NONE,
-				Shell.ActionMode.NORMAL | Shell.ActionMode.MESSAGE_TRAY,
+				Shell.ActionMode.NORMAL,
 				Lang.bind(this, this.keyNextTask));
 		else if (Main.wm.addKeybinding && Shell.KeyBindingMode) //3.8
 			Main.wm.addKeybinding(NEXTKEY, this.settings, Meta.KeyBindingFlags.NONE,
@@ -909,7 +909,7 @@ TaskBar.prototype = {
 				Lang.bind(this, this.keyNextTask));
 		if (Main.wm.addKeybinding && Shell.ActionMode) //3.16
 			Main.wm.addKeybinding(DESKTOPKEY, this.settings, Meta.KeyBindingFlags.NONE,
-				Shell.ActionMode.NORMAL | Shell.ActionMode.MESSAGE_TRAY,
+				Shell.ActionMode.NORMAL,
 				Lang.bind(this, this.keyToggleDesktop));
 		else if (Main.wm.addKeybinding && Shell.KeyBindingMode) //3.8
 			Main.wm.addKeybinding(DESKTOPKEY, this.settings, Meta.KeyBindingFlags.NONE,
@@ -2151,7 +2151,7 @@ TaskBar.prototype = {
 		this.tasksList.forEach(
 			function(task) {
 				let [windowTask, buttonTask, signalsTask, labelTask, iconTask] = task;
-                app = Shell.WindowTracker.get_default().get_window_app(windowTask);
+                let app = Shell.WindowTracker.get_default().get_window_app(windowTask);
                 iconTask.child = app.create_icon_texture(this.panelSize);
 			},
 			this

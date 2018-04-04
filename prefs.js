@@ -108,7 +108,7 @@ Prefs.prototype = {
 	buildPrefsWidget: function() {
 		let notebook = new Gtk.Notebook();
 		notebook.set_scrollable(true);
-		notebook.popup_enable(true);
+		notebook.popup_enable;
 		notebook.set_tab_pos(0);
 		this.newValueAppearance = null;
 		this.oldValueAppearance = null;
