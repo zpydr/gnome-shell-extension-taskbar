@@ -2072,29 +2072,20 @@ TaskBar.prototype = {
 		}
 	},
 
-	//Taskslist
-	onWindowsListChanged: function(windowsList, type, window) {
-		if (type === 0) //Add all windows (On init or workspace change)
-		{
-			this.cleanTasksList();
-			windowsList.forEach(
-				function(window) {
-					this.addTaskInList(window);
-				},
-				this
-			);
-			this.hidePreview();
-		} else if (type === 1) //Add window
-		{
-			this.addTaskInList(window);
-		} else if (type === 2) //Remove window
-		{
-			this.removeTaskInList(window);
-			this.hidePreview();
-		}
-		this.tasksContainer();
-		//            this.iconGeometry();
-	},
+    //Taskslist
+    onWindowsListChanged: function(windowsList, type, window) {
+        this.cleanTasksList();
+        windowsList.forEach(
+            function(window) {
+                this.addTaskInList(window);
+            },
+            this
+        );
+        this.hidePreview();
+        this.tasksContainer();
+        this.iconGeometry();
+        this.updateIcon();
+    },
 
 	//Tasks Container
 	tasksContainer: function(window) {
@@ -2143,6 +2134,34 @@ TaskBar.prototype = {
 			this.boxMainTasks.set_width(this.newTasksContainerWidth);
 		}
 	},
+
+    //Icon Geometry
+	iconGeometry: function() {
+		for (let i = this.tasksList.length - 1; i >= 0; i--) {
+			let [windowTask, buttonTask, signalsTask, labelTask, iconTask] = this.tasksList[i];
+			let rect = new Meta.Rectangle();
+			[rect.x, rect.y] = buttonTask.get_transformed_position();
+            [rect.width, rect.height] = buttonTask.get_transformed_size();
+			windowTask.set_icon_geometry(rect);
+		}
+	},
+
+    //Icons
+    updateIcon: function() {
+		this.tasksList.forEach(
+			function(task) {
+				let [windowTask, buttonTask, signalsTask, labelTask, iconTask] = task;
+                app = Shell.WindowTracker.get_default().get_window_app(windowTask);
+                iconTask.child = app.create_icon_texture(this.panelSize);
+			},
+			this
+		);
+    },
+
+    updateTasks: function() {
+        this.iconGeometry();
+        this.updateIcon();
+    },
 
 	//Active Tasks
 	activeTasks: function(window) {
@@ -2242,7 +2261,9 @@ TaskBar.prototype = {
 				},
 				this
 			);
-		}
+		} else if ((type === 3) || (type === 4)) {
+              this.updateIcon();
+        }
 	},
 
 	//Task Index
@@ -2262,6 +2283,7 @@ TaskBar.prototype = {
 	addTaskInList: function(window) {
 		let app = Shell.WindowTracker.get_default().get_window_app(window);
 		let buttonTask = null;
+        let iconTask = new St.Bin();
 		let labelTask = null;
 		if (app !== null) {
 			let appname = app.get_name();
@@ -2271,32 +2293,34 @@ TaskBar.prototype = {
 				if (blacklist.length > 0) {
 					for (let j = 0; j < blacklist.length; j++) {
 						let blacklistapp = blacklist[j];
-						if (appname === blacklistapp)
+						if (appname === blacklistapp) {
 							return;
+                        }
 					}
 				}
 			}
 			//Tasks Label
 			if (this.settings.get_enum("tasks-label") !== 0) {
 				let buttonTaskLayout = null;
-				if (this.settings.get_boolean("bottom-panel"))
+				if (this.settings.get_boolean("bottom-panel")) {
 					buttonTaskLayout = new St.BoxLayout({
 						style_class: "tkb-task-button-bottom-label"
 					});
-				else
+                } else {
 					buttonTaskLayout = new St.BoxLayout({
 						style_class: "tkb-task-button"
 					});
-				let iconTask = app.create_icon_texture(this.panelSize);
+                }
 				buttonTaskLayout.add_actor(iconTask);
-				if (this.settings.get_enum("tasks-label") === 1)
+				if (this.settings.get_enum("tasks-label") === 1) {
 					labelTask = new St.Label({
 						text: (" " + window.get_title() + " ")
 					});
-				else
+                } else {
 					labelTask = new St.Label({
 						text: (" " + appname + " ")
 					});
+                }
 				labelTask.set_style('font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; padding-top: ' + ((this.panelSize - 5 - (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize)) / 2) + 'px;');
 				buttonTaskLayout.add_actor(labelTask);
 				buttonTask = new St.Button({
@@ -2307,28 +2331,30 @@ TaskBar.prototype = {
 				this.tasksWidth = this.settings.get_int("tasks-width");
 				buttonTask.set_width(this.tasksWidth);
 			} else {
-				if (this.settings.get_boolean("bottom-panel"))
+				if (this.settings.get_boolean("bottom-panel")) {
 					buttonTask = new St.Button({
-						style_class: "tkb-task-button-bottom",
-						child: app.create_icon_texture(this.panelSize)
+						style_class: "tkb-task-button-bottom"
 					});
-				else
+                } else {
 					buttonTask = new St.Button({
-						style_class: "tkb-task-button",
-						child: app.create_icon_texture(this.panelSize)
+						style_class: "tkb-task-button"
 					});
+                }
+                buttonTask.add_actor(iconTask);
 			}
 			//Signals
 			let signalsTask = [
 				buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
 				buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
-				buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window))
+				buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window)),
+				buttonTask.connect("allocation-changed", Lang.bind(this, this.updateTasks))
 			];
 			//Display Tasks of All Workspaces
 			if (!this.settings.get_boolean("tasks-all-workspaces")) {
 				let workspace = global.screen.get_active_workspace();
-				if (!this.settings.get_boolean("tasks-all-workspaces"))
+				if (!this.settings.get_boolean("tasks-all-workspaces")) {
 					buttonTask.visible = window.located_on_workspace(workspace);
+                }
 			}
 			if (window.has_focus()) {
 				buttonTask.set_style(this.backgroundStyleColor);
@@ -2347,8 +2373,9 @@ TaskBar.prototype = {
 					if (this.inactiveTasksLabelColor !== "unset") {
 						this.inactiveTasksLabelStyle = 'font-size: ' + (this.panelSize - 5 + this.adjustTBLabelSize - this.adjustTBIconSize) + 'px; color: ' + this.inactiveTasksLabelColor + ';';
 						labelTask.set_style(this.inactiveTasksLabelStyle);
-					} else
+					} else {
 						labelTask.set_style("None");
+                    }
 				}
 			}
 			//Sort Tasks
@@ -2356,7 +2383,6 @@ TaskBar.prototype = {
 			if (this.settings.get_enum("sort-tasks") !== 0) {
 				for (let i = this.tasksList.length - 1; i >= 0; i--) {
 					let [_windowTask, _buttonTask, _signalsTask] = this.tasksList[i];
-
 					let _app_name = Shell.WindowTracker.get_default().get_window_app(_windowTask).get_name();
 					if (appname === _app_name) {
 						if ((this.settings.get_enum("sort-tasks") === 2) || (this.settings.get_enum("sort-tasks") === 4)) {
@@ -2367,9 +2393,10 @@ TaskBar.prototype = {
 							}
 						}
 						this.boxMainTasks.insert_child_above(buttonTask, _buttonTask);
-						if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4))
+						if ((this.settings.get_enum("sort-tasks") === 3) || (this.settings.get_enum("sort-tasks") === 4)) {
 							buttonTask.hide();
-						this.tasksList.splice(i + 1, 0, [window, buttonTask, signalsTask, labelTask]);
+                        }
+						this.tasksList.splice(i + 1, 0, [window, buttonTask, signalsTask, labelTask, iconTask]);
 						inserted = true;
 						break;
 					}
@@ -2377,7 +2404,7 @@ TaskBar.prototype = {
 			}
 			if (!inserted) {
 				this.boxMainTasks.add_child(buttonTask);
-				this.tasksList.push([window, buttonTask, signalsTask, labelTask]);
+				this.tasksList.push([window, buttonTask, signalsTask, labelTask, iconTask]);
 			}
 			this.countTasks++;
 		}
@@ -2423,17 +2450,7 @@ TaskBar.prototype = {
 		this.countTasks = 0;
 	},
 
-	iconGeometry: function() {
-		for (let i = this.tasksList.length - 1; i >= 0; i--) {
-			let [windowTask, buttonTask, signalsTask, labelTask] = this.tasksList[i];
-			let rect = new Meta.Rectangle();
-			[rect.x, rect.y] = buttonTask.get_transformed_position();
-			//            [rect.width, rect.height] = buttonTask.get_transformed_size();
-			windowTask.set_icon_geometry(rect);
-		}
-	},
-
-	//Preview
+    //Preview
 	getThumbnail: function(window, size) {
 		let thumbnail = null;
 		let mutterWindow = window.get_compositor_private();

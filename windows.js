@@ -109,24 +109,19 @@ Windows.prototype = {
 	},
 
 	onWindowChanged: function(window, object, type) {
-		if (type === 0) //Focus changed
-		{
-			if (window.appears_focused)
+		if (type === 0) { //Focus changed
+			if (window.appears_focused) {
 				this.callbackWindowChanged.call(this.callBackThis, window, 0);
-		} else if (type === 1) //Title changed
+            }
+		} else if (type === 1) { //Title changed
 			this.callbackWindowChanged.call(this.callBackThis, window, 1);
-		else if (type === 2) //Minimized
+        } else if (type === 2) { //Minimized
 			this.callbackWindowChanged.call(this.callBackThis, window, 2);
-	},
-
-	onWindowAdded: function(workspace, window) {
-		if (this.addWindowInList(window))
-			this.callbackWindowsListChanged.call(this.callBackThis, this.windowsList, 1, window);
-	},
-
-	onWindowRemoved: function(workspace, window) {
-		if (this.removeWindowInList(window))
-			this.callbackWindowsListChanged.call(this.callBackThis, this.windowsList, 2, window);
+        } else if (type === 3) { //Icon
+			this.callbackWindowChanged.call(this.callBackThis, window, 3);
+        } else if (type === 4) { //Icon
+			this.callbackWindowChanged.call(this.callBackThis, window, 4);
+        }
 	},
 
 	searchWindowInList: function(window) {
@@ -150,7 +145,9 @@ Windows.prototype = {
 				window, [
 					window.connect('notify::appears-focused', Lang.bind(this, this.onWindowChanged, 0)),
 					window.connect('notify::title', Lang.bind(this, this.onWindowChanged, 1)),
-					window.connect('notify::minimized', Lang.bind(this, this.onWindowChanged, 2))
+					window.connect('notify::minimized', Lang.bind(this, this.onWindowChanged, 2)),
+					window.connect('notify::wm-class', Lang.bind(this, this.onWindowChanged, 3)),
+					window.connect('notify::gtk-application-id', Lang.bind(this, this.onWindowChanged, 4))
 				]
 			];
 			this.windowsSignals.push(objectAndSignals);
