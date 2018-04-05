@@ -1,6 +1,6 @@
 ![TaskBar Icon](https://extensions.gnome.org/extension-data/icons/icon_584_ZS33QUn.png)          
 **GNOME Shell Extension TaskBar**    
-Copyright (C) 2013-2017 zpydr             
+Copyright (C) 2013-2018 zpydr             
                 
 This program is free software: you can redistribute it and/or modify            
 it under the terms of the GNU General Public License as published by            
@@ -22,7 +22,7 @@ zpydr@openmailbox.org
          
 ![TaskBar Image](https://github.com/zpydr/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
         
- **Version 56 for GNOME 3.10 - 3.26**       
+ **Version 57 for GNOME 3.10 - 3.28**       
         
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
@@ -75,5 +75,5 @@ German by jonnius
 Russian by dersteinkauz     
 Spanish by Testoriano		
 
-Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano        
+Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano, unixfox, jkosecki, Taz8du29, diegosanz        
             

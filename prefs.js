@@ -1,7 +1,7 @@
 //  GNOME Shell Extension TaskBar
-//  Copyright (C) 2013-2017 zpydr
+//  Copyright (C) 2013-2018 zpydr
 //
-//  Version 56
+//  Version 57
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -149,9 +149,12 @@ Prefs.prototype = {
 		let linkImage8 = new Gtk.Image({
 			file: SPACERICON
 		});
+		let linkImage9 = new Gtk.Image({
+			file: HOMEICON
+		});
 
 		let labelVersion1 = new Gtk.Label({
-			label: _("Version") + " 56"
+			label: _("Version") + " 57"
 		});
 		this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
 		let labelVersion2 = new Gtk.Label({
@@ -181,14 +184,14 @@ Prefs.prototype = {
 		});
 		labelLink2.set_always_show_image(true);
 		this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
-		let bugReport = new Gtk.LinkButton({
-			image: linkImage4,
-			label: _("Report a Bug"),
-			uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 56%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A",
+		let labelLink7 = new Gtk.LinkButton({
+			image: linkImage9,
+			label: " TaskBar Wiki",
+			uri: "https://github.com/zpydr/gnome-shell-extension-taskbar/wiki",
 			xalign: 0
 		});
-		bugReport.set_always_show_image(true);
-		this.gridTaskBar.attach(bugReport, 1, 6, 1, 1);
+		labelLink7.set_always_show_image(true);
+		this.gridTaskBar.attach(labelLink7, 1, 6, 1, 1);
 		let labelLink4 = new Gtk.LinkButton({
 			image: linkImage5,
 			label: " " + _("Donate for TaskBar"),
@@ -213,20 +216,28 @@ Prefs.prototype = {
 		});
 		labelLink6.set_always_show_image(true);
 		this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
+		let bugReport = new Gtk.LinkButton({
+			image: linkImage4,
+			label: _("Report a Bug"),
+			uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 57%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A",
+			xalign: 0
+		});
+		bugReport.set_always_show_image(true);
+		this.gridTaskBar.attach(bugReport, 1, 7, 1, 1);
 
 		let exportButton = new Gtk.Button({
 			label: _("Export Settings")
 		});
 		exportButton.connect('clicked', Lang.bind(this, this.exportSettings));
 		exportButton.set_tooltip_text(_("Export All TaskBar Settings. This will create a taskbar.dconf file in your home folder."));
-		this.gridTaskBar.attach(exportButton, 1, 8, 1, 1);
+		this.gridTaskBar.attach(exportButton, 1, 9, 1, 1);
 
 		let importButton = new Gtk.Button({
 			label: _("Import Settings")
 		});
 		importButton.connect('clicked', Lang.bind(this, this.importSettings));
 		importButton.set_tooltip_text(_("Import All TaskBar Settings. This will import the taskbar.dconf file located in your home folder."));
-		this.gridTaskBar.attach(importButton, 3, 8, 1, 1);
+		this.gridTaskBar.attach(importButton, 3, 9, 1, 1);
 
 		let resetAllButton = new Gtk.Button({
 			label: _("RESET ALL !")
@@ -238,19 +249,19 @@ Prefs.prototype = {
 		}));
 		resetAllButton.connect('clicked', Lang.bind(this, this.resetAll));
 		resetAllButton.set_tooltip_text(_("Reset All TaskBar Settings to the Original TaskBar Settings"));
-		this.gridTaskBar.attach(resetAllButton, 1, 10, 1, 1);
+		this.gridTaskBar.attach(resetAllButton, 1, 11, 1, 1);
 
 		let labelSpaceTaskBar1 = new Gtk.Label({
 			label: "\t",
 			xalign: 0
 		});
-		this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 11, 1, 1);
+		this.gridTaskBar.attach(labelSpaceTaskBar1, 0, 12, 1, 1);
 		let labelSpaceTaskBar2 = new Gtk.Label({
 			label: "\t",
 			xalign: 0,
 			hexpand: true
 		});
-		this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 9, 1, 1);
+		this.gridTaskBar.attach(labelSpaceTaskBar2, 2, 10, 1, 1);
 		let labelSpaceTaskBar3 = new Gtk.Label({
 			label: "<b>" + _("TaskBar") + "</b>",
 			hexpand: true
@@ -261,7 +272,7 @@ Prefs.prototype = {
 			label: "\t",
 			xalign: 0
 		});
-		this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 7, 1, 1);
+		this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 8, 1, 1);
 
 		this.gridComponents = new Gtk.Grid();
 		this.gridComponents.margin = this.gridComponents.row_spacing = 10;
@@ -861,7 +872,7 @@ Prefs.prototype = {
 		});
 		this.gridTasks.attach(labelSpaceTasks2, 2, 10, 1, 1);
 		let labelSpaceTasks3 = new Gtk.Label({
-			label: "\t",
+			label: "\t\t",
 			xalign: 0
 		});
 		this.gridTasks.attach(labelSpaceTasks3, 3, 0, 1, 1);
@@ -2317,7 +2328,7 @@ Prefs.prototype = {
 		});
 
 		let labelGPL = new Gtk.Label({
-			label: "GNOME Shell Extension TaskBar\nCopyright (C) 2013-2017 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see",
+			label: "GNOME Shell Extension TaskBar\nCopyright (C) 2013-2018 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see",
 			xalign: 0
 		});
 		let labelLinkGPL = new Gtk.LinkButton({
@@ -3280,9 +3291,9 @@ Prefs.prototype = {
 		this.valueTasksLabelWidth.set_value(150);
 		this.valueTasksContainerWidth.set_value(0);
 		this.valueTasksSpaces.set_value(4);
-		this.valueTasksLeftClickMenu.set_value(1);
-		this.valueTasksMiddleClickMenu.set_value(0);
-		this.valueTasksRightClickMenu.set_value(2);
+		this.valueTasksLeftClickMenu.set_active(1);
+		this.valueTasksMiddleClickMenu.set_active(0);
+		this.valueTasksRightClickMenu.set_active(2);
 		this.settings.set_boolean("reset-flag", false);
 	},
 

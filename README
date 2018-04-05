@@ -1,5 +1,5 @@
 GNOME Shell Extension TaskBar 
-Copyright (C) 2013-2017 zpydr
+Copyright (C) 2013-2018 zpydr
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.
 zpydr@openmailbox.org
 
 
-Version 56 for GNOME 3.10 - 3.26
+Version 57 for GNOME 3.10 - 3.28
 
 https://extensions.gnome.org/extension/584/taskbar/
 https://github.com/zpydr/gnome-shell-extension-taskbar/
@@ -72,4 +72,5 @@ Spanish by Testoriano
 
 Credit to Xes, flubshi, rogst, Baltix, boennhoff, 
 skoslowski, rgeary1, hkskoglund, Michal Růžička, 
-skochxxl, tuhaihe, to-ba, tobimensch, navarrano
+skochxxl, tuhaihe, to-ba, tobimensch, navarrano, 
+unixfox, jkosecki, Taz8du29, diegosanz
