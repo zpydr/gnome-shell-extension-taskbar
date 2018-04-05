@@ -33,6 +33,7 @@
         <value value="1" nick="minmax"/>
         <value value="2" nick="openmenu"/>
         <value value="3" nick="close"/>
+        <value value="4" nick="new_instance"/>
     </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.scroll-tasks-style">
         <value value="0" nick="off"/>

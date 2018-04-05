@@ -1771,6 +1771,7 @@ TaskBar.prototype = {
 	    else if (numButton === RIGHTBUTTON)
 	        buttonAction = this.settings.get_enum("tasks-right-click");
 
+		let app = Shell.WindowTracker.get_default().get_window_app(window);
 		let appname = Shell.WindowTracker.get_default().get_window_app(window).get_name();
 		let index = this.searchTaskInList(window);
 
@@ -1787,6 +1788,9 @@ TaskBar.prototype = {
 	        case 3: //Action === 'close'
 	            window.delete(global.get_current_time());
 	            break;
+            case 4: //Action === 'new_instance'
+                app.open_new_window(-1);
+                break;
 	        default: //Same as 'none'
 	            return;
 	    }

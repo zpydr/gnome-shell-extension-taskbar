@@ -751,7 +751,7 @@ Prefs.prototype = {
 		this.gridTasks.attach(value2TasksLabelWidth, 3, 4, 2, 1);
 
 		let labelTasksContainerWidth = new Gtk.Label({
-			label: _("Tasks Container Width (0 Tasks)"),
+			label: _("Reserve Space on Panel (0 Tasks)"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelTasksContainerWidth, 1, 5, 2, 1);
@@ -788,16 +788,16 @@ Prefs.prototype = {
 
 		//Array of action strings
 		let arrayTasksClickMenus = [
-			"Do Nothing",
-			"Minimize/Maximize Task",
-			"Open Application Menu",
+			"OFF",
+			"Min/Max Task",
+			"Open App Menu",
 			"Close Task",
 			"New Instance"
 		];
 
 		//Left Click actions menu
 		let labelLeftClickMenu = new Gtk.Label({
-			label: _("Left Click Action"),
+			label: _("Left Click"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelLeftClickMenu, 1, 7, 1, 1);
@@ -811,7 +811,7 @@ Prefs.prototype = {
 
 		//Middle Click actions menu
 		let labelMiddleClickMenu = new Gtk.Label({
-			label: _("Middle Click Action"),
+			label: _("Middle Click"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelMiddleClickMenu, 1, 8, 1, 1);
@@ -825,7 +825,7 @@ Prefs.prototype = {
 
 		//Right Click actions menu
 		let labelRightClickMenu = new Gtk.Label({
-			label: _("Right Click Action"),
+			label: _("Right Click"),
 			xalign: 0
 		});
 		this.gridTasks.attach(labelRightClickMenu, 1, 9, 1, 1);
@@ -853,13 +853,13 @@ Prefs.prototype = {
 			label: "\t",
 			xalign: 0
 		});
-		this.gridTasks.attach(labelSpaceTasks1, 0, 11, 1, 1);
+		this.gridTasks.attach(labelSpaceTasks1, 0, 12, 1, 1);
 		let labelSpaceTasks2 = new Gtk.Label({
 			label: "\t",
 			xalign: 0,
 			hexpand: true
 		});
-		this.gridTasks.attach(labelSpaceTasks2, 2, 9, 1, 1);
+		this.gridTasks.attach(labelSpaceTasks2, 2, 10, 1, 1);
 		let labelSpaceTasks3 = new Gtk.Label({
 			label: "\t",
 			xalign: 0
