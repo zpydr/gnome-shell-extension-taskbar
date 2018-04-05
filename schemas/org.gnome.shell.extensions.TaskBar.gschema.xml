@@ -28,15 +28,11 @@
         <value value="3" nick="group"/>
         <value value="4" nick="groupworkspace"/>
     </enum>
-    <enum id="org.gnome.shell.extensions.TaskBar.task-menu-style">
-        <value value="0" nick="off"/>
-        <value value="1" nick="middle"/>
-        <value value="2" nick="right"/>
-    </enum>
-    <enum id="org.gnome.shell.extensions.TaskBar.close-button-style">
-        <value value="0" nick="off"/>
-        <value value="1" nick="middle"/>
-        <value value="2" nick="right"/>
+    <enum id="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+        <value value="0" nick="none"/>
+        <value value="1" nick="minmax"/>
+        <value value="2" nick="openmenu"/>
+        <value value="3" nick="close"/>
     </enum>
     <enum id="org.gnome.shell.extensions.TaskBar.scroll-tasks-style">
         <value value="0" nick="off"/>
@@ -237,20 +233,25 @@
             <summary>Sort Tasks by Application</summary>
             <description/>
         </key>
-	<key name="task-menu" enum="org.gnome.shell.extensions.TaskBar.task-menu-style">
-            <default>'right'</default>
-            <summary>Middle/Right Click to Show Tasks Menu</summary>
+        <key name="tasks-left-click" enum="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+            <default>'minmax'</default>
+            <summary>Left Click Action</summary>
+            <description/>
+        </key>
+        <key name="tasks-middle-click" enum="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+            <default>'none'</default>
+            <summary>Middle Click Action</summary>
+            <description/>
+        </key>
+        <key name="tasks-right-click" enum="org.gnome.shell.extensions.TaskBar.tasks-clicks-style">
+            <default>'openmenu'</default>
+            <summary>Right Click Action</summary>
             <description/>
         </key>
         <key name="tasks-container-width-new" type="i">
             <range min="0" max="100"/>
             <default>0</default>
             <summary>Tasks Container Width</summary>
-            <description/>
-        </key>
-        <key name="close-button" enum="org.gnome.shell.extensions.TaskBar.close-button-style">
-            <default>'off'</default>
-            <summary>Middle/Right Click to Close Task</summary>
             <description/>
         </key>
         <key name="scroll-tasks" enum="org.gnome.shell.extensions.TaskBar.scroll-tasks-style">

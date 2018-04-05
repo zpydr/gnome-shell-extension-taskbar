@@ -786,31 +786,56 @@ Prefs.prototype = {
 		value2TasksSpaces.connect("value-changed", Lang.bind(this, this.changeTasksSpaces));
 		this.gridTasks.attach(value2TasksSpaces, 3, 6, 2, 1);
 
-		let labelTaskMenu = new Gtk.Label({
-			label: _("Tasks Application Menu"),
-			xalign: 0
-		});
-		this.gridTasks.attach(labelTaskMenu, 1, 7, 1, 1);
-		this.valueTaskMenu = new Gtk.ComboBoxText();
-		this.valueTaskMenu.append_text(_("OFF"));
-		this.valueTaskMenu.append_text(_("Middle Click"));
-		this.valueTaskMenu.append_text(_("Right Click"));
-		this.valueTaskMenu.set_active(this.settings.get_enum("task-menu"));
-		this.valueTaskMenu.connect('changed', Lang.bind(this, this.changeTaskMenu));
-		this.gridTasks.attach(this.valueTaskMenu, 3, 7, 2, 1);
+		//Array of action strings
+		let arrayTasksClickMenus = [
+			"Do Nothing",
+			"Minimize/Maximize Task",
+			"Open Application Menu",
+			"Close Task",
+			"New Instance"
+		];
 
-		let labelCloseButton = new Gtk.Label({
-			label: _("Close Tasks"),
+		//Left Click actions menu
+		let labelLeftClickMenu = new Gtk.Label({
+			label: _("Left Click Action"),
 			xalign: 0
 		});
-		this.gridTasks.attach(labelCloseButton, 1, 8, 1, 1);
-		this.valueCloseButton = new Gtk.ComboBoxText();
-		this.valueCloseButton.append_text(_("OFF"));
-		this.valueCloseButton.append_text(_("Middle Click"));
-		this.valueCloseButton.append_text(_("Right Click"));
-		this.valueCloseButton.set_active(this.settings.get_enum("close-button"));
-		this.valueCloseButton.connect('changed', Lang.bind(this, this.changeCloseButton));
-		this.gridTasks.attach(this.valueCloseButton, 3, 8, 2, 1);
+		this.gridTasks.attach(labelLeftClickMenu, 1, 7, 1, 1);
+		this.valueTasksLeftClickMenu = new Gtk.ComboBoxText();
+		arrayTasksClickMenus.forEach(string => {
+			this.valueTasksLeftClickMenu.append_text(_(string));
+		});
+		this.valueTasksLeftClickMenu.set_active(this.settings.get_enum("tasks-left-click"));
+		this.valueTasksLeftClickMenu.connect('changed', Lang.bind(this, this.changeTasksLeftClickMenu));
+		this.gridTasks.attach(this.valueTasksLeftClickMenu, 3, 7, 2, 1);
+
+		//Middle Click actions menu
+		let labelMiddleClickMenu = new Gtk.Label({
+			label: _("Middle Click Action"),
+			xalign: 0
+		});
+		this.gridTasks.attach(labelMiddleClickMenu, 1, 8, 1, 1);
+		this.valueTasksMiddleClickMenu = new Gtk.ComboBoxText();
+		arrayTasksClickMenus.forEach(string => {
+			this.valueTasksMiddleClickMenu.append_text(_(string));
+		});
+		this.valueTasksMiddleClickMenu.set_active(this.settings.get_enum("tasks-middle-click"));
+		this.valueTasksMiddleClickMenu.connect('changed', Lang.bind(this, this.changeTasksMiddleClickMenu));
+		this.gridTasks.attach(this.valueTasksMiddleClickMenu, 3, 8, 2, 1);
+
+		//Right Click actions menu
+		let labelRightClickMenu = new Gtk.Label({
+			label: _("Right Click Action"),
+			xalign: 0
+		});
+		this.gridTasks.attach(labelRightClickMenu, 1, 9, 1, 1);
+		this.valueTasksRightClickMenu = new Gtk.ComboBoxText();
+		arrayTasksClickMenus.forEach(string => {
+			this.valueTasksRightClickMenu.append_text(_(string));
+		});
+		this.valueTasksRightClickMenu.set_active(this.settings.get_enum("tasks-right-click"));
+		this.valueTasksRightClickMenu.connect('changed', Lang.bind(this, this.changeTasksRightClickMenu));
+		this.gridTasks.attach(this.valueTasksRightClickMenu, 3, 9, 2, 1);
 
 		let resetTasksButton = new Gtk.Button({
 			label: _("Reset Tasks (I) Tab")
@@ -822,7 +847,7 @@ Prefs.prototype = {
 		}));
 		resetTasksButton.connect('clicked', Lang.bind(this, this.resetTasks));
 		resetTasksButton.set_tooltip_text(_("Reset the Tasks (I) Tab to the Original Tasks Settings"));
-		this.gridTasks.attach(resetTasksButton, 1, 10, 1, 1);
+		this.gridTasks.attach(resetTasksButton, 1, 11, 1, 1);
 
 		let labelSpaceTasks1 = new Gtk.Label({
 			label: "\t",
@@ -2543,16 +2568,20 @@ Prefs.prototype = {
 		this.settings.set_boolean("display-inactive-tasks-frame-color", object.active);
 	},
 
-	changeTaskMenu: function(object) {
-		this.settings.set_enum("task-menu", this.valueTaskMenu.get_active());
+	changeTasksLeftClickMenu: function(object) {
+		this.settings.set_enum("tasks-left-click", this.valueTasksLeftClickMenu.get_active());
+	},
+
+	changeTasksMiddleClickMenu: function(object) {
+		this.settings.set_enum("tasks-middle-click", this.valueTasksMiddleClickMenu.get_active());
+	},
+
+	changeTasksRightClickMenu: function(object) {
+		this.settings.set_enum("tasks-right-click", this.valueTasksRightClickMenu.get_active());
 	},
 
 	changeTasksContainerWidth: function(object) {
 		this.settings.set_int("tasks-container-width-new", this.valueTasksContainerWidth.get_value());
-	},
-
-	changeCloseButton: function(object) {
-		this.settings.set_enum("close-button", this.valueCloseButton.get_active());
 	},
 
 	changeTasksSpaces: function(object) {
@@ -2732,7 +2761,6 @@ Prefs.prototype = {
 		}
 		this.dialogDesktopIcon.set_preview_widget_active(have_preview);
 	},
-
 
 	changeDesktopButtonRightClick: function(object, pspec) {
 		this.settings.set_boolean("desktop-button-right-click", object.active);
@@ -3252,8 +3280,9 @@ Prefs.prototype = {
 		this.valueTasksLabelWidth.set_value(150);
 		this.valueTasksContainerWidth.set_value(0);
 		this.valueTasksSpaces.set_value(4);
-		this.valueTaskMenu.set_active(2);
-		this.valueCloseButton.set_active(0);
+		this.valueTasksLeftClickMenu.set_value(1);
+		this.valueTasksMiddleClickMenu.set_value(0);
+		this.valueTasksRightClickMenu.set_value(2);
 		this.settings.set_boolean("reset-flag", false);
 	},
 
