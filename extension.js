@@ -1772,7 +1772,7 @@ TaskBar.prototype = {
 	        buttonAction = this.settings.get_enum("tasks-right-click");
 
 		let app = Shell.WindowTracker.get_default().get_window_app(window);
-		let appname = Shell.WindowTracker.get_default().get_window_app(window).get_name();
+		let appname = app.get_name();
 		let index = this.searchTaskInList(window);
 
 	    switch (buttonAction)
