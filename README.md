@@ -74,6 +74,8 @@ French by narzb
 German by jonnius       
 Russian by dersteinkauz     
 Spanish by Testoriano		
-
-Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano, unixfox, jkosecki, Taz8du29, diegosanz        
-            
+      
+Credit to Xes, flubshi, rogst, Baltix, to-ba, ghost, tuhaihe, amiller27, acabal,       
+pepl, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl,        
+ExtraordinaryBen, navarrano, unixfox, tobimensch, jkosecki, Taz8du29, diegosanz        
+           
