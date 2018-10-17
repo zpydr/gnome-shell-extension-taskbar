@@ -302,10 +302,16 @@ TaskBar.prototype = {
 	xsettings: null,
 	y: null,
 	yOffset: null,
+	workspaceManager: null,
 
 	init: function(extensionMeta, schema) {
 		this.extensionMeta = extensionMeta;
 		this.schema = schema;
+
+		if (global.screen)
+			workspaceManager = global.screen; // Mutter < 3.29
+		else
+			workspaceManager = global.workspace_manager; // Mutter >= 3.29
 	},
 
 	onParamChanged: function() {

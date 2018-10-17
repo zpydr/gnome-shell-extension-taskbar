@@ -42,6 +42,8 @@ Windows.prototype = {
 	windowRemovedSignal: null,
 	windowsSignals: [],
 
+	workspaceManager: null,
+
 	init: function(callBackThis, callbackWindowsListChanged, callbackWindowChanged) {
 		//Set User Callback
 		this.callBackThis = callBackThis;
@@ -53,7 +55,10 @@ Windows.prototype = {
 		this.buildWindowsList();
 		this.onWorkspaceChanged();
 
-
+		if (global.screen)
+			workspaceManager = global.screen; // Mutter < 3.29
+		else
+			workspaceManager = global.workspace_manager; // Mutter >= 3.29
 
 		//Add window manager signals
 		this.workspaceSwitchSignal = workspaceManager.connect('workspace-switched', Lang.bind(this, this.buildWindowsList));
