@@ -10,4 +10,5 @@ Now this extension is plagued with memory leaks and other inconsistencies that s
 
 Thanks for all the great ideas, bug reports, translations etc. We had a good run!
 
-Marc
+
+Marc (zpydr@protonmail.com)
