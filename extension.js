@@ -36,7 +36,6 @@ const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-const RemoteMenu = imports.ui.remoteMenu;
 const ThumbnailsSlider = imports.ui.overviewControls.ThumbnailsSlider.prototype;
 const Tweener = imports.ui.tweener;
 
@@ -1894,7 +1893,7 @@ TaskBar.prototype = {
 	    });
 
 	    if (app.action_group && app.menu) {
-	        this.taskMenu = new RemoteMenu.RemoteMenu(button, app.menu, app.action_group);
+	        this.taskMenu = new imports.ui.remoteMenu.RemoteMenu(button, app.menu, app.action_group);
 	    }
 	    else {
 	        this.taskMenu = new PopupMenu.PopupMenu(button, 0.0, St.Side.TOP);
