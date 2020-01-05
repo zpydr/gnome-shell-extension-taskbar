@@ -2,7 +2,8 @@
 
 ![TaskBar Icon](https://extensions.gnome.org/extension-data/icons/icon_584_ZS33QUn.png)          
 **GNOME Shell Extension TaskBar**    
-Copyright (C) 2013-2018 zpydr             
+Copyright (C) 2013-2018 zpydr  
+Copyright (C) 2020 c0ldplasma
                 
 This program is free software: you can redistribute it and/or modify            
 it under the terms of the GNU General Public License as published by            
@@ -15,9 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.            
                 
 You should have received a copy of the GNU General Public License               
-along with this program. If not, see https://www.gnu.org/licenses/.              
-                
-zpydr@openmailbox.org            
+along with this program. If not, see https://www.gnu.org/licenses/.                         
                 
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
         
