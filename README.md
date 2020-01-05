@@ -23,7 +23,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.
          
 ![TaskBar Image](https://github.com/zpydr/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
 
-**Version 58 for GNOME 3.30-3.34**
+**Version 58 for GNOME 3.30 - 3.34**
 
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
 
