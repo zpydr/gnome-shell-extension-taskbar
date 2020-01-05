@@ -49,15 +49,15 @@ Windows.prototype = {
 
 
 		//Add window manager signals
-		this.workspaceSwitchSignal = global.screen.connect('workspace-switched', Lang.bind(this, this.buildWindowsList));
-		this.nWorkspacesSignal = global.screen.connect('notify::n-workspaces', Lang.bind(this, this.onWorkspaceChanged));
+		this.workspaceSwitchSignal = global.workspace_manager.connect('workspace-switched', Lang.bind(this, this.buildWindowsList));
+		this.nWorkspacesSignal = global.workspace_manager.connect('notify::n-workspaces', Lang.bind(this, this.onWorkspaceChanged));
 	},
 
 	destruct: function() {
 		//Remove window manager signals
-		let numWorkspaces = global.screen.n_workspaces;
+		let numWorkspaces = global.workspace_manager.n_workspaces;
 		for (let i = 0; i < numWorkspaces; i++) {
-			let workspace = global.screen.get_workspace_by_index(i);
+			let workspace = global.workspace_manager.get_workspace_by_index(i);
 			let signals = this.workspaceSignals.get(workspace);
 			this.workspaceSignals.delete(workspace);
 			workspace.disconnect(signals.windowAddedId);
@@ -69,9 +69,9 @@ Windows.prototype = {
 	},
 
 	onWorkspaceChanged: function() {
-		let numWorkspaces = global.screen.n_workspaces;
+		let numWorkspaces = global.workspace_manager.n_workspaces;
 		for (let i = 0; i < numWorkspaces; i++) {
-			let workspace = global.screen.get_workspace_by_index(i);
+			let workspace = global.workspace_manager.get_workspace_by_index(i);
 			if (this.workspaceSignals.has(workspace))
 				continue;
 			let signals = {
@@ -89,9 +89,9 @@ Windows.prototype = {
 		this.cleanWindowsList();
 
 		//Build windows list
-		let totalWorkspaces = global.screen.n_workspaces;
+		let totalWorkspaces = global.workspace_manager.n_workspaces;
 		for (let i = 0; i < totalWorkspaces; i++) {
-			let activeWorkspace = global.screen.get_workspace_by_index(i);
+			let activeWorkspace = global.workspace_manager.get_workspace_by_index(i);
 			activeWorkspace.list_windows().sort(this.sortWindowsCompareFunction).forEach(
 				function(window) {
 					this.addWindowInList(window);
