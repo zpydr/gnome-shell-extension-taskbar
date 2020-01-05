@@ -1,4 +1,4 @@
-
+Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME
 
 ![TaskBar Icon](https://extensions.gnome.org/extension-data/icons/icon_584_ZS33QUn.png)          
 **GNOME Shell Extension TaskBar**    
