@@ -33,7 +33,7 @@ https://extensions.gnome.org/extension/584/taskbar/
 https://github.com/zpydr/gnome-shell-extension-taskbar/         
            
 TaskBar Wiki (Installation - Settings - Translation - Troubleshooting)                                    
-https://github.com/zpydr/gnome-shell-extension-taskbar/wiki/                              
+https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/                              
                  
 Arch Linux User Repository              
 https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
