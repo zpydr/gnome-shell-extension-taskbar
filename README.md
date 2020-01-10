@@ -23,6 +23,9 @@ along with this program. If not, see https://www.gnu.org/licenses/.
          
 ![TaskBar Image](https://github.com/zpydr/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
 
+TaskBar Wiki (Installation - Settings - Translation - Troubleshooting)                                    
+https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
+
 **Version 58 for GNOME 3.30 - 3.34**
 
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
@@ -30,16 +33,16 @@ https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
  **Version 57 for GNOME 3.10 - 3.28**       
         
 https://extensions.gnome.org/extension/584/taskbar/             
-https://github.com/zpydr/gnome-shell-extension-taskbar/         
-           
-TaskBar Wiki (Installation - Settings - Translation - Troubleshooting)                                    
-https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/                              
+https://github.com/zpydr/gnome-shell-extension-taskbar/                                   
                  
 Arch Linux User Repository              
 https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
         
 Debian / Ubuntu PPA Repository                   
-https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/                         
+https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/ 
+
+
+**Further information**
         
 GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
 https://www.gnu.org/licenses/       
