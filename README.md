@@ -29,6 +29,7 @@ https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
 **Version 58 for GNOME 3.30 - 3.34**
 
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
+
 https://extensions.gnome.org/extension/2506/taskbar-updated/
 
  **Version 57 for GNOME 3.10 - 3.28**       
