@@ -23,7 +23,7 @@ along with this program. If not, see https://www.gnu.org/licenses/.
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
         
          
-![TaskBar 2020 Image](https://github.com/c0ldplasma/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
+![TaskBar 2020 Image](https://github.com/c0ldplasma/gnome-shell-extension-taskbar/master/images/taskbar_v56.gif)        
 
 TaskBar 2020 Wiki (Installation - Settings - Translation - Troubleshooting)                                    
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
