@@ -1,3 +1,5 @@
+##Taskbar 2020
+
 Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME
 
 ![TaskBar Icon](https://extensions.gnome.org/extension-data/icons/icon_584_ZS33QUn.png)          
@@ -21,9 +23,9 @@ along with this program. If not, see https://www.gnu.org/licenses/.
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)             
         
          
-![TaskBar Image](https://github.com/zpydr/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
+![TaskBar 2020 Image](https://github.com/c0ldplasma/gnome-shell-extension-taskbar-content/blob/master/taskbar_v56.gif)        
 
-TaskBar Wiki (Installation - Settings - Translation - Troubleshooting)                                    
+TaskBar 2020 Wiki (Installation - Settings - Translation - Troubleshooting)                                    
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
 
 **Version 58 for GNOME 3.30 - 3.34**
