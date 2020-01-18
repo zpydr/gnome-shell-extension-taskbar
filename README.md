@@ -1,4 +1,4 @@
-##Taskbar 2020
+## Taskbar 2020
 
 Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME
 
