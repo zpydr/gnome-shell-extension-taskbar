@@ -1879,9 +1879,7 @@ TaskBar.prototype = {
 	clickActionOpenMenu: function(window, appname, button) {
 	    this.taskMenu = null;
 	    let app = Shell.WindowTracker.get_default().get_window_app(window);
-	    let taskMenuManager = new PopupMenu.PopupMenuManager({
-	        actor: button
-	    });
+	    let taskMenuManager = new PopupMenu.PopupMenuManager(button);
 
 	    if (app.action_group && app.menu) {
 	        this.taskMenu = new imports.ui.remoteMenu.RemoteMenu(button, app.menu, app.action_group);
