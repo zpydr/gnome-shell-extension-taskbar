@@ -2481,12 +2481,16 @@ TaskBar.prototype = {
 	cleanTasksList: function() {
 		for (let i = this.tasksList.length - 1; i >= 0; i--) {
 			let [windowTask, buttonTask, signalsTask] = this.tasksList[i];
-			signalsTask.forEach(
-				function(signal) {
-					buttonTask.disconnect(signal);
-				},
-				this
-			);
+			try {
+				signalsTask.forEach(
+					function(signal) {
+						buttonTask.disconnect(signal);
+					},
+					this
+				);
+			} catch (e) {
+				// try...catch... workaround for crashing when disabling bottom panel in settings
+			}
 			buttonTask.destroy();
 			this.tasksList.splice(i, 1);
 		}
