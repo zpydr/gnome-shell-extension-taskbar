@@ -1,7 +1,8 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2013-2018 zpydr
+//  Copyright (C) 2020 c0ldplasma
 //
-//  Version 57
+//  Version 58
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,7 +17,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//  zpydr@openmailbox.org
 
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
@@ -154,24 +154,17 @@ Prefs.prototype = {
 		});
 
 		let labelVersion1 = new Gtk.Label({
-			label: _("Version") + " 57"
+			label: _("Version") + " 58"
 		});
 		this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
 		let labelVersion2 = new Gtk.Label({
 			label: _("GNOME Shell Version") + " 3." + ShellVersion[1]
 		});
 		this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
-		let labelLink3 = new Gtk.LinkButton({
-			image: linkImage8,
-			label: "zpydr@openmailbox.org",
-			uri: "mailto:zpydr@openmailbox.org"
-		});
-		labelLink3.set_always_show_image(true);
-		this.gridTaskBar.attach(labelLink3, 1, 3, 3, 1);
 		let labelLink1 = new Gtk.LinkButton({
 			image: linkImage1,
 			label: " extensions.gnome.org",
-			uri: "https://extensions.gnome.org/extension/584/taskbar",
+			uri: "https://extensions.gnome.org/extension/2506/taskbar-updated",
 			xalign: 0
 		});
 		labelLink1.set_always_show_image(true);
@@ -179,27 +172,19 @@ Prefs.prototype = {
 		let labelLink2 = new Gtk.LinkButton({
 			image: linkImage2,
 			label: " github.com",
-			uri: "https://github.com/zpydr/gnome-shell-extension-taskbar",
+			uri: "https://github.com/c0ldplasma/gnome-shell-extension-taskbar",
 			xalign: 0
 		});
 		labelLink2.set_always_show_image(true);
 		this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
 		let labelLink7 = new Gtk.LinkButton({
 			image: linkImage9,
-			label: " TaskBar Wiki",
-			uri: "https://github.com/zpydr/gnome-shell-extension-taskbar/wiki",
+			label: " TaskBar 2020 Wiki",
+			uri: "https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki",
 			xalign: 0
 		});
 		labelLink7.set_always_show_image(true);
 		this.gridTaskBar.attach(labelLink7, 1, 6, 1, 1);
-		let labelLink4 = new Gtk.LinkButton({
-			image: linkImage5,
-			label: " " + _("Donate for TaskBar"),
-			uri: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=U5LCPU7B3FB9S",
-			xalign: 0
-		});
-		labelLink4.set_always_show_image(true);
-		this.gridTaskBar.attach(labelLink4, 3, 4, 1, 1);
 		let labelLink5 = new Gtk.LinkButton({
 			image: linkImage6,
 			label: " " + _("Become a Friend of GNOME"),
@@ -219,7 +204,7 @@ Prefs.prototype = {
 		let bugReport = new Gtk.LinkButton({
 			image: linkImage4,
 			label: _("Report a Bug"),
-			uri: "mailto:zpydr@openmailbox.org?subject=TaskBar Bug Report&Body=TaskBar Bug Report%0D%0A%0D%0ATaskBar Version: 57%0D%0AGNOME Shell Version: %0D%0AOperating System: %0D%0AOS Version: %0D%0A%0D%0ABug Description: %0D%0A%0D%0A",
+			uri: "https://github.com/c0ldplasma/gnome-shell-extension-taskbar/issues/new",
 			xalign: 0
 		});
 		bugReport.set_always_show_image(true);
@@ -2328,7 +2313,7 @@ Prefs.prototype = {
 		});
 
 		let labelGPL = new Gtk.Label({
-			label: "GNOME Shell Extension TaskBar\nCopyright (C) 2013-2018 zpydr\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see",
+			label: "GNOME Shell Extension TaskBar\nCopyright (C) 2013-2018 zpydr\nCopyright (C) 2020 c0ldplasma\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see",
 			xalign: 0
 		});
 		let labelLinkGPL = new Gtk.LinkButton({
@@ -2337,15 +2322,8 @@ Prefs.prototype = {
 			uri: "https://www.gnu.org/licenses/",
 			xalign: 0
 		});
-		let labelEmailLinkGPL = new Gtk.LinkButton({
-			image: gplSpacer,
-			label: "zpydr@openmailbox.org",
-			uri: "mailto:zpydr@openmailbox.org",
-			xalign: 0
-		});
 		this.gridGPL.attach(labelGPL, 1, 1, 2, 1);
 		this.gridGPL.attach(labelLinkGPL, 1, 2, 1, 1);
-		this.gridGPL.attach(labelEmailLinkGPL, 1, 3, 1, 1);
 		this.gridGPL.attach(gplImage, 2, 3, 1, 1);
 
 		let labelSpaceGPL1 = new Gtk.Label({
