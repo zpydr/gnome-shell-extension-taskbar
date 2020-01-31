@@ -1,7 +1,8 @@
 //  GNOME Shell Extension TaskBar
 //  Copyright (C) 2013-2018 zpydr
+//  Copyright (C) 2020 c0ldplasma
 //
-//  Version 57
+//  Version 58
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,7 +17,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
-//  zpydr@openmailbox.org
 
 const Clutter = imports.gi.Clutter;
 const Gdk = imports.gi.Gdk;
@@ -2500,10 +2500,16 @@ TaskBar.prototype = {
 		let mutterWindow = window.get_compositor_private();
 		if (mutterWindow) {
 			let windowTexture = mutterWindow.get_texture();
-			let [width, height] = windowTexture.get_size();
+			let width, height;
+			if (windowTexture.get_size) {
+				[width, height] = windowTexture.get_size();
+			} else {
+				let preferred_size_ok;
+	            [preferred_size_ok, width, height] = windowTexture.get_preferred_size();
+			}
 			let scale = Math.min(1.0, size / width, size / height);
 			thumbnail = new Clutter.Clone({
-				source: windowTexture,
+				source: mutterWindow,
 				reactive: true,
 				width: width * scale,
 				height: height * scale
