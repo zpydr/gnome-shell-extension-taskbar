@@ -1,6 +1,6 @@
 {
   "description": "Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME \n\nTaskBar 2020 displays icons of running applications on the top panel or alternatively on a new bottom panel. Activate, minimize or close tasks with a simple click. \n\nTaskBar 2020 is a dock-like windows list on the top/bottom bar.", 
-  "name": "TaskBar Updated", 
+  "name": "TaskBar 2020", 
   "shell-version": [
     "3.30",
     "3.32",
