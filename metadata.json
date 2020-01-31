@@ -3,9 +3,7 @@
   "name": "TaskBar Updated", 
   "shell-version": [
     "3.30",
-    "3.31",
     "3.32",
-    "3.33",
     "3.34"
   ], 
   "url": "https://github.com/c0ldplasma/gnome-shell-extension-taskbar", 
