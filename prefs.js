@@ -113,6 +113,10 @@ Prefs.prototype = {
 		this.newValueAppearance = null;
 		this.oldValueAppearance = null;
 
+		//
+		// About
+		//
+
 		this.gridTaskBar = new Gtk.Grid();
 		this.gridTaskBar.margin = this.gridTaskBar.row_spacing = 10;
 		this.gridTaskBar.column_spacing = 2;
@@ -259,6 +263,10 @@ Prefs.prototype = {
 		});
 		this.gridTaskBar.attach(labelSpaceTaskBar4, 4, 8, 1, 1);
 
+		//
+		// Overview
+		//
+
 		this.gridComponents = new Gtk.Grid();
 		this.gridComponents.margin = this.gridComponents.row_spacing = 10;
 		this.gridComponents.column_spacing = 2;
@@ -279,6 +287,7 @@ Prefs.prototype = {
 		this.valueDisplayTasks = new Gtk.Switch({
 			active: this.settings.get_boolean("display-tasks")
 		});
+		this.valueDisplayTasks.set_halign(Gtk.Align.END);
 		this.valueDisplayTasks.connect('notify::active', Lang.bind(this, this.changeDisplayTasks));
 		this.gridComponents.attach(this.valueDisplayTasks, 3, 1, 2, 1);
 
@@ -290,6 +299,7 @@ Prefs.prototype = {
 		this.valueDisplayDesktopButton = new Gtk.Switch({
 			active: this.settings.get_boolean("display-desktop-button")
 		});
+		this.valueDisplayDesktopButton.set_halign(Gtk.Align.END);
 		this.valueDisplayDesktopButton.connect('notify::active', Lang.bind(this, this.changeDisplayDesktopButton));
 		this.gridComponents.attach(this.valueDisplayDesktopButton, 3, 2, 2, 1);
 
@@ -301,6 +311,7 @@ Prefs.prototype = {
 		this.valueDisplayWorkspaceButton = new Gtk.Switch({
 			active: this.settings.get_boolean("display-workspace-button")
 		});
+		this.valueDisplayWorkspaceButton.set_halign(Gtk.Align.END);
 		this.valueDisplayWorkspaceButton.connect('notify::active', Lang.bind(this, this.changeDisplayWorkspaceButton));
 		this.gridComponents.attach(this.valueDisplayWorkspaceButton, 3, 3, 2, 1);
 
@@ -312,6 +323,7 @@ Prefs.prototype = {
 		this.valueDisplayShowAppsButton = new Gtk.Switch({
 			active: this.settings.get_boolean("display-showapps-button")
 		});
+		this.valueDisplayShowAppsButton.set_halign(Gtk.Align.END);
 		this.valueDisplayShowAppsButton.connect('notify::active', Lang.bind(this, this.changeDisplayShowAppsButton));
 		this.gridComponents.attach(this.valueDisplayShowAppsButton, 3, 4, 2, 1);
 
@@ -323,6 +335,7 @@ Prefs.prototype = {
 		this.valueDisplayFavorites = new Gtk.Switch({
 			active: this.settings.get_boolean("display-favorites")
 		});
+		this.valueDisplayFavorites.set_halign(Gtk.Align.END);
 		this.valueDisplayFavorites.connect('notify::active', Lang.bind(this, this.changeDisplayFavorites));
 		this.gridComponents.attach(this.valueDisplayFavorites, 3, 5, 2, 1);
 
@@ -369,6 +382,7 @@ Prefs.prototype = {
 		this.valueTopPanel = new Gtk.Switch({
 			active: this.settings.get_boolean("top-panel")
 		});
+		this.valueTopPanel.set_halign(Gtk.Align.END);
 		this.valueTopPanel.connect('notify::active', Lang.bind(this, this.changeTopPanel));
 		this.gridComponents.attach(this.valueTopPanel, 3, 7, 2, 1);
 
@@ -380,6 +394,7 @@ Prefs.prototype = {
 		this.valueBottomPanel = new Gtk.Switch({
 			active: this.settings.get_boolean("bottom-panel")
 		});
+		this.valueBottomPanel.set_halign(Gtk.Align.END);
 		this.valueBottomPanel.connect('notify::active', Lang.bind(this, this.changeBottomPanel));
 		this.gridComponents.attach(this.valueBottomPanel, 3, 8, 2, 1);
 
@@ -418,6 +433,10 @@ Prefs.prototype = {
 			xalign: 0
 		});
 		this.gridComponents.attach(labelSpaceComponents4, 5, 1, 1, 1);
+
+		//
+		// Panels
+		//
 
 		this.gridSettings = new Gtk.Grid();
 		this.gridSettings.margin = this.gridSettings.row_spacing = 10;
@@ -677,6 +696,10 @@ Prefs.prototype = {
 		});
 		this.gridSettings.attach(labelSpaceSettings5, 8, 1, 1, 1);
 
+		//
+		// Tasks (I)
+		//
+
 		this.gridTasks = new Gtk.Grid();
 		this.gridTasks.margin = this.gridTasks.row_spacing = 10;
 		this.gridTasks.column_spacing = 2;
@@ -697,6 +720,7 @@ Prefs.prototype = {
 		this.valueAllWorkspaces = new Gtk.Switch({
 			active: this.settings.get_boolean("tasks-all-workspaces")
 		});
+		this.valueAllWorkspaces.set_halign(Gtk.Align.END);
 		this.valueAllWorkspaces.connect('notify::active', Lang.bind(this, this.changeAllWorkspaces));
 		this.gridTasks.attach(this.valueAllWorkspaces, 4, 1, 1, 1);
 
@@ -873,6 +897,10 @@ Prefs.prototype = {
 		});
 		this.gridTasks.attach(labelSpaceTasks5, 5, 1, 1, 1);
 
+		//
+		// Tasks (II)
+		//
+
 		this.gridTasks2 = new Gtk.Grid();
 		this.gridTasks2.margin = this.gridTasks2.row_spacing = 10;
 		this.gridTasks2.column_spacing = 2;
@@ -906,6 +934,7 @@ Prefs.prototype = {
 		this.valueActiveTaskFrame = new Gtk.Switch({
 			active: this.settings.get_boolean("active-task-frame")
 		});
+		this.valueActiveTaskFrame.set_halign(Gtk.Align.END);
 		this.valueActiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeActiveTaskFrame));
 		this.gridTasks2.attach(this.valueActiveTaskFrame, 4, 2, 1, 1);
 
@@ -917,6 +946,7 @@ Prefs.prototype = {
 		this.valueInactiveTaskFrame = new Gtk.Switch({
 			active: this.settings.get_boolean("inactive-task-frame")
 		});
+		this.valueInactiveTaskFrame.set_halign(Gtk.Align.END);
 		this.valueInactiveTaskFrame.connect('notify::active', Lang.bind(this, this.changeInactiveTaskFrame));
 		this.gridTasks2.attach(this.valueInactiveTaskFrame, 4, 3, 1, 1);
 
@@ -928,6 +958,7 @@ Prefs.prototype = {
 		this.valueHoverSwitchTask = new Gtk.Switch({
 			active: this.settings.get_boolean("hover-switch-task")
 		});
+		this.valueHoverSwitchTask.set_halign(Gtk.Align.END);
 		this.valueHoverSwitchTask.connect('notify::active', Lang.bind(this, this.changeHoverSwitchTask));
 		this.gridTasks2.attach(this.valueHoverSwitchTask, 4, 4, 1, 1);
 
@@ -957,6 +988,7 @@ Prefs.prototype = {
 		this.valueBlinkTasks = new Gtk.Switch({
 			active: this.settings.get_boolean("blink-tasks")
 		});
+		this.valueBlinkTasks.set_halign(Gtk.Align.END);
 		this.valueBlinkTasks.connect('notify::active', Lang.bind(this, this.changeBlinkTasks));
 		this.gridTasks2.attach(this.valueBlinkTasks, 4, 6, 1, 1);
 
@@ -1036,6 +1068,10 @@ Prefs.prototype = {
 		});
 		this.gridTasks2.attach(labelSpaceTasks25, 5, 1, 1, 1);
 
+		//
+		// Tasks (III)
+		//
+
 		this.gridTasks3 = new Gtk.Grid();
 		this.gridTasks3.margin = this.gridTasks3.row_spacing = 10;
 		this.gridTasks3.column_spacing = 2;
@@ -1069,6 +1105,7 @@ Prefs.prototype = {
 		this.value2ActiveTaskBackgroundColor = new Gtk.Switch({
 			active: this.settings.get_boolean("active-task-background-color-set")
 		});
+		this.value2ActiveTaskBackgroundColor.set_valign(Gtk.Align.CENTER);
 		this.value2ActiveTaskBackgroundColor.set_tooltip_text(tooltipActiveTaskBackgroundColor);
 		this.value2ActiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeActiveTaskBackgroundColorSet));
 		this.gridTasks3.attach(this.value2ActiveTaskBackgroundColor, 4, 1, 1, 1);
@@ -1094,6 +1131,7 @@ Prefs.prototype = {
 		this.value2InactiveTaskBackgroundColor = new Gtk.Switch({
 			active: this.settings.get_boolean("inactive-task-background-color-set")
 		});
+		this.value2InactiveTaskBackgroundColor.set_valign(Gtk.Align.CENTER);
 		this.value2InactiveTaskBackgroundColor.set_tooltip_text(tooltipInactiveTaskBackgroundColor);
 		this.value2InactiveTaskBackgroundColor.connect('notify::active', Lang.bind(this, this.changeInactiveTaskBackgroundColorSet));
 		this.gridTasks3.attach(this.value2InactiveTaskBackgroundColor, 4, 2, 1, 1);
@@ -1119,6 +1157,7 @@ Prefs.prototype = {
 		this.value2TasksLabelColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-tasks-label-color")
 		});
+		this.value2TasksLabelColor.set_valign(Gtk.Align.CENTER);
 		this.value2TasksLabelColor.set_tooltip_text(tooltipTasksLabelColor);
 		this.value2TasksLabelColor.connect('notify::active', Lang.bind(this, this.changeTasksLabelColorSet));
 		this.gridTasks3.attach(this.value2TasksLabelColor, 4, 3, 1, 1);
@@ -1144,6 +1183,7 @@ Prefs.prototype = {
 		this.value2InactiveTasksLabelColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-inactive-tasks-label-color")
 		});
+		this.value2InactiveTasksLabelColor.set_valign(Gtk.Align.CENTER);
 		this.value2InactiveTasksLabelColor.set_tooltip_text(tooltipInactiveTasksLabelColor);
 		this.value2InactiveTasksLabelColor.connect('notify::active', Lang.bind(this, this.changeInactiveTasksLabelColorSet));
 		this.gridTasks3.attach(this.value2InactiveTasksLabelColor, 4, 4, 1, 1);
@@ -1169,6 +1209,7 @@ Prefs.prototype = {
 		this.value2TasksFrameColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-tasks-frame-color")
 		});
+		this.value2TasksFrameColor.set_valign(Gtk.Align.CENTER);
 		this.value2TasksFrameColor.set_tooltip_text(tooltipTasksFrameColor);
 		this.value2TasksFrameColor.connect('notify::active', Lang.bind(this, this.changeTasksFrameColorSet));
 		this.gridTasks3.attach(this.value2TasksFrameColor, 4, 5, 1, 1);
@@ -1194,6 +1235,7 @@ Prefs.prototype = {
 		this.value2InactiveTasksFrameColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-inactive-tasks-frame-color")
 		});
+		this.value2InactiveTasksFrameColor.set_valign(Gtk.Align.CENTER);
 		this.value2InactiveTasksFrameColor.set_tooltip_text(tooltipInactiveTasksFrameColor);
 		this.value2InactiveTasksFrameColor.connect('notify::active', Lang.bind(this, this.changeInactiveTasksFrameColorSet));
 		this.gridTasks3.attach(this.value2InactiveTasksFrameColor, 4, 6, 1, 1);
@@ -1223,6 +1265,7 @@ Prefs.prototype = {
 		this.value2BlacklistTask = new Gtk.Switch({
 			active: this.settings.get_boolean("blacklist-set")
 		});
+		this.value2BlacklistTask.set_valign(Gtk.Align.CENTER);
 		this.value2BlacklistTask.set_tooltip_text(tooltipBlacklistTask);
 		this.value2BlacklistTask.connect('notify::active', Lang.bind(this, this.changeBlacklist));
 		this.gridTasks3.attach(this.value2BlacklistTask, 4, 7, 1, 1);
@@ -1267,6 +1310,10 @@ Prefs.prototype = {
 		});
 		this.gridTasks3.attach(labelSpaceTasks35, 5, 1, 1, 1);
 
+		//
+		// Buttons
+		//
+
 		this.gridButtons = new Gtk.Grid();
 		this.gridButtons.margin = this.gridButtons.row_spacing = 10;
 		this.gridButtons.column_spacing = 2;
@@ -1287,6 +1334,8 @@ Prefs.prototype = {
 		this.valueDesktopButtonRightClick = new Gtk.Switch({
 			active: this.settings.get_boolean("desktop-button-right-click")
 		});
+		this.valueDesktopButtonRightClick.set_valign(Gtk.Align.CENTER);
+		this.valueDesktopButtonRightClick.set_halign(Gtk.Align.END);
 		this.valueDesktopButtonRightClick.connect('notify::active', Lang.bind(this, this.changeDesktopButtonRightClick));
 		this.gridButtons.attach(this.valueDesktopButtonRightClick, 4, 1, 1, 1);
 
@@ -1351,6 +1400,8 @@ Prefs.prototype = {
 		this.valueDisplayWorkspaceButtonColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-workspace-button-color")
 		});
+		this.valueDisplayWorkspaceButtonColor.set_valign(Gtk.Align.CENTER);
+		this.valueDisplayWorkspaceButtonColor.set_halign(Gtk.Align.END);
 		this.valueDisplayWorkspaceButtonColor.connect('notify::active', Lang.bind(this, this.displayWorkspaceButtonColor));
 		this.gridButtons.attach(this.valueDisplayWorkspaceButtonColor, 4, 5, 1, 1);
 
@@ -1439,6 +1490,10 @@ Prefs.prototype = {
 			xalign: 0
 		});
 		this.gridButtons.attach(labelSpaceButtons5, 6, 1, 1, 1);
+
+		//
+		// Tray Buttons
+		//
 
 		this.gridTrayButton = new Gtk.Grid();
 		this.gridTrayButton.margin = this.gridTrayButton.row_spacing = 10;
@@ -1798,6 +1853,10 @@ Prefs.prototype = {
 		});
 		this.gridSeparator.attach(labelSpaceSeparator7, 8, 1, 1, 1);
 
+		//
+		// Preview
+		//
+
 		this.gridPreview = new Gtk.Grid();
 		this.gridPreview.margin = this.gridPreview.row_spacing = 10;
 		this.gridPreview.column_spacing = 2;
@@ -1832,6 +1891,7 @@ Prefs.prototype = {
 		this.valueDisplayThumbnail = new Gtk.Switch({
 			active: this.settings.get_boolean("display-thumbnail")
 		});
+		this.valueDisplayThumbnail.set_halign(Gtk.Align.END);
 		this.valueDisplayThumbnail.connect('notify::active', Lang.bind(this, this.changeDisplayThumbnail));
 		this.gridPreview.attach(this.valueDisplayThumbnail, 4, 2, 1, 1);
 
@@ -1905,6 +1965,8 @@ Prefs.prototype = {
 		this.valueDisplayPreviewBackgroundColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-preview-background-color")
 		});
+		this.valueDisplayPreviewBackgroundColor.set_halign(Gtk.Align.END);
+		this.valueDisplayPreviewBackgroundColor.set_valign(Gtk.Align.CENTER);
 		this.valueDisplayPreviewBackgroundColor.connect('notify::active', Lang.bind(this, this.displayPreviewBackgroundColor));
 		this.gridPreview.attach(this.valueDisplayPreviewBackgroundColor, 4, 6, 1, 1);
 
@@ -1928,6 +1990,8 @@ Prefs.prototype = {
 		this.valueDisplayPreviewLabelColor = new Gtk.Switch({
 			active: this.settings.get_boolean("display-preview-label-color")
 		});
+		this.valueDisplayPreviewLabelColor.set_halign(Gtk.Align.END);
+		this.valueDisplayPreviewLabelColor.set_valign(Gtk.Align.CENTER);
 		this.valueDisplayPreviewLabelColor.connect('notify::active', Lang.bind(this, this.displayPreviewLabelColor));
 		this.gridPreview.attach(this.valueDisplayPreviewLabelColor, 4, 7, 1, 1);
 
@@ -2104,6 +2168,8 @@ Prefs.prototype = {
 		this.valueDisplayActivitiesButton = new Gtk.Switch({
 			active: this.settings.get_boolean("activities-button")
 		});
+		this.valueDisplayActivitiesButton.set_halign(Gtk.Align.END);
+		this.valueDisplayActivitiesButton.set_valign(Gtk.Align.CENTER);
 		this.valueDisplayActivitiesButton.connect('notify::active', Lang.bind(this, this.changeDisplayActivitiesButton));
 		this.gridMisc.attach(this.valueDisplayActivitiesButton, 3, 2, 1, 1);
 		let colorActivities = this.settings.get_string("activities-button-color");
@@ -2132,6 +2198,8 @@ Prefs.prototype = {
 		this.valueDisplayApplicationMenu = new Gtk.Switch({
 			active: this.settings.get_boolean("application-menu")
 		});
+		this.valueDisplayApplicationMenu.set_halign(Gtk.Align.END);
+		this.valueDisplayApplicationMenu.set_valign(Gtk.Align.CENTER);
 		this.valueDisplayApplicationMenu.connect('notify::active', Lang.bind(this, this.changeDisplayApplicationMenu));
 		this.gridMisc.attach(this.valueDisplayApplicationMenu, 3, 3, 1, 1);
 		let colorApplicationMenu = this.settings.get_string("application-menu-color");
@@ -2160,6 +2228,8 @@ Prefs.prototype = {
 		this.valueDisplayDateMenu = new Gtk.Switch({
 			active: this.settings.get_boolean("date-menu")
 		});
+		this.valueDisplayDateMenu.set_halign(Gtk.Align.END);
+		this.valueDisplayDateMenu.set_valign(Gtk.Align.CENTER);
 		this.valueDisplayDateMenu.connect('notify::active', Lang.bind(this, this.changeDisplayDateMenu));
 		this.gridMisc.attach(this.valueDisplayDateMenu, 3, 4, 1, 1);
 		let colorDateMenu = this.settings.get_string("date-menu-color");
@@ -2188,6 +2258,8 @@ Prefs.prototype = {
 		this.valueDisplaySystemMenu = new Gtk.Switch({
 			active: this.settings.get_boolean("system-menu")
 		});
+		this.valueDisplaySystemMenu.set_halign(Gtk.Align.END);
+		this.valueDisplaySystemMenu.set_valign(Gtk.Align.CENTER);
 		this.valueDisplaySystemMenu.connect('notify::active', Lang.bind(this, this.changeDisplaySystemMenu));
 		this.gridMisc.attach(this.valueDisplaySystemMenu, 3, 5, 1, 1);
 		let colorSystemMenu = this.settings.get_string("system-menu-color");
