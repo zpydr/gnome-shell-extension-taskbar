@@ -75,6 +75,9 @@ along with this program. If not, see https://www.gnu.org/licenses/.
                 
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)            
 
+
+## Credits
+
 Translations:       
 
 Language | Translator
