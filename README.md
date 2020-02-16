@@ -31,7 +31,7 @@ TaskBar displays icons of running applications on the top panel or alternatively
 Activate, minimize or close tasks with a simple click.          
 TaskBar is a dock-like windows list on the top/bottom bar.      
                        
-### Options                 
+#### Options                 
 - Desktop button - toggle desktop view                       
 - Workspace button - switch workspaces left/right-click: cycle forward/backwards                
 - Appview button - left/right-click: toggle appview/overview                 
