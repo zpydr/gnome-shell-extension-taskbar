@@ -35,28 +35,28 @@ Activate, minimize or close tasks with a simple click.
 TaskBar is a dock-like windows list on the top/bottom bar.      
                        
 ### Options                 
-Desktop button - toggle desktop view                       
-Workspace button - switch workspaces left/right-click: cycle forward/backwards                
-Appview button - left/right-click: toggle appview/overview                 
-Favorites - add from dash                     
-Align position                          
-Resize panels + adjust icon, label and content sizes                    
-Top/bottom panel background color + opacity                      
-Bottom panel tray button - activate the message tray                       
-Tasks on all workspaces                
-Group/sort tasks                
-Tasks label                     
-Tasks application menu                    
-Close tasks with a right/middle click                     
-Activate tasks on hover                 
-Scroll tasks/workspaces                     
-Separators                      
-Thumbnail/label-preview                    
-Preview color + opacity                 
-Keybindings                            
-Color or hide menu buttons                      
-Disable hot corner                        
-Export/import settings                       
+- Desktop button - toggle desktop view                       
+- Workspace button - switch workspaces left/right-click: cycle forward/backwards                
+- Appview button - left/right-click: toggle appview/overview                 
+- Favorites - add from dash                     
+- Align position                          
+- Resize panels + adjust icon, label and content sizes                    
+- Top/bottom panel background color + opacity                      
+- Bottom panel tray button - activate the message tray                       
+- Tasks on all workspaces                
+- Group/sort tasks                
+- Tasks label                     
+- Tasks application menu                    
+- Close tasks with a right/middle click                     
+- Activate tasks on hover                 
+- Scroll tasks/workspaces                     
+- Separators                      
+- Thumbnail/label-preview                    
+- Preview color + opacity                 
+- Keybindings                            
+- Color or hide menu buttons                      
+- Disable hot corner                        
+- Export/import settings                       
                
 ### License
 
