@@ -1,19 +1,19 @@
-## GNOME Shell Extension TaskBar 2020
+# GNOME Shell Extension TaskBar 2020
 
 Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME        
         
 <img src="https://github.com/c0ldplasma/gnome-shell-extension-taskbar/blob/master/images/taskbar_v56.gif" height="350" alt="TaskBar 2020 Image">
 
-### Wiki (Installation - Settings - Translation - Troubleshooting)                                    
+## Wiki (Installation - Settings - Translation - Troubleshooting)                                    
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
 
-### Version 58 for GNOME 3.30 - 3.34
+## Version 58 for GNOME 3.30 - 3.34
 
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
 
 https://extensions.gnome.org/extension/2506/taskbar-updated/
 
-### Version <=57 for GNOME 3.10 - 3.28
+## Version <=57 for GNOME 3.10 - 3.28
         
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/                                   
@@ -25,13 +25,13 @@ Debian / Ubuntu PPA Repository
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/ 
 
 
-### Features
+## Features
 
 TaskBar displays icons of running applications on the top panel or alternatively on a new bottom panel.        
 Activate, minimize or close tasks with a simple click.          
 TaskBar is a dock-like windows list on the top/bottom bar.      
                        
-#### Options                 
+### Options                 
 - Desktop button - toggle desktop view                       
 - Workspace button - switch workspaces left/right-click: cycle forward/backwards                
 - Appview button - left/right-click: toggle appview/overview                 
@@ -54,8 +54,8 @@ TaskBar is a dock-like windows list on the top/bottom bar.
 - Color or hide menu buttons                      
 - Disable hot corner                        
 - Export/import settings                       
-               
-### License
+              
+## License
 
 Copyright (C) 2013-2018 zpydr  
 Copyright (C) 2020 c0ldplasma
@@ -74,8 +74,6 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see https://www.gnu.org/licenses/.                         
                 
 ![GPL Image](https://www.gnu.org/graphics/gplv3-127x51.png)            
-
-### Credits
 
 Translations:       
 
