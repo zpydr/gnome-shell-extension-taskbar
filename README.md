@@ -36,7 +36,10 @@ TaskBar is a dock-like windows list on the top/bottom bar.
                        
 ### Options                 
 - Desktop button - toggle desktop view                       
-- Workspace button - switch workspaces left/right-click: cycle forward/backwards                
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3- Workspace button - switch workspaces left/right-click: cycle forward/backwards                
 - Appview button - left/right-click: toggle appview/overview                 
 - Favorites - add from dash                     
 - Align position                          
@@ -80,13 +83,16 @@ along with this program. If not, see https://www.gnu.org/licenses/.
 
 ### Credits
 
-Translation:       
-Chinese by wsxy162        
-Czech by Michal Růžička           
-French by narzb       
-German by jonnius       
-Russian by dersteinkauz     
-Spanish by Testoriano		
+Translations:       
 
-Credit to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano, unixfox, jkosecki, Taz8du29, diegosanz        
+Language | Translator
+--- | --- 
+Chinese | wsxy162
+Czech | Michal Růžička
+French | narzb
+German | jonnius
+Russian | dersteinkauz
+Spanish | Testoriano	
+
+Credits to Xes, flubshi, rogst, Baltix, boennhoff, skoslowski, rgeary1, hkskoglund, Michal Růžička, skochxxl, tuhaihe, to-ba, tobimensch, navarrano, unixfox, jkosecki, Taz8du29, diegosanz        
             
