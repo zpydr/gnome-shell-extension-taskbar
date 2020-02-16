@@ -25,10 +25,7 @@ Debian / Ubuntu PPA Repository
 https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/ 
 
 
-### Further information
-        
-GNOME Shell Extension TaskBar is free software and released under the GNU General Public License (GPL)          
-https://www.gnu.org/licenses/       
+### Features
 
 TaskBar displays icons of running applications on the top panel or alternatively on a new bottom panel.        
 Activate, minimize or close tasks with a simple click.          
