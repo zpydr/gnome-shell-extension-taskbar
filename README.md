@@ -27,9 +27,9 @@ https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/
 
 ## Features
 
-TaskBar displays icons of running applications on the top panel or alternatively on a new bottom panel.        
+TaskBar 2020 displays icons of running applications on the top panel or alternatively on a new bottom panel.        
 Activate, minimize or close tasks with a simple click.          
-TaskBar is a dock-like windows list on the top/bottom bar.      
+TaskBar 2020 is a dock-like windows list on the top/bottom bar.      
                        
 ### Options                 
 - Desktop button - toggle desktop view                       
