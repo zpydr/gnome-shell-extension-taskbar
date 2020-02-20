@@ -7,13 +7,13 @@ Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME
 ## Wiki (Installation - Settings - Translation - Troubleshooting)                                    
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
 
-## Version 58 for GNOME 3.30 - 3.34
+## TaskBar 2020 for GNOME 3.30 - 3.34
 
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
 
 https://extensions.gnome.org/extension/2506/taskbar-updated/
 
-## Version <=57 for GNOME 3.10 - 3.28
+## Old TaskBar for GNOME 3.10 - 3.28
         
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/                                   

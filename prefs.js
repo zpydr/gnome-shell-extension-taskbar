@@ -1,8 +1,6 @@
-//  GNOME Shell Extension TaskBar
+//  GNOME Shell Extension TaskBar 2020
 //  Copyright (C) 2013-2018 zpydr
 //  Copyright (C) 2020 c0ldplasma
-//
-//  Version 58
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -158,7 +156,7 @@ Prefs.prototype = {
 		});
 
 		let labelVersion1 = new Gtk.Label({
-			label: _("Version") + " 58"
+			label: _("Version") + " 4"
 		});
 		this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
 		let labelVersion2 = new Gtk.Label({
@@ -2385,7 +2383,7 @@ Prefs.prototype = {
 		});
 
 		let labelGPL = new Gtk.Label({
-			label: "GNOME Shell Extension TaskBar\nCopyright (C) 2013-2018 zpydr\nCopyright (C) 2020 c0ldplasma\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see",
+			label: "GNOME Shell Extension TaskBar 2020\nCopyright (C) 2013-2018 zpydr\nCopyright (C) 2020 c0ldplasma\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see",
 			xalign: 0
 		});
 		let labelLinkGPL = new Gtk.LinkButton({

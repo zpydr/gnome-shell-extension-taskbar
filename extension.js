@@ -1,8 +1,6 @@
-//  GNOME Shell Extension TaskBar
+//  GNOME Shell Extension TaskBar 2020
 //  Copyright (C) 2013-2018 zpydr
 //  Copyright (C) 2020 c0ldplasma
-//
-//  Version 58
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by

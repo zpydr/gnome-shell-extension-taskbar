@@ -1,8 +1,7 @@
 #!/bin/bash
-#  GNOME Shell Extension TaskBar
+#  GNOME Shell Extension TaskBar 2020
 #  Copyright (C) 2013-2018 zpydr
-#
-#  Version 57
+#  Copyright (C) 2020 c0ldplasma
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,12 +16,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https:#www.gnu.org/licenses/>.
 #
-#  zpydr@openmailbox.org
 #
 if [ ! -f $HOME/taskbar.dconf ]; then
-    zenity --info --text 'Import of TaskBar Settings Failed!'
+    zenity --info --text 'Import of TaskBar 2020 Settings Failed!'
 else
     dconf load /org/gnome/shell/extensions/TaskBar/ <$HOME/taskbar.dconf
     killall gnome-shell-extension-prefs
-    zenity --info --text 'Import of TaskBar Settings Successful!' && gnome-shell-extension-prefs TaskBar@zpydr
+    zenity --info --text 'Import of TaskBar 2020 Settings Successful!' && gnome-shell-extension-prefs TaskBar@c0ldplasma
 fi
