@@ -1,4 +1,4 @@
-https://github.com/c0ldplasma/gnome-shell-extension-taskbar/issues/newhttps://github.com/c0ldplasma/gnome-shell-extension-taskbar/issues/new# GNOME Shell Extension TaskBar 2020
+# GNOME Shell Extension TaskBar 2020
 
 Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME        
         
