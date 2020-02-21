@@ -9,7 +9,7 @@ https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
 
 ## TaskBar 2020 for GNOME 3.30 - 3.34
 
-https://github.com/c0ldplasma/gnome-shell-extension-taskbar/
+https://github.com/c0ldplasma/gnome-shell-extension-taskbar/                                           
 https://extensions.gnome.org/extension/2506/taskbar-updated/
 
 ## Old TaskBar for GNOME 3.10 - 3.28
