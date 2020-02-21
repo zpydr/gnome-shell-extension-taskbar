@@ -1,4 +1,4 @@
-# GNOME Shell Extension TaskBar 2020
+https://github.com/c0ldplasma/gnome-shell-extension-taskbar/issues/new# GNOME Shell Extension TaskBar 2020
 
 Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME        
         
@@ -17,13 +17,6 @@ https://extensions.gnome.org/extension/2506/taskbar-updated/
         
 https://extensions.gnome.org/extension/584/taskbar/             
 https://github.com/zpydr/gnome-shell-extension-taskbar/                                   
-                 
-Arch Linux User Repository              
-https://aur.archlinux.org/packages/gnome-shell-extension-taskbar/               
-        
-Debian / Ubuntu PPA Repository                   
-https://launchpad.net/~zpydr/+archive/gnome-shell-extension-taskbar/ 
-
 
 ## Features
 
