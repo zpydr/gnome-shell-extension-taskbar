@@ -752,7 +752,7 @@ TaskBar.prototype = {
 		}
 		if ((this.settings.get_boolean("first-start")) && (Main.sessionMode.currentMode === 'user')) {
 			//Comment out the next line to disable the preferences window from opening at the first start
-			Util.spawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+			Util.spawnCommandLine('gnome-extensions prefs ' + Extension.metadata.uuid);
 			this.settings.set_boolean("first-start", false);
 		}
 	},
@@ -1753,7 +1753,7 @@ TaskBar.prototype = {
 			if (Main.overview.visible)
 				Main.overview.hide();
 		} else if ((numButton === RIGHTBUTTON) && (this.settings.get_boolean("desktop-button-right-click"))) //Right Button
-			Util.spawnCommandLine('gnome-shell-extension-prefs ' + Extension.metadata.uuid);
+			Util.spawnCommandLine('gnome-extensions prefs ' + Extension.metadata.uuid);
 	},
 
 	onClickTaskButton: function(button, pspec, window) {
