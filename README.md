@@ -2,7 +2,7 @@
 
 Fork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME        
         
-<img src="https://github.com/c0ldplasma/gnome-shell-extension-taskbar/blob/master/images/taskbar_v56.gif" height="350" alt="TaskBar 2020 Image">
+<img src="https://github.com/c0ldplasma/gnome-shell-extension-taskbar/blob/main/images/taskbar_v56.gif" height="350" alt="TaskBar 2020 Image">
 
 ## Wiki (Installation - Settings - Translation - Troubleshooting)                                    
 https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki/    
