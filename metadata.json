@@ -2,7 +2,6 @@
   "description": "TaskBar 2020 displays icons of running applications and favorites on the top panel or alternatively on a new bottom panel. Activate, minimize or close tasks with a simple click. \n\nTaskBar 2020 is a dock-like windows list on the top/bottom bar. \n\nFork of zpydr/gnome-shell-extension-taskbar to support newer versions of GNOME \n\nPlease submit issues to: https://github.com/c0ldplasma/gnome-shell-extension-taskbar/issues/new", 
   "name": "TaskBar 2020", 
   "shell-version": [
-    "3.34",
     "3.36",
     "3.38"
   ], 
