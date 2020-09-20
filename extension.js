@@ -2382,7 +2382,7 @@ TaskBar.prototype = {
 				buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
 				buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
 				buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window)),
-				buttonTask.connect("allocation-changed", Lang.bind(this, this.updateTasks))
+				buttonTask.connect("notify::allocation", Lang.bind(this, this.updateTasks))
 			];
 			//Display Tasks of All Workspaces
 			if (!this.settings.get_boolean("tasks-all-workspaces")) {

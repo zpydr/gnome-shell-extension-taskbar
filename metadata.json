@@ -3,9 +3,10 @@
   "name": "TaskBar 2020", 
   "shell-version": [
     "3.34",
-    "3.36"
+    "3.36",
+    "3.38"
   ], 
   "url": "https://github.com/c0ldplasma/gnome-shell-extension-taskbar", 
   "uuid": "TaskBar@c0ldplasma", 
-  "version": 4
+  "version": 5
 }
