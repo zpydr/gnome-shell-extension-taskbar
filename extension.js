@@ -1625,17 +1625,14 @@ TaskBar.prototype = {
 		this.bottomPanelActor.set_style(this.fontSize + ' ' + this.bottomPanelBackgroundStyle);
 		this.bottomPanelActor.set_reactive(false);
 		this.positionBoxBottomStart = new St.Bin({
-			x_fill: false,
 			x_expand: true,
 			x_align: St.Align.START
 		});
 		this.positionBoxBottomMiddle = new St.Bin({
-			x_fill: false,
 			x_expand: true,
 			x_align: St.Align.MIDDLE
 		});
 		this.positionBoxBottomEnd = new St.Bin({
-			x_fill: false,
 			x_expand: true,
 			x_align: St.Align.END
 		});
@@ -2385,7 +2382,7 @@ TaskBar.prototype = {
 				buttonTask.connect("button-press-event", Lang.bind(this, this.onClickTaskButton, window)),
 				buttonTask.connect("enter-event", Lang.bind(this, this.showPreview, window)),
 				buttonTask.connect("leave-event", Lang.bind(this, this.resetPreview, window)),
-				buttonTask.connect("notify::allocation", Lang.bind(this, this.updateTasks))
+				buttonTask.connect("allocation-changed", Lang.bind(this, this.updateTasks))
 			];
 			//Display Tasks of All Workspaces
 			if (!this.settings.get_boolean("tasks-all-workspaces")) {
