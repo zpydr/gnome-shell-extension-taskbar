@@ -37,9 +37,7 @@ const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-//const RemoteMenu = imports.ui.remoteMenu;
 const ThumbnailsSlider = imports.ui.overviewControls.ThumbnailsSlider.prototype;
-const Tweener = imports.ui.tweener;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
