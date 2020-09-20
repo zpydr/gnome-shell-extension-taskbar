@@ -156,7 +156,7 @@ Prefs.prototype = {
 		});
 
 		let labelVersion1 = new Gtk.Label({
-			label: _("Version") + " 4"
+			label: _("Version") + " 5"
 		});
 		this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
 		let labelVersion2 = new Gtk.Label({
