@@ -1625,16 +1625,12 @@ TaskBar.prototype = {
 		this.bottomPanelActor.set_style(this.fontSize + ' ' + this.bottomPanelBackgroundStyle);
 		this.bottomPanelActor.set_reactive(false);
 		this.positionBoxBottomStart = new St.Bin({
-			x_expand: true,
-			x_align: St.Align.START
 		});
 		this.positionBoxBottomMiddle = new St.Bin({
 			x_expand: true,
-			x_align: St.Align.MIDDLE
+			x_align: St.Align.END
 		});
 		this.positionBoxBottomEnd = new St.Bin({
-			x_expand: true,
-			x_align: St.Align.END
 		});
 		this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
 		if (this.positionBoxBottomSettings === 0)
