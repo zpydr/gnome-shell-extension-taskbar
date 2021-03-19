@@ -37,7 +37,6 @@ const MessageTray = imports.ui.messageTray;
 const Panel = imports.ui.main.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-const ThumbnailsSlider = imports.ui.overviewControls.ThumbnailsSlider.prototype;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
@@ -362,9 +361,6 @@ TaskBar.prototype = {
 		//Dash
 		this.initDisplayDash();
 
-		//Workspace Selector
-		this.initDisplayWorkspaceSelector();
-
 		//Init Windows Manage Callbacks
 		this.initWindows();
 
@@ -402,7 +398,7 @@ TaskBar.prototype = {
 
 		//Reset Activities Button Color if changed
 		if (this.settings.get_string("activities-button-color") !== "unset")
-			Main.panel.statusArea.activities.set_style("None");
+			Main.panel.statusArea.activities.actor.set_style("None");
 
 		//Enable Hot Corner if disabled
 		if ((!this.settings.get_boolean("hot-corner")) && (ShellVersion[1] < 26))
@@ -417,7 +413,7 @@ TaskBar.prototype = {
 
 		//Reset Application Menu Color if changed
 		if (this.settings.get_string("application-menu-color") !== "unset")
-			Main.panel.statusArea.appMenu.set_style("None");
+			Main.panel.statusArea.appMenu.actor.set_style("None");
 
 		//Show Date Menu if hidden
 		if (!this.settings.get_boolean("date-menu"))
@@ -425,7 +421,7 @@ TaskBar.prototype = {
 
 		//Reset Date Menu Color if changed
 		if (this.settings.get_string("date-menu-color") !== "unset")
-			Main.panel.statusArea.dateMenu.set_style("None");
+			Main.panel.statusArea.dateMenu.actor.set_style("None");
 
 		//Show System Menu if hidden
 		if (!this.settings.get_boolean("system-menu"))
@@ -433,18 +429,12 @@ TaskBar.prototype = {
 
 		//Reset System Menu Color if changed
 		if (this.settings.get_string("system-menu-color") !== "unset")
-			Main.panel.statusArea.aggregateMenu.set_style("None");
+			Main.panel.statusArea.aggregateMenu.actor.set_style("None");
 
 		//Show Dash if hidden
 		if (!this.settings.get_boolean("dash")) {
 			this.dash.set_height(this.dashHeight);
 			this.dash.set_width(this.dashWidth);
-		}
-
-		//Show Workspace Selector if hidden
-		if (!this.settings.get_boolean("workspace-selector")) {
-			ThumbnailsSlider._getAlwaysZoomOut = this.alwaysZoomOut;
-			ThumbnailsSlider.getNonExpandedWidth = this.nonExpandedWidth;
 		}
 
 		//Disconnect Workspace Signals
@@ -573,7 +563,7 @@ TaskBar.prototype = {
 			this.bottomPanelActor = null;
 		}
 		if ((this.setAnchorPoint) && (ShellVersion[1] <= 14)) {
-			Main.messageTray.set_anchor_point(0, 0);
+			Main.messageTray.actor.set_anchor_point(0, 0);
 			Main.messageTray._notificationWidget.set_anchor_point(0, 0);
 			this.setAnchorPoint = false;
 		}
@@ -588,22 +578,22 @@ TaskBar.prototype = {
 		this.cleanTasksList();
 		if (this.topPanelBackgroundColor !== 'unset') {
 			if (ShellVersion[1] <= 16) {
-				Main.panel._leftCorner.show();
-				Main.panel._rightCorner.show();
+				Main.panel._leftCorner.actor.show();
+				Main.panel._rightCorner.actor.show();
 			}
-			Main.panel._leftCorner.set_style(this.originalLeftPanelCornerStyle);
-			Main.panel._rightCorner.set_style(this.originalRightPanelCornerStyle);
+			Main.panel._leftCorner.actor.set_style(this.originalLeftPanelCornerStyle);
+			Main.panel._rightCorner.actor.set_style(this.originalRightPanelCornerStyle);
 		}
 		if ((this.topPanelBackgroundColor !== 'unset') || (this.panelSet))
-			Main.panel.set_style(this.originalTopPanelStyle);
+			Main.panel.actor.set_style(this.originalTopPanelStyle);
 		if (!this.settings.get_boolean("top-panel")) {
 			Main.layoutManager.removeChrome(Main.layoutManager.panelBox);
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: true
 			});
-			Main.panel._leftCorner.show();
-			Main.panel._rightCorner.show();
-			Main.panel.show();
+			Main.panel._leftCorner.actor.show();
+			Main.panel._rightCorner.actor.show();
+			Main.panel.actor.show();
 		}
 	},
 
@@ -681,7 +671,6 @@ TaskBar.prototype = {
 			this.settings.connect("changed::system-menu", Lang.bind(this, this.displaySystemMenu)),
 			this.settings.connect("changed::system-menu-color", Lang.bind(this, this.colorSystemMenu)),
 			this.settings.connect("changed::dash", Lang.bind(this, this.displayDash)),
-			this.settings.connect("changed::workspace-selector", Lang.bind(this, this.displayWorkspaceSelector)),
 			this.settings.connect("changed::position-changed", Lang.bind(this, this.appearancePositionChange)),
 			this.settings.connect("changed::bottom-panel", Lang.bind(this, this.onParamChanged)),
 			this.settings.connect("changed::bottom-panel-vertical", Lang.bind(this, this.onParamChanged)),
@@ -1311,9 +1300,9 @@ TaskBar.prototype = {
 		this.activitiesColor = this.settings.get_string("activities-button-color");
 		if (this.activitiesColor !== "unset") {
 			this.activitiesStyle = "color: " + this.activitiesColor + ";";
-			Main.panel.statusArea.activities.set_style(this.activitiesStyle);
+			Main.panel.statusArea.activities.actor.set_style(this.activitiesStyle);
 		} else
-			Main.panel.statusArea.activities.set_style("None");
+			Main.panel.statusArea.activities.actor.set_style("None");
 	},
 
 	//Top Panel
@@ -1324,9 +1313,9 @@ TaskBar.prototype = {
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: true
 			});
-			Main.panel.show();
-			Main.panel._leftCorner.show();
-			Main.panel._rightCorner.show();
+			Main.panel.actor.show();
+			Main.panel._leftCorner.actor.show();
+			Main.panel._rightCorner.actor.show();
 			this.onParamChanged();
 		}
 	},
@@ -1337,9 +1326,9 @@ TaskBar.prototype = {
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: false
 			});
-			Main.panel.hide();
-			Main.panel._leftCorner.hide();
-			Main.panel._rightCorner.hide();
+			Main.panel.actor.hide();
+			Main.panel._leftCorner.actor.hide();
+			Main.panel._rightCorner.actor.hide();
 		}
 	},
 
@@ -1397,9 +1386,9 @@ TaskBar.prototype = {
 		this.appMenuColor = this.settings.get_string("application-menu-color");
 		if (this.appMenuColor !== "unset") {
 			this.appMenuStyle = "color: " + this.appMenuColor + ";";
-			Main.panel.statusArea.appMenu.set_style(this.appMenuStyle);
+			Main.panel.statusArea.appMenu.actor.set_style(this.appMenuStyle);
 		} else
-			Main.panel.statusArea.appMenu.set_style("None");
+			Main.panel.statusArea.appMenu.actor.set_style("None");
 	},
 
 
@@ -1424,9 +1413,9 @@ TaskBar.prototype = {
 		this.dateMenuColor = this.settings.get_string("date-menu-color");
 		if (this.dateMenuColor !== "unset") {
 			this.dateMenuStyle = "color: " + this.dateMenuColor + ";";
-			Main.panel.statusArea.dateMenu.set_style(this.dateMenuStyle);
+			Main.panel.statusArea.dateMenu.actor.set_style(this.dateMenuStyle);
 		} else
-			Main.panel.statusArea.dateMenu.set_style("None");
+			Main.panel.statusArea.dateMenu.actor.set_style("None");
 	},
 
 	//System Menu
@@ -1450,9 +1439,9 @@ TaskBar.prototype = {
 		this.systemMenuColor = this.settings.get_string("system-menu-color");
 		if (this.systemMenuColor !== "unset") {
 			this.systemMenuStyle = "color: " + this.systemMenuColor + ";";
-			Main.panel.statusArea.aggregateMenu.set_style(this.systemMenuStyle);
+			Main.panel.statusArea.aggregateMenu.actor.set_style(this.systemMenuStyle);
 		} else
-			Main.panel.statusArea.aggregateMenu.set_style("None");
+			Main.panel.statusArea.aggregateMenu.actor.set_style("None");
 	},
 
 	//Dash
@@ -1466,33 +1455,11 @@ TaskBar.prototype = {
 
 	initDisplayDash: function() {
 		if (!this.settings.get_boolean("dash")) {
-			this.dash = Main.overview.dash;
+			this.dash = Main.overview._dash.actor;
 			this.dashHeight = this.dash.get_height();
 			this.dashWidth = this.dash.get_width();
 			this.dash.set_height(0);
 			this.dash.set_width(0);
-		}
-	},
-
-	//Workspace Selector
-	displayWorkspaceSelector: function() {
-		this.initDisplayWorkspaceSelector();
-		if (this.settings.get_boolean("workspace-selector")) {
-			ThumbnailsSlider._getAlwaysZoomOut = this.alwaysZoomOut;
-			ThumbnailsSlider.getNonExpandedWidth = this.nonExpandedWidth;
-		}
-	},
-
-	initDisplayWorkspaceSelector: function() {
-		if (!this.settings.get_boolean("workspace-selector")) {
-			this.alwaysZoomOut = ThumbnailsSlider._getAlwaysZoomOut;
-			this.nonExpandedWidth = ThumbnailsSlider.getNonExpandedWidth;
-			ThumbnailsSlider._getAlwaysZoomOut = function() {
-				return false;
-			}
-			ThumbnailsSlider.getNonExpandedWidth = function() {
-				return 0;
-			}
 		}
 	},
 
@@ -1564,11 +1531,11 @@ TaskBar.prototype = {
 		this.adjustTBLabelSize = this.settings.get_int('tb-label-size');
 		this.adjustContentSize = this.settings.get_int('content-size');
 		this.panelSet = false;
-		this.originalTopPanelStyle = Main.panel.get_style();
-		this.originalLeftPanelCornerStyle = Main.panel._leftCorner.get_style();
-		this.originalRightPanelCornerStyle = Main.panel._rightCorner.get_style();
+		this.originalTopPanelStyle = Main.panel.actor.get_style();
+		this.originalLeftPanelCornerStyle = Main.panel._leftCorner.actor.get_style();
+		this.originalRightPanelCornerStyle = Main.panel._rightCorner.actor.get_style();
 		//Get Native Panel Background Color
-		let tpobc = Main.panel.get_theme_node().get_background_color();
+		let tpobc = Main.panel.actor.get_theme_node().get_background_color();
 		let topPanelOriginalBackgroundColor = 'rgba(%d, %d, %d, %d)'.format(tpobc.red, tpobc.green, tpobc.blue, tpobc.alpha);
 		this.settings.set_string("top-panel-original-background-color", topPanelOriginalBackgroundColor);
 		this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
@@ -1579,7 +1546,7 @@ TaskBar.prototype = {
 			//Set Font Size
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
-			Main.panel.set_style(this.fontSize);
+			Main.panel.actor.set_style(this.fontSize);
 			this.panelSet = true;
 		}
 		this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
@@ -1587,17 +1554,17 @@ TaskBar.prototype = {
 			this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor + ";";
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
-			Main.panel.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
+			Main.panel.actor.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
 			if ((this.settings.get_boolean("top-panel-background-alpha")) && (ShellVersion[1] <= 16)) {
-				Main.panel._leftCorner.hide();
-				Main.panel._rightCorner.hide();
+				Main.panel._leftCorner.actor.hide();
+				Main.panel._rightCorner.actor.hide();
 			} else {
 				if (ShellVersion[1] <= 16) {
-					Main.panel._leftCorner.show();
-					Main.panel._rightCorner.show();
+					Main.panel._leftCorner.actor.show();
+					Main.panel._rightCorner.actor.show();
 				}
-				Main.panel._leftCorner.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
-				Main.panel._rightCorner.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
+				Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
+				Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
 			}
 			this.panelSet = true;
 		}
@@ -1625,12 +1592,16 @@ TaskBar.prototype = {
 		this.bottomPanelActor.set_style(this.fontSize + ' ' + this.bottomPanelBackgroundStyle);
 		this.bottomPanelActor.set_reactive(false);
 		this.positionBoxBottomStart = new St.Bin({
+			x_expand: true,
+			x_align: St.Align.START
 		});
 		this.positionBoxBottomMiddle = new St.Bin({
 			x_expand: true,
-			x_align: St.Align.END
+			x_align: St.Align.MIDDLE
 		});
 		this.positionBoxBottomEnd = new St.Bin({
+			x_expand: true,
+			x_align: St.Align.END
 		});
 		this.positionBoxBottomSettings = this.settings.get_int("position-bottom-box");
 		if (this.positionBoxBottomSettings === 0)
@@ -1658,11 +1629,11 @@ TaskBar.prototype = {
 			Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
 			this.setAnchorPoint = true;
 			this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function() {
-				Main.messageTray.set_anchor_point(0, this.height);
+				Main.messageTray.actor.set_anchor_point(0, this.height);
 				this.setAnchorPoint = true;
 			}));
 			this.messageTrayHidingId = Main.messageTray.connect('hiding', Lang.bind(this, function() {
-				Main.messageTray.set_anchor_point(0, 0);
+				Main.messageTray.actor.set_anchor_point(0, 0);
 				this.setAnchorPoint = true;
 			}));
 		}
@@ -1946,9 +1917,9 @@ TaskBar.prototype = {
 	        }
 	    }
 
-	    this.taskMenu.hide();
+	    this.taskMenu.actor.hide();
 	    taskMenuManager.addMenu(this.taskMenu);
-	    Main.uiGroup.add_actor(this.taskMenu);
+	    Main.uiGroup.add_actor(this.taskMenu.actor);
 	    this.taskMenuUp = true;
 	    this.hidePreview();
 	    this.taskMenu.open();
