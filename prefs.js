@@ -156,45 +156,39 @@ Prefs.prototype = {
 		});
 
 		let labelVersion1 = new Gtk.Label({
-			label: _("Version") + " 5"
+			label: _("Version") + " 6"
 		});
 		this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
 		let labelVersion2 = new Gtk.Label({
-			label: _("GNOME Shell Version") +  ShellVersion
+			label: _("GNOME Shell Version") +  " " + ShellVersion
 		});
 		this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
 		let labelLink1 = new Gtk.LinkButton({
-			icon_name: "HOMEICON",
-			label: " extensions.gnome.org",
+			label: "extensions.gnome.org",
 			uri: "https://extensions.gnome.org/extension/2506/taskbar-updated"
 		});
 		this.gridTaskBar.attach(labelLink1, 1, 4, 1, 1);
 		let labelLink2 = new Gtk.LinkButton({
-			icon_name: "HOMEICON",
-			label: " github.com",
+			label: "github.com",
 			uri: "https://github.com/c0ldplasma/gnome-shell-extension-taskbar"
 		});
 		this.gridTaskBar.attach(labelLink2, 1, 5, 1, 1);
 		let labelLink7 = new Gtk.LinkButton({
-			icon_name: "HOMEICON",
-			label: " TaskBar 2020 Wiki",
+			label: "TaskBar 2020 Wiki",
 			uri: "https://github.com/c0ldplasma/gnome-shell-extension-taskbar/wiki"
 		});
 		this.gridTaskBar.attach(labelLink7, 1, 6, 1, 1);
 		let labelLink5 = new Gtk.LinkButton({
-			icon_name: "GNOMEICON",
-			label: " " + _("Become a Friend of GNOME"),
+			label: _("Become a Friend of GNOME"),
 			uri: "https://www.gnome.org/friends/"
 		});
 		this.gridTaskBar.attach(labelLink5, 3, 5, 1, 1);
 		let labelLink6 = new Gtk.LinkButton({
-			icon_name: "FSFICON",
-			label: " " + _("Free Software Foundation"),
+			label: _("Free Software Foundation"),
 			uri: "https://www.fsf.org/"
 		});
 		this.gridTaskBar.attach(labelLink6, 3, 6, 1, 1);
 		let bugReport = new Gtk.LinkButton({
-			icon_name: "MAILICON",
 			label: _("Report a Bug"),
 			uri: "https://github.com/c0ldplasma/gnome-shell-extension-taskbar/issues/new"
 		});
@@ -2145,7 +2139,6 @@ Prefs.prototype = {
 
 		let gplImage = new Gtk.Image({
 			file: GPLICON
-			//xalign: 1
 		});
 		let gplSpacer = new Gtk.Image({
 			file: SPACERICON
@@ -2155,7 +2148,6 @@ Prefs.prototype = {
 			label: "GNOME Shell Extension TaskBar 2020\nCopyright (C) 2013-2018 zpydr\nCopyright (C) 2020 c0ldplasma\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program. If not, see"
 		});
 		let labelLinkGPL = new Gtk.LinkButton({
-			icon_name: "GPLICON",
 			label: "https://www.gnu.org/licenses/",
 			uri: "https://www.gnu.org/licenses/"
 		});
