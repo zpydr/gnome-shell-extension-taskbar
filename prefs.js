@@ -32,9 +32,10 @@ const _ = Gettext.gettext;
 
 const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
-const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function(x) {
-	return +x;
-});
+
+const [major] = Config.PACKAGE_VERSION.split(".");
+const ShellVersion = Number.parseInt(major);
+
 
 const schema = "org.gnome.shell.extensions.TaskBar";
 
@@ -159,7 +160,7 @@ Prefs.prototype = {
 		});
 		this.gridTaskBar.attach(labelVersion1, 0, 1, 5, 1);
 		let labelVersion2 = new Gtk.Label({
-			label: _("GNOME Shell Version") + " 3." + ShellVersion[1]
+			label: _("GNOME Shell Version") +  ShellVersion
 		});
 		this.gridTaskBar.attach(labelVersion2, 0, 2, 5, 1);
 		let labelLink1 = new Gtk.LinkButton({
