@@ -41,9 +41,6 @@ const PopupMenu = imports.ui.popupMenu;
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Lib = Extension.imports.lib;
 const Prefs = Extension.imports.prefs;
-const ShellVersion = imports.misc.config.PACKAGE_VERSION.split(".").map(function(x) {
-	return +x;
-});
 const Windows = Extension.imports.windows;
 
 const schema = "org.gnome.shell.extensions.TaskBar";
@@ -346,9 +343,6 @@ TaskBar.prototype = {
 		//Activities Button
 		this.initDisplayActivitiesButton();
 
-		//Hot Corner
-		this.initEnableHotCorner();
-
 		//Application Menu
 		this.initDisplayApplicationMenu();
 
@@ -399,10 +393,6 @@ TaskBar.prototype = {
 		//Reset Activities Button Color if changed
 		if (this.settings.get_string("activities-button-color") !== "unset")
 			Main.panel.statusArea.activities.actor.set_style("None");
-
-		//Enable Hot Corner if disabled
-		if ((!this.settings.get_boolean("hot-corner")) && (ShellVersion[1] < 26))
-			Main.layoutManager._updateHotCorners();
 
 		//Show and disconnect Application Menu if hidden
 		if (!this.settings.get_boolean("application-menu")) {
@@ -459,36 +449,26 @@ TaskBar.prototype = {
 
 		//Disconnect Message Tray Sources Added Signal
 		if (this.messageTrayCountAddedId !== null) {
-			if (ShellVersion[1] <= 14)
-				Main.messageTray.disconnect(this.messageTrayCountAddedId);
 			this.messageTrayCountAddedId = null;
 		}
 
 		//Disconnect Message Tray Sources Removed Signal
 		if (this.messageTrayCountRemovedId !== null) {
-			if (ShellVersion[1] <= 14)
-				Main.messageTray.disconnect(this.messageTrayCountRemovedId);
 			this.messageTrayCountRemovedId = null;
 		}
 
 		//Disconnect Message Tray Showing Signal
 		if (this.messageTrayShowingId !== null) {
-			if (ShellVersion[1] <= 14)
-				Main.messageTray.disconnect(this.messageTrayShowingId);
 			this.messageTrayShowingId = null;
 		}
 
 		//Disconnect Message Tray Hiding Signal
 		if (this.messageTrayHidingId !== null) {
-			if (ShellVersion[1] <= 14)
-				Main.messageTray.disconnect(this.messageTrayHidingId);
 			this.messageTrayHidingId = null;
 		}
 
 		//Reset Message Tray
 		if (this.showTray !== null) {
-			if (ShellVersion[1] <= 14)
-				MessageTray.MessageTray.prototype._showTray = this.showTray;
 			this.showTray = null;
 		}
 
@@ -562,11 +542,6 @@ TaskBar.prototype = {
 			this.bottomPanelActor.destroy();
 			this.bottomPanelActor = null;
 		}
-		if ((this.setAnchorPoint) && (ShellVersion[1] <= 14)) {
-			Main.messageTray.actor.set_anchor_point(0, 0);
-			Main.messageTray._notificationWidget.set_anchor_point(0, 0);
-			this.setAnchorPoint = false;
-		}
 		if (this.newBox !== null) {
 			this.newBox.remove_child(this.boxMain);
 			this.newBox = null;
@@ -577,10 +552,6 @@ TaskBar.prototype = {
 			this.mainBox = null;
 		this.cleanTasksList();
 		if (this.topPanelBackgroundColor !== 'unset') {
-			if (ShellVersion[1] <= 16) {
-				Main.panel._leftCorner.actor.show();
-				Main.panel._rightCorner.actor.show();
-			}
 			Main.panel._leftCorner.actor.set_style(this.originalLeftPanelCornerStyle);
 			Main.panel._rightCorner.actor.set_style(this.originalRightPanelCornerStyle);
 		}
@@ -663,7 +634,6 @@ TaskBar.prototype = {
 			this.settings.connect("changed::top-panel", Lang.bind(this, this.displayTopPanel)),
 			this.settings.connect("changed::activities-button", Lang.bind(this, this.displayActivities)),
 			this.settings.connect("changed::activities-button-color", Lang.bind(this, this.colorActivities)),
-			this.settings.connect("changed::hot-corner", Lang.bind(this, this.enableHotCorner)),
 			this.settings.connect("changed::application-menu", Lang.bind(this, this.displayApplicationMenu)),
 			this.settings.connect("changed::application-menu-color", Lang.bind(this, this.colorApplicationMenu)),
 			this.settings.connect("changed::date-menu", Lang.bind(this, this.displayDateMenu)),
@@ -792,10 +762,6 @@ TaskBar.prototype = {
 				this.tasksContainerWidth = this.settings.get_int("tasks-container-width-new");
 				this.boxMainTasksId = this.boxMainTasks.connect("scroll-event", Lang.bind(this, this.onScrollTaskButton));
 			}
-			if ((this.settings.get_enum("tray-button") !== 0) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
-				this.boxBottomPanelTrayButton = new St.BoxLayout({
-					style_class: "tkb-box"
-				});
 		}
 	},
 
@@ -1052,8 +1018,6 @@ TaskBar.prototype = {
 					this
 				);
 			}
-			if ((this.settings.get_enum("tray-button") !== 0) && (this.bottomPanelEndIndicator) && (ShellVersion[1] <= 14))
-				this.boxMain.add_actor(this.boxBottomPanelTrayButton);
 		}
 	},
 
@@ -1068,14 +1032,10 @@ TaskBar.prototype = {
 	//Hide TaskBar in Overview
 	showMainBox: function() {
 		this.mainBox.show();
-		if ((this.settings.get_enum("tray-button") !== 0) && (!this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
-			this.boxBottomPanelTrayButton.show();
 	},
 
 	hideMainBox: function() {
 		this.mainBox.hide();
-		if ((this.settings.get_enum("tray-button") !== 0) && (!this.bottomPanelEndIndicator) && (this.settings.get_boolean("bottom-panel")) && (ShellVersion[1] <= 14))
-			this.boxBottomPanelTrayButton.hide();
 	},
 
 	//Add Favorites
@@ -1220,22 +1180,6 @@ TaskBar.prototype = {
 	addTrayButton: function() {
 		this.messageTrayCountAddedId = null;
 		this.messageTrayCountRemovedId = null;
-		if ((this.settings.get_boolean("bottom-panel")) && (this.settings.get_enum("tray-button") !== 0) && (ShellVersion[1] <= 14)) {
-			this.buttonTray = new St.Button({
-				style_class: "tkb-task-button"
-			});
-			this.signalTray = [
-				this.buttonTray.connect("button-press-event", Lang.bind(this, this.onClickTrayButton)),
-				this.buttonTray.connect("enter-event", Lang.bind(this, this.onHoverTrayButton))
-			];
-			if ((this.settings.get_enum("tray-button") === 1) && (this.settings.get_enum("tray-button-empty") === 0))
-				this.messageTrayIcon();
-			else {
-				this.messageTrayCountAddedId = Main.messageTray.connect('source-added', Lang.bind(this, this.messageTrayCount));
-				this.messageTrayCountRemovedId = Main.messageTray.connect('source-removed', Lang.bind(this, this.messageTrayCount));
-				this.messageTrayCount();
-			}
-		}
 	},
 
 	messageTrayCount: function() {
@@ -1329,23 +1273,6 @@ TaskBar.prototype = {
 			Main.panel.actor.hide();
 			Main.panel._leftCorner.actor.hide();
 			Main.panel._rightCorner.actor.hide();
-		}
-	},
-
-	//Hot Corner
-	enableHotCorner: function() {
-        if (ShellVersion[1] < 26) {
-		    this.initEnableHotCorner();
-		    if (this.settings.get_boolean("hot-corner")) {
-			    Main.layoutManager._updateHotCorners();
-		    }
-        }
-	},
-
-	initEnableHotCorner: function() {
-		if ((!this.settings.get_boolean("hot-corner")) && (ShellVersion[1] < 26)) {
-			Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._toggleOverview = function() {};
-			Main.layoutManager.hotCorners[Main.layoutManager.primaryIndex]._pressureBarrier._trigger = function() {};
 		}
 	},
 
@@ -1531,11 +1458,11 @@ TaskBar.prototype = {
 		this.adjustTBLabelSize = this.settings.get_int('tb-label-size');
 		this.adjustContentSize = this.settings.get_int('content-size');
 		this.panelSet = false;
-		this.originalTopPanelStyle = Main.panel.actor.get_style();
-		this.originalLeftPanelCornerStyle = Main.panel._leftCorner.actor.get_style();
-		this.originalRightPanelCornerStyle = Main.panel._rightCorner.actor.get_style();
+		this.originalTopPanelStyle = Main.panel.get_style();
+		this.originalLeftPanelCornerStyle = Main.panel._leftCorner.get_style();
+		this.originalRightPanelCornerStyle = Main.panel._rightCorner.get_style();
 		//Get Native Panel Background Color
-		let tpobc = Main.panel.actor.get_theme_node().get_background_color();
+		let tpobc = Main.panel.get_theme_node().get_background_color();
 		let topPanelOriginalBackgroundColor = 'rgba(%d, %d, %d, %d)'.format(tpobc.red, tpobc.green, tpobc.blue, tpobc.alpha);
 		this.settings.set_string("top-panel-original-background-color", topPanelOriginalBackgroundColor);
 		this.bottomPanelBackgroundColor = this.settings.get_string("bottom-panel-background-color");
@@ -1555,17 +1482,8 @@ TaskBar.prototype = {
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
 			Main.panel.actor.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
-			if ((this.settings.get_boolean("top-panel-background-alpha")) && (ShellVersion[1] <= 16)) {
-				Main.panel._leftCorner.actor.hide();
-				Main.panel._rightCorner.actor.hide();
-			} else {
-				if (ShellVersion[1] <= 16) {
-					Main.panel._leftCorner.actor.show();
-					Main.panel._rightCorner.actor.show();
-				}
-				Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
-				Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
-			}
+			Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
+			Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
 			this.panelSet = true;
 		}
 		this.panelSize = ((this.settings.get_int('panel-size')) - 6 + (this.settings.get_int('tb-icon-size')));
@@ -1612,8 +1530,6 @@ TaskBar.prototype = {
 			this.positionBoxBottomEnd.add_actor(this.boxMain);
 			this.bottomPanelEndIndicator = true;
 		}
-		if ((this.settings.get_enum("tray-button") !== 0) && (!this.bottomPanelEndIndicator) && (ShellVersion[1] <= 14))
-			this.positionBoxBottomEnd.add_actor(this.boxBottomPanelTrayButton);
 		Main.layoutManager.addChrome(this.bottomPanelActor, {
 			affectsStruts: true,
 			trackFullscreen: true
@@ -1625,18 +1541,6 @@ TaskBar.prototype = {
 		this.height = (this.panelSize + this.bottomPanelVertical);
 		this.bottomPanelActor.set_position(primary.x, primary.y + primary.height - this.height);
 		this.bottomPanelActor.set_size(primary.width, -1);
-		if (ShellVersion[1] <= 14) {
-			Main.messageTray._notificationWidget.set_anchor_point(0, this.height);
-			this.setAnchorPoint = true;
-			this.messageTrayShowingId = Main.messageTray.connect('showing', Lang.bind(this, function() {
-				Main.messageTray.actor.set_anchor_point(0, this.height);
-				this.setAnchorPoint = true;
-			}));
-			this.messageTrayHidingId = Main.messageTray.connect('hiding', Lang.bind(this, function() {
-				Main.messageTray.actor.set_anchor_point(0, 0);
-				this.setAnchorPoint = true;
-			}));
-		}
 		this.panelSize = ((this.settings.get_int('panel-size-bottom')) - 6 + (this.settings.get_int('tb-icon-size-bottom')));
 	},
 

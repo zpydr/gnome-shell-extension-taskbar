@@ -1368,9 +1368,6 @@ Prefs.prototype = {
 			label: _("Tray Button")
 		});
 
-		if (ShellVersion[1] <= 14)
-			notebook.append_page(scrollWindowTrayButton, labelTrayButton);
-
 		let labelBottomTrayButton = new Gtk.Label({
 			label: _("Bottom Panel Tray Button")
 		});
@@ -2082,17 +2079,7 @@ Prefs.prototype = {
 		});
 		this.resetSystemMenuColorButton.connect('clicked', Lang.bind(this, this.resetSystemMenuColor));
 		this.gridMisc.attach(this.resetSystemMenuColorButton, 6, 5, 1, 1);
-        if (ShellVersion[1] < 26) {
-		    let labelEnableHotCorner = new Gtk.Label({
-			    label: _("Hot Corner")
-		    });
-		    this.gridMisc.attach(labelEnableHotCorner, 1, 6, 1, 1);
-		    this.valueEnableHotCorner = new Gtk.Switch({
-			    active: this.settings.get_boolean("hot-corner")
-		    });
-		this.valueEnableHotCorner.connect('notify::active', Lang.bind(this, this.changeEnableHotCorner));
-		this.gridMisc.attach(this.valueEnableHotCorner, 3, 6, 1, 1);
-        }
+
 		let labelDisplayDash = new Gtk.Label({
 			label: _("Dash (Activities Overview)")
 		});
@@ -3227,9 +3214,6 @@ Prefs.prototype = {
 		rgba.parse(color);
 		this.valueActivitiesColor.set_rgba(rgba);
 		this.settings.set_string("activities-button-color", "unset");
-        if (ShellVersion[1] < 26) {
-		    this.valueEnableHotCorner.set_active(true);
-        }
 		this.valueDisplayApplicationMenu.set_active(true);
 		this.valueApplicationMenuColor.set_rgba(rgba);
 		this.settings.set_string("application-menu-color", "unset");
