@@ -392,7 +392,7 @@ TaskBar.prototype = {
 
 		//Reset Activities Button Color if changed
 		if (this.settings.get_string("activities-button-color") !== "unset")
-			Main.panel.statusArea.activities.actor.set_style("None");
+			Main.panel.statusArea.activities.set_style("None");
 
 		//Show and disconnect Application Menu if hidden
 		if (!this.settings.get_boolean("application-menu")) {
@@ -403,7 +403,7 @@ TaskBar.prototype = {
 
 		//Reset Application Menu Color if changed
 		if (this.settings.get_string("application-menu-color") !== "unset")
-			Main.panel.statusArea.appMenu.actor.set_style("None");
+			Main.panel.statusArea.appMenu.set_style("None");
 
 		//Show Date Menu if hidden
 		if (!this.settings.get_boolean("date-menu"))
@@ -411,7 +411,7 @@ TaskBar.prototype = {
 
 		//Reset Date Menu Color if changed
 		if (this.settings.get_string("date-menu-color") !== "unset")
-			Main.panel.statusArea.dateMenu.actor.set_style("None");
+			Main.panel.statusArea.dateMenu.set_style("None");
 
 		//Show System Menu if hidden
 		if (!this.settings.get_boolean("system-menu"))
@@ -419,7 +419,7 @@ TaskBar.prototype = {
 
 		//Reset System Menu Color if changed
 		if (this.settings.get_string("system-menu-color") !== "unset")
-			Main.panel.statusArea.aggregateMenu.actor.set_style("None");
+			Main.panel.statusArea.aggregateMenu.set_style("None");
 
 		//Show Dash if hidden
 		if (!this.settings.get_boolean("dash")) {
@@ -552,19 +552,19 @@ TaskBar.prototype = {
 			this.mainBox = null;
 		this.cleanTasksList();
 		if (this.topPanelBackgroundColor !== 'unset') {
-			Main.panel._leftCorner.actor.set_style(this.originalLeftPanelCornerStyle);
-			Main.panel._rightCorner.actor.set_style(this.originalRightPanelCornerStyle);
+			Main.panel._leftCorner.set_style(this.originalLeftPanelCornerStyle);
+			Main.panel._rightCorner.set_style(this.originalRightPanelCornerStyle);
 		}
 		if ((this.topPanelBackgroundColor !== 'unset') || (this.panelSet))
-			Main.panel.actor.set_style(this.originalTopPanelStyle);
+			Main.panel.set_style(this.originalTopPanelStyle);
 		if (!this.settings.get_boolean("top-panel")) {
 			Main.layoutManager.removeChrome(Main.layoutManager.panelBox);
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: true
 			});
-			Main.panel._leftCorner.actor.show();
-			Main.panel._rightCorner.actor.show();
-			Main.panel.actor.show();
+			Main.panel._leftCorner.show();
+			Main.panel._rightCorner.show();
+			Main.panel.show();
 		}
 	},
 
@@ -1244,9 +1244,9 @@ TaskBar.prototype = {
 		this.activitiesColor = this.settings.get_string("activities-button-color");
 		if (this.activitiesColor !== "unset") {
 			this.activitiesStyle = "color: " + this.activitiesColor + ";";
-			Main.panel.statusArea.activities.actor.set_style(this.activitiesStyle);
+			Main.panel.statusArea.activities.set_style(this.activitiesStyle);
 		} else
-			Main.panel.statusArea.activities.actor.set_style("None");
+			Main.panel.statusArea.activities.set_style("None");
 	},
 
 	//Top Panel
@@ -1257,9 +1257,9 @@ TaskBar.prototype = {
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: true
 			});
-			Main.panel.actor.show();
-			Main.panel._leftCorner.actor.show();
-			Main.panel._rightCorner.actor.show();
+			Main.panel.show();
+			Main.panel._leftCorner.show();
+			Main.panel._rightCorner.show();
 			this.onParamChanged();
 		}
 	},
@@ -1270,9 +1270,9 @@ TaskBar.prototype = {
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: false
 			});
-			Main.panel.actor.hide();
-			Main.panel._leftCorner.actor.hide();
-			Main.panel._rightCorner.actor.hide();
+			Main.panel.hide();
+			Main.panel._leftCorner.hide();
+			Main.panel._rightCorner.hide();
 		}
 	},
 
@@ -1313,9 +1313,9 @@ TaskBar.prototype = {
 		this.appMenuColor = this.settings.get_string("application-menu-color");
 		if (this.appMenuColor !== "unset") {
 			this.appMenuStyle = "color: " + this.appMenuColor + ";";
-			Main.panel.statusArea.appMenu.actor.set_style(this.appMenuStyle);
+			Main.panel.statusArea.appMenu.set_style(this.appMenuStyle);
 		} else
-			Main.panel.statusArea.appMenu.actor.set_style("None");
+			Main.panel.statusArea.appMenu.set_style("None");
 	},
 
 
@@ -1340,9 +1340,9 @@ TaskBar.prototype = {
 		this.dateMenuColor = this.settings.get_string("date-menu-color");
 		if (this.dateMenuColor !== "unset") {
 			this.dateMenuStyle = "color: " + this.dateMenuColor + ";";
-			Main.panel.statusArea.dateMenu.actor.set_style(this.dateMenuStyle);
+			Main.panel.statusArea.dateMenu.set_style(this.dateMenuStyle);
 		} else
-			Main.panel.statusArea.dateMenu.actor.set_style("None");
+			Main.panel.statusArea.dateMenu.set_style("None");
 	},
 
 	//System Menu
@@ -1366,9 +1366,9 @@ TaskBar.prototype = {
 		this.systemMenuColor = this.settings.get_string("system-menu-color");
 		if (this.systemMenuColor !== "unset") {
 			this.systemMenuStyle = "color: " + this.systemMenuColor + ";";
-			Main.panel.statusArea.aggregateMenu.actor.set_style(this.systemMenuStyle);
+			Main.panel.statusArea.aggregateMenu.set_style(this.systemMenuStyle);
 		} else
-			Main.panel.statusArea.aggregateMenu.actor.set_style("None");
+			Main.panel.statusArea.aggregateMenu.set_style("None");
 	},
 
 	//Dash
@@ -1382,7 +1382,7 @@ TaskBar.prototype = {
 
 	initDisplayDash: function() {
 		if (!this.settings.get_boolean("dash")) {
-			this.dash = Main.overview._dash.actor;
+			this.dash = Main.overview._dash;
 			this.dashHeight = this.dash.get_height();
 			this.dashWidth = this.dash.get_width();
 			this.dash.set_height(0);
@@ -1473,7 +1473,7 @@ TaskBar.prototype = {
 			//Set Font Size
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
-			Main.panel.actor.set_style(this.fontSize);
+			Main.panel.set_style(this.fontSize);
 			this.panelSet = true;
 		}
 		this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
@@ -1481,9 +1481,9 @@ TaskBar.prototype = {
 			this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor + ";";
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
-			Main.panel.actor.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
-			Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
-			Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
+			Main.panel.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
+			Main.panel._leftCorner.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
+			Main.panel._rightCorner.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
 			this.panelSet = true;
 		}
 		this.panelSize = ((this.settings.get_int('panel-size')) - 6 + (this.settings.get_int('tb-icon-size')));
@@ -1821,9 +1821,9 @@ TaskBar.prototype = {
 	        }
 	    }
 
-	    this.taskMenu.actor.hide();
+	    this.taskMenu.hide();
 	    taskMenuManager.addMenu(this.taskMenu);
-	    Main.uiGroup.add_actor(this.taskMenu.actor);
+	    Main.uiGroup.add_actor(this.taskMenu);
 	    this.taskMenuUp = true;
 	    this.hidePreview();
 	    this.taskMenu.open();
