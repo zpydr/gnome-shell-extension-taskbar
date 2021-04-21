@@ -2572,13 +2572,13 @@ TaskBar.prototype = {
 
 		//Destroy Preview if displaying
 		if (this.preview !== null) {
+			// also destroys this.favoritesPreview because this.preview = this.favoritesPreview in showFavoritesPreview() function
 			this.preview.destroy();
 			this.preview = null;
 		}
 
 		//Destroy Favorites Preview if displaying
 		if (this.favoritesPreview !== null) {
-			this.favoritesPreview.destroy();
 			this.favoritesPreview = null;
 		}
 	}
