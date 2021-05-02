@@ -682,6 +682,30 @@ TaskBar.prototype = {
 
 	//TaskBar in Overview Mode
 	setOverview: function() {
+
+		// Overwrite _hideDone to remove Main.panel.style = null; so panel style does not reset when closing overview
+		Main.overview._hideDone = function() {
+			// Re-enable unredirection
+			Meta.enable_unredirect_for_display(global.display);
+
+			this._desktopFade.hide();
+			this._coverPane.hide();
+
+			this._visible = false;
+			this._animationInProgress = false;
+
+			this.emit('hidden');
+			// Handle any calls to show* while we were hiding
+			if (this._shown)
+			    this._animateVisible(OverviewControls.ControlsState.WINDOW_PICKER);
+			else
+			    Main.layoutManager.hideOverview();
+
+			//Main.panel.style = null;
+
+			this._syncGrab();
+		};
+
 		if (!this.settings.get_boolean("overview")) {
 			this.mainBox = this.boxMain;
 			this.overviewHidingId = Main.overview.connect('hiding', Lang.bind(this, this.showMainBox));
