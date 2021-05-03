@@ -683,6 +683,9 @@ TaskBar.prototype = {
 	//TaskBar in Overview Mode
 	setOverview: function() {
 
+		Main.overview.connect('shown', Lang.bind(this, this.changeTopPanelBackgroundColor));
+		Main.overview.connect('showing', Lang.bind(this, this.changeTopPanelBackgroundColor));
+
 		// Overwrite _hideDone to remove Main.panel.style = null; so panel style does not reset when closing overview
 		Main.overview._hideDone = function() {
 			// Re-enable unredirection
