@@ -556,7 +556,7 @@ TaskBar.prototype = {
 			Main.panel._rightCorner.actor.set_style(this.originalRightPanelCornerStyle);
 		}
 		if ((this.topPanelBackgroundColor !== 'unset') || (this.panelSet))
-			Main.panel.actor.set_style(this.originalTopPanelStyle);
+			Main.panel.set_style(this.originalTopPanelStyle);
 		if (!this.settings.get_boolean("top-panel")) {
 			Main.layoutManager.removeChrome(Main.layoutManager.panelBox);
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
@@ -564,7 +564,7 @@ TaskBar.prototype = {
 			});
 			Main.panel._leftCorner.actor.show();
 			Main.panel._rightCorner.actor.show();
-			Main.panel.actor.show();
+			Main.panel.show();
 		}
 	},
 
@@ -1284,7 +1284,7 @@ TaskBar.prototype = {
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: true
 			});
-			Main.panel.actor.show();
+			Main.panel.show();
 			Main.panel._leftCorner.actor.show();
 			Main.panel._rightCorner.actor.show();
 			this.onParamChanged();
@@ -1297,7 +1297,7 @@ TaskBar.prototype = {
 			Main.layoutManager.addChrome(Main.layoutManager.panelBox, {
 				affectsStruts: false
 			});
-			Main.panel.actor.hide();
+			Main.panel.hide();
 			Main.panel._leftCorner.actor.hide();
 			Main.panel._rightCorner.actor.hide();
 		}
@@ -1500,7 +1500,7 @@ TaskBar.prototype = {
 			//Set Font Size
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
-			Main.panel.actor.set_style(this.fontSize);
+			Main.panel.set_style(this.fontSize);
 			this.panelSet = true;
 		}
 		this.topPanelBackgroundColor = this.settings.get_string("top-panel-background-color");
@@ -1508,7 +1508,7 @@ TaskBar.prototype = {
 			this.topPanelBackgroundStyle = "background-color: " + this.topPanelBackgroundColor + ";";
 			this.panelLabelSize = (this.panelSize - 12 + this.adjustContentSize);
 			this.fontSize = 'font-size: ' + this.panelLabelSize + 'px; height: ' + this.panelSize + 'px;';
-			Main.panel.actor.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
+			Main.panel.set_style(this.fontSize + ' ' + this.topPanelBackgroundStyle);
 			Main.panel._leftCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
 			Main.panel._rightCorner.actor.set_style('-panel-corner-background-color: ' + this.topPanelBackgroundColor + ';');
 			this.panelSet = true;
