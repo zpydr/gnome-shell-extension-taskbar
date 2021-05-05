@@ -2074,7 +2074,9 @@ TaskBar.prototype = {
 			let [windowTask, buttonTask, signalsTask, labelTask, iconTask] = this.tasksList[i];
 			let rect = new Meta.Rectangle();
 			[rect.x, rect.y] = buttonTask.get_transformed_position();
-            [rect.width, rect.height] = buttonTask.get_transformed_size();
+			if (buttonTask.get_stage() !== null) {
+            	[rect.width, rect.height] = buttonTask.get_transformed_size();
+			}
 			windowTask.set_icon_geometry(rect);
 		}
 	},
