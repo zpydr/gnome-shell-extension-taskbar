@@ -1,5 +1,5 @@
 # Development stopped
-### Feel free to fork this repo and to work on it yourself
+### Feel free to fork this repo to work on it yourself
 ### or
 ### Have a look at Dash-to-Panel as an alternative https://extensions.gnome.org/extension/1160/dash-to-panel/ (Update for Gnome 40 is worked on)
 
